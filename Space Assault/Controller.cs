@@ -22,7 +22,6 @@ namespace Space_Assault
         public Controller()
         {
             _currentGameState = new MainMenu();
-			_camera = new Camera();
         }
 
         public void Update()

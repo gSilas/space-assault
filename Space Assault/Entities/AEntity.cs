@@ -28,5 +28,4 @@ namespace Space_Assault.Entities
             }
         }
     }
-    }
 }
