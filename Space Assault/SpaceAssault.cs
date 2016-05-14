@@ -7,12 +7,13 @@ namespace Space_Assault
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class SpaceAssault : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        private Controller controller;
 
-        public Game1()
+        public SpaceAssault()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -26,8 +27,13 @@ namespace Space_Assault
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            //Initialize window
+            Window.Title = "Space Assault";
+            Window.AllowAltF4 = true;
+            IsMouseVisible = true;
 
+            // TODO: Add your initialization logic here
+            controller = new Controller();
             base.Initialize();
         }
 
@@ -63,7 +69,7 @@ namespace Space_Assault
                 Exit();
 
             // TODO: Add your update logic here
-
+            controller.Update();
             base.Update(gameTime);
         }
 
@@ -76,7 +82,7 @@ namespace Space_Assault
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            controller.Draw();
             base.Draw(gameTime);
         }
     }
