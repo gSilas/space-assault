@@ -12,7 +12,8 @@ namespace Space_Assault
             EndlessModeScene,
             TutorialScene,
             PauseMenu,
-            OptionsMenu
+            OptionsMenu,
+            HighScoreList
         }
 		//Current GameState has to be initialized
         private AGameState _currentGameState;
@@ -21,7 +22,7 @@ namespace Space_Assault
 		//Constructor creates instance of mainmenu for the default gamestate
         public Controller()
         {
-            _currentGameState = new MainMenu();
+            _currentGameState = new HighScoreList();
         }
 
         public void Update()
@@ -49,6 +50,9 @@ namespace Space_Assault
 				case EGameStates.PauseMenu:
                     break;
 				case EGameStates.OptionsMenu:
+                    break;
+                case EGameStates.HighScoreList:
+                    _currentGameState = new HighScoreList();
                     break;
             }
         }
