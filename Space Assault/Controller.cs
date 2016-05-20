@@ -23,6 +23,7 @@ namespace Space_Assault
         public Controller()
         {
             _currentGameState = new HighScoreList();
+            _currentGameState.Initialize();
         }
 
         public void Update()

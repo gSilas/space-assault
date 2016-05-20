@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml;
 using System.IO;
-
+using System.Diagnostics;
 
 /// <summary>
 /// Dient zum laden und schreiben der Highscoreliste 
@@ -24,94 +24,103 @@ namespace Space_Assault.States
 
     class HighScoreList : AGameState
     {
-        int listLength = 10;
-        string filePath = "HighScoreList.xml";
+        int listLength;
+        string filePath;
         HighscoreEntity[] scoresList;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public override void Draw()
+        public override void Initialize()
         {
-        }
-
-        public override void Update()
-        {
-        }
-
-        public HighScoreList()
-        {
+            listLength = 10;
             scoresList = new HighscoreEntity[listLength];
-            //wenn die Datei nicht existiert erstelle eine
-            if (!File.Exists(filePath))
+            filePath = "HighScoreList.xml";
+
+            //wenn die Datei nicht existiert erstelle sie
+            if (File.Exists(filePath))
             {
-                Add("Philipp", 666);
+                Load();
+            }
+            else
+            {
+                Add("Philipp", 789);
                 Add("Daniel", 777);
                 Add("Dustin", 888);
                 Add("Gerd", 999);
                 Add("Hans-Martin", 1337);
+                Add("Markus", 1111);
+                Add("Arne", 1234);
+                Add("Andre", 666);
+                Add("Ulrich", 555);
+                Add("Acagamic", 1777);
                 Save();
             }
-            else
-            {
-                Load();
-            }
 
-            foreach (HighscoreEntity x in scoresList)
+            foreach (HighscoreEntity i in scoresList)
             {
-                Console.WriteLine(x.Name + " " + x.Points);
+                Debug.WriteLine(i.Name + " " + i.Points);
             }
+        }
 
+        public override void Draw()
+        {
+            //TODO
+        }
+
+        public override void Update()
+        {
+            //TODO
         }
 
         //laden der XML und schreiben in scoresList
         public void Load()
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(filePath);
+            XmlDocument highScoreDoc = new XmlDocument();
+            highScoreDoc.Load(filePath);
 
-            int count = 0;
-            scoresList = new HighscoreEntity[doc.ChildNodes[0].ChildNodes.Count];
-            foreach (XmlNode platz in doc.ChildNodes[0].ChildNodes)
+            scoresList = new HighscoreEntity[highScoreDoc.ChildNodes[0].ChildNodes.Count];
+            int i = 0;
+            HighscoreEntity currentEntry;
+            foreach (XmlNode entry in highScoreDoc.ChildNodes[0].ChildNodes)
             {
-                if (!string.IsNullOrEmpty(platz.ChildNodes[0].InnerText))
+                if (!string.IsNullOrEmpty(entry.ChildNodes[0].InnerText))
                 {
-                    //ein neues Item erzeugen, wenn der Spielername nicht null oder leer ist
-                    HighscoreEntity i = new HighscoreEntity();
-                    i.Name = platz.ChildNodes[0].InnerText;
-                    i.Points = int.Parse(platz.ChildNodes[1].InnerText);
-                    this.scoresList[count] = i;
-                    count++;
+                    currentEntry = new HighscoreEntity();
+                    currentEntry.Name = entry.ChildNodes[0].InnerText;
+                    currentEntry.Points = int.Parse(entry.ChildNodes[1].InnerText);
+                    scoresList[i] = currentEntry;
+                    i++;
                 }
             }
-            Console.WriteLine("File Loaded");
         }
 
         //scoresList in die XML schreiben
         public void Save()
         {
-            XmlDocument doc = new XmlDocument();
-            //root-node
-            doc.AppendChild(doc.CreateElement("Highscore"));
-            int platzNum = 1;
-            foreach (HighscoreEntity i in scoresList)
+            XmlDocument highScoreDoc = new XmlDocument();
+            highScoreDoc.AppendChild(highScoreDoc.CreateElement("Highscore"));
+
+            int i = 1;
+            XmlElement curNum;
+            XmlElement curName;
+            XmlElement curPoints;
+
+            foreach (HighscoreEntity entry in scoresList)
             {
-                XmlElement num = doc.CreateElement("Platz" + platzNum);
+                curNum = highScoreDoc.CreateElement("Platz" + i);
+                curName = highScoreDoc.CreateElement("Name");
+                curPoints = highScoreDoc.CreateElement("Punkte");
 
-                XmlElement name = doc.CreateElement("Name");
-                name.InnerText = i.Name;
+                curName.InnerText = entry.Name;  
+                curPoints.InnerText = entry.Points.ToString();
 
-                XmlElement points = doc.CreateElement("Punkte");
-                points.InnerText = i.Points.ToString();
+                curNum.AppendChild(curName);
+                curNum.AppendChild(curPoints);
 
-                num.AppendChild(name);
-                num.AppendChild(points);
+                highScoreDoc.ChildNodes[0].AppendChild(curNum);
 
-                platzNum++;
-                doc.ChildNodes[0].AppendChild(num);
+                i++;
             }
-            doc.Save(filePath);
-            Console.WriteLine("File Saved");
+            highScoreDoc.Save(filePath);
+
         }
 
         //neue Eintrag hinzufügen
@@ -137,7 +146,8 @@ namespace Space_Assault.States
                 }
             }
 
-            Console.WriteLine("Entry added");
+            Debug.WriteLine("Entry added");
         }
+
     }
 }
