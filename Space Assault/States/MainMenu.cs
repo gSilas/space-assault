@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Space_Assault.States
 {
     class MainMenu : AGameState
@@ -6,6 +8,11 @@ namespace Space_Assault.States
         public override void Draw()
         {
 
+        }
+
+        public override void Initialize()
+        {
+            throw new NotImplementedException();
         }
 
         public override void Update()
