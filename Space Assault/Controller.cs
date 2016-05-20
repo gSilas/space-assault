@@ -38,7 +38,6 @@ namespace Space_Assault
 		//switches between GameStates
         protected void NextGameState(EGameStates nextState)
         {
-            Initializer.InitalizeGameState(nextState);
             switch (nextState)
             {
                 case EGameStates.MainMenu:
@@ -62,6 +61,7 @@ namespace Space_Assault
 
                     break;
             }
+            _currentGameState.Initialize();
         }
 
     }
