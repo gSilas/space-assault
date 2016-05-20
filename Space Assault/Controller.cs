@@ -38,21 +38,28 @@ namespace Space_Assault
 		//switches between GameStates
         protected void NextGameState(EGameStates nextState)
         {
+            Initializer.InitalizeGameState(nextState);
             switch (nextState)
             {
                 case EGameStates.MainMenu:
 					_currentGameState = new MainMenu();
+
                     break;
 				case EGameStates.EndlessModeScene:
+
                     break;
 				case EGameStates.TutorialScene:
+
                     break;
 				case EGameStates.PauseMenu:
+
                     break;
 				case EGameStates.OptionsMenu:
+
                     break;
                 case EGameStates.HighScoreList:
                     _currentGameState = new HighScoreList();
+
                     break;
             }
         }

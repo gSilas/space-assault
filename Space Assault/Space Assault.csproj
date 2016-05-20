@@ -46,6 +46,8 @@
     <Compile Include="States\HighScoreList.cs" />
     <Compile Include="States\MainMenu.cs" />
     <Compile Include="Utils\Camera.cs" />
+    <Compile Include="Utils\Global.cs" />
+    <Compile Include="Utils\Initializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
