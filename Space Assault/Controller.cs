@@ -1,4 +1,6 @@
-﻿using Space_Assault.States;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Space_Assault.States;
 using Space_Assault.Utils;
 
 namespace Space_Assault
@@ -16,14 +18,17 @@ namespace Space_Assault
             HighScoreList
         }
 		//Current GameState has to be initialized
-        private AGameState _currentGameState;
+        public AGameState _currentGameState;
+        public GraphicsDeviceManager gm;
+        public ContentManager cm;
         private Camera _camera;
 
-		//Constructor creates instance of mainmenu for the default gamestate
-        public Controller()
+        //Constructor creates instance of mainmenu for the default gamestate
+        public Controller(GraphicsDeviceManager graphics, ContentManager content)
         {
-            _currentGameState = new HighScoreList();
-            _currentGameState.Initialize();
+            gm = graphics;
+            cm = content;
+            NextGameState(EGameStates.MainMenu);
         }
 
         public void Update()
@@ -42,27 +47,22 @@ namespace Space_Assault
             switch (nextState)
             {
                 case EGameStates.MainMenu:
-					_currentGameState = new MainMenu();
-
+					_currentGameState = new MainMenu(this);
                     break;
 				case EGameStates.EndlessModeScene:
-
                     break;
 				case EGameStates.TutorialScene:
-
                     break;
 				case EGameStates.PauseMenu:
-
                     break;
 				case EGameStates.OptionsMenu:
-
                     break;
                 case EGameStates.HighScoreList:
                     _currentGameState = new HighScoreList();
-
                     break;
             }
             _currentGameState.Initialize();
+            _currentGameState.LoadContent();
         }
 
     }

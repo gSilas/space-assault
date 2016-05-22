@@ -33,7 +33,7 @@ namespace Space_Assault
             IsMouseVisible = true;
 
             // TODO: Add your initialization logic here
-            controller = new Controller();
+            controller = new Controller(graphics, Content);
             base.Initialize();
         }
 
