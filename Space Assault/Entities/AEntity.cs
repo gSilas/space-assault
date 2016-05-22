@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Space_Assault.Utils;
 
@@ -7,20 +8,23 @@ namespace Space_Assault.Entities
 {
     public abstract  class AEntity
     {
-        private Model _model;
-        private Vector3 _position;
+        protected Model Model;
+        protected Vector3 Position;
+        protected Matrix RotationMatrix;
 
-        public abstract void Update();
+        public abstract void Update(GameTime gameTime);
+
+        public abstract void LoadContent(ContentManager cm);
 
         public void Draw(Camera camera)
         {
-            foreach (var mesh in _model.Meshes)
+            foreach (var mesh in Model.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
                     effect.PreferPerPixelLighting = true;
-                    effect.World = Matrix.CreateWorld(_position, Vector3.UnitX, Vector3.UnitY);
+                    effect.World = RotationMatrix*Matrix.CreateWorld(Position, Vector3.UnitX, Vector3.UnitY);
                     effect.View = camera.ViewMatrix;
                     effect.Projection = camera.ProjectionMatrix;
                 }

@@ -39,13 +39,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Entities\AEntity.cs" />
+    <Compile Include="Entities\Station.cs" />
     <Compile Include="SpaceAssault.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="States\AGameState.cs" />
+    <Compile Include="States\IGameState.cs" />
     <Compile Include="States\HighScoreList.cs" />
     <Compile Include="States\MainMenu.cs" />
     <Compile Include="Utils\Camera.cs" />
+    <Compile Include="Utils\IDrawable.cs" />
+    <Compile Include="Utils\IUpdateable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

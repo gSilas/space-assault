@@ -4,10 +4,13 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System;
+using Space_Assault.Entities;
+using Space_Assault.Utils;
 
 namespace Space_Assault.States
 {
-    class MainMenu : AGameState
+    class MainMenu : IGameState, IUpdateableState, IDrawableState
     {
         //#################################
         // Set Variables
@@ -22,15 +25,15 @@ namespace Space_Assault.States
         List<SoundEffect> soundEffects;
 
         // 3D Model
+        private Camera _camera;
+        private Station _station;
         private bool up;
         private float angle;
         private Vector3 position;
         private Model model;
-        private Matrix world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
-        private Matrix view = Matrix.CreateLookAt(new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.UnitY);
-        private Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 800f / 480f, 0.1f, 100f);
         private SpriteBatch spriteBatch;
         Texture2D background;
+
 
         //#################################
         // Constructor
@@ -41,14 +44,16 @@ namespace Space_Assault.States
             gm = sc.gm;
             cm = sc.cm;
             soundEffects = new List<SoundEffect>();
+            _camera = new Camera(800f/480f,10000f, MathHelper.ToRadians(45),1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.UnitY);
+            _station = new Station(Vector3.Zero,0);
+
         }
 
         //#################################
         // LoadContent - Function
         //#################################
-        public override void LoadContent()
-        {
-            
+        public void LoadContent()
+        {       
             // Sound
             soundEffects.Add(cm.Load<SoundEffect>("stationSound"));
             
@@ -57,59 +62,31 @@ namespace Space_Assault.States
             instance.IsLooped = true;
             instance.Play();
 
-            // 3D Model
-            up = true;
-            angle = 0;
-            position = new Vector3(0, 0, 0);
-            model = cm.Load<Model>("station");
-            
+            _station.LoadContent(cm);
+                    
         }
 
         //#################################
         // Draw - Function
         //#################################
-        public override void Draw()
+        public void Draw(GameTime elapsedTime)
         {
-            DrawModel(model, world, view, projection);
+           _station.Draw(_camera);
         }
 
         //#################################
         // Update - Function
         //#################################
-        public override void Update()
+
+        public void Update(GameTime elapsedTime)
         {
-            
             //3D Model
-            angle += 0.005f;
-            if (position.Y < 1 && up)
-                position += new Vector3(0, 0.002f, 0);
-            else if (position.Y < 0)
-                up = true;
-            else
-            {
-                position -= new Vector3(0, 0.002f, 0);
-                up = false;
-            }
-            world = Matrix.CreateRotationY(angle) * Matrix.CreateTranslation(position);
-            
+            _station.Update(elapsedTime);
         }
 
-        //#################################
-        // DrawModel - Function
-        //#################################
-        private void DrawModel(Model model, Matrix world, Matrix view, Matrix projection)
+        public void Initialize()
         {
-            foreach (ModelMesh mesh in model.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.World = world;
-                    effect.View = view;
-                    effect.Projection = projection;
-                }
-
-                mesh.Draw();
-            }
+            
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Space_Assault
                 Exit();
 
             // TODO: Add your update logic here
-            controller.Update();
+            controller.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -82,7 +82,7 @@ namespace Space_Assault
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            controller.Draw();
+            controller.Draw(gameTime);
             base.Draw(gameTime);
         }
     }

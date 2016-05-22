@@ -2,6 +2,8 @@
 using System.Xml;
 using System.IO;
 using System.Diagnostics;
+using Space_Assault.Utils;
+using Microsoft.Xna.Framework;
 
 /// <summary>
 /// Dient zum laden und schreiben der Highscoreliste 
@@ -22,13 +24,13 @@ namespace Space_Assault.States
         }
     }
 
-    class HighScoreList : AGameState
+    class HighScoreList : IGameState
     {
         int listLength;
         string filePath;
         HighscoreEntity[] scoresList;
 
-        public override void Initialize()
+        public void Initialize()
         {
             listLength = 10;
             scoresList = new HighscoreEntity[listLength];
@@ -58,16 +60,6 @@ namespace Space_Assault.States
             {
                 Debug.WriteLine(i.Name + " " + i.Points);
             }
-        }
-
-        public override void Draw()
-        {
-            //TODO
-        }
-
-        public override void Update()
-        {
-            //TODO
         }
 
         //laden der XML und schreiben in scoresList
@@ -148,6 +140,9 @@ namespace Space_Assault.States
 
             Debug.WriteLine("Entry added");
         }
-
+        public void LoadContent()
+        {
+            
+        }
     }
 }

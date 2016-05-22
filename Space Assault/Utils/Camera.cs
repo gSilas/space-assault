@@ -1,28 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Space_Assault.Utils
 {
     //TODO make movable and better constructor
-    public class Camera
+    public struct Camera
     {
         private float _aspectRatio;
-        private float _farClipPlane = 10000f;
-        private float _fieldOfView = MathHelper.PiOver2;
-        private float _nearClipPlane = 0.1f;
+        private float _farClipPlane;
+        private float _fieldOfView;
+        private float _nearClipPlane;
 
-        private Vector3 _position = new Vector3(0, 100, 0);
-        private Vector3 _target = Vector3.UnitZ;
-        private Vector3 _upVector = Vector3.UnitZ;
+        private Vector3 _position;
+        private Vector3 _target;
+        private Vector3 _upVector;
 
-        public Camera(GraphicsDeviceManager graphics)
+        public Camera(float aspectRatio, float farClipPlane, float fieldOfView, float nearClipPlane, Vector3 position, Vector3 target, Vector3 upVector) : this()
         {
-            _aspectRatio = graphics.GraphicsDevice.DisplayMode.AspectRatio;
+            _aspectRatio = aspectRatio;
+            _farClipPlane = farClipPlane;
+            _fieldOfView = fieldOfView;
+            _nearClipPlane = nearClipPlane;
+            _position = position;
+            _target = target;
+            this._upVector = upVector;
         }
 
         public Matrix ViewMatrix
