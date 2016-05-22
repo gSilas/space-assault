@@ -16,6 +16,8 @@ namespace Space_Assault.Entities
 
         public abstract void LoadContent(ContentManager cm);
 
+        public abstract void Initialize();
+
         public void Draw(Camera camera)
         {
             foreach (var mesh in Model.Meshes)

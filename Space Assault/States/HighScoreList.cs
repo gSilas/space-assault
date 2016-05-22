@@ -2,8 +2,6 @@
 using System.Xml;
 using System.IO;
 using System.Diagnostics;
-using Space_Assault.Utils;
-using Microsoft.Xna.Framework;
 
 /// <summary>
 /// Dient zum laden und schreiben der Highscoreliste 
@@ -12,7 +10,7 @@ using Microsoft.Xna.Framework;
 /// 
 namespace Space_Assault.States
 {
-    public struct HighscoreEntity : IComparable<HighscoreEntity>
+    internal struct HighscoreEntity : IComparable<HighscoreEntity>
     {
         public string Name { get; set; }
         public int Points { get; set; }

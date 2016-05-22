@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,12 +14,17 @@ namespace Space_Assault.Entities
         {
             _angle = angle;
             Position = position;
+
+        }
+
+        public override void Initialize()
+        {
             _up = true;
         }
 
         public override void LoadContent(ContentManager cm)
         {
-            Model = cm.Load<Model>("station");
+            Model = cm.Load<Model>("Models/station");
         }
 
         public override void Update(GameTime gameTime)

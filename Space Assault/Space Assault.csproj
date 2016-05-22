@@ -47,8 +47,8 @@
     <Compile Include="States\HighScoreList.cs" />
     <Compile Include="States\MainMenu.cs" />
     <Compile Include="Utils\Camera.cs" />
-    <Compile Include="Utils\IDrawable.cs" />
-    <Compile Include="Utils\IUpdateable.cs" />
+    <Compile Include="States\IDrawable.cs" />
+    <Compile Include="States\IUpdateable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

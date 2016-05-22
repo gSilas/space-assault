@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,13 +22,13 @@ namespace Space_Assault
             OptionsMenu,
             HighScoreList
         }
-		//Current GameState has to be initialized
+		//Current GameStates,Drawables,Updateables has to be initialized
         //public IGameState _currentGameState;
         public GraphicsDeviceManager gm;
         public ContentManager cm;
         private Camera _camera;
 
-        public Stack<IGameState> _currentGameStates;
+        public List<IGameState> _currentGameStates;
         public List<IDrawableState> _activeDrawable;
         public List<IUpdateableState> _activeUpdateable; 
 
@@ -36,7 +37,7 @@ namespace Space_Assault
         {
             gm = graphics;
             cm = content;
-            _currentGameStates = new Stack<IGameState>();
+            _currentGameStates = new List<IGameState>();
             _activeDrawable = new List<IDrawableState>();
             _activeUpdateable = new List<IUpdateableState>();
             Switch(EGameStates.MainMenu);
@@ -44,14 +45,12 @@ namespace Space_Assault
         }
 
 		//switches between GameStates
-        protected void Switch(EGameStates nextState)
+        public void Switch(EGameStates nextState)
         {
             switch (nextState)
             {
                 case EGameStates.MainMenu:
                     MainMenu mainMenu = new MainMenu(this);
-                    mainMenu.Initialize();
-                    mainMenu.LoadContent();
                     Push(mainMenu);
                     break;
 				case EGameStates.EndlessModeScene:
@@ -64,33 +63,37 @@ namespace Space_Assault
                     break;
                 case EGameStates.HighScoreList:
                     HighScoreList highScore = new HighScoreList();
-                    highScore.Initialize();
                     Push(highScore);
                     break;
             }
 
         }
 
-        protected void Pop()
+        //Removes an Gamestate from Draw and Update vectors
+        public void Pop(IGameState gameState)
         {
-            IGameState state = _currentGameStates.Pop();
-            if (state is IUpdateableState)
+            if (gameState is IUpdateableState)
             {
-                IUpdateableState updateable = state as IUpdateableState;
+                IUpdateableState updateable = gameState as IUpdateableState;
                 _activeUpdateable.Remove(updateable);
             }
-            if (state is IDrawableState)
+            if (gameState is IDrawableState)
             {
-                IDrawableState drawable = state as IDrawableState;
+                IDrawableState drawable = gameState as IDrawableState;
                 _activeDrawable.Remove(drawable);
             }
         }
 
-
-        protected void Push(IGameState gameState)
+        //Adds a Gamestate to the list of initialized Gamestates and adds it to update and draw vectors
+        public void Push(IGameState gameState)
         {
-            _currentGameStates.Push(gameState);
-
+            if (!_currentGameStates.Contains(gameState))
+            {
+                gameState.Initialize();
+                gameState.LoadContent();
+                _currentGameStates.Add(gameState);
+            }
+                
             if (gameState is IUpdateableState)
             {
                 IUpdateableState updateable = gameState as IUpdateableState;
