@@ -1,8 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Space_Assault.States
 {
-    public interface IDrawableState
+    public interface IDrawableState : IEquatable<IDrawableState>
     {
         /*
          * This interface implemnts a Draw function into a GameState

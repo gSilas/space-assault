@@ -38,3 +38,9 @@
 /processorParam:Quality=Best
 /build:Sounds/stationSound.wav
 
+#begin Sounds/dark_click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/dark_click.wav
+

@@ -12,6 +12,7 @@ namespace Space_Assault.States
 {
     class MainMenu : IGameState, IUpdateableState, IDrawableState
     {
+
         //#################################
         // Set Variables
         //#################################
@@ -20,6 +21,7 @@ namespace Space_Assault.States
         private Controller _sc;
         private GraphicsDeviceManager _gm;
         private ContentManager _cm;
+        private SoundEffectInstance _stationSound;
 
         // Sound
         List<SoundEffect> soundEffects;
@@ -40,34 +42,48 @@ namespace Space_Assault.States
             _gm = _sc.gm;
             _cm = _sc.cm;
             soundEffects = new List<SoundEffect>();
-            _camera = new Camera(800f/480f,10000f, MathHelper.ToRadians(45),1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.UnitY);
-            _station = new Station(Vector3.Zero,0);
-
+            _camera = new Camera(800f / 480f, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.UnitY);
+            _station = new Station(Vector3.Zero, 0);
+            IsStopped = false;
         }
 
         //#################################
         // LoadContent - Function
         //#################################
         public void LoadContent()
-        {       
+        {
             // Sound
             soundEffects.Add(_cm.Load<SoundEffect>("Sounds/stationSound"));
-            
+
             // Play that can be manipulated after the fact
-            var instance = soundEffects[0].CreateInstance();
-            instance.IsLooped = true;
-            instance.Play();
+            _stationSound = soundEffects[0].CreateInstance();
+            _stationSound.IsLooped = true;
+            _stationSound.Play();
 
             _station.LoadContent(_cm);
-                    
+
         }
 
+        public void Kill()
+        {
+            IsStopped = true;
+            _stationSound.Stop();
+        }
+
+        public void Resume()
+        {
+            if (IsStopped)
+            {
+                _stationSound.Resume();
+                IsStopped = false;
+            }
+        }
         //#################################
         // Draw - Function
         //#################################
         public void Draw(GameTime elapsedTime)
         {
-           _station.Draw(_camera);
+            _station.Draw(_camera);
         }
 
         //#################################
@@ -84,11 +100,33 @@ namespace Space_Assault.States
             {
                 _sc.Pop(this);
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                _sc.Push(Controller.EGameStates.EndlessModeScene);
+                _sc.Pop(this);
+            }
         }
+
+        public bool IsStopped { get; set; }
 
         public void Initialize()
         {
             _station.Initialize();
+        }
+
+        public bool Equals(IGameState other)
+        {
+            return other.GetType() == this.GetType();
+        }
+
+        public bool Equals(IUpdateable other)
+        {
+            return other.GetType() == this.GetType();
+        }
+
+        public bool Equals(IDrawableState other)
+        {
+            return other.GetType() == this.GetType();
         }
     }
 }

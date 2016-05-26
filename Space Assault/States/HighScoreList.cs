@@ -28,6 +28,8 @@ namespace Space_Assault.States
         string filePath;
         HighscoreEntity[] scoresList;
 
+        public bool IsStopped { get; set; }
+
         public void Initialize()
         {
             listLength = 10;
@@ -141,6 +143,21 @@ namespace Space_Assault.States
         public void LoadContent()
         {
             
+        }
+
+        public void Kill()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Resume()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Equals(IGameState other)
+        {
+            return other.GetType() == typeof (HighScoreList);
         }
     }
 }

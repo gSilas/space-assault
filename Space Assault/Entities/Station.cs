@@ -10,6 +10,7 @@ namespace Space_Assault.Entities
         private float _angle;
         private bool _up;
 
+
         public Station(Vector3 position, float angle)
         {
             _angle = angle;

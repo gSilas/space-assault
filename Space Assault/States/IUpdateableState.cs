@@ -1,8 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Space_Assault.States
 {
-    public interface IUpdateableState
+    public interface IUpdateableState : IEquatable<IUpdateable>
     {
         /*
         * This interface implements an Update function into a GameState
