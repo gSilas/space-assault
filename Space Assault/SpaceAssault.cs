@@ -31,6 +31,9 @@ namespace Space_Assault
             Window.Title = "Space Assault";
             Window.AllowAltF4 = true;
             IsMouseVisible = true;
+            graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.ApplyChanges();
 
             // TODO: Add your initialization logic here
             controller = new Controller(graphics, Content);
