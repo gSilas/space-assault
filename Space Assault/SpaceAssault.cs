@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,7 +11,8 @@ namespace Space_Assault
     public class SpaceAssault : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private SpriteBatch spriteBatch;
+        private SpriteFont font;
         private Controller controller;
 
         public SpaceAssault()
@@ -37,6 +39,9 @@ namespace Space_Assault
 
             // TODO: Add your initialization logic here
             controller = new Controller(graphics, Content);
+
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
             base.Initialize();
         }
 
@@ -46,10 +51,7 @@ namespace Space_Assault
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            font = Content.Load<SpriteFont>("Fonts/Arial");
         }
 
         /// <summary>
@@ -85,7 +87,11 @@ namespace Space_Assault
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            spriteBatch.DrawString(font, ((int)(1/gameTime.ElapsedGameTime.TotalSeconds)).ToString(), new Vector2(3, 3), Color.LightGreen);
             controller.Draw(gameTime);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }

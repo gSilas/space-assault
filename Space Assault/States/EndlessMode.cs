@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Space_Assault.Entities;
 using Space_Assault.Utils;
+using System.Diagnostics;
 
 namespace Space_Assault.States
 {
@@ -50,7 +51,7 @@ namespace Space_Assault.States
 
             _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
             IsStopped = false;
-            Console.WriteLine("DisplayModeXY: " + "{" + _gm.PreferredBackBufferWidth.ToString() + " ;" +  _gm.PreferredBackBufferHeight.ToString() + "}");
+            Debug.WriteLine("DisplayModeXY: " + "{" + _gm.PreferredBackBufferWidth.ToString() + " ;" +  _gm.PreferredBackBufferHeight.ToString() + "}");
             
         }
 
@@ -70,6 +71,8 @@ namespace Space_Assault.States
 
             _station.LoadContent(_cm);
             _drone.LoadContent(_cm);
+
+            
 
 
         }

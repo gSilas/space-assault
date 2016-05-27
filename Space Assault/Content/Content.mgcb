@@ -94,3 +94,9 @@
 /processorParam:TextureFormat=DxtCompressed
 /build:Models\drone_placeholder.FBX
 
+#begin Fonts\Arial.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts\Arial.spritefont
+
