@@ -15,6 +15,12 @@ namespace Space_Assault.Utils
         private Vector3 _target;
         private Vector3 _upVector;
 
+        public Vector3 Position
+        {
+            get { return _position; }
+            set { _position = value; }
+        }
+
         public Camera(float aspectRatio, float farClipPlane, float fieldOfView, float nearClipPlane, Vector3 position, Vector3 target, Vector3 upVector) : this()
         {
             _aspectRatio = aspectRatio;
