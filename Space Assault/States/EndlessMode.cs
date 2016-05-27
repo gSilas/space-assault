@@ -49,22 +49,23 @@ namespace Space_Assault.States
                 IsStopped = false;
             }
 
-            //#################################
-            // LoadContent - Function
-            //#################################
-            public void LoadContent()
-            {
-                // Sound
-                soundEffects.Add(_cm.Load<SoundEffect>("Sounds/stationSound"));
+        //#################################
+        // LoadContent - Function
+        //#################################
+        public void LoadContent()
+        {
+            // Sound
+            soundEffects.Add(_cm.Load<SoundEffect>("Sounds/stationSound"));
 
-                // Play that can be manipulated after the fact
-                _stationSound = soundEffects[0].CreateInstance();
-                _stationSound.IsLooped = true;
-                _stationSound.Play();
+            // Play that can be manipulated after the fact
+            _stationSound = soundEffects[0].CreateInstance();
+            _stationSound.Volume = 0.1f;
+            _stationSound.IsLooped = true;
+            _stationSound.Play();
 
-                _station.LoadContent(_cm);
-                _asteroid.LoadContent(_cm);
-                
+            _station.LoadContent(_cm);
+            _asteroid.LoadContent(_cm);
+
 
         }
 
@@ -88,10 +89,10 @@ namespace Space_Assault.States
         // Draw - Function
         //#################################
         public void Draw(GameTime elapsedTime)
-            {
-                _station.Draw(_camera);
-                _asteroid.Draw(_camera);
-            }
+        {
+            _station.Draw(_camera);
+            _asteroid.Draw(_camera);
+        }
 
         //#################################
         // Update - Function

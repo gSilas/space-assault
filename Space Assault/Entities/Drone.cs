@@ -6,7 +6,6 @@ namespace Space_Assault.Entities
 {
     class Drone : AEntity
     {
-        private float _angle;
 
         public Drone(Vector3 position, float angle)
         {
