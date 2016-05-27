@@ -27,9 +27,9 @@ namespace Space_Assault.States
         List<SoundEffect> soundEffects;
 
         // 3D Model
+        private List<Asteroid> _asteroidList;
         private Camera _camera;
         private Station _station;
-        private Asteroid _asteroid;
         private Drone _drone;
         private SpriteBatch _spriteBatch;
         private Texture2D _background;
@@ -46,9 +46,9 @@ namespace Space_Assault.States
             soundEffects = new List<SoundEffect>();
 
             _station = new Station(new Vector3(-20, 0, 20), 0);
-            _asteroid = new Asteroid(Vector3.Zero, 0, Vector3.Forward, new Vector3(0.5f, 0.5f, 0.5f));
-
-            _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _asteroid.Position, Vector3.Up);
+            _drone = new Drone(Vector3.Zero, 0, Vector3.Forward, new Vector3(0.5f, 0.5f, 0.5f));
+            _asteroidList = new List<Asteroid>();
+            _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
             IsStopped = false;
             Console.WriteLine("DisplayModeXY: " + "{" + _gm.PreferredBackBufferWidth.ToString() + " ;" +  _gm.PreferredBackBufferHeight.ToString() + "}");
             
@@ -69,7 +69,7 @@ namespace Space_Assault.States
             _stationSound.Play();
 
             _station.LoadContent(_cm);
-            _asteroid.LoadContent(_cm);
+            _drone.LoadContent(_cm);
 
 
         }
@@ -96,7 +96,11 @@ namespace Space_Assault.States
         public void Draw(GameTime elapsedTime)
         {
             _station.Draw(_camera);
-            _asteroid.Draw(_camera);
+            _drone.Draw(_camera);
+            foreach (var asteroid in _asteroidList)
+            {
+                asteroid.Draw(_camera);
+            }
             Console.WriteLine(elapsedTime.ElapsedGameTime.ToString());
         }
 
@@ -108,12 +112,15 @@ namespace Space_Assault.States
         {
             //3D Model
             _station.Update(elapsedTime);
-            _asteroid.Update(elapsedTime);
+            _drone.Update(elapsedTime);
             //_drone.Update(elapsedTime);
 
             Vector3 windowMidpoint = new Vector3(_gm.PreferredBackBufferWidth / 2.0f, 0, _gm.PreferredBackBufferHeight / 2.0f);
-
-            _asteroid.Move(Mousehandler.Position - windowMidpoint);
+            foreach (var asteroid in _asteroidList)
+            {
+                asteroid.Update(elapsedTime);
+            }
+            _drone.Move(Mousehandler.Position - windowMidpoint);
             Console.WriteLine(Mousehandler.Position.ToString() + " ~~ CameraTarget: " + _camera.Position.ToString());
             //Pop test
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -124,7 +131,7 @@ namespace Space_Assault.States
             {
                 _sc.Push(Controller.EGameStates.EndlessModeScene);
             }
-            _camera.Target = _asteroid.Position;
+            _camera.Target = _drone.Position;
             _camera.Position = _camera.Target + new Vector3(0, 500, 500);
         }
 
@@ -133,8 +140,17 @@ namespace Space_Assault.States
         public void Initialize()
         {
             _station.Initialize();
-            _asteroid.Initialize();
-            //_drone.Initialize();
+            _drone.Initialize();
+            int i = 0;
+            while (i <= 20)
+            {
+                Asteroid ast = new Asteroid(new Vector3(i*20,0,i*35),0,Vector3.Forward, 0.5f);
+                ast.Initialize();
+                ast.LoadContent(_cm);
+                _asteroidList.Add(ast);
+                
+                i++;
+            }
         }
 
         public bool Equals(IGameState other)

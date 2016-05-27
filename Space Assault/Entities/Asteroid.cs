@@ -10,9 +10,9 @@ namespace Space_Assault.Entities
         private float _angle;
         private bool _up;
         private Vector3 _direction;
-        private Vector3 _speed;
+        private float _speed;
 
-        public Asteroid(Vector3 position, float angle, Vector3 direction, Vector3 movespeed)
+        public Asteroid(Vector3 position, float angle, Vector3 direction, float movespeed)
         {
             _angle = angle;
             Position = position;
@@ -29,13 +29,6 @@ namespace Space_Assault.Entities
             _up = true;
         }
 
-        public void Move(Vector3 direction)
-        {
-            _direction = direction;
-            if(!(direction == Vector3.Zero)) _direction.Normalize();
-            _direction *= _speed;
-        }
-
         public override void LoadContent(ContentManager cm)
         {
             Model = cm.Load<Model>("Models/asteroid");
@@ -43,7 +36,7 @@ namespace Space_Assault.Entities
 
         public override void Update(GameTime gameTime)
         {
-            /*
+            
             _angle += 0.005f;
             if (Position.Y < 1 && _up)
                 Position += new Vector3(0, 0.002f, 0);
@@ -53,7 +46,7 @@ namespace Space_Assault.Entities
             {
                 Position -= new Vector3(0, 0.002f, 0);
                 _up = false;
-            }*/
+            }
             RotationMatrix = Matrix.Identity;
 
             Position += _direction;
