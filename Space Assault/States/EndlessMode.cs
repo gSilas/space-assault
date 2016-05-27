@@ -48,7 +48,7 @@ namespace Space_Assault.States
             _station = new Station(new Vector3(-20, 0, 20), 0);
             _drone = new Drone(new Vector3(-20,0,20));
 
-            _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _asteroid.Position, Vector3.Up);
+            _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
             IsStopped = false;
             Console.WriteLine("DisplayModeXY: " + "{" + _gm.PreferredBackBufferWidth.ToString() + " ;" +  _gm.PreferredBackBufferHeight.ToString() + "}");
             
