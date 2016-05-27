@@ -89,7 +89,7 @@ namespace Space_Assault
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            spriteBatch.DrawString(font, ((int)(1/gameTime.ElapsedGameTime.TotalSeconds)).ToString(), new Vector2(3, 3), Color.LightGreen);
+            spriteBatch.DrawString(font, (1/gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
             controller.Draw(gameTime);
             spriteBatch.End();
             base.Draw(gameTime);
