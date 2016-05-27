@@ -44,7 +44,7 @@ namespace Space_Assault.States
                 soundEffects = new List<SoundEffect>();
                 _camera = new Camera(800f / 480f, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.UnitY);
                 _station = new Station(Vector3.Zero, 0);
-                _asteroid = new Asteroid(Vector3.Zero, 0);
+            _asteroid = new Asteroid(Vector3.Zero, 0, new Vector3(1, 1, 1), new Vector3(-0.1f,0f, 00.1f));
                 IsStopped = false;
             }
 
