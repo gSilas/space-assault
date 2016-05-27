@@ -50,7 +50,7 @@ namespace Space_Assault.States
 
                 _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _asteroid.Position, Vector3.Up);
             IsStopped = false;
-            }
+        }
 
         //#################################
         // LoadContent - Function
@@ -108,7 +108,8 @@ namespace Space_Assault.States
             _asteroid.Update(elapsedTime);
             //_drone.Update(elapsedTime);
 
-            Vector3 windowMidpoint = new Vector3(_gm.PreferredBackBufferWidth/2.0f, 0, _gm.PreferredBackBufferHeight/2.0f);
+            Vector3 windowMidpoint = new Vector3(_gm.GraphicsDevice.DisplayMode.Width/2.0f, 0, _gm.GraphicsDevice.DisplayMode.Height/2.0f);
+            
             _asteroid.Move(Mousehandler.Position - windowMidpoint);
             Console.WriteLine(Mousehandler.Position.ToString() + " ~~ CameraTarget: " + _camera.Position.ToString());
             //Pop test
