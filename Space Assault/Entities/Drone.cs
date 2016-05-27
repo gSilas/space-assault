@@ -44,7 +44,7 @@ namespace Space_Assault.Entities
             */
         }
 
-        public void move()
+        public void turn(Vector3 direction)
         {
 
         }
