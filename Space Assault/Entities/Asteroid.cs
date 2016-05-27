@@ -10,6 +10,7 @@ namespace Space_Assault.Entities
         private float _angle;
         private bool _up;
         private Vector3 _direction;
+        private Vector3 _speed;
 
         public Asteroid(Vector3 position, float angle, Vector3 direction, Vector3 movespeed)
         {
@@ -20,12 +21,19 @@ namespace Space_Assault.Entities
 
             _direction = direction;
             _direction.Normalize();
-            _direction *= movespeed;
+            _speed = movespeed;
         }
 
         public override void Initialize()
         {
             _up = true;
+        }
+
+        public void Move(Vector3 direction)
+        {
+            _direction = direction;
+            _direction.Normalize();
+            _direction *= _speed;
         }
 
         public override void LoadContent(ContentManager cm)
