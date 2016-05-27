@@ -25,7 +25,7 @@ namespace Space_Assault.Entities
 
         public override void LoadContent(ContentManager cm)
         {
-            Model = cm.Load<Model>("Models/asteroid");
+            Model = cm.Load<Model>("Models/drone");
         }
 
         public override void Update(GameTime gameTime)
