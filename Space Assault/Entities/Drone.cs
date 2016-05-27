@@ -20,6 +20,7 @@ namespace Space_Assault.Entities
 
         public override void Initialize()
         {
+            RotationMatrix = Matrix.Identity;
         }
 
         public override void LoadContent(ContentManager cm)
