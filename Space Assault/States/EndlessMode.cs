@@ -46,7 +46,7 @@ namespace Space_Assault.States
             soundEffects = new List<SoundEffect>();
 
             _station = new Station(new Vector3(-20, 0, 20), 0);
-            _asteroid = new Asteroid(Vector3.Zero, 0, Vector3.Forward, new Vector3(0.5f, 0.5f, 0.5f));
+            _asteroid = new Asteroid(Vector3.Zero, 0, Vector3.Forward, 0.01f);
             _drone = new Drone(new Vector3(-20,0,20));
 
             _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _asteroid.Position, Vector3.Up);
@@ -114,9 +114,9 @@ namespace Space_Assault.States
             _asteroid.Update(elapsedTime);
             _drone.Update(elapsedTime);
 
-            Vector3 windowMidpoint = new Vector3(_gm.PreferredBackBufferWidth / 2.0f, 0, _gm.PreferredBackBufferHeight / 2.0f);
+            //Vector3 windowMidpoint = new Vector3(_gm.PreferredBackBufferWidth / 2.0f, 0, _gm.PreferredBackBufferHeight / 2.0f);
 
-            _asteroid.Move(Mousehandler.Position - windowMidpoint);
+            //_asteroid.Move(Mousehandler.Position - windowMidpoint);
             Console.WriteLine(Mousehandler.Position.ToString() + " ~~ CameraTarget: " + _camera.Position.ToString());
             //Pop test
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -127,7 +127,7 @@ namespace Space_Assault.States
             {
                 _sc.Push(Controller.EGameStates.EndlessModeScene);
             }
-            _camera.Target = _asteroid.Position;
+            _camera.Target = _drone.Position;
             _camera.Position = _camera.Target + new Vector3(0, 300, 300);
         }
 
