@@ -35,21 +35,23 @@ namespace Space_Assault.States
         private Texture2D _background;
 
 
-            //#################################
-            // Constructor
-            //#################################
-            public EndlessMode(Controller controller)
-            {
-                _sc = controller;
-                _gm = _sc.gm;
-                _cm = _sc.cm;
-                soundEffects = new List<SoundEffect>();
-               
-                _station = new Station(new Vector3(-20,0,20), 0);
-                _asteroid = new Asteroid(Vector3.Zero, 0, Vector3.Forward, new Vector3(0.5f, 0.5f, 0.5f));
+        //#################################
+        // Constructor
+        //#################################
+        public EndlessMode(Controller controller)
+        {
+            _sc = controller;
+            _gm = _sc.gm;
+            _cm = _sc.cm;
+            soundEffects = new List<SoundEffect>();
 
-                _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _asteroid.Position, Vector3.Up);
+            _station = new Station(new Vector3(-20, 0, 20), 0);
+            _asteroid = new Asteroid(Vector3.Zero, 0, Vector3.Forward, new Vector3(0.5f, 0.5f, 0.5f));
+
+            _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _asteroid.Position, Vector3.Up);
             IsStopped = false;
+            Console.WriteLine("DisplayModeXY: " + "{" + _gm.PreferredBackBufferWidth.ToString() + " ;" +  _gm.PreferredBackBufferHeight.ToString() + "}");
+            
         }
 
         //#################################
@@ -108,8 +110,8 @@ namespace Space_Assault.States
             _asteroid.Update(elapsedTime);
             //_drone.Update(elapsedTime);
 
-            Vector3 windowMidpoint = new Vector3(_gm.GraphicsDevice.DisplayMode.Width/2.0f, 0, _gm.GraphicsDevice.DisplayMode.Height/2.0f);
-            
+            Vector3 windowMidpoint = new Vector3(_gm.GraphicsDevice.DisplayMode.Width / 2.0f, 0, _gm.GraphicsDevice.DisplayMode.Height / 2.0f);
+
             _asteroid.Move(Mousehandler.Position - windowMidpoint);
             Console.WriteLine(Mousehandler.Position.ToString() + " ~~ CameraTarget: " + _camera.Position.ToString());
             //Pop test
