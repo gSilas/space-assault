@@ -46,7 +46,6 @@ namespace Space_Assault.States
             soundEffects = new List<SoundEffect>();
 
             _station = new Station(new Vector3(-20, 0, 20), 0);
-            _asteroid = new Asteroid(Vector3.Zero, 0, Vector3.Forward, 0.01f);
             _drone = new Drone(new Vector3(-20,0,20));
 
             _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _asteroid.Position, Vector3.Up);
@@ -70,7 +69,6 @@ namespace Space_Assault.States
             _stationSound.Play();
 
             _station.LoadContent(_cm);
-            _asteroid.LoadContent(_cm);
             _drone.LoadContent(_cm);
 
 
@@ -98,7 +96,6 @@ namespace Space_Assault.States
         public void Draw(GameTime elapsedTime)
         {
             _station.Draw(_camera);
-            _asteroid.Draw(_camera);
             _drone.Draw(_camera);
             Console.WriteLine(elapsedTime.ElapsedGameTime.ToString());
         }
@@ -111,7 +108,6 @@ namespace Space_Assault.States
         {
             //3D Model
             _station.Update(elapsedTime);
-            _asteroid.Update(elapsedTime);
             _drone.Update(elapsedTime);
 
             //Vector3 windowMidpoint = new Vector3(_gm.PreferredBackBufferWidth / 2.0f, 0, _gm.PreferredBackBufferHeight / 2.0f);
@@ -136,7 +132,6 @@ namespace Space_Assault.States
         public void Initialize()
         {
             _station.Initialize();
-            _asteroid.Initialize();
             _drone.Initialize();
         }
 
