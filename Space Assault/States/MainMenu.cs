@@ -22,6 +22,7 @@ namespace Space_Assault.States
         private GraphicsDeviceManager _gm;
         private ContentManager _cm;
         private SoundEffectInstance _stationSound;
+        Button btnPlay;
 
         // Sound
         List<SoundEffect> soundEffects;
@@ -52,6 +53,9 @@ namespace Space_Assault.States
         //#################################
         public void LoadContent()
         {
+            //Button
+            //btnPlay = new Button(_cm.Load<Texture2D>('Button'), _gm.GraphicsDevice);
+
             // Sound
             soundEffects.Add(_cm.Load<SoundEffect>("Sounds/stationSound"));
 
@@ -129,5 +133,7 @@ namespace Space_Assault.States
         {
             return other.GetType() == this.GetType();
         }
+
+
     }
 }
