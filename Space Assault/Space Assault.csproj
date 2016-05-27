@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Entities\AEntity.cs" />
     <Compile Include="Entities\Asteroid.cs" />
+    <Compile Include="Entities\Drone.cs" />
     <Compile Include="Entities\Station.cs" />
     <Compile Include="SpaceAssault.cs" />
     <Compile Include="Program.cs" />
