@@ -43,10 +43,5 @@ namespace Space_Assault.Entities
                 * Matrix.CreateRotationZ(MathHelper.ToRadians(rotationXYZ.Z));
             */
         }
-
-        public void turn(Vector3 direction)
-        {
-
-        }
     }
 }
