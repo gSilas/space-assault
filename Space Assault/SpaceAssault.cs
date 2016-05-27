@@ -31,8 +31,8 @@ namespace Space_Assault
             Window.Title = "Space Assault";
             Window.AllowAltF4 = true;
             IsMouseVisible = true;
-            graphics.PreferredBackBufferHeight = 540;
-            graphics.PreferredBackBufferWidth = 960;
+            graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferWidth = 1366;
             graphics.ApplyChanges();
 
             // TODO: Add your initialization logic here

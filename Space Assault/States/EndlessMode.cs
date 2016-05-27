@@ -47,6 +47,7 @@ namespace Space_Assault.States
 
             _station = new Station(new Vector3(-20, 0, 20), 0);
             _asteroid = new Asteroid(Vector3.Zero, 0, Vector3.Forward, new Vector3(0.5f, 0.5f, 0.5f));
+            _drone = new Drone(new Vector3(-20,0,20));
 
             _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _asteroid.Position, Vector3.Up);
             IsStopped = false;
@@ -70,6 +71,7 @@ namespace Space_Assault.States
 
             _station.LoadContent(_cm);
             _asteroid.LoadContent(_cm);
+            _drone.LoadContent(_cm);
 
 
         }
@@ -97,6 +99,7 @@ namespace Space_Assault.States
         {
             _station.Draw(_camera);
             _asteroid.Draw(_camera);
+            _drone.Draw(_camera);
             Console.WriteLine(elapsedTime.ElapsedGameTime.ToString());
         }
 
@@ -109,7 +112,7 @@ namespace Space_Assault.States
             //3D Model
             _station.Update(elapsedTime);
             _asteroid.Update(elapsedTime);
-            //_drone.Update(elapsedTime);
+            _drone.Update(elapsedTime);
 
             Vector3 windowMidpoint = new Vector3(_gm.PreferredBackBufferWidth / 2.0f, 0, _gm.PreferredBackBufferHeight / 2.0f);
 
@@ -125,7 +128,7 @@ namespace Space_Assault.States
                 _sc.Push(Controller.EGameStates.EndlessModeScene);
             }
             _camera.Target = _asteroid.Position;
-            _camera.Position = _camera.Target + new Vector3(0, 500, 500);
+            _camera.Position = _camera.Target + new Vector3(0, 300, 300);
         }
 
         public bool IsStopped { get; set; }
@@ -134,7 +137,7 @@ namespace Space_Assault.States
         {
             _station.Initialize();
             _asteroid.Initialize();
-            //_drone.Initialize();
+            _drone.Initialize();
         }
 
         public bool Equals(IGameState other)
