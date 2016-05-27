@@ -9,7 +9,7 @@ namespace Space_Assault.Entities
     public abstract  class AEntity
     {
         protected Model Model;
-        protected Vector3 Position;
+        public Vector3 Position;
         protected Matrix RotationMatrix;
 
         public abstract void Update(GameTime gameTime);
