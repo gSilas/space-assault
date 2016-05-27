@@ -6,6 +6,11 @@ namespace Space_Assault.Entities
 {
     class Drone : AEntity
     {
+        private Vector3 _direction;
+        private Vector3 _speed;
+        private Vector3 rotationXYZ;
+        private Matrix rotationMatrix;
+
 
         public Drone(Vector3 position, float angle)
         {
@@ -25,6 +30,21 @@ namespace Space_Assault.Entities
         public override void Update(GameTime gameTime)
         {
             //mousehandler stuff
+        }
+
+        public void turn(Vector3 direction)
+        {
+            rotationXYZ.Normalize();
+            rotationMatrix = Matrix.Identity;
+
+            rotationMatrix *= Matrix.CreateRotationX(MathHelper.ToRadians(rotationXYZ.X))
+                * Matrix.CreateRotationY(MathHelper.ToRadians(rotationXYZ.Y))
+                * Matrix.CreateRotationZ(MathHelper.ToRadians(rotationXYZ.Z));
+        }
+
+        public void move()
+        {
+
         }
     }
 }
