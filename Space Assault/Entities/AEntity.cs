@@ -26,7 +26,7 @@ namespace Space_Assault.Entities
                 {
                     effect.EnableDefaultLighting();
                     effect.PreferPerPixelLighting = true;
-                    effect.World = RotationMatrix*Matrix.CreateWorld(Position, Vector3.UnitX, Vector3.UnitY);
+                    effect.World = RotationMatrix*Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
                     effect.View = camera.ViewMatrix;
                     effect.Projection = camera.ProjectionMatrix;
                 }
