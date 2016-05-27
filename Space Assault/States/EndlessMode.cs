@@ -97,6 +97,7 @@ namespace Space_Assault.States
         {
             _station.Draw(_camera);
             _asteroid.Draw(_camera);
+            Console.WriteLine(elapsedTime.ElapsedGameTime.ToString());
         }
 
         //#################################
