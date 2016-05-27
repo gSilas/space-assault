@@ -106,8 +106,10 @@ namespace Space_Assault.States
             _station.Update(elapsedTime);
             _asteroid.Update(elapsedTime);
             //_drone.Update(elapsedTime);
-            _asteroid.Move(Mousehandler.Position);
-            Console.WriteLine(Mousehandler.Position.ToString());
+
+            Vector3 windowMidpoint = new Vector3(_gm.PreferredBackBufferWidth/2.0f, 0, _gm.PreferredBackBufferHeight/2.0f);
+            _asteroid.Move(Mousehandler.Position - windowMidpoint);
+            Console.WriteLine(Mousehandler.Position.ToString() + " ~~ CameraTarget: " + _camera.Target.ToString());
             //Pop test
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
