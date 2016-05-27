@@ -57,6 +57,7 @@ namespace Space_Assault.States
 
             // Play that can be manipulated after the fact
             _stationSound = soundEffects[0].CreateInstance();
+            _stationSound.Volume = 0.1f;
             _stationSound.IsLooped = true;
             _stationSound.Play();
 

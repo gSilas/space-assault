@@ -23,7 +23,7 @@ namespace Space_Assault.Utils
             _nearClipPlane = nearClipPlane;
             _position = position;
             _target = target;
-            this._upVector = upVector;
+            _upVector = upVector;
         }
 
         public Matrix ViewMatrix
