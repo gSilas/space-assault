@@ -42,7 +42,7 @@ namespace Space_Assault.States
             _gm = _sc.gm;
             _cm = _sc.cm;
             soundEffects = new List<SoundEffect>();
-            _camera = new Camera(800f / 480f, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.Up);
+            _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.UnitY);
             _station = new Station(Vector3.Zero, 0);
             IsStopped = false;
         }

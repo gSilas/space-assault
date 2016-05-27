@@ -9,7 +9,7 @@ namespace Space_Assault.Entities
     {
         private float _angle;
         private bool _up;
-        Vector3 _direction;
+        private Vector3 _direction;
 
         public Asteroid(Vector3 position, float angle, Vector3 direction, Vector3 movespeed)
         {
