@@ -32,7 +32,7 @@ namespace Space_Assault.Entities
         public void Move(Vector3 direction)
         {
             _direction = direction;
-            _direction.Normalize();
+            if(!(direction == Vector3.Zero)) _direction.Normalize();
             _direction *= _speed;
         }
 
@@ -43,6 +43,7 @@ namespace Space_Assault.Entities
 
         public override void Update(GameTime gameTime)
         {
+            /*
             _angle += 0.005f;
             if (Position.Y < 1 && _up)
                 Position += new Vector3(0, 0.002f, 0);
@@ -52,7 +53,7 @@ namespace Space_Assault.Entities
             {
                 Position -= new Vector3(0, 0.002f, 0);
                 _up = false;
-            }
+            }*/
             RotationMatrix = Matrix.CreateRotationY(_angle) * Matrix.CreateTranslation(Position);
 
             Position += _direction;
