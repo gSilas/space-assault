@@ -43,7 +43,7 @@ namespace Space_Assault.States
                 _cm = _sc.cm;
                 soundEffects = new List<SoundEffect>();
                 _camera = new Camera(800f / 480f, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.UnitY);
-                _station = new Station(Vector3.Zero, 0);
+                _station = new Station(new Vector3(-20,0,20), 0);
                 _asteroid = new Asteroid(Vector3.Zero, 0);
                 IsStopped = false;
             }
@@ -53,14 +53,14 @@ namespace Space_Assault.States
             //#################################
             public void LoadContent()
             {
-                /*/ Sound
+                // Sound
                 soundEffects.Add(_cm.Load<SoundEffect>("Sounds/stationSound"));
 
                 // Play that can be manipulated after the fact
                 _stationSound = soundEffects[0].CreateInstance();
                 _stationSound.IsLooped = true;
                 _stationSound.Play();
-                */
+
                 _station.LoadContent(_cm);
                 _asteroid.LoadContent(_cm);
                 
@@ -88,7 +88,7 @@ namespace Space_Assault.States
         //#################################
         public void Draw(GameTime elapsedTime)
             {
-                //_station.Draw(_camera);
+                _station.Draw(_camera);
                 _asteroid.Draw(_camera);
             }
 
