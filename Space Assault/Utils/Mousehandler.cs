@@ -9,7 +9,7 @@ namespace Space_Assault.Utils
     {
         public static Vector3 Position 
         {
-            get { return new Vector3(Mouse.GetState().Position.X, Mouse.GetState().Position.Y,0); }
+            get { return new Vector3(Mouse.GetState().Position.X,0, Mouse.GetState().Position.Y); }
         }
     }
 }

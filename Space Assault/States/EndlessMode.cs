@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -105,6 +106,7 @@ namespace Space_Assault.States
             _asteroid.Update(elapsedTime);
             //_drone.Update(elapsedTime);
             _asteroid.Move(Mousehandler.Position);
+            Console.WriteLine(Mousehandler.Position.ToString());
             //Pop test
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
