@@ -100,7 +100,6 @@ namespace Space_Assault.States
         {
             _station.Draw(_camera);
             _drone.Draw(_camera);
-            Console.WriteLine(elapsedTime.ElapsedGameTime.ToString());
         }
 
         //#################################
