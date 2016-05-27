@@ -39,7 +39,7 @@ namespace Space_Assault.Entities
                 Position -= new Vector3(0, 0.002f, 0);
                 _up = false;
             }
-            RotationMatrix = Matrix.CreateRotationY(_angle) * Matrix.CreateTranslation(Position);
+            RotationMatrix = Matrix.CreateRotationY(_angle);
         }
     }
 }

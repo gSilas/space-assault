@@ -46,8 +46,8 @@ namespace Space_Assault.States
             _cm = _sc.cm;
             soundEffects = new List<SoundEffect>();
 
-            _station = new Station(new Vector3(-20, 0, 20), 0);
-            _drone = new Drone(new Vector3(-20,0,20));
+            _station = new Station(new Vector3(0, 0, 0), 0);
+            _drone = new Drone(new Vector3(0,0,20));
 
             _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
             IsStopped = false;
@@ -71,9 +71,6 @@ namespace Space_Assault.States
 
             _station.LoadContent(_cm);
             _drone.LoadContent(_cm);
-
-            
-
 
         }
 
@@ -112,10 +109,8 @@ namespace Space_Assault.States
             _station.Update(elapsedTime);
             _drone.Update(elapsedTime);
 
-            Vector3 windowMidpoint = new Vector3(_gm.PreferredBackBufferWidth / 2.0f, 0, _gm.PreferredBackBufferHeight / 2.0f);
-
-            _drone.turn(Mousehandler.Position - windowMidpoint);
-            Console.WriteLine(Mousehandler.Position.ToString() + " ~~ CameraTarget: " + _camera.Position.ToString());
+            _drone.turn(new Vector3(_gm.PreferredBackBufferWidth / 2.0f, 0, _gm.PreferredBackBufferHeight / 2.0f)- Mousehandler.Position);
+            //Console.WriteLine(Mousehandler.Position.ToString() + " ~~ CameraTarget: " + _camera.Position.ToString());
             //Pop test
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
@@ -126,7 +121,7 @@ namespace Space_Assault.States
                 _sc.Push(Controller.EGameStates.EndlessModeScene);
             }
             _camera.Target = _drone.Position;
-            _camera.Position = _camera.Target + new Vector3(0, 300, 300);
+            _camera.Position = _camera.Target + new Vector3(0, 500, 500);
         }
 
         public bool IsStopped { get; set; }
