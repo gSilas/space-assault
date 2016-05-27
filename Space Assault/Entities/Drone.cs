@@ -29,8 +29,6 @@ namespace Space_Assault.Entities
         public override void Update(GameTime gameTime)
         {
             //mousehandler stuff
-
         }
-
     }
 }
