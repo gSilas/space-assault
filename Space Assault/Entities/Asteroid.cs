@@ -9,7 +9,7 @@ namespace Space_Assault.Entities
     {
         private float _angle;
         private bool _up;
-        Vector3 direction;
+        Vector3 _direction;
 
         public Asteroid(Vector3 position, float angle, Vector3 direction, Vector3 movespeed)
         {
@@ -18,9 +18,9 @@ namespace Space_Assault.Entities
             //kolision später
             //worldMatrix = Matrix.CreateWorld(base.Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(0.05f);
 
-            this.direction = direction;
-            this.direction.Normalize();
-            this.direction *= movespeed;
+            _direction = direction;
+            _direction.Normalize();
+            _direction *= movespeed;
         }
 
         public override void Initialize()
@@ -47,7 +47,7 @@ namespace Space_Assault.Entities
             }
             RotationMatrix = Matrix.CreateRotationY(_angle) * Matrix.CreateTranslation(Position);
 
-            Position += direction;
+            Position += _direction;
         }
     }
 }
