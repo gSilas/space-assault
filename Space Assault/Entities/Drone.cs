@@ -30,7 +30,7 @@ namespace Space_Assault.Entities
         {
             movementWasTrue = false;
             RotationMatrix = Matrix.Identity;
-            _turnSpeed = 50.0f;
+            _turnSpeed = 10.0f;
             _moveSpeed = 1.0f;
             health = 100;
             armor = 100;
@@ -56,23 +56,25 @@ namespace Space_Assault.Entities
         public override void Update(GameTime gameTime)
         {
 
+            //forward movement
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                Position -= RotationMatrix.Forward * _moveSpeed;
+                if (_moveSpeedModifier < _moveSpeed) _moveSpeedModifier += 0.04f;
+                else _moveSpeedModifier = _moveSpeed;
+
+                Position -= RotationMatrix.Forward * _moveSpeedModifier;
                 movementWasTrue = true;
+
             }
             else if (movementWasTrue == true)
             {
-                if (_moveSpeedModifier < _moveSpeed)
+                if (_moveSpeedModifier > 0.0f)
                 {
-                    Position -= RotationMatrix.Forward * (_moveSpeed - _moveSpeedModifier);
-                    _moveSpeedModifier += 0.02f;
+
+                    Position -= RotationMatrix.Forward * _moveSpeedModifier;
+                    _moveSpeedModifier -= 0.02f;
                 }
-                else
-                {
-                    movementWasTrue = false;
-                    _moveSpeedModifier = 0;
-                }
+                else movementWasTrue = false;
             }
 
             //TODO: health, armor update
@@ -85,16 +87,14 @@ namespace Space_Assault.Entities
             for (float i = 0.5f; i < _turnSpeed; i++)
             {
                 vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
-                Console.WriteLine(vectorDirection);
                 if (vectorDirection > 0.01)
                 {
                     //turn left
-                    Console.Write("   ~~ left");
                     RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.5f));
                 }
                 else if (vectorDirection < -0.01)
                 {
-                    Console.Write("   ~~ right");
+                    //turn right
                     RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
                 }
             }
