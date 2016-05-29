@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 
 /// <summary>
 ///  Movement, Schießen, Health, Sterben, neu Spawnen.
@@ -18,6 +20,8 @@ namespace Space_Assault.Entities
         private float health;
         private float armor;
         private bool movementWasTrue;
+        private SoundEffectInstance _droneMoveSound;
+        private List<SoundEffect> soundEffects;
 
 
         public Drone(Vector3 position)
@@ -34,6 +38,7 @@ namespace Space_Assault.Entities
             _moveSpeed = 1.0f;
             health = 100;
             armor = 100;
+            soundEffects = new List<SoundEffect>();
         }
 
         public void Reset()
@@ -51,6 +56,12 @@ namespace Space_Assault.Entities
         public override void LoadContent(ContentManager cm)
         {
             Model = cm.Load<Model>("Models/drone");
+            soundEffects.Add(cm.Load<SoundEffect>("Sounds/droneMovement")); //only placeholder for now
+
+            // Play that can be manipulated after the fact
+            _droneMoveSound = soundEffects[0].CreateInstance();
+            _droneMoveSound.Volume = 0.1f;
+            _droneMoveSound.IsLooped = true;
         }
 
         public override void Update(GameTime gameTime)
@@ -59,6 +70,7 @@ namespace Space_Assault.Entities
             //forward movement
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
+                _droneMoveSound.Play();
                 if (_moveSpeedModifier < _moveSpeed) _moveSpeedModifier += 0.04f;
                 else _moveSpeedModifier = _moveSpeed;
 
@@ -68,6 +80,7 @@ namespace Space_Assault.Entities
             }
             else if (movementWasTrue == true)
             {
+                _droneMoveSound.Stop();
                 if (_moveSpeedModifier > 0.0f)
                 {
 

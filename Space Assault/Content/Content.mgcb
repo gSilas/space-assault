@@ -100,3 +100,9 @@
 /processorParam:TextureFormat=DxtCompressed
 /build:Models/drone.x
 
+#begin Sounds/droneMovement.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/droneMovement.wav
+
