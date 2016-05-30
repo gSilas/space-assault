@@ -15,11 +15,11 @@ namespace Space_Assault.Entities
     {
         private Vector3 _spawnPos;
         private float _turnSpeed;
-        private float _moveSpeed;
+        private float _moveSpeedForward;
+        private float _moveSpeedBackward;
         private float _moveSpeedModifier;
         private float health;
         private float armor;
-        private bool movementWasTrue;
         private SoundEffectInstance _droneMoveSound;
         private List<SoundEffect> soundEffects;
 
@@ -32,10 +32,10 @@ namespace Space_Assault.Entities
 
         public override void Initialize()
         {
-            movementWasTrue = false;
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 10.0f;
-            _moveSpeed = 1.0f;
+            _moveSpeedForward = 1.0f;
+            _moveSpeedBackward = -0.5f;
             health = 100;
             armor = 100;
             soundEffects = new List<SoundEffect>();
@@ -43,10 +43,10 @@ namespace Space_Assault.Entities
 
         public void Reset()
         {
-            movementWasTrue = false;
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 1.0f;
-            _moveSpeed = 1.0f;
+            _moveSpeedForward = 1.0f;
+            _moveSpeedBackward = -0.5f;
             health = 100;
             armor = 100;
             _moveSpeedModifier = 0;
@@ -67,28 +67,39 @@ namespace Space_Assault.Entities
         public override void Update(GameTime gameTime)
         {
 
-            //forward movement
+            //movement
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
+                //forward
                 _droneMoveSound.Play();
-                if (_moveSpeedModifier < _moveSpeed) _moveSpeedModifier += 0.04f;
-                else _moveSpeedModifier = _moveSpeed;
-
-                Position -= RotationMatrix.Forward * _moveSpeedModifier;
-                movementWasTrue = true;
-
+                if (_moveSpeedModifier < _moveSpeedForward) _moveSpeedModifier += 0.04f;
+                else _moveSpeedModifier = _moveSpeedForward;
             }
-            else if (movementWasTrue == true)
+            else if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                _droneMoveSound.Stop();
-                if (_moveSpeedModifier > 0.0f)
-                {
-
-                    Position -= RotationMatrix.Forward * _moveSpeedModifier;
-                    _moveSpeedModifier -= 0.02f;
-                }
-                else movementWasTrue = false;
+                //backward
+                _droneMoveSound.Play();
+                if (_moveSpeedModifier > _moveSpeedBackward) _moveSpeedModifier -= 0.04f;
+                else _moveSpeedModifier = _moveSpeedBackward;
             }
+            else if (_moveSpeedModifier > 0.02f)
+            {
+                //forward slowing down
+                _droneMoveSound.Stop();
+                _moveSpeedModifier -= 0.02f;
+            }
+            else if (_moveSpeedModifier < -0.02f)
+            {
+                //backward slowing down
+                _droneMoveSound.Stop();
+                _moveSpeedModifier += 0.02f;
+            }
+            else
+            {
+                _moveSpeedModifier = 0.0f;
+            }
+
+            Position -= RotationMatrix.Forward * _moveSpeedModifier;
 
             //TODO: health, armor update
         }
