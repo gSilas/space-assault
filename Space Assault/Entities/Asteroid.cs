@@ -24,7 +24,7 @@ namespace Space_Assault.Entities
             Model = Global.ContentManager.Load<Model>("Models/asteroid");
         }
 
-        public void LoadContent(ref Model model)
+        public void LoadContent(Model model)
         {
             Model = model;
         }

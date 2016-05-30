@@ -13,7 +13,6 @@ namespace Space_Assault.Utils
         private int _distance;
         private Model _model;
         private List<Asteroid> _asteroids;
-        private ContentManager _cm;
 
         public AsteroidBuilder(int chunkSize, int distance, Vector3 pointOfReference)
         {
@@ -31,7 +30,7 @@ namespace Space_Assault.Utils
             {
                 Asteroid ast = new Asteroid(new Vector3(10*i,0,-100*i+30*i), 0,new Vector3(1,0,-1), 0.5f);
                 ast.Initialize();
-                ast.LoadContent(ref _model);
+                ast.LoadContent(_model);
                 _asteroids.Add(ast);
             }
         }
