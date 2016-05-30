@@ -12,14 +12,12 @@ namespace Space_Assault.Entities.Weapon
         public String Name;
         public int Schussfrequenz;
         public int Damage;
-        public int Ammunition;
+        public AAmmunition TypeOfAmmu;
         //Overheat
         public int MaxOverheat;
         public int OverheatPerShot;
 
-        public void shoot(AAmmunition typeOfAmmu)
-        {
-            
-        }
+        public abstract void shoot(Vector3 position, Vector3 direction, Vector3 travelspeed);
+
     }
 }

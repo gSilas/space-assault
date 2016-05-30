@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace Space_Assault.Entities.Weapon
 {
     class Railgun: AWeapon
     {
-        public Railgun(String name, int damage, int schussfrequenz, int ammunition, int maxoverheat, int overheatpershot)
-        {
+        public Railgun(String name, int damage, int schussfrequenz, AAmmunition typeOfAmmu, int maxoverheat, int overheatpershot){
             Name=name;
             Damage = damage;
             Schussfrequenz = schussfrequenz;
-            Ammunition = ammunition;
+            TypeOfAmmu = typeOfAmmu;
             MaxOverheat = maxoverheat;
             OverheatPerShot = overheatpershot;
+        }
+
+
+        public override void shoot(Vector3 position, Vector3 direction, Vector3 travelspeed)
+        {
+            NormalBullet bullet= new NormalBullet(position,direction,travelspeed);
         }
     }
 }
