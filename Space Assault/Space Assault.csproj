@@ -47,6 +47,7 @@
     <Compile Include="Entities\Weapon\AWeapon.cs" />
     <Compile Include="Entities\Weapon\NormalBullet.cs" />
     <Compile Include="Entities\Weapon\Railgun.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="UI\Button.cs" />
     <Compile Include="Entities\Drone.cs" />
     <Compile Include="Entities\Station.cs" />

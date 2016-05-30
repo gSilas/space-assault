@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
 
 /// <summary>
@@ -53,10 +52,10 @@ namespace Space_Assault.Entities
             Position = _spawnPos;
         }
 
-        public override void LoadContent(ContentManager cm)
+        public override void LoadContent()
         {
-            Model = cm.Load<Model>("Models/drone");
-            soundEffects.Add(cm.Load<SoundEffect>("Sounds/droneMovement")); //only placeholder for now
+            Model = Global.ContentManager.Load<Model>("Models/drone");
+            soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/droneMovement")); //only placeholder for now
 
             // Play that can be manipulated after the fact
             _droneMoveSound = soundEffects[0].CreateInstance();

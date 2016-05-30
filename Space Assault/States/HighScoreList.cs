@@ -2,6 +2,7 @@
 using System.Xml;
 using System.IO;
 using System.Diagnostics;
+using Microsoft.Xna.Framework;
 
 /// <summary>
 /// Dient zum laden und schreiben der Highscoreliste 
@@ -22,7 +23,7 @@ namespace Space_Assault.States
         }
     }
 
-    class HighScoreList : IGameState
+    class HighScoreList : IGameState, IUpdateableState, IDrawableState
     {
         int listLength;
         string filePath;
@@ -62,6 +63,21 @@ namespace Space_Assault.States
             }
         }
 
+        public void LoadContent()
+        {
+            
+        }
+
+        public void Update(GameTime elapsedTime)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void Draw(GameTime elapsedTime)
+        {
+            throw new NotImplementedException();
+        }
         //laden der XML und schreiben in scoresList
         public void Load()
         {
@@ -101,7 +117,7 @@ namespace Space_Assault.States
                 curName = highScoreDoc.CreateElement("Name");
                 curPoints = highScoreDoc.CreateElement("Punkte");
 
-                curName.InnerText = entry.Name;  
+                curName.InnerText = entry.Name;
                 curPoints.InnerText = entry.Points.ToString();
 
                 curNum.AppendChild(curName);
@@ -115,7 +131,7 @@ namespace Space_Assault.States
 
         }
 
-        //neue Eintrag hinzufügen
+        //neuen Eintrag hinzufügen
         public void Add(string Name, int Points)
         {
 
@@ -140,11 +156,11 @@ namespace Space_Assault.States
 
             Debug.WriteLine("Entry added");
         }
-        public void LoadContent()
-        {
-            
-        }
 
+
+        /// <summary>
+        /// GameState stuff
+        /// </summary>
         public void Kill()
         {
             throw new NotImplementedException();
@@ -157,7 +173,17 @@ namespace Space_Assault.States
 
         public bool Equals(IGameState other)
         {
-            return other.GetType() == typeof (HighScoreList);
+            return other.GetType() == this.GetType();
+        }
+
+        public bool Equals(IUpdateable other)
+        {
+            return other.GetType() == this.GetType();
+        }
+
+        public bool Equals(IDrawableState other)
+        {
+            return other.GetType() == this.GetType();
         }
     }
 }

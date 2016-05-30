@@ -22,9 +22,9 @@ namespace Space_Assault.Entities
             _up = true;
         }
 
-        public override void LoadContent(ContentManager cm)
+        public override void LoadContent()
         {
-            Model = cm.Load<Model>("Models/station");
+            Model = Global.ContentManager.Load<Model>("Models/station");
         }
 
         public override void Update(GameTime gameTime)

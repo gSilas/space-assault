@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,15 +9,11 @@ namespace Space_Assault
     /// </summary>
     public class SpaceAssault : Game
     {
-        GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
-        private SpriteFont font;
-        private Controller controller;
-
         public SpaceAssault()
         {
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            Global.GraphicsManager = new GraphicsDeviceManager(this);
+            Global.ContentManager = Content;
+            Global.ContentManager.RootDirectory = "Content";
         }
 
         /// <summary>
@@ -33,15 +28,17 @@ namespace Space_Assault
             Window.Title = "Space Assault";
             Window.AllowAltF4 = true;
             IsMouseVisible = true;
-            graphics.PreferredBackBufferHeight = 768;
-            graphics.PreferredBackBufferWidth = 1366;
-            graphics.ApplyChanges();
+            Global.GraphicsManager.PreferredBackBufferHeight = 768;
+            Global.GraphicsManager.PreferredBackBufferWidth = 1366;
+            Global.GraphicsManager.ApplyChanges();
 
             // TODO: Add your initialization logic here
-            controller = new Controller(graphics, Content);
+            Global.Controller = new Controller();
 
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            Global.SpriteBatch = new SpriteBatch(GraphicsDevice);
+
             base.Initialize();
         }
 
@@ -51,7 +48,7 @@ namespace Space_Assault
         /// </summary>
         protected override void LoadContent()
         {
-            font = Content.Load<SpriteFont>("Fonts/Arial");
+            Global.Arial = Global.ContentManager.Load<SpriteFont>("Fonts/Arial");
         }
 
         /// <summary>
@@ -74,7 +71,7 @@ namespace Space_Assault
                 Exit();
 
             // TODO: Add your update logic here
-            controller.Update(gameTime);
+            Global.Controller.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -84,14 +81,14 @@ namespace Space_Assault
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.SteelBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            Global.SpriteBatch.Begin();
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            spriteBatch.DrawString(font, (1/gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
-            controller.Draw(gameTime);
-            spriteBatch.End();
+            Global.SpriteBatch.DrawString(Global.Arial, (1/gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
+            Global.Controller.Draw(gameTime);
+            Global.SpriteBatch.End();
             base.Draw(gameTime);
         }
     }
