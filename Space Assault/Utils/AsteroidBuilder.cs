@@ -49,11 +49,11 @@ namespace Space_Assault.Utils
             }
         }
 
-        public void Draw(Camera _camera)
+        public void Draw()
         {
             foreach (var ast in _asteroids)
             {
-                ast.Draw(_camera);
+                ast.Draw();
             }
         }
     }

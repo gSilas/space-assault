@@ -39,7 +39,7 @@ namespace Space_Assault.States
 
             _station = new Station(new Vector3(0, 0, 0), 0);
             _drone = new Drone(new Vector3(0,0,20));
-            _asteroidField = new AsteroidBuilder(20,0,_station.Position,Global.ContentManager);
+            _asteroidField = new AsteroidBuilder(20,0,_station.Position);
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
             IsStopped = false;
             Debug.WriteLine("DisplayModeXY: " + "{" + Global.GraphicsManager.PreferredBackBufferWidth.ToString() + " ;" +  Global.GraphicsManager.PreferredBackBufferHeight.ToString() + "}");
@@ -60,8 +60,8 @@ namespace Space_Assault.States
             _stationSound.IsLooped = true;
             _stationSound.Play();
 
-            _station.LoadContent(_cm);
-            _drone.LoadContent(_cm);
+            _station.LoadContent();
+            _drone.LoadContent();
             _asteroidField.LoadContent();
         }
 
@@ -101,7 +101,7 @@ namespace Space_Assault.States
             _station.Update(elapsedTime);
             _drone.Update(elapsedTime);
 
-            _drone.turn(new Vector3(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, 0, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f)- Mousehandler.Position);
+            _drone.turn(new Vector3(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, 0, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f)- MouseHandler.Position);
             //Console.WriteLine(Mousehandler.Position.ToString() + " ~~ CameraTarget: " + _camera.Position.ToString());
             //Pop test
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
