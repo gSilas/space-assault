@@ -21,7 +21,6 @@ namespace Space_Assault
         }
 		//Current GameStates,Drawables,Updateables has to be initialized
         //public IGameState _currentGameState;
-        private Camera _camera;
 
         private bool _updateClear;
         private bool _drawClear;

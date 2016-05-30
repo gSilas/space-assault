@@ -35,7 +35,7 @@ namespace Space_Assault.States
         public MainMenu()
         {
             soundEffects = new List<SoundEffect>();
-            _camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.Up);
+            Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.Up);
             _station = new Station(Vector3.Zero, 0);
             IsStopped = false;
         }
