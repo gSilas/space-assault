@@ -30,7 +30,7 @@ namespace Space_Assault.States
         // 3D Model
         private Camera _camera;
         private Station _station;
-        private Asteroid _asteroid;
+        private AsteroidBuilder _asteroidField;
         private Drone _drone;
         private SpriteBatch _spriteBatch;
         private Texture2D _background;
@@ -48,7 +48,7 @@ namespace Space_Assault.States
 
             _station = new Station(new Vector3(0, 0, 0), 0);
             _drone = new Drone(new Vector3(0,0,20));
-
+            _asteroidField = new AsteroidBuilder(20,0,_station.Position,_cm);
             _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
             IsStopped = false;
             Debug.WriteLine("DisplayModeXY: " + "{" + _gm.PreferredBackBufferWidth.ToString() + " ;" +  _gm.PreferredBackBufferHeight.ToString() + "}");
@@ -97,6 +97,7 @@ namespace Space_Assault.States
         {
             _station.Draw(_camera);
             _drone.Draw(_camera);
+            _asteroidField.Draw(_camera);
         }
 
         //#################################
@@ -122,6 +123,7 @@ namespace Space_Assault.States
             }
             _camera.Target = _drone.Position;
             _camera.Position = _camera.Target + new Vector3(0, 500, 500);
+            _asteroidField.Update(elapsedTime);
         }
 
         public bool IsStopped { get; set; }

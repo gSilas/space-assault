@@ -56,6 +56,7 @@
     <Compile Include="States\HighScoreList.cs" />
     <Compile Include="States\MainMenu.cs" />
     <Compile Include="Utils\3DCollider.cs" />
+    <Compile Include="Utils\AsteroidBuilder.cs" />
     <Compile Include="Utils\Camera.cs" />
     <Compile Include="States\IDrawableState.cs" />
     <Compile Include="States\IUpdateableState.cs" />
