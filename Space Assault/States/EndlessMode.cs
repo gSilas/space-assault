@@ -19,39 +19,31 @@ namespace Space_Assault.States
         //#################################
 
         // General
-        private Controller _sc;
-        private GraphicsDeviceManager _gm;
-        private ContentManager _cm;
         private SoundEffectInstance _stationSound;
 
         // Sound
         List<SoundEffect> soundEffects;
 
         // 3D Model
-        private Camera _camera;
         private Station _station;
         private AsteroidBuilder _asteroidField;
         private Drone _drone;
-        private SpriteBatch _spriteBatch;
         private Texture2D _background;
 
 
         //#################################
         // Constructor
         //#################################
-        public EndlessMode(Controller controller)
+        public EndlessMode()
         {
-            _sc = controller;
-            _gm = _sc.gm;
-            _cm = _sc.cm;
             soundEffects = new List<SoundEffect>();
 
             _station = new Station(new Vector3(0, 0, 0), 0);
             _drone = new Drone(new Vector3(0,0,20));
-            _asteroidField = new AsteroidBuilder(20,0,_station.Position,_cm);
-            _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
+            _asteroidField = new AsteroidBuilder(20,0,_station.Position,Global.ContentManager);
+            Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
             IsStopped = false;
-            Debug.WriteLine("DisplayModeXY: " + "{" + _gm.PreferredBackBufferWidth.ToString() + " ;" +  _gm.PreferredBackBufferHeight.ToString() + "}");
+            Debug.WriteLine("DisplayModeXY: " + "{" + Global.GraphicsManager.PreferredBackBufferWidth.ToString() + " ;" +  Global.GraphicsManager.PreferredBackBufferHeight.ToString() + "}");
             
         }
 
@@ -61,7 +53,7 @@ namespace Space_Assault.States
         public void LoadContent()
         {
             // Sound
-            soundEffects.Add(_cm.Load<SoundEffect>("Sounds/stationSound"));
+            soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/stationSound"));
 
             // Play that can be manipulated after the fact
             _stationSound = soundEffects[0].CreateInstance();
@@ -69,8 +61,8 @@ namespace Space_Assault.States
             _stationSound.IsLooped = true;
             _stationSound.Play();
 
-            _station.LoadContent(_cm);
-            _drone.LoadContent(_cm);
+            _station.LoadContent();
+            _drone.LoadContent();
 
         }
 
@@ -95,9 +87,9 @@ namespace Space_Assault.States
         //#################################
         public void Draw(GameTime elapsedTime)
         {
-            _station.Draw(_camera);
-            _drone.Draw(_camera);
-            _asteroidField.Draw(_camera);
+            _station.Draw();
+            _drone.Draw();
+            _asteroidField.Draw();
         }
 
         //#################################
@@ -110,19 +102,19 @@ namespace Space_Assault.States
             _station.Update(elapsedTime);
             _drone.Update(elapsedTime);
 
-            _drone.turn(new Vector3(_gm.PreferredBackBufferWidth / 2.0f, 0, _gm.PreferredBackBufferHeight / 2.0f)- Mousehandler.Position);
+            _drone.turn(new Vector3(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, 0, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f)- Mousehandler.Position);
             //Console.WriteLine(Mousehandler.Position.ToString() + " ~~ CameraTarget: " + _camera.Position.ToString());
             //Pop test
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                _sc.Pop(this);
+                Global.Controller.Pop(this);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                _sc.Push(Controller.EGameStates.EndlessModeScene);
+                Global.Controller.Push(Controller.EGameStates.EndlessModeScene);
             }
-            _camera.Target = _drone.Position;
-            _camera.Position = _camera.Target + new Vector3(0, 500, 500);
+            Global.Camera.Target = _drone.Position;
+            Global.Camera.Position = Global.Camera.Target + new Vector3(0, 500, 500);
             _asteroidField.Update(elapsedTime);
         }
 
