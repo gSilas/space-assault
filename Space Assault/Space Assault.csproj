@@ -43,8 +43,10 @@
   <ItemGroup>
     <Compile Include="Entities\AEntity.cs" />
     <Compile Include="Entities\Asteroid.cs" />
-    <Compile Include="Entities\Weapon\Bullet.cs" />
+    <Compile Include="Entities\Weapon\AAmmunition.cs" />
     <Compile Include="Entities\Weapon\AWeapon.cs" />
+    <Compile Include="Entities\Weapon\NormalBullet.cs" />
+    <Compile Include="Entities\Weapon\Railgun.cs" />
     <Compile Include="UI\Button.cs" />
     <Compile Include="Entities\Drone.cs" />
     <Compile Include="Entities\Station.cs" />
