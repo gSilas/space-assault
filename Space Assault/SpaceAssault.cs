@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using static Space_Assault.Global;
 
 namespace Space_Assault
 {
@@ -86,7 +84,7 @@ namespace Space_Assault
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.SteelBlue);
 
             // TODO: Add your drawing code here
             Global.SpriteBatch.Begin();

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -48,7 +47,7 @@ namespace Space_Assault.States
 
             _station = new Station(new Vector3(0, 0, 0), 0);
             _drone = new Drone(new Vector3(0,0,20));
-            _asteroidField = new AsteroidBuilder(20,0,_station.Position,_cm);
+            _asteroidField = new AsteroidBuilder(20,0,_station.Position);
             _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
             IsStopped = false;
             Debug.WriteLine("DisplayModeXY: " + "{" + _gm.PreferredBackBufferWidth.ToString() + " ;" +  _gm.PreferredBackBufferHeight.ToString() + "}");
@@ -71,7 +70,7 @@ namespace Space_Assault.States
 
             _station.LoadContent(_cm);
             _drone.LoadContent(_cm);
-
+            _asteroidField.LoadContent();
         }
 
         public void Kill()
@@ -110,7 +109,7 @@ namespace Space_Assault.States
             _station.Update(elapsedTime);
             _drone.Update(elapsedTime);
 
-            _drone.turn(new Vector3(_gm.PreferredBackBufferWidth / 2.0f, 0, _gm.PreferredBackBufferHeight / 2.0f)- Mousehandler.Position);
+            _drone.turn(new Vector3(_gm.PreferredBackBufferWidth / 2.0f, 0, _gm.PreferredBackBufferHeight / 2.0f)- MouseHandler.Position);
             //Console.WriteLine(Mousehandler.Position.ToString() + " ~~ CameraTarget: " + _camera.Position.ToString());
             //Pop test
             if (Keyboard.GetState().IsKeyDown(Keys.Space))

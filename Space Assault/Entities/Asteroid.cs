@@ -24,6 +24,11 @@ namespace Space_Assault.Entities
             Model = cm.Load<Model>("Models/asteroid");
         }
 
+        public void LoadContent(ref Model model)
+        {
+            Model = model;
+        }
+
         public override void Initialize()
         {
             _direction.Normalize();
