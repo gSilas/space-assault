@@ -10,8 +10,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Space_Assault
 {
-    public class Global
+    public static class Global
     {
-        public SpriteBatch spriteBatch;
+        public static SpriteBatch SpriteBatch;
     }
 }

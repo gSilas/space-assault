@@ -12,8 +12,8 @@ namespace Space_Assault
     public class SpaceAssault : Game
     {
         GraphicsDeviceManager graphics;
-        private SpriteFont font;
-        private Controller controller;
+        private SpriteFont _font;
+        private Controller _controller;
 
         public SpaceAssault()
         {
@@ -38,9 +38,11 @@ namespace Space_Assault
             graphics.ApplyChanges();
 
             // TODO: Add your initialization logic here
-            controller = new Controller(graphics, Content);
+            _controller = new Controller(graphics, Content);
 
             // Create a new SpriteBatch, which can be used to draw textures.
+
+            Global.SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             base.Initialize();
         }
@@ -51,7 +53,7 @@ namespace Space_Assault
         /// </summary>
         protected override void LoadContent()
         {
-            font = Content.Load<SpriteFont>("Fonts/Arial");
+            _font = Content.Load<SpriteFont>("Fonts/Arial");
         }
 
         /// <summary>
@@ -74,7 +76,7 @@ namespace Space_Assault
                 Exit();
 
             // TODO: Add your update logic here
-            controller.Update(gameTime);
+            _controller.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -87,11 +89,11 @@ namespace Space_Assault
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            Global.SpriteBatch.Begin();
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            spriteBatch.DrawString(font, (1/gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
-            controller.Draw(gameTime);
-            spriteBatch.End();
+            Global.SpriteBatch.DrawString(_font, (1/gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
+            _controller.Draw(gameTime);
+            Global.SpriteBatch.End();
             base.Draw(gameTime);
         }
     }
