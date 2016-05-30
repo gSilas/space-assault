@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Space_Assault.Utils;
 
 namespace Space_Assault.Entities.Weapon
 {
@@ -25,11 +26,11 @@ namespace Space_Assault.Entities.Weapon
         //Schusslogik für einzelne Waffen
         public abstract void shoot(Vector3 position, Vector3 direction, float travelspeed);
 
-        public void Draw(Camera camera)
+        public void Draw()
         {
             foreach (AAmmunition bullet in ListOfBullets)
             {
-                bullet.Draw(camera);
+                bullet.Draw();
             }
         }
     }
