@@ -6,7 +6,7 @@ namespace Space_Assault.Entities.Weapon
 {
     class NormalBullet : AAmmunition
     {
-        public NormalBullet(Vector3 position, Vector3 direction, Vector3 travelspeed) : base(position, direction, travelspeed) {}
+        public NormalBullet(Vector3 position, Vector3 direction, float travelspeed) : base(position, direction, travelspeed) {}
 
         public override void LoadContent(ContentManager cm)
         {

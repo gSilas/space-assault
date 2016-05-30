@@ -12,9 +12,9 @@ namespace Space_Assault.Entities.Weapon
     {
        // private Vector3 _position;
         private Vector3 _direction;
-        private Vector3 _travelspeed;
+        private float _travelspeed;
 
-        public AAmmunition(Vector3 position, Vector3 direction, Vector3 travelspeed)
+        public AAmmunition(Vector3 position, Vector3 direction, float travelspeed)
         {
             Position = position;
             _direction = direction;

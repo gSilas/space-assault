@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,16 +9,31 @@ namespace Space_Assault.Entities.Weapon
 {
     public abstract class AWeapon
     {
+        //
         //Basic
-        public String Name;
-        public int Schussfrequenz;
-        public int Damage;
-        public AAmmunition TypeOfAmmu;
+        public uint Damage;
+        public uint Schussfrequenz;
+        public uint CooldownOnShoot = 100;
+        public bool IsReadyToShoot=true;
+
         //Overheat
-        public int MaxOverheat;
-        public int OverheatPerShot;
+        public uint Overheat = 0;
+        public uint MaxOverheat;
+        public uint OverheatPerShot;
+        public bool IsOverheat = false;
 
-        public abstract void shoot(Vector3 position, Vector3 direction, Vector3 travelspeed);
+        //draw
+        public List<AAmmunition> ListOfBullets;
 
+        //Schusslogik für einzelne Waffen
+        public abstract void shoot(Vector3 position, Vector3 direction, float travelspeed);
+
+        public void Draw(Camera camera)
+        {
+            foreach (AAmmunition bullet in ListOfBullets)
+            {
+                bullet.Draw(camera);
+            }
+        }
     }
 }
