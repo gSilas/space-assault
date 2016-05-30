@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using static Space_Assault.Global;
 
 namespace Space_Assault
 {
@@ -11,7 +12,6 @@ namespace Space_Assault
     public class SpaceAssault : Game
     {
         GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
         private SpriteFont font;
         private Controller controller;
 
@@ -41,7 +41,7 @@ namespace Space_Assault
             controller = new Controller(graphics, Content);
 
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+
             base.Initialize();
         }
 
