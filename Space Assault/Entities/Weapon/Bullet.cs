@@ -23,6 +23,9 @@ namespace Space_Assault.Entities.Weapon
             _direction = direction;
             _direction.Normalize();
             _travelspeed = travelspeed;
+
+            //kollision später
+            //worldMatrix = Matrix.CreateWorld(base.Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(0.05f);
         }
         public override void Initialize()
         {
@@ -36,7 +39,7 @@ namespace Space_Assault.Entities.Weapon
         public override void Update(GameTime gameTime)
         {
 
-            RotationMatrix = Matrix.Identity;
+            //RotationMatrix = Matrix.Identity;
 
             Position += _direction;
         }

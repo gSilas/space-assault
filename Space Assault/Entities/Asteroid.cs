@@ -16,7 +16,7 @@ namespace Space_Assault.Entities
         {
             _angle = angle;
             Position = position;
-            //kolision später
+            //kollision später
             //worldMatrix = Matrix.CreateWorld(base.Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(0.05f);
 
             _direction = direction;
