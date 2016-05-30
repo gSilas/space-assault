@@ -67,31 +67,37 @@ namespace Space_Assault.Entities
         public override void Update(GameTime gameTime)
         {
 
-            //forward movement
+            //movement
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
+                //forward
                 _droneMoveSound.Play();
                 if (_moveSpeedModifier < _moveSpeedForward) _moveSpeedModifier += 0.04f;
                 else _moveSpeedModifier = _moveSpeedForward;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
+                //backward
                 _droneMoveSound.Play();
                 if (_moveSpeedModifier > _moveSpeedBackward) _moveSpeedModifier -= 0.04f;
                 else _moveSpeedModifier = _moveSpeedBackward;
             }
-            else if (_moveSpeedModifier > 0.0f)
+            else if (_moveSpeedModifier > 0.02f)
             {
+                //forward slowing down
                 _droneMoveSound.Stop();
                 _moveSpeedModifier -= 0.02f;
             }
-            else if (_moveSpeedModifier < 0.0f)
+            else if (_moveSpeedModifier < -0.02f)
             {
+                //backward slowing down
                 _droneMoveSound.Stop();
                 _moveSpeedModifier += 0.02f;
             }
-
-            //backward movement
+            else
+            {
+                _moveSpeedModifier = 0.0f;
+            }
 
             Position -= RotationMatrix.Forward * _moveSpeedModifier;
 
