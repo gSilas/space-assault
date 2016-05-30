@@ -21,6 +21,7 @@ namespace Space_Assault.Utils
             _referencePoint = pointOfReference;
             _referencePoint.Normalize();
             _asteroids = new List<Asteroid>();
+            LoadContent();
             BuildField();
         }
 
