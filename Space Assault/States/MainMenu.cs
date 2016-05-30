@@ -17,9 +17,6 @@ namespace Space_Assault.States
         //#################################
 
         // General
-        private Controller _sc;
-        private GraphicsDeviceManager _gm;
-        private ContentManager _cm;
         private SoundEffectInstance _stationSound;
         Button btnPlay;
 
@@ -29,20 +26,16 @@ namespace Space_Assault.States
         // 3D Model
         private Camera _camera;
         private Station _station;
-        private SpriteBatch _spriteBatch;
         private Texture2D _background;
 
 
         //#################################
         // Constructor
         //#################################
-        public MainMenu(Controller controller)
+        public MainMenu()
         {
-            _sc = controller;
-            _gm = _sc.gm;
-            _cm = _sc.cm;
             soundEffects = new List<SoundEffect>();
-            _camera = new Camera(_gm.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.Up);
+            _camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.Up);
             _station = new Station(Vector3.Zero, 0);
             IsStopped = false;
         }
@@ -53,10 +46,10 @@ namespace Space_Assault.States
         public void LoadContent()
         {
             //Button
-            //btnPlay = new Button(_cm.Load<Texture2D>('Button'), _gm.GraphicsDevice);
+            //btnPlay = new Button(Global.ContentManager.Load<Texture2D>('Button'), _gm.GraphicsDevice);
 
             // Sound
-            soundEffects.Add(_cm.Load<SoundEffect>("Sounds/stationSound"));
+            soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/stationSound"));
 
             // Play that can be manipulated after the fact
             _stationSound = soundEffects[0].CreateInstance();
@@ -64,7 +57,7 @@ namespace Space_Assault.States
             _stationSound.IsLooped = true;
             _stationSound.Play();
 
-            _station.LoadContent(_cm);
+            _station.LoadContent();
 
         }
 
@@ -87,7 +80,7 @@ namespace Space_Assault.States
         //#################################
         public void Draw(GameTime elapsedTime)
         {
-            _station.Draw(_camera);
+            _station.Draw();
         }
 
         //#################################
@@ -102,12 +95,12 @@ namespace Space_Assault.States
             //Pop test
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                _sc.Pop(this);
+                Global.Controller.Pop(this);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                _sc.Push(Controller.EGameStates.EndlessModeScene);
-                _sc.Pop(this);
+                Global.Controller.Push(Controller.EGameStates.EndlessModeScene);
+                Global.Controller.Pop(this);
             }
         }
 

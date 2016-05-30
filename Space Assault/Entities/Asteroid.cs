@@ -19,9 +19,9 @@ namespace Space_Assault.Entities
             _speed = movespeed;
         }
 
-        public override void LoadContent(ContentManager cm)
+        public override void LoadContent()
         {
-            Model = cm.Load<Model>("Models/asteroid");
+            Model = Global.ContentManager.Load<Model>("Models/asteroid");
         }
 
         public void LoadContent(ref Model model)

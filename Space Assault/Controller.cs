@@ -21,8 +21,6 @@ namespace Space_Assault
         }
 		//Current GameStates,Drawables,Updateables has to be initialized
         //public IGameState _currentGameState;
-        public GraphicsDeviceManager gm;
-        public ContentManager cm;
         private Camera _camera;
 
         private bool _updateClear;
@@ -37,10 +35,8 @@ namespace Space_Assault
         private List<IUpdateableState> _removeUpdateable;
 
         //Constructor creates instance of mainmenu for the default gamestate
-        public Controller(GraphicsDeviceManager graphics, ContentManager content)
+        public Controller()
         {
-            gm = graphics;
-            cm = content;
             _currentGameStates = new List<IGameState>();
             _activeDrawable = new List<IDrawableState>();
             _activeUpdateable = new List<IUpdateableState>();
@@ -76,15 +72,15 @@ namespace Space_Assault
         //Adds a Gamestate to the list of initialized Gamestates and adds it to update and draw vectors
         public void Push(EGameStates gameState)
         {
-            IGameState state = new MainMenu(this);
+            IGameState state = new MainMenu();
             
             switch (gameState)
             {
                 case EGameStates.MainMenu:
-                    state = new MainMenu(this);                
+                    state = new MainMenu();                
                     break;
                 case EGameStates.EndlessModeScene:
-                    state = new EndlessMode(this);
+                    state = new EndlessMode();
                     break;
                 case EGameStates.TutorialScene:
                     break;
@@ -96,7 +92,7 @@ namespace Space_Assault
                     state = new HighScoreList();
                     break;
                 default:
-                    state = new MainMenu(this);
+                    state = new MainMenu();
                     break;
             }
 

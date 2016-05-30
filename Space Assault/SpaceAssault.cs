@@ -9,14 +9,11 @@ namespace Space_Assault
     /// </summary>
     public class SpaceAssault : Game
     {
-        GraphicsDeviceManager graphics;
-        private SpriteFont _font;
-        private Controller _controller;
-
         public SpaceAssault()
         {
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            Global.GraphicsManager = new GraphicsDeviceManager(this);
+            Global.ContentManager = Content;
+            Global.ContentManager.RootDirectory = "Content";
         }
 
         /// <summary>
@@ -31,12 +28,12 @@ namespace Space_Assault
             Window.Title = "Space Assault";
             Window.AllowAltF4 = true;
             IsMouseVisible = true;
-            graphics.PreferredBackBufferHeight = 768;
-            graphics.PreferredBackBufferWidth = 1366;
-            graphics.ApplyChanges();
+            Global.GraphicsManager.PreferredBackBufferHeight = 768;
+            Global.GraphicsManager.PreferredBackBufferWidth = 1366;
+            Global.GraphicsManager.ApplyChanges();
 
             // TODO: Add your initialization logic here
-            _controller = new Controller(graphics, Content);
+            Global.Controller = new Controller();
 
             // Create a new SpriteBatch, which can be used to draw textures.
 
@@ -51,7 +48,7 @@ namespace Space_Assault
         /// </summary>
         protected override void LoadContent()
         {
-            _font = Content.Load<SpriteFont>("Fonts/Arial");
+            Global.Arial = Global.ContentManager.Load<SpriteFont>("Fonts/Arial");
         }
 
         /// <summary>
@@ -74,7 +71,7 @@ namespace Space_Assault
                 Exit();
 
             // TODO: Add your update logic here
-            _controller.Update(gameTime);
+            Global.Controller.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -89,8 +86,8 @@ namespace Space_Assault
             // TODO: Add your drawing code here
             Global.SpriteBatch.Begin();
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            Global.SpriteBatch.DrawString(_font, (1/gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
-            _controller.Draw(gameTime);
+            Global.SpriteBatch.DrawString(Global.Arial, (1/gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
+            Global.Controller.Draw(gameTime);
             Global.SpriteBatch.End();
             base.Draw(gameTime);
         }

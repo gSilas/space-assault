@@ -8,9 +8,9 @@ namespace Space_Assault.Entities.Weapon
     {
         public NormalBullet(Vector3 position, Vector3 direction, Vector3 travelspeed) : base(position, direction, travelspeed) {}
 
-        public override void LoadContent(ContentManager cm)
+        public override void LoadContent()
         {
-            Model = cm.Load<Model>("Models/bullet");
+            Model = Global.ContentManager.Load<Model>("Models/bullet");
         }
     }
 }

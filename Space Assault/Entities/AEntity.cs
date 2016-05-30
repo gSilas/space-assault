@@ -13,11 +13,11 @@ namespace Space_Assault.Entities
 
         public abstract void Update(GameTime gameTime);
 
-        public abstract void LoadContent(ContentManager cm);
+        public abstract void LoadContent();
 
         public abstract void Initialize();
 
-        public void Draw(Camera camera)
+        public void Draw()
         {
             foreach (var mesh in Model.Meshes)
             {
@@ -26,8 +26,8 @@ namespace Space_Assault.Entities
                     effect.EnableDefaultLighting();
                     effect.PreferPerPixelLighting = true;
                     effect.World = RotationMatrix*Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
-                    effect.View = camera.ViewMatrix;
-                    effect.Projection = camera.ProjectionMatrix;
+                    effect.View = Global.Camera.ViewMatrix;
+                    effect.Projection = Global.Camera.ProjectionMatrix;
                 }
                 mesh.Draw();
             }
