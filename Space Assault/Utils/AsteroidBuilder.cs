@@ -3,21 +3,18 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Space_Assault.Entities;
-using System.Linq;
 
 namespace Space_Assault.Utils
 {
     class AsteroidBuilder
     {
-        private Vector3 _referencePoint;
-        private Model _model;
+        private Vector3 _position;
         private List<Asteroid> _asteroids;
         private TimeSpan _lastChunkTime;
 
-        public AsteroidBuilder(Vector3 pointOfReference)
+        public AsteroidBuilder(Vector3 position)
         {
-            _referencePoint = pointOfReference;
-            _referencePoint.Normalize();
+            _position = position;
             _asteroids = new List<Asteroid>();
             LoadContent();
             BuildChunks();
