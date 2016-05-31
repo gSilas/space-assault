@@ -56,13 +56,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="States\EndlessMode.cs" />
     <Compile Include="States\IGameState.cs" />
-    <Compile Include="States\HighScoreList.cs" />
+    <Compile Include="States\HighScore.cs" />
     <Compile Include="States\MainMenu.cs" />
     <Compile Include="Utils\3DCollider.cs" />
     <Compile Include="Utils\AsteroidBuilder.cs" />
     <Compile Include="Utils\Camera.cs" />
     <Compile Include="States\IDrawableState.cs" />
     <Compile Include="States\IUpdateableState.cs" />
+    <Compile Include="Utils\HighScoreList.cs" />
     <Compile Include="Utils\Mousehandler.cs" />
   </ItemGroup>
   <ItemGroup>

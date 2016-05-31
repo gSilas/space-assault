@@ -17,7 +17,7 @@ namespace Space_Assault
             TutorialScene,
             PauseMenu,
             OptionsMenu,
-            HighScoreList
+            HighScore
         }
 		//Current GameStates,Drawables,Updateables has to be initialized
         //public IGameState _currentGameState;
@@ -87,8 +87,8 @@ namespace Space_Assault
                     break;
                 case EGameStates.OptionsMenu:
                     break;
-                case EGameStates.HighScoreList:
-                    state = new HighScoreList();
+                case EGameStates.HighScore:
+                    state = new HighScore();
                     break;
                 default:
                     state = new MainMenu();

@@ -104,7 +104,7 @@ namespace Space_Assault.States
             }
             if (Keyboard.GetState().IsKeyDown(Keys.H))
             {
-                Global.Controller.Push(Controller.EGameStates.HighScoreList);
+                Global.Controller.Push(Controller.EGameStates.HighScore);
                 Global.Controller.Pop(this);
             }
         }

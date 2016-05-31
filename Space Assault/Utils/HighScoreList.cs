@@ -2,17 +2,10 @@
 using System.Xml;
 using System.IO;
 using System.Diagnostics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
-/// <summary>
-/// Dient zum laden und schreiben der Highscoreliste 
-/// </summary>
-/// TODO: Grafische Oberfläche der HighscoreList im Spiel
-/// 
-namespace Space_Assault.States
+namespace Space_Assault.Utils
 {
-    internal struct HighscoreEntity : IComparable<HighscoreEntity>
+    public struct HighscoreEntity : IComparable<HighscoreEntity>
     {
         public string Name { get; set; }
         public int Points { get; set; }
@@ -24,27 +17,22 @@ namespace Space_Assault.States
         }
     }
 
-    class HighScoreList : IGameState, IUpdateableState, IDrawableState
+    public class HighScoreList
     {
-        int listLength;
-        string filePath;
-        HighscoreEntity[] scoresList;
+        public int listLength;
+        public string filePath;
+        public HighscoreEntity[] scoresList;
 
-        public bool IsStopped { get; set; }
-
-        public void Initialize()
+        public HighScoreList()
         {
             listLength = 10;
             scoresList = new HighscoreEntity[listLength];
             filePath = "HighScoreList.xml";
-        }
 
-        public void LoadContent()
-        {
             //wenn die Datei nicht existiert erstelle sie
             if (File.Exists(filePath))
             {
-                Load();
+                LoadFile();
             }
             else
             {
@@ -58,35 +46,11 @@ namespace Space_Assault.States
                 Add("Andre", 666);
                 Add("Ulrich", 555);
                 Add("Acagamic", 1777);
-                Save();
-            }
-        }
-
-        public void Update(GameTime elapsedTime)
-        {
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-            {
-
-            }
-        }
-
-
-        public void Draw(GameTime elapsedTime)
-        {
-            int zeilenAbstand = 50;
-            int spaltenAbstand = 200;
-            int spawnPointX = 400;
-            int spawnPointY = 100;
-            for(int i = 0; i < listLength; i++)
-            {
-                Global.SpriteBatch.DrawString(Global.Arial, (i+1) + ". Platz", new Vector2(spawnPointX, spawnPointY+i*zeilenAbstand), Color.Black);
-                Global.SpriteBatch.DrawString(Global.Arial, scoresList[i].Name , new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.Black);
-                Global.SpriteBatch.DrawString(Global.Arial, (scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand*2, spawnPointY + i * zeilenAbstand), Color.Black);
             }
         }
 
         //laden der XML und schreiben in scoresList
-        public void Load()
+        public void LoadFile()
         {
             XmlDocument highScoreDoc = new XmlDocument();
             highScoreDoc.Load(filePath);
@@ -108,7 +72,7 @@ namespace Space_Assault.States
         }
 
         //scoresList in die XML schreiben
-        public void Save()
+        public void SaveFile()
         {
             XmlDocument highScoreDoc = new XmlDocument();
             highScoreDoc.AppendChild(highScoreDoc.CreateElement("Highscore"));
@@ -138,7 +102,6 @@ namespace Space_Assault.States
 
         }
 
-        //neuen Eintrag hinzufügen
         public void Add(string Name, int Points)
         {
 
@@ -162,35 +125,7 @@ namespace Space_Assault.States
             }
 
             Debug.WriteLine("Entry added");
-        }
-
-
-        /// <summary>
-        /// GameState stuff
-        /// </summary>
-        public void Kill()
-        {
-            Save();
-        }
-
-        public void Resume()
-        {
-            Load();
-        }
-
-        public bool Equals(IGameState other)
-        {
-            return other.GetType() == this.GetType();
-        }
-
-        public bool Equals(IUpdateable other)
-        {
-            return other.GetType() == this.GetType();
-        }
-
-        public bool Equals(IDrawableState other)
-        {
-            return other.GetType() == this.GetType();
+            SaveFile();
         }
     }
 }
