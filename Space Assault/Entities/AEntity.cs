@@ -7,7 +7,7 @@ namespace Space_Assault.Entities
 {
     public abstract  class AEntity
     {
-        protected Model Model;
+        public Model Model;
         public Vector3 Position;
         protected Matrix RotationMatrix;
 
