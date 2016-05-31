@@ -1,44 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Space_Assault.Entities;
+using System.Linq;
 
 namespace Space_Assault.Utils
 {
     class AsteroidBuilder
     {
-        private int _chunkSize;
         private Vector3 _referencePoint;
-        private int _distance;
         private Model _model;
         private List<Asteroid> _asteroids;
+        private TimeSpan _lastChunkTime;
 
-        public AsteroidBuilder(int chunkSize, int distance, Vector3 pointOfReference)
+        public AsteroidBuilder(Vector3 pointOfReference)
         {
-            _chunkSize = chunkSize;
-            _distance = distance;
             _referencePoint = pointOfReference;
             _referencePoint.Normalize();
             _asteroids = new List<Asteroid>();
             LoadContent();
-            BuildField();
+            BuildChunks();
         }
 
-        private void BuildField()
+        private void BuildChunks()
         {
-            for (int i = 0; i <= _chunkSize; i++)
-            {
-                Asteroid ast = new Asteroid(new Vector3(10*i,0,-100*i+30*i), 0,new Vector3(1,0,-1), 0.5f);
-                ast.Initialize();
-                ast.LoadContent(_model);
-                _asteroids.Add(ast);
-            }
+            _asteroids.AddRange(AsteroidChunk.ChunkAsteroids(AsteroidChunk.PatternType.CirclePattern));
         }
 
-        public void LoadContent()
-        { 
-            _model = Global.ContentManager.Load<Model>("Models/asteroid");
+        private void LoadContent()
+        {
+            AsteroidChunk.LoadContent(Global.ContentManager.Load<Model>("Models/asteroid"));
         }
 
         public void Update(GameTime gameTime)
@@ -46,6 +38,11 @@ namespace Space_Assault.Utils
             foreach (var ast in _asteroids)
             {
                 ast.Update(gameTime);
+            }
+            if(gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromSeconds(1))))
+            {
+                BuildChunks();
+                _lastChunkTime = gameTime.TotalGameTime;
             }
         }
 
@@ -55,6 +52,56 @@ namespace Space_Assault.Utils
             {
                 ast.Draw();
             }
+        }
+    }
+
+    internal static class AsteroidChunk
+    {
+        private static Model _model;
+
+        public static List<Asteroid> ChunkAsteroids(PatternType t)
+        {
+            switch (t)
+            {
+                case PatternType.StarPattern:
+                    return (MakeStringToChunk(System.IO.File.ReadAllLines(@"AsteroidPatterns\starpattern.txt"), t));
+                case PatternType.CirclePattern:
+                    return (MakeStringToChunk(System.IO.File.ReadAllLines(@"AsteroidPatterns\circlepattern.txt"), t));
+                case PatternType.FieldPattern:
+                    return (MakeStringToChunk(System.IO.File.ReadAllLines(@"AsteroidPatterns\fieldpattern.txt"), t));
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(t), t, null);
+            }
+        }
+
+        public static void LoadContent(Model model)
+        {
+            _model = model;
+        }
+
+        private static List<Asteroid> MakeStringToChunk(string[] lines, PatternType t)
+        {
+                List<Asteroid> astList = new List<Asteroid>();
+                foreach (string line in lines)
+                {
+                    string[] coords = line.Split(' ');
+                    Vector3 astPos = new Vector3();
+                    astPos.X = float.Parse(coords[0]);
+                    astPos.Y = float.Parse(coords[1]);
+                    astPos.Z = float.Parse(coords[2]);
+                    Asteroid ast = new Asteroid(astPos, float.Parse(coords[3]), new Vector3(-1, 0, 1),float.Parse(coords[4]));
+                    ast.Initialize();
+                    ast.LoadContent(_model);
+                    astList.Add(ast);
+                }
+                return astList;
+        }
+
+        public enum PatternType
+        {
+            StarPattern,
+            CirclePattern,
+            FieldPattern
         }
     }
 }

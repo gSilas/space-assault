@@ -39,7 +39,7 @@ namespace Space_Assault.States
 
             _station = new Station(new Vector3(0, 0, 0), 0);
             _drone = new Drone(new Vector3(0,0,20));
-            _asteroidField = new AsteroidBuilder(20,0,_station.Position);
+            _asteroidField = new AsteroidBuilder(_station.Position);
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
 
             IsStopped = false;
@@ -63,7 +63,6 @@ namespace Space_Assault.States
 
             _station.LoadContent();
             _drone.LoadContent();
-            _asteroidField.LoadContent();
         }
 
         public void Kill()

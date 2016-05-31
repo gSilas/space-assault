@@ -1,4 +1,5 @@
 ﻿
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -40,7 +41,12 @@ namespace Space_Assault.Entities
             _angle += 0.005f;
             RotationMatrix = Matrix.CreateRotationY(_angle);
 
-            Position += _direction;
+            Position += _direction * _speed;
+        }
+        
+        public Asteroid Clone()
+        {
+            return new Asteroid(Position,_angle,_direction,_speed);
         }
     }
 }
