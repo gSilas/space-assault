@@ -102,6 +102,11 @@ namespace Space_Assault.States
                 Global.Controller.Push(Controller.EGameStates.EndlessModeScene);
                 Global.Controller.Pop(this);
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.H))
+            {
+                Global.Controller.Push(Controller.EGameStates.HighScoreList);
+                Global.Controller.Pop(this);
+            }
         }
 
         public bool IsStopped { get; set; }

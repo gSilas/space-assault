@@ -3,6 +3,7 @@ using System.Xml;
 using System.IO;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 /// <summary>
 /// Dient zum laden und schreiben der Highscoreliste 
@@ -36,7 +37,10 @@ namespace Space_Assault.States
             listLength = 10;
             scoresList = new HighscoreEntity[listLength];
             filePath = "HighScoreList.xml";
+        }
 
+        public void LoadContent()
+        {
             //wenn die Datei nicht existiert erstelle sie
             if (File.Exists(filePath))
             {
@@ -56,28 +60,31 @@ namespace Space_Assault.States
                 Add("Acagamic", 1777);
                 Save();
             }
-
-            foreach (HighscoreEntity i in scoresList)
-            {
-                Debug.WriteLine(i.Name + " " + i.Points);
-            }
-        }
-
-        public void LoadContent()
-        {
-            
         }
 
         public void Update(GameTime elapsedTime)
         {
-            throw new NotImplementedException();
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            {
+
+            }
         }
 
 
         public void Draw(GameTime elapsedTime)
         {
-            throw new NotImplementedException();
+            int zeilenAbstand = 50;
+            int spaltenAbstand = 200;
+            int spawnPointX = 400;
+            int spawnPointY = 100;
+            for(int i = 0; i < listLength; i++)
+            {
+                Global.SpriteBatch.DrawString(Global.Arial, (i+1) + ". Platz", new Vector2(spawnPointX, spawnPointY+i*zeilenAbstand), Color.Black);
+                Global.SpriteBatch.DrawString(Global.Arial, scoresList[i].Name , new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.Black);
+                Global.SpriteBatch.DrawString(Global.Arial, (scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand*2, spawnPointY + i * zeilenAbstand), Color.Black);
+            }
         }
+
         //laden der XML und schreiben in scoresList
         public void Load()
         {
@@ -163,12 +170,12 @@ namespace Space_Assault.States
         /// </summary>
         public void Kill()
         {
-            throw new NotImplementedException();
+            Save();
         }
 
         public void Resume()
         {
-            throw new NotImplementedException();
+            Load();
         }
 
         public bool Equals(IGameState other)
