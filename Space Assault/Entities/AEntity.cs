@@ -17,7 +17,7 @@ namespace Space_Assault.Entities
 
         public abstract void Initialize();
 
-        public void Draw()
+        public virtual void Draw()
         {
             foreach (var mesh in Model.Meshes)
             {

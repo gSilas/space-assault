@@ -10,18 +10,15 @@ namespace Space_Assault.Entities.Weapon
     {
         //draw
         public List<AAmmunition> ListOfBullets;
-        private Model _bulletModel;
 
-        //Ammunition
-        public Vector3 _direction;
-        public Vector3 _position;
+        protected Model _bulletModel;
 
         public abstract void Initialize();
 
         public abstract void LoadContent();
 
         //Schusslogik für einzelne Waffen
-        public abstract void shoot(Vector3 position, Vector3 direction, float travelspeed);
+        public abstract void Shoot(Vector3 position, Vector3 direction, float travelspeed);
 
         public void Update(GameTime gameTime)
         {
