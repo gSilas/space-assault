@@ -3,13 +3,16 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Space_Assault.Utils;
 
-namespace Space_Assault.Entities
+namespace Space_Assault.UI
 {
     class Button
     {
         private Texture2D _texture;
         private Vector2 _position;
         private Rectangle _rect;
+        private SpriteFont _font;
+        private string  _label;
+        private Vector2 _vector;
 
         private Color _color = new Color(255, 255, 255);
 
@@ -21,6 +24,14 @@ namespace Space_Assault.Entities
             size = new Vector2(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 8, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 30);
         }
 
+        public Button(string font, string label, int x, int y)
+        {
+            _font = Global.ContentManager.Load<SpriteFont>("Fonts/"+font);
+            _label = label;
+            _vector = new Vector2(x, y);
+        }
+
+
         bool down;
         public bool isClicked;
         public void Update()
@@ -31,8 +42,8 @@ namespace Space_Assault.Entities
 
             if (mouseRect.Intersects(_rect))
             {
-                if (_color.A == 255) down = false;
-                if (_color.A == 0) down = true;
+                if (_color.A >= 255) down = false;
+                if (_color.A <= 0) down = true;
                 if (down) _color.A += 3; else _color.A -= 3;
                 if (MouseHandler.MouseState.LeftButton == ButtonState.Pressed) isClicked = true;
             }
@@ -50,7 +61,13 @@ namespace Space_Assault.Entities
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, _rect, _color);
+            if (_texture != null)
+                spriteBatch.Draw(_texture, _rect, _color);
+            else
+                spriteBatch.DrawString(_font, _label, _vector, Color.Black);
         }
+
+
+        
     }
 }
