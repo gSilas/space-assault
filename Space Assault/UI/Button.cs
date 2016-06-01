@@ -15,10 +15,10 @@ namespace Space_Assault.Entities
 
         public Vector2 size;
 
-        public Button(Texture2D newTexture, GraphicsDevice graphics)
+        public Button(Texture2D newTexture)
         {
             _texture = newTexture;
-            size = new Vector2(graphics.Viewport.Width / 8, graphics.Viewport.Height / 30);
+            size = new Vector2(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 8, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 30);
         }
 
         bool down;
