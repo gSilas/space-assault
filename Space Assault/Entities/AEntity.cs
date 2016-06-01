@@ -7,7 +7,7 @@ namespace Space_Assault.Entities
     {
         private Model _model;
         private Vector3 _position;
-        private Matrix _rotationMatrix;
+        private Matrix _rotationMatrix = Matrix.Identity;
 
         public Model Model
         {
@@ -24,7 +24,7 @@ namespace Space_Assault.Entities
         public Matrix RotationMatrix
         {
             get { return _rotationMatrix; }
-            set { _rotationMatrix = value; }
+            protected set { _rotationMatrix = value; }
         }
 
         public abstract void Update(GameTime gameTime);

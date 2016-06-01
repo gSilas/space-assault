@@ -105,7 +105,7 @@ namespace Space_Assault.Entities
             //shooting the gun
             if (Keyboard.GetState().IsKeyDown(Keys.F))
             {
-               _gun.Shoot(Position, RotationMatrix.Forward, 0.2f);
+               _gun.Shoot(Position, RotationMatrix.Forward, 4f);
             }
 
             _gun.Update(gameTime);

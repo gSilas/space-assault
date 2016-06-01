@@ -96,7 +96,7 @@ namespace Space_Assault.Utils
                     astPos.X = float.Parse(coords[0]);
                     astPos.Y = float.Parse(coords[1]);
                     astPos.Z = float.Parse(coords[2]) * (int)(t + 1);
-                    Asteroid ast = new Asteroid(astPos+_position, float.Parse(coords[3]),new Vector3(-1, 0, 1), 5.5f);
+                    Asteroid ast = new Asteroid(astPos+_position, float.Parse(coords[3]),new Vector3(-1, 0, 1), 3f);
                     ast.Initialize();
                     ast.LoadContent(_model);
                     astList.Add(ast);
