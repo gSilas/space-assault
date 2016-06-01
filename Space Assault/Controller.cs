@@ -113,6 +113,21 @@ namespace Space_Assault
             return state;
         }
 
+        public void Reset(EGameStates gameState)
+        {
+            IGameState state = Switch(gameState);
+            foreach (var states in _currentGameStates)
+            {
+                if (state.Equals(states))
+                {
+                    state = states;
+                    break;
+                }
+            }
+            _currentGameStates.Remove(state);
+            Push(gameState);
+        }
+
         //Adds a Gamestate to the list of initialized Gamestates and adds it to update and draw vectors
         public void Push(EGameStates gameState)
         {

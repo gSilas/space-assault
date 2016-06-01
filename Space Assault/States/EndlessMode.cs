@@ -67,7 +67,7 @@ namespace Space_Assault.States
             _station.LoadContent();
             _drone.LoadContent();
             Texture2D texture = Global.ContentManager.Load<Texture2D>("Effects/particle_texture");
-            _particleEngine = new ParticleEngine(texture, _emitter);
+            _particleEngine = new ParticleEngine(texture, new Vector2(0, Global.GraphicsManager.PreferredBackBufferHeight/2));
         }
 
         public void Kill()

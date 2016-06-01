@@ -5,9 +5,27 @@ namespace Space_Assault.Entities
 {
     public abstract  class AEntity
     {
-        public Model Model;
-        public Vector3 Position;
-        protected Matrix RotationMatrix;
+        private Model _model;
+        private Vector3 _position;
+        private Matrix _rotationMatrix;
+
+        public Model Model
+        {
+            get { return _model;}
+            protected set { _model = value; }
+        }
+
+        public Vector3 Position
+        {
+            get { return _position; }
+            protected set { _position = value; }
+        }
+
+        public Matrix RotationMatrix
+        {
+            get { return _rotationMatrix; }
+            protected set { _rotationMatrix = value; }
+        }
 
         public abstract void Update(GameTime gameTime);
 
