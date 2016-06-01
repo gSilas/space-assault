@@ -55,6 +55,16 @@ namespace Space_Assault
         public void Pop(EGameStates gameState)
         {
             IGameState state = Switch(gameState);
+
+            foreach (var states in _currentGameStates)
+            {
+                if (state.Equals(states))
+                {
+                    state = states;
+                    break;
+                }
+            }
+
             Console.WriteLine("Pop!\n");
             state.Kill();
             if (state is IUpdateableState)
