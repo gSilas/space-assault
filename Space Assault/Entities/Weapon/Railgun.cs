@@ -7,9 +7,6 @@ namespace Space_Assault.Entities.Weapon
     {
         
         public Railgun(uint damage, uint schussfrequenz, uint maxoverheat, uint overheatpershot){
-           //SUPERCONSTRUCTOR ???????????????????????????????????????????????????????????????????
-           //WIESO IST ALLES PUBLIC?
-           //MACHT DAS SINN?
 
             Damage = damage;
             Schussfrequenz = schussfrequenz;
@@ -30,7 +27,6 @@ namespace Space_Assault.Entities.Weapon
                 //wenn die frequenz 100 ist, hat die waffe keinen cooldown) 
                 if (Schussfrequenz != 100)
                 {
-                    //SCHUSSFREQUENZ? ERGIBT DAS SINN?
                     CooldownOnShoot = 0;
                     IsReadyToShoot = false;
                 }
