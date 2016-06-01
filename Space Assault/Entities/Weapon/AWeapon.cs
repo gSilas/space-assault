@@ -6,52 +6,30 @@ using Space_Assault.Utils;
 
 namespace Space_Assault.Entities.Weapon
 {
-    public abstract class AWeapon:AEntity
+    public abstract class AWeapon
     {
-        //Weaponstuff
-        //Basic
-        private uint Damage;
-        private uint Schussfrequenz;
-        private uint CooldownOnShoot = 100;
-        private bool IsReadyToShoot=true;
-        //Overheat
-        public uint Overheat = 0;
-        public uint MaxOverheat;
-        public uint OverheatPerShot;
-        public bool IsOverheat = false;
         //draw
         public List<AAmmunition> ListOfBullets;
+        private Model _bulletModel;
 
         //Ammunition
         public Vector3 _direction;
-        public float _travelspeed;
+        public Vector3 _position;
 
+        public abstract void Initialize();
 
-        public override void Initialize()
-        {
-            _direction.Normalize();
-        }
-
-        public void LoadContent(Model model)
-        {
-            Model = model;
-        }
-
-
-        public override void LoadContent()
-        {
-            throw new System.NotImplementedException();
-        } 
-
-        public override void Update(GameTime gameTime)
-        {
-            Position += _direction * _travelspeed;
-        }
-
-
+        public abstract void LoadContent();
 
         //Schusslogik für einzelne Waffen
         public abstract void shoot(Vector3 position, Vector3 direction, float travelspeed);
+
+        public void Update(GameTime gameTime)
+        {
+            foreach (AAmmunition bullet in ListOfBullets)
+            {
+                bullet.Update(gameTime);
+            }
+        }
 
         public void Draw()
         {

@@ -27,9 +27,6 @@ namespace Space_Assault.Entities.Weapon
             _overheatPerShot = overheatpershot;
         }
 
-
-
-
         public override void shoot(Vector3 position, Vector3 direction, float travelspeed)
         {
 

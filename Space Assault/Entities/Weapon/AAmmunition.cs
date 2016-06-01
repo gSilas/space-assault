@@ -6,7 +6,6 @@ namespace Space_Assault.Entities.Weapon
 {
     public class AAmmunition : AEntity
     {
-       // private Vector3 _position;
         private Vector3 _direction;
         private float _travelspeed;
 
@@ -14,12 +13,8 @@ namespace Space_Assault.Entities.Weapon
         {
             Position = position;
             _direction = direction;
-            _travelspeed = travelspeed;
-
-            _direction = direction;
             _direction.Normalize();
             _travelspeed = travelspeed;
-
         }
 
         public override void Initialize()
@@ -29,7 +24,12 @@ namespace Space_Assault.Entities.Weapon
 
         public override void LoadContent()
         {
-            Model = Global.ContentManager.Load<Model>("Models/asteroid");
+            throw new NotImplementedException();
+        }
+
+        public void LoadContent(Model model)
+        {
+            Model = model;
         }
 
         public override void Update(GameTime gameTime)
