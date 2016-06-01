@@ -5,7 +5,8 @@ using Space_Assault.Utils;
 using System;
 /// <summary>
 /// Handles the input for the highscorelist (for the name)
-/// help from: http://community.monogame.net/t/true-keyboard-input/1114
+/// Takes Global.HighScorePoints
+/// TODO: make it more fancier with http://www.monogame.net/documentation/?page=E_Microsoft_Xna_Framework_GameWindow_TextInput
 /// </summary>
 namespace Space_Assault.States
 {
@@ -14,16 +15,12 @@ namespace Space_Assault.States
         private Texture2D _entryField;
         private Vector2 _fieldPos;
         private string _entryString;
-
-        EventHandler<TextInputEventArgs> onTextEntered;
-        KeyboardState _prevKeyState;
+        private int _elapsedTimeMilliseconds;
 
         public void Initialize()
         {
             _fieldPos = new Vector2(100, Global.PreferredBackBufferHeight - 100);
             _entryString = "";
-
-
         }
 
         public void LoadContent()
@@ -33,17 +30,45 @@ namespace Space_Assault.States
 
         public void Update(GameTime elapsedTime)
         {
-            KeyboardState keyState = Keyboard.GetState();
+            _elapsedTimeMilliseconds += elapsedTime.ElapsedGameTime.Milliseconds;
 
-            // Print to debug console currently pressed keys
-            Keys prevKey = Keys.A;
-            foreach (Keys key in keyState.GetPressedKeys())
+
+            KeyboardState keyState = Keyboard.GetState();
+            if (keyState.GetPressedKeys().Length > 0 && _elapsedTimeMilliseconds > 16 * 4)
             {
-                if(key != prevKey)
+
+                Keys curKey = keyState.GetPressedKeys()[0];
+
+                //handling text input
+                if (_entryString.Length <= 10)
                 {
-                    _entryString += key;
+                    //wenn der key nur ein charakter hat
+                    if (curKey.ToString().ToCharArray().Length == 1)
+                        //wenn mehr als ein Key gleichzeitig gedrueckt wurde
+                        if (keyState.GetPressedKeys().Length > 1)
+                        {
+                            //wenn LeftShift ist => Großschreibung
+                            if (keyState.GetPressedKeys()[1] == Keys.LeftShift)
+                                _entryString += curKey.ToString().ToUpper();
+                        }
+                        // => kleinschreibung
+                        else _entryString += curKey.ToString().ToLower();
+                    //wenn der key das minuszeichen ist
+                    else if (curKey == Keys.OemMinus)
+                        _entryString += "-";
                 }
-                prevKey = key;
+
+                //handling other operations on string
+                if (curKey == Keys.Back && _entryString.Length > 0)
+                    _entryString = _entryString.Remove(_entryString.Length - 1, 1);
+
+                if (curKey == Keys.Enter && _entryString.Length > 0)
+                {
+                    Global.HighScore.Add(_entryString, Global.HighScorePoints);
+                    Global.Controller.Pop(Controller.EGameStates.HighScoreEnter);
+                }
+
+                _elapsedTimeMilliseconds = 0;
             }
         }
 
