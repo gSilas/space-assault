@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Space_Assault.Utils;
 
 namespace Space_Assault.Entities.Weapon
 {
     public abstract class AWeapon
     {
         //draw
-        public List<AAmmunition> ListOfBullets;
+        protected List<Bullet> ListOfBullets;
 
         protected Model _bulletModel;
 
@@ -22,7 +21,7 @@ namespace Space_Assault.Entities.Weapon
 
         public void Update(GameTime gameTime)
         {
-            foreach (AAmmunition bullet in ListOfBullets)
+            foreach (Bullet bullet in ListOfBullets)
             {
                 bullet.Update(gameTime);
             }
@@ -30,7 +29,7 @@ namespace Space_Assault.Entities.Weapon
 
         public void Draw()
         {
-            foreach (AAmmunition bullet in ListOfBullets)
+            foreach (Bullet bullet in ListOfBullets)
             {
                 bullet.Draw();
             }

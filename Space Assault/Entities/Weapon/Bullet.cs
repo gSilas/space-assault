@@ -4,22 +4,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Space_Assault.Entities.Weapon
 {
-    public class AAmmunition : AEntity
+    public class Bullet : AEntity
     {
         private Vector3 _direction;
         private float _travelspeed;
 
-        public AAmmunition(Vector3 position, Vector3 direction, float travelspeed)
+        public Bullet(Vector3 position, Vector3 direction, float travelspeed, Model model)
         {
             Position = position;
             _direction = direction;
-            _direction.Normalize();
             _travelspeed = travelspeed;
+            Model = model;
         }
-
-        public override void Initialize()
+        public override void Update(GameTime gameTime)
         {
-            _direction.Normalize();
+            Position += _direction*_travelspeed;
         }
 
         public override void LoadContent()
@@ -27,15 +26,9 @@ namespace Space_Assault.Entities.Weapon
             throw new NotImplementedException();
         }
 
-        public void LoadContent(Model model)
+        public override void Initialize()
         {
-            Model = model;
+            throw new NotImplementedException();
         }
-
-        public override void Update(GameTime gameTime)
-        {
-            Position += _direction*_travelspeed;
-        }
-
     }
 }

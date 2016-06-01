@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,20 +9,19 @@ namespace Space_Assault.Entities.Weapon
     {
         public override void Initialize()
         {
-            ListOfBullets = new List<AAmmunition>();
+            ListOfBullets = new List<Bullet>();
         }
 
         public override void LoadContent()
         {
-            _bulletModel = Global.ContentManager.Load<Model>("Models/bullet");
+            _bulletModel = Global.ContentManager.Load<Model>("Models/asteroid");
         }
 
         public override void Shoot(Vector3 position, Vector3 direction, float travelspeed)
         {
-            RailBullet bullet = new RailBullet(position, direction, travelspeed);
-            bullet.LoadContent(_bulletModel);
-            bullet.Initialize();
+            Bullet bullet = new Bullet(position, direction, travelspeed, _bulletModel);
             ListOfBullets.Add(bullet);
+            Console.WriteLine(ListOfBullets.Count.ToString());
         }
     }
 }

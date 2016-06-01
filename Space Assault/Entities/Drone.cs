@@ -103,9 +103,12 @@ namespace Space_Assault.Entities
             {
                _gun.Shoot(Position,RotationMatrix.Forward, 1f);
             }
-            Position -= RotationMatrix.Forward * _moveSpeedModifier;
 
             _gun.Update(gameTime);
+
+            Position -= RotationMatrix.Forward * _moveSpeedModifier;
+
+
             //TODO: health, armor update
         }
 
