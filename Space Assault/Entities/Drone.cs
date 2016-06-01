@@ -22,7 +22,7 @@ namespace Space_Assault.Entities
         private float armor;
         private SoundEffectInstance _droneMoveSound;
         private List<SoundEffect> soundEffects;
-        Railgun test = new Railgun(10, 100, 100, 5);
+        Railgun test=new Railgun(100,100,100,2);
 
         public Drone(Vector3 position)
         {
@@ -100,7 +100,7 @@ namespace Space_Assault.Entities
             }
             if (Keyboard.GetState().IsKeyDown(Keys.F))
             {
-                test.shoot(Position,Vector3.Backward, 50);
+               test.shoot(Position,Vector3.Backward, 50);
             }
             Position -= RotationMatrix.Forward * _moveSpeedModifier;
 

@@ -1,62 +1,80 @@
 ﻿
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Space_Assault.Entities.Weapon
 {
     class Railgun: AWeapon
     {
-        
-        public Railgun(uint damage, uint schussfrequenz, uint maxoverheat, uint overheatpershot){
+        private uint _damage;
+        private readonly uint _schussfrequenz;
+        private uint _cooldownOnShoot = 100;
+        private bool _isReadyToShoot = true;
+        //Overheat
+        private uint _overheat = 0;
+        private readonly uint _maxOverheat;
+        private readonly uint _overheatPerShot;
+        private bool _isOverheat = false;
 
-            Damage = damage;
-            Schussfrequenz = schussfrequenz;
-          
-            MaxOverheat = maxoverheat;
-            OverheatPerShot = overheatpershot;
+
+        public Railgun(uint damage, uint schussfrequenz, uint maxoverheat, uint overheatpershot)
+        {
+            LoadContent(Model = Global.ContentManager.Load<Model>("Models/asteroid"));
+            _damage = damage;
+            _schussfrequenz = schussfrequenz;
+            _maxOverheat = maxoverheat;
+            _overheatPerShot = overheatpershot;
         }
+
+
 
 
         public override void shoot(Vector3 position, Vector3 direction, float travelspeed)
         {
-            NormalBullet bullet = new NormalBullet(position, direction, travelspeed);
-            List<AAmmunition> test = new List<AAmmunition>();
-            if (Overheat < MaxOverheat && IsOverheat==false && IsReadyToShoot==true)
+
+            AAmmunition bullet = new AAmmunition(position, direction, travelspeed);
+
+
+            ListOfBullets = new List<AAmmunition>();
+            if (_overheat < _maxOverheat && _isOverheat==false && _isReadyToShoot==true)
             {
                
-                test.Add(bullet);
-                Overheat += OverheatPerShot;
-
+                ListOfBullets.Add(bullet);
+                _overheat += OverheatPerShot;
+                
                 //wenn die frequenz 100 ist, hat die waffe keinen cooldown) 
-                if (Schussfrequenz != 100)
+                if (_schussfrequenz != 100)
                 {
-                    CooldownOnShoot = 0;
-                    IsReadyToShoot = false;
+                    _cooldownOnShoot = 0;
+                    _isReadyToShoot = false;
                 }
                     
             }
             else
             {
-                if (Overheat > MaxOverheat)
+                if (_overheat > _maxOverheat)
                 {
-                    IsOverheat = true;
-                    Overheat = Overheat - 3*OverheatPerShot;
-                    if (Overheat <= 0)
-                        IsOverheat = false;
+                    _isOverheat = true;
+                    _overheat = _overheat - 3*_overheatPerShot;
+                    if (_overheat <= 0)
+                        _isOverheat = false;
                 }
                 
-                Overheat = Overheat - 2 * OverheatPerShot;
-                if (IsReadyToShoot == false)
+                _overheat = _overheat - 2 * _overheatPerShot;
+                if (_isReadyToShoot == false)
                 {
-                    CooldownOnShoot += Schussfrequenz;
-                    if (CooldownOnShoot >= 100)
-                        IsReadyToShoot = true;
+                    _cooldownOnShoot += _schussfrequenz;
+                    if (_cooldownOnShoot >= 100)
+                        _isReadyToShoot = true;
                 }
              
 
             }
             
-            Draw(test);
+            Draw();
         }
+
+
     }
 }

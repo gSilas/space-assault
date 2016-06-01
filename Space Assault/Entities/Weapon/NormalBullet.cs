@@ -10,7 +10,7 @@ namespace Space_Assault.Entities.Weapon
 
         public override void LoadContent()
         {
-            Model = Global.ContentManager.Load<Model>("Models/bullet");
+            Model = Global.ContentManager.Load<Model>("Models/asteroid");
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Space_Assault.Entities.Weapon
 {
-    public abstract class AAmmunition : AEntity
+    public class AAmmunition : AEntity
     {
        // private Vector3 _position;
         private Vector3 _direction;
@@ -23,6 +25,11 @@ namespace Space_Assault.Entities.Weapon
         public override void Initialize()
         {
             _direction.Normalize();
+        }
+
+        public override void LoadContent()
+        {
+            Model = Global.ContentManager.Load<Model>("Models/asteroid");
         }
 
         public override void Update(GameTime gameTime)
