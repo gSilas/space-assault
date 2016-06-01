@@ -47,8 +47,8 @@
     <Compile Include="Entities\Asteroid.cs" />
     <Compile Include="Entities\Weapon\AAmmunition.cs" />
     <Compile Include="Entities\Weapon\AWeapon.cs" />
-    <Compile Include="Entities\Weapon\NormalBullet.cs" />
-    <Compile Include="Entities\Weapon\Railgun.cs" />
+    <Compile Include="Entities\Weapon\RailBullet.cs" />
+    <Compile Include="Entities\Weapon\RailGun.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="States\HighScoreEnter.cs" />
     <Compile Include="States\MenuBackground.cs" />

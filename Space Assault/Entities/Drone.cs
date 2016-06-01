@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Space_Assault.Entities.Weapon;
 using System.Collections.Generic;
 
 /// <summary>
@@ -20,7 +21,7 @@ namespace Space_Assault.Entities
         private float armor;
         private SoundEffectInstance _droneMoveSound;
         private List<SoundEffect> soundEffects;
-
+        private AWeapon _gun;
 
         public Drone(Vector3 position)
         {
@@ -37,6 +38,8 @@ namespace Space_Assault.Entities
             health = 100;
             armor = 100;
             soundEffects = new List<SoundEffect>();
+            _gun = new RailGun();
+            _gun.Initialize();
         }
 
         public void Reset()
@@ -55,7 +58,7 @@ namespace Space_Assault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
             soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/droneMovement")); //only placeholder for now
-
+            _gun.LoadContent();
             // Play that can be manipulated after the fact
             _droneMoveSound = soundEffects[0].CreateInstance();
             _droneMoveSound.Volume = 0.1f;
@@ -96,9 +99,13 @@ namespace Space_Assault.Entities
             {
                 _moveSpeedModifier = 0.0f;
             }
-
+            if (Keyboard.GetState().IsKeyDown(Keys.F))
+            {
+               _gun.Shoot(Position,RotationMatrix.Forward, 1f);
+            }
             Position -= RotationMatrix.Forward * _moveSpeedModifier;
 
+            _gun.Update(gameTime);
             //TODO: health, armor update
         }
 
@@ -120,6 +127,23 @@ namespace Space_Assault.Entities
                     RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
                 }
             }
+        }
+
+        public override void Draw()
+        {
+            foreach (var mesh in Model.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.EnableDefaultLighting();
+                    effect.PreferPerPixelLighting = true;
+                    effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
+                    effect.View = Global.Camera.ViewMatrix;
+                    effect.Projection = Global.Camera.ProjectionMatrix;
+                }
+                mesh.Draw();
+            }
+            _gun.Draw();
         }
     }
 }

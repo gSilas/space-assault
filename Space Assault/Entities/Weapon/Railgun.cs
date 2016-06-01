@@ -1,56 +1,28 @@
-﻿using Microsoft.Xna.Framework;
+﻿
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Space_Assault.Entities.Weapon
 {
-    class Railgun: AWeapon
+    class RailGun: AWeapon
     {
-        
-        public Railgun(uint damage, uint schussfrequenz, uint maxoverheat, uint overheatpershot){
-
-            Damage = damage;
-            Schussfrequenz = schussfrequenz;
-          
-            MaxOverheat = maxoverheat;
-            OverheatPerShot = overheatpershot;
+        public override void Initialize()
+        {
+            ListOfBullets = new List<AAmmunition>();
         }
 
-
-        public override void shoot(Vector3 position, Vector3 direction, float travelspeed)
+        public override void LoadContent()
         {
+            _bulletModel = Global.ContentManager.Load<Model>("Models/bullet");
+        }
 
-            if (Overheat < MaxOverheat && IsOverheat==false && IsReadyToShoot==true)
-            {
-                NormalBullet bullet = new NormalBullet(position, direction, travelspeed);
-                ListOfBullets.Add(bullet);
-                Overheat += OverheatPerShot;
-                //wenn die frequenz 100 ist, hat die waffe keinen cooldown) 
-                if (Schussfrequenz != 100)
-                {
-                    CooldownOnShoot = 0;
-                    IsReadyToShoot = false;
-                }
-                    
-            }
-            else
-            {
-                if (Overheat > MaxOverheat)
-                {
-                    IsOverheat = true;
-                    Overheat = Overheat - 3*OverheatPerShot;
-                    if (Overheat <= 0)
-                        IsOverheat = false;
-                }
-                
-                Overheat = Overheat - 2 * OverheatPerShot;
-                if (IsReadyToShoot == false)
-                {
-                    CooldownOnShoot += Schussfrequenz;
-                    if (CooldownOnShoot >= 100)
-                        IsReadyToShoot = true;
-                }
-             
-
-            }
+        public override void Shoot(Vector3 position, Vector3 direction, float travelspeed)
+        {
+            RailBullet bullet = new RailBullet(position, direction, travelspeed);
+            bullet.LoadContent(_bulletModel);
+            bullet.Initialize();
+            ListOfBullets.Add(bullet);
         }
     }
 }

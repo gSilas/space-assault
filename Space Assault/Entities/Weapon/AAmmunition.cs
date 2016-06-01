@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Space_Assault.Entities.Weapon
 {
-    public abstract class AAmmunition : AEntity
+    public class AAmmunition : AEntity
     {
-       // private Vector3 _position;
         private Vector3 _direction;
         private float _travelspeed;
 
@@ -12,12 +13,8 @@ namespace Space_Assault.Entities.Weapon
         {
             Position = position;
             _direction = direction;
-            _travelspeed = travelspeed;
-
-            _direction = direction;
             _direction.Normalize();
             _travelspeed = travelspeed;
-
         }
 
         public override void Initialize()
@@ -25,9 +22,19 @@ namespace Space_Assault.Entities.Weapon
             _direction.Normalize();
         }
 
+        public override void LoadContent()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LoadContent(Model model)
+        {
+            Model = model;
+        }
+
         public override void Update(GameTime gameTime)
         {
-            Position += _direction;
+            Position += _direction*_travelspeed;
         }
 
     }
