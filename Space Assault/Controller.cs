@@ -52,29 +52,38 @@ namespace Space_Assault
         }
 
         //Removes an Gamestate from Draw and Update vectors
-        public void Pop(IGameState gameState)
+        public void Pop(EGameStates gameState)
         {
-            Console.WriteLine("Pop!\n");
-            gameState.Kill();
-            if (gameState is IUpdateableState)
+            IGameState state = Switch(gameState);
+
+            foreach (var states in _currentGameStates)
             {
-                IUpdateableState updateable = gameState as IUpdateableState;
+                if (state.Equals(states))
+                {
+                    state = states;
+                    break;
+                }
+            }
+
+            Console.WriteLine("Pop!\n");
+            state.Kill();
+            if (state is IUpdateableState)
+            {
+                IUpdateableState updateable = state as IUpdateableState;
                 _removeUpdateable.Add(updateable);
                 _updateClear = true;
             }
-            if (gameState is IDrawableState)
+            if (state is IDrawableState)
             {
-                IDrawableState drawable = gameState as IDrawableState;
+                IDrawableState drawable = state as IDrawableState;
                 _removeDrawable.Add(drawable);
                 _drawClear = true;
             }
         }
 
-        //Adds a Gamestate to the list of initialized Gamestates and adds it to update and draw vectors
-        public void Push(EGameStates gameState)
+        public IGameState Switch(EGameStates gameState)
         {
             IGameState state = new MainMenu();
-
             switch (gameState)
             {
                 case EGameStates.MainMenu:
@@ -99,6 +108,13 @@ namespace Space_Assault
                     state = new MainMenu();
                     break;
             }
+            return state;
+        }
+
+        //Adds a Gamestate to the list of initialized Gamestates and adds it to update and draw vectors
+        public void Push(EGameStates gameState)
+        {
+            IGameState state = Switch(gameState);
 
             if (!_currentGameStates.Contains(state))
             {
