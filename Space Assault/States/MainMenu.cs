@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Input;
-using Space_Assault.Entities;
-using Space_Assault.Utils;
+using Space_Assault.UI;
 
 namespace Space_Assault.States
 {

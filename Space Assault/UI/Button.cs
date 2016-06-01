@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Space_Assault.Utils;
 
-namespace Space_Assault.Entities
+namespace Space_Assault.UI
 {
     class Button
     {
