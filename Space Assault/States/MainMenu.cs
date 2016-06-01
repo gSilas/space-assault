@@ -66,12 +66,12 @@ namespace Space_Assault.States
             if (_gameButton.Pressed)
             {
                 Global.Controller.Push(Controller.EGameStates.EndlessModeScene);
-                Global.Controller.Pop(this);
+                Global.Controller.Pop(Controller.EGameStates.MenuBackground);
             }
             if (_highScoreButton.Pressed)
             {
                 Global.Controller.Push(Controller.EGameStates.HighScore);
-                Global.Controller.Pop(this);
+                Global.Controller.Pop(Controller.EGameStates.MenuBackground);
             }
         }
 
