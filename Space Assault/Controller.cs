@@ -64,7 +64,7 @@ namespace Space_Assault
                 }
             }
 
-            Console.WriteLine("Pop!\n");
+            Console.WriteLine("Pop! " + gameState.ToString());
             state.Kill();
             if (state is IUpdateableState)
             {
@@ -135,7 +135,7 @@ namespace Space_Assault
 
             if (!_currentGameStates.Contains(state))
             {
-                Console.WriteLine("Creating new gameState!\n");
+                Console.WriteLine("Creating new gameState! " + gameState.ToString());
                 state.Initialize();
                 state.LoadContent();
                 _currentGameStates.Add(state);
@@ -157,7 +157,7 @@ namespace Space_Assault
             }
             else
             {
-                Console.WriteLine("State already existed! Added state to Update and Draw List!\n");
+                Console.WriteLine("State " + gameState.ToString() + " already existed! Added state to Update and Draw List!\n");
                 state.Resume();
                 if (state is IDrawableState)
                 {
