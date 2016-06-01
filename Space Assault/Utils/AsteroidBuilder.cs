@@ -101,6 +101,10 @@ namespace Space_Assault.Utils
                     ast.LoadContent(_model);
                     astList.Add(ast);
                 }
+            foreach (var ast in astList)
+            {
+                ast.Position.Z *= (int) t+1;
+            }
                 return astList;
         }
 
