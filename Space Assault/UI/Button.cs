@@ -60,10 +60,10 @@ namespace Space_Assault.UI
 
         public void Draw()
         {
-            //if (_texture != null)
-            Global.SpriteBatch.Draw(_texture, _rect, _color);
-            //else
-            // Global.SpriteBatch.DrawString(_font, _label, _vector, Color.Black);
+            if (_texture != null)
+                Global.SpriteBatch.Draw(_texture, _rect, _color);
+            else
+                Global.SpriteBatch.DrawString(_font, _label, _vector, Color.Black);
         }
     }
 }

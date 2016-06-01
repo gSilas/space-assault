@@ -41,6 +41,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Effects\Particle.cs" />
+    <Compile Include="Effects\ParticleEngine.cs" />
     <Compile Include="Entities\AEntity.cs" />
     <Compile Include="Entities\Asteroid.cs" />
     <Compile Include="Entities\Weapon\AAmmunition.cs" />

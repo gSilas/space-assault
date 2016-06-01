@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Space_Assault.UI;
 using System.Collections.Generic;
+
 
 namespace Space_Assault.States
 {
@@ -69,7 +69,6 @@ namespace Space_Assault.States
 
             _gameButton.Draw();
             _highScoreButton.Draw();
-
         }
 
         //#################################
@@ -78,8 +77,6 @@ namespace Space_Assault.States
 
         public void Update(GameTime elapsedTime)
         {
-            //btnPlay.Update();
-
             _gameButton.Update();
             _highScoreButton.Update();
 

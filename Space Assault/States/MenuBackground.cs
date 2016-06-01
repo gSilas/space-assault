@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using Space_Assault.Entities;
 using Space_Assault.Utils;
+using Space_Assault.Effects;
+using Microsoft.Xna.Framework.Graphics;
 
 /// <summary>
 /// This Gamestate draws the background that can be used for every gamestate that is some type of menu and not gameplay
@@ -12,6 +14,12 @@ namespace Space_Assault.States
 {
     class MenuBackground : IGameState, IUpdateableState, IDrawableState
     {
+
+        //The particle engine object that we will manage our particles
+        private ParticleEngine particleEngine;
+        //The emitter for the particles. Just a point emitter
+        private Vector2 emitter = new Vector2(Global.GraphicsManager.PreferredBackBufferWidth / 2, Global.GraphicsManager.PreferredBackBufferHeight / 2);
+
         // General
         private SoundEffectInstance _stationSound;
 
@@ -47,10 +55,18 @@ namespace Space_Assault.States
             _stationSound.Play();
 
             _station.LoadContent();
+
+            // Load and add our particle texture to the Particle Engine
+            Texture2D texture = Global.ContentManager.Load<Texture2D>("Effects/particle_texture");
+            particleEngine = new ParticleEngine(texture, emitter);
         }
 
         public void Draw(GameTime elapsedTime)
         {
+            particleEngine.Update();
+
+            // Drawing the particles
+            particleEngine.Draw(Global.SpriteBatch);
             _station.Draw();
         }
 
