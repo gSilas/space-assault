@@ -19,6 +19,9 @@ namespace Space_Assault
 
         public static GraphicsDeviceManager GraphicsManager;
 
+        public static int PreferredBackBufferHeight = 768;
+        public static int PreferredBackBufferWidth = 1366;
+
         public static Controller Controller;
 
         public static Camera Camera;

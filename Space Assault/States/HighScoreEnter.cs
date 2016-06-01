@@ -12,7 +12,7 @@ namespace Space_Assault.States
 
         public void Initialize()
         {
-            pos = new Vector2(1000,50);
+            pos = new Vector2(100,Global.PreferredBackBufferHeight - 100);
         }
 
         public void LoadContent()
