@@ -15,7 +15,8 @@ namespace Space_Assault.States
 
         // General
         List<Button> Buttons = new List<Button>();
-        private SpriteFont font;
+        private Button _gameButton;
+        private Button _highScoreButton;
 
         //#################################
         // Constructor
@@ -31,7 +32,9 @@ namespace Space_Assault.States
         public void LoadContent()
         {
             //Button
-            //btnPlay = new Button(Global.ContentManager.Load<Texture2D>("UI/play"));
+            _gameButton = new Button(Global.ContentManager.Load<Texture2D>("UI/play"), new Vector2(150, 150));
+            _highScoreButton = new Button(Global.ContentManager.Load<Texture2D>("UI/highscore"), new Vector2(150, 250));
+            
             int init_x = 100;
             int init_y = 100;
             Buttons.Add(new Button("Arial", "StartGame", init_x, init_y));
@@ -57,11 +60,15 @@ namespace Space_Assault.States
         //#################################
         public void Draw(GameTime elapsedTime)
         {
+            /*
             foreach (var button in Buttons)
             {
-                button.Draw(Global.SpriteBatch);
+                button.Draw();
             }
+            */
 
+            _gameButton.Draw();
+            _highScoreButton.Draw();
 
         }
 
@@ -73,20 +80,19 @@ namespace Space_Assault.States
         {
             //btnPlay.Update();
 
-            //Pop test
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                Global.Controller.Pop(this);
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            _gameButton.Update();
+            _highScoreButton.Update();
+
+            if (_gameButton.Pressed)
             {
                 Global.Controller.Push(Controller.EGameStates.EndlessModeScene);
-                Global.Controller.Pop(this);
+                Global.Controller.Pop(Controller.EGameStates.MenuBackground);
+                Global.Controller.Pop(Controller.EGameStates.MainMenu);
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.H))
+            if (_highScoreButton.Pressed)
             {
                 Global.Controller.Push(Controller.EGameStates.HighScore);
-                Global.Controller.Pop(this);
+                Global.Controller.Pop(Controller.EGameStates.MainMenu);
             }
         }
 
