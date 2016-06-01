@@ -10,7 +10,13 @@ namespace Space_Assault.Entities.Weapon
         //draw
         protected List<Bullet> ListOfBullets;
 
-        protected Model _bulletModel;
+        protected Model BulletModel;
+
+        protected TimeSpan CoolDownTime;
+
+        protected TimeSpan GlobalTimeSpan;
+
+        protected TimeSpan LastShotTime;
 
         public abstract void Initialize();
 
@@ -21,7 +27,7 @@ namespace Space_Assault.Entities.Weapon
 
         public void Update(GameTime gameTime)
         {
-
+            GlobalTimeSpan = gameTime.TotalGameTime;
             foreach (Bullet bullet in ListOfBullets)
             {
                 bullet.Update(gameTime);

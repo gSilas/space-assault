@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,17 +11,24 @@ namespace Space_Assault.Entities.Weapon
         public override void Initialize()
         {
             ListOfBullets = new List<Bullet>();
+            GlobalTimeSpan = TimeSpan.FromSeconds(0);
+            LastShotTime = TimeSpan.FromSeconds(0);
+            CoolDownTime = TimeSpan.FromMilliseconds(300d);
         }
 
         public override void LoadContent()
         {
-            _bulletModel = Global.ContentManager.Load<Model>("Models/asteroid");
+            BulletModel = Global.ContentManager.Load<Model>("Models/bullet");
         }
 
         public override void Shoot(Vector3 position, Vector3 direction, float travelspeed)
         {
-            ListOfBullets.Add(new Bullet(position, direction, travelspeed, _bulletModel));
-            //Console.WriteLine(ListOfBullets.Count.ToString());
+            if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
+            {
+                ListOfBullets.Add(new Bullet(position, direction, travelspeed, BulletModel));
+                LastShotTime = GlobalTimeSpan;
+            }
+
         }
     }
 }

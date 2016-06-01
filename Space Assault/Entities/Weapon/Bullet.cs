@@ -15,11 +15,9 @@ namespace Space_Assault.Entities.Weapon
             _direction = direction;
             _travelspeed = travelspeed;
             Model = model;
-            RotationMatrix = Matrix.Identity;
         }
         public override void Update(GameTime gameTime)
         {
-            Console.WriteLine("Bullet Update called");
             Position -= _direction*_travelspeed;
         }
 
