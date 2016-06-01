@@ -14,8 +14,6 @@ namespace Space_Assault.States
     {
         HighScoreList highScore;
 
-        public bool IsStopped { get; set; }
-
         public void Initialize()
         {
             highScore = new HighScoreList();
@@ -38,28 +36,29 @@ namespace Space_Assault.States
         {
             int zeilenAbstand = 50;
             int spaltenAbstand = 200;
-            int spawnPointX = 400;
-            int spawnPointY = 100;
+            int spawnPointX = 80;
+            int spawnPointY = 80;
             for(int i = 0; i < highScore.listLength; i++)
             {
-                Global.SpriteBatch.DrawString(Global.Arial, (i+1) + ". Platz", new Vector2(spawnPointX, spawnPointY+i*zeilenAbstand), Color.Black);
-                Global.SpriteBatch.DrawString(Global.Arial, highScore.scoresList[i].Name , new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.Black);
-                Global.SpriteBatch.DrawString(Global.Arial, (highScore.scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand*2, spawnPointY + i * zeilenAbstand), Color.Black);
+                Global.SpriteBatch.DrawString(Global.Arial, (i+1) + ". Platz", new Vector2(spawnPointX, spawnPointY+i*zeilenAbstand), Color.BurlyWood);
+                Global.SpriteBatch.DrawString(Global.Arial, highScore.scoresList[i].Name , new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
+                Global.SpriteBatch.DrawString(Global.Arial, (highScore.scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand*2, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
             }
         }
-
-        /// <summary>
-        /// GameState stuff
-        /// </summary>
         public void Kill()
         {
-
+            IsStopped = true;
         }
 
         public void Resume()
         {
-
+            if (IsStopped)
+            {
+                IsStopped = false;
+            }
         }
+
+        public bool IsStopped { get; set; }
 
         public bool Equals(IGameState other)
         {
@@ -75,5 +74,6 @@ namespace Space_Assault.States
         {
             return other.GetType() == this.GetType();
         }
+
     }
 }

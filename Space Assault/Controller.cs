@@ -9,9 +9,10 @@ namespace Space_Assault
 {
     public class Controller
     {
-		// Holds all possible gamestates
+        // Holds all possible gamestates
         public enum EGameStates
         {
+            MenuBackground,
             MainMenu,
             EndlessModeScene,
             TutorialScene,
@@ -19,7 +20,7 @@ namespace Space_Assault
             OptionsMenu,
             HighScore
         }
-		//Current GameStates,Drawables,Updateables has to be initialized
+        //Current GameStates,Drawables,Updateables has to be initialized
         //public IGameState _currentGameState;
 
         private bool _updateClear;
@@ -45,6 +46,7 @@ namespace Space_Assault
             _removeUpdateable = new List<IUpdateableState>();
             _updateClear = false;
             _drawClear = false;
+            Push(EGameStates.MenuBackground);
             Push(EGameStates.MainMenu);
 
         }
@@ -72,11 +74,11 @@ namespace Space_Assault
         public void Push(EGameStates gameState)
         {
             IGameState state = new MainMenu();
-            
+
             switch (gameState)
             {
                 case EGameStates.MainMenu:
-                    state = new MainMenu();                
+                    state = new MainMenu();
                     break;
                 case EGameStates.EndlessModeScene:
                     state = new EndlessMode();
@@ -89,6 +91,9 @@ namespace Space_Assault
                     break;
                 case EGameStates.HighScore:
                     state = new HighScore();
+                    break;
+                case EGameStates.MenuBackground:
+                    state = new MenuBackground();
                     break;
                 default:
                     state = new MainMenu();
@@ -156,7 +161,7 @@ namespace Space_Assault
 
         public void Update(GameTime elapsedTime)
         {
-            if (_activeUpdateable.Count == 0 && (elapsedTime.ElapsedGameTime.Seconds%30) == 0)
+            if (_activeUpdateable.Count == 0 && (elapsedTime.ElapsedGameTime.Seconds % 30) == 0)
                 Console.WriteLine("Nothing to update! \n");
 
             foreach (var updateable in _activeUpdateable)
@@ -175,18 +180,18 @@ namespace Space_Assault
                 _removeUpdateable.Clear();
                 _updateClear = false;
                 Console.WriteLine("Updateclear done! \n");
-            }        
+            }
         }
 
         public void Draw(GameTime elapsedTime)
         {
-            if(_activeDrawable.Count == 0 && (elapsedTime.ElapsedGameTime.Seconds % 30) == 0)
+            if (_activeDrawable.Count == 0 && (elapsedTime.ElapsedGameTime.Seconds % 30) == 0)
                 Console.WriteLine("Nothing to draw! \n");
 
             foreach (var drawable in _activeDrawable)
             {
                 drawable.Draw(elapsedTime);
-                
+
             }
             if (_drawClear)
             {
