@@ -19,18 +19,18 @@ namespace Space_Assault.Utils
 
     public class HighScoreList
     {
-        public int listLength;
-        public string filePath;
-        public HighscoreEntity[] scoresList;
+        public int _listLength;
+        public string _filePath;
+        public HighscoreEntity[] _scoresList;
 
         public HighScoreList()
         {
-            listLength = 10;
-            scoresList = new HighscoreEntity[listLength];
-            filePath = "HighScoreList.xml";
+            _listLength = 10;
+            _scoresList = new HighscoreEntity[_listLength];
+            _filePath = "HighScoreList.xml";
 
             //wenn die Datei nicht existiert erstelle sie
-            if (File.Exists(filePath))
+            if (File.Exists(_filePath))
             {
                 LoadFile();
             }
@@ -53,9 +53,9 @@ namespace Space_Assault.Utils
         public void LoadFile()
         {
             XmlDocument highScoreDoc = new XmlDocument();
-            highScoreDoc.Load(filePath);
+            highScoreDoc.Load(_filePath);
 
-            scoresList = new HighscoreEntity[highScoreDoc.ChildNodes[0].ChildNodes.Count];
+            _scoresList = new HighscoreEntity[highScoreDoc.ChildNodes[0].ChildNodes.Count];
             int i = 0;
             HighscoreEntity currentEntry;
             foreach (XmlNode entry in highScoreDoc.ChildNodes[0].ChildNodes)
@@ -65,7 +65,7 @@ namespace Space_Assault.Utils
                     currentEntry = new HighscoreEntity();
                     currentEntry.Name = entry.ChildNodes[0].InnerText;
                     currentEntry.Points = int.Parse(entry.ChildNodes[1].InnerText);
-                    scoresList[i] = currentEntry;
+                    _scoresList[i] = currentEntry;
                     i++;
                 }
             }
@@ -80,7 +80,7 @@ namespace Space_Assault.Utils
             int i = 1;
             XmlElement curNum, curName, curPoints;
 
-            foreach (HighscoreEntity entry in scoresList)
+            foreach (HighscoreEntity entry in _scoresList)
             {
                 curNum = highScoreDoc.CreateElement("Platz" + i);
                 curName = highScoreDoc.CreateElement("Name");
@@ -96,7 +96,7 @@ namespace Space_Assault.Utils
 
                 i++;
             }
-            highScoreDoc.Save(filePath);
+            highScoreDoc.Save(_filePath);
 
         }
 
@@ -108,17 +108,17 @@ namespace Space_Assault.Utils
             newEntry.Points = Points;
 
             // neuer eintrag ist besser als letzter platz
-            if (scoresList[scoresList.Length - 1].Points < newEntry.Points)
-                scoresList[scoresList.Length - 1] = newEntry;
+            if (_scoresList[_scoresList.Length - 1].Points < newEntry.Points)
+                _scoresList[_scoresList.Length - 1] = newEntry;
 
             //liste sortieren
-            for (int i = scoresList.Length - 2; i >= 0; i--)
+            for (int i = _scoresList.Length - 2; i >= 0; i--)
             {
-                if (scoresList[i].Points < scoresList[i + 1].Points)
+                if (_scoresList[i].Points < _scoresList[i + 1].Points)
                 {
-                    HighscoreEntity tempEntity = scoresList[i + 1];
-                    scoresList[i + 1] = scoresList[i];
-                    scoresList[i] = tempEntity;
+                    HighscoreEntity tempEntity = _scoresList[i + 1];
+                    _scoresList[i + 1] = _scoresList[i];
+                    _scoresList[i] = tempEntity;
                 }
             }
 

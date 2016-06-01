@@ -21,6 +21,7 @@ namespace Space_Assault.Entities.Weapon
 
         public void Update(GameTime gameTime)
         {
+
             foreach (Bullet bullet in ListOfBullets)
             {
                 bullet.Update(gameTime);

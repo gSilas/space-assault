@@ -19,9 +19,8 @@ namespace Space_Assault.Entities.Weapon
 
         public override void Shoot(Vector3 position, Vector3 direction, float travelspeed)
         {
-            Bullet bullet = new Bullet(position, direction, travelspeed, _bulletModel);
-            ListOfBullets.Add(bullet);
-            Console.WriteLine(ListOfBullets.Count.ToString());
+            ListOfBullets.Add(new Bullet(position, direction, travelspeed, _bulletModel));
+            //Console.WriteLine(ListOfBullets.Count.ToString());
         }
     }
 }

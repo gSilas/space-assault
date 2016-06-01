@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Space_Assault.Entities.Weapon;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 ///  Movement, Schießen, Health, Sterben, neu Spawnen.
@@ -20,7 +21,7 @@ namespace Space_Assault.Entities
         private float health;
         private float armor;
         private SoundEffectInstance _droneMoveSound;
-        private List<SoundEffect> soundEffects;
+        private List<SoundEffect> _soundEffects;
         private AWeapon _gun;
 
         public Drone(Vector3 position)
@@ -37,7 +38,7 @@ namespace Space_Assault.Entities
             _moveSpeedBackward = -0.5f;
             health = 100;
             armor = 100;
-            soundEffects = new List<SoundEffect>();
+            _soundEffects = new List<SoundEffect>();
             _gun = new RailGun();
             _gun.Initialize();
         }
@@ -57,10 +58,10 @@ namespace Space_Assault.Entities
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
-            soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/droneMovement")); //only placeholder for now
+            _soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/droneMovement")); //only placeholder for now
             _gun.LoadContent();
             // Play that can be manipulated after the fact
-            _droneMoveSound = soundEffects[0].CreateInstance();
+            _droneMoveSound = _soundEffects[0].CreateInstance();
             _droneMoveSound.Volume = 0.1f;
             _droneMoveSound.IsLooped = true;
         }
@@ -99,16 +100,17 @@ namespace Space_Assault.Entities
             {
                 _moveSpeedModifier = 0.0f;
             }
+            Position -= RotationMatrix.Forward * _moveSpeedModifier;
+
+            //shooting the gun
             if (Keyboard.GetState().IsKeyDown(Keys.F))
             {
-               _gun.Shoot(Position,RotationMatrix.Forward, 1f);
+               _gun.Shoot(Position, RotationMatrix.Forward, 0.2f);
             }
 
             _gun.Update(gameTime);
 
-            Position -= RotationMatrix.Forward * _moveSpeedModifier;
-
-
+       
             //TODO: health, armor update
         }
 
@@ -134,6 +136,8 @@ namespace Space_Assault.Entities
 
         public override void Draw()
         {
+            _gun.Draw();
+
             foreach (var mesh in Model.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
@@ -146,7 +150,7 @@ namespace Space_Assault.Entities
                 }
                 mesh.Draw();
             }
-            _gun.Draw();
+
         }
     }
 }

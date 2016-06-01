@@ -35,11 +35,11 @@ namespace Space_Assault.States
             int spaltenAbstand = 200;
             int spawnPointX = 80;
             int spawnPointY = 80;
-            for(int i = 0; i < highScore.listLength; i++)
+            for(int i = 0; i < highScore._listLength; i++)
             {
                 Global.SpriteBatch.DrawString(Global.Arial, (i+1) + ". Platz", new Vector2(spawnPointX, spawnPointY+i*zeilenAbstand), Color.BurlyWood);
-                Global.SpriteBatch.DrawString(Global.Arial, highScore.scoresList[i].Name , new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
-                Global.SpriteBatch.DrawString(Global.Arial, (highScore.scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand*2, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
+                Global.SpriteBatch.DrawString(Global.Arial, highScore._scoresList[i].Name , new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
+                Global.SpriteBatch.DrawString(Global.Arial, (highScore._scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand*2, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
             }
         }
         public void Kill()

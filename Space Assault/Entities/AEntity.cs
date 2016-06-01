@@ -24,7 +24,7 @@ namespace Space_Assault.Entities
         public Matrix RotationMatrix
         {
             get { return _rotationMatrix; }
-            protected set { _rotationMatrix = value; }
+            set { _rotationMatrix = value; }
         }
 
         public abstract void Update(GameTime gameTime);
