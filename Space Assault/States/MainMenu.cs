@@ -17,7 +17,8 @@ namespace Space_Assault.States
         //#################################
 
         // General
-        Button btnPlay;
+        private Button _gameButton;
+        private Button _highScoreButton;
 
         //#################################
         // Constructor
@@ -33,7 +34,8 @@ namespace Space_Assault.States
         public void LoadContent()
         {
             //Button
-            //btnPlay = new Button(Global.ContentManager.Load<Texture2D>('Button'), _gm.GraphicsDevice);
+            _gameButton = new Button(Global.ContentManager.Load<Texture2D>("Art/game_button"), new Vector2(0, 0));
+            _highScoreButton = new Button(Global.ContentManager.Load<Texture2D>("Art/highscore_button"), new Vector2(75, 0));
         }
 
         public void Kill()
@@ -53,6 +55,8 @@ namespace Space_Assault.States
         //#################################
         public void Draw(GameTime elapsedTime)
         {
+            _gameButton.Draw();
+            _highScoreButton.Draw();
         }
 
         //#################################
@@ -61,17 +65,12 @@ namespace Space_Assault.States
 
         public void Update(GameTime elapsedTime)
         {
-            //Pop test
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                Global.Controller.Pop(this);
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (_gameButton.Pressed)
             {
                 Global.Controller.Push(Controller.EGameStates.EndlessModeScene);
                 Global.Controller.Pop(this);
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.H))
+            if (_highScoreButton.Pressed)
             {
                 Global.Controller.Push(Controller.EGameStates.HighScore);
                 Global.Controller.Pop(this);

@@ -8,49 +8,47 @@ namespace Space_Assault.Entities
     class Button
     {
         private Texture2D _texture;
+        private Color _color;
+
         private Vector2 _position;
         private Rectangle _rect;
+        private Vector2 _size;
 
-        private Color _color = new Color(255, 255, 255);
+        public bool Pressed;
 
-        public Vector2 size;
-
-        public Button(Texture2D newTexture)
+        public Button(Texture2D newTexture, Vector2 position)
         {
             _texture = newTexture;
-            size = new Vector2(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 8, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 30);
+            _position = position;
+            Pressed = false;
+            _color = new Color(255, 255, 255);
+            _size = new Vector2(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 8, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 30);
         }
-
-        bool down;
-        public bool isClicked;
         public void Update()
         {
-            _rect = new Rectangle((int)_position.X, (int)_position.Y,(int)size.X, (int)size.X);
+            _rect = new Rectangle((int)_position.X, (int)_position.Y,(int)_size.X, (int)_size.X);
 
             Rectangle mouseRect = new Rectangle(MouseHandler.MouseState.X, MouseHandler.MouseState.Y, 1, 1);
 
             if (mouseRect.Intersects(_rect))
             {
-                if (_color.A == 255) down = false;
-                if (_color.A == 0) down = true;
-                if (down) _color.A += 3; else _color.A -= 3;
-                if (MouseHandler.MouseState.LeftButton == ButtonState.Pressed) isClicked = true;
-            }
-            else if(_color.A < 255)
-            {
-                _color.A += 3;
-                isClicked = false;
+                if (MouseHandler.MouseState.LeftButton == ButtonState.Pressed)
+                {
+                    _color.A = 255 / 2;
+                    Pressed = true;
+                }
+                 
+                else if(Pressed)
+                {
+                    _color.A = 255;
+                    Pressed = false;
+                }
             }
         }
 
-        public void setPosition(Vector2 newPosition)
+        public void Draw()
         {
-            _position = newPosition;
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_texture, _rect, _color);
+            Global.SpriteBatch.Draw(_texture, _rect, _color);
         }
     }
 }
