@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Space_Assault.Entities;
 using Space_Assault.Utils;
 using System.Diagnostics;
+using Space_Assault.Effects;
 
 namespace Space_Assault.States
 {
@@ -16,6 +15,10 @@ namespace Space_Assault.States
         //#################################
         // Set Variables
         //#################################
+
+        private ParticleEngine _particleEngine;
+        //The emitter for the particles. Just a point emitter
+        private Vector2 _emitter = new Vector2(0,0);
 
         // General
         private SoundEffectInstance _stationSound;
@@ -63,6 +66,8 @@ namespace Space_Assault.States
 
             _station.LoadContent();
             _drone.LoadContent();
+            Texture2D texture = Global.ContentManager.Load<Texture2D>("Effects/particle_texture");
+            _particleEngine = new ParticleEngine(texture, _emitter);
         }
 
         public void Kill()
@@ -86,6 +91,11 @@ namespace Space_Assault.States
         //#################################
         public void Draw(GameTime elapsedTime)
         {
+            Global.BackgroundBatch.Begin();
+            _particleEngine.Draw(Global.BackgroundBatch);
+            Global.BackgroundBatch.End();
+            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+
             _station.Draw();
             _drone.Draw();
             _asteroidField.Draw();
@@ -106,6 +116,8 @@ namespace Space_Assault.States
             Global.Camera.Target = _drone.Position;
             Global.Camera.Position = Global.Camera.Target + new Vector3(0, 500, 500);
             _asteroidField.Update(elapsedTime);
+
+            _particleEngine.Update();
         }
 
         public bool IsStopped { get; set; }

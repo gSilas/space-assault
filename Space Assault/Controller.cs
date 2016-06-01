@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Space_Assault.States;
-using Space_Assault.Utils;
 
 namespace Space_Assault
 {

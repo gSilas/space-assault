@@ -63,17 +63,21 @@ namespace Space_Assault.States
 
         public void Draw(GameTime elapsedTime)
         {
-            particleEngine.Update();
+            // Drawing the particles 
+            Global.BackgroundBatch.Begin();
+            particleEngine.Draw(Global.BackgroundBatch);
+            Global.BackgroundBatch.End();
 
-            // Drawing the particles
-            particleEngine.Draw(Global.SpriteBatch);
+            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             _station.Draw();
+
         }
 
         public void Update(GameTime elapsedTime)
         {
             //3D Model
             _station.Update(elapsedTime);
+            particleEngine.Update();
         }
 
         /// <summary>

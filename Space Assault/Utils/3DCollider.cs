@@ -1,5 +1,4 @@
-﻿
-using Space_Assault.Entities;
+﻿using Space_Assault.Entities;
 
 namespace Space_Assault.Utils
 {

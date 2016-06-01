@@ -13,6 +13,8 @@ namespace Space_Assault
         //core stuff
         public static SpriteBatch SpriteBatch;
 
+        public static SpriteBatch BackgroundBatch;
+
         public static ContentManager ContentManager;
 
         public static GraphicsDeviceManager GraphicsManager;
