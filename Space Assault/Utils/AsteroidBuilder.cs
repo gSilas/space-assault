@@ -61,7 +61,7 @@ namespace Space_Assault.Utils
         public static List<Asteroid> RandomChunks()
         {
             Random random = new Random();
-            int seed = random.Next(Enum.GetValues(typeof(PatternType)).Cast<int>().Min(),Enum.GetValues(typeof(PatternType)).Cast<int>().Max());
+            int seed = random.Next(Enum.GetValues(typeof(PatternType)).Cast<int>().Min(),Enum.GetValues(typeof(PatternType)).Cast<int>().Max()+1);
             return ChunkAsteroids((PatternType)seed);
         }
 
@@ -88,7 +88,7 @@ namespace Space_Assault.Utils
 
         private static List<Asteroid> MakeStringToChunk(string[] lines, PatternType t)
         {
-                List<Asteroid> astList = new List<Asteroid>();
+            List<Asteroid> astList = new List<Asteroid>();
                 foreach (string line in lines)
                 {
                     string[] coords = line.Split(' ');
@@ -96,7 +96,7 @@ namespace Space_Assault.Utils
                     astPos.X = float.Parse(coords[0]);
                     astPos.Y = float.Parse(coords[1]);
                     astPos.Z = float.Parse(coords[2]);
-                    Asteroid ast = new Asteroid(astPos+_position, float.Parse(coords[3]), new Vector3(-1, 0, 1),float.Parse(coords[4]));
+                    Asteroid ast = new Asteroid(astPos+_position, float.Parse(coords[3]),new Vector3(-1, 0, 1), float.Parse(coords[4]));
                     ast.Initialize();
                     ast.LoadContent(_model);
                     astList.Add(ast);
