@@ -4,8 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Space_Assault.Entities.Weapon
 {
-    class NormalBullet : AAmmunition
+    class RailBullet : AAmmunition
     {
-        public NormalBullet(Vector3 position, Vector3 direction, float travelspeed) : base(position, direction, travelspeed) {}
+        public RailBullet(Vector3 position, Vector3 direction, float travelspeed) : base(position, direction, travelspeed) {}
     }
 }
