@@ -27,7 +27,7 @@ namespace Space_Assault.Entities.Weapon
 
         public override void Update(GameTime gameTime)
         {
-            Position += _direction;
+            Position += _direction*_travelspeed;
         }
 
     }

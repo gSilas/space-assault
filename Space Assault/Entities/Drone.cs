@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Space_Assault.Entities.Weapon;
 using System.Collections.Generic;
 
 /// <summary>
@@ -21,7 +22,7 @@ namespace Space_Assault.Entities
         private float armor;
         private SoundEffectInstance _droneMoveSound;
         private List<SoundEffect> soundEffects;
-
+        Railgun test = new Railgun(10, 100, 100, 5);
 
         public Drone(Vector3 position)
         {
@@ -97,7 +98,10 @@ namespace Space_Assault.Entities
             {
                 _moveSpeedModifier = 0.0f;
             }
-
+            if (Keyboard.GetState().IsKeyDown(Keys.F))
+            {
+                test.shoot(Position,Vector3.Backward, 50);
+            }
             Position -= RotationMatrix.Forward * _moveSpeedModifier;
 
             //TODO: health, armor update

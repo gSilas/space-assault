@@ -21,12 +21,12 @@ namespace Space_Assault.Entities.Weapon
         public bool IsOverheat = false;
 
         //draw
-        public List<AAmmunition> ListOfBullets;
+        //public List<AAmmunition> ListOfBullets;
 
         //Schusslogik für einzelne Waffen
         public abstract void shoot(Vector3 position, Vector3 direction, float travelspeed);
 
-        public void Draw()
+        public void Draw(List<AAmmunition> ListOfBullets)
         {
             foreach (AAmmunition bullet in ListOfBullets)
             {

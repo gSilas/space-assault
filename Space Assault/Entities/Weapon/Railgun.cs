@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace Space_Assault.Entities.Weapon
@@ -21,12 +22,14 @@ namespace Space_Assault.Entities.Weapon
 
         public override void shoot(Vector3 position, Vector3 direction, float travelspeed)
         {
-
+            NormalBullet bullet = new NormalBullet(position, direction, travelspeed);
+            List<AAmmunition> test = new List<AAmmunition>();
             if (Overheat < MaxOverheat && IsOverheat==false && IsReadyToShoot==true)
             {
-                NormalBullet bullet = new NormalBullet(position, direction, travelspeed);
-                ListOfBullets.Add(bullet);
+               
+                test.Add(bullet);
                 Overheat += OverheatPerShot;
+
                 //wenn die frequenz 100 ist, hat die waffe keinen cooldown) 
                 if (Schussfrequenz != 100)
                 {
@@ -56,6 +59,8 @@ namespace Space_Assault.Entities.Weapon
              
 
             }
+            
+            Draw(test);
         }
     }
 }
