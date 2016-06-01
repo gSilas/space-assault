@@ -29,8 +29,8 @@ namespace Space_Assault.States
         public void LoadContent()
         {
             //Button
-            _gameButton = new Button(Global.ContentManager.Load<Texture2D>("Art/game_button"), new Vector2(50, 0));
-            _highScoreButton = new Button(Global.ContentManager.Load<Texture2D>("Art/highscore_button"), new Vector2(150, 175));
+            _gameButton = new Button(Global.ContentManager.Load<Texture2D>("Art/game_button"), new Vector2(150, 150));
+            _highScoreButton = new Button(Global.ContentManager.Load<Texture2D>("Art/highscore_button"), new Vector2(150, 250));
         }
 
         public void Kill()

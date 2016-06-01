@@ -12,7 +12,6 @@ namespace Space_Assault.UI
 
         private Vector2 _position;
         private Rectangle _rect;
-        private Vector2 _size;
 
         public bool Pressed;
 
@@ -22,8 +21,7 @@ namespace Space_Assault.UI
             _position = position;
             Pressed = false;
             _color = new Color(255, 255, 255);
-            _size = new Vector2(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 8, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 30);
-            _rect = new Rectangle((int)_position.X, (int)_position.Y, (int)_size.X, (int)_size.X);
+            _rect = new Rectangle((int)_position.X, (int)_position.Y,_texture.Bounds.Width, _texture.Height);
         }
         public void Update()
         { 
