@@ -34,8 +34,8 @@ namespace Space_Assault.States
         public void LoadContent()
         {
             //Button
-            _gameButton = new Button(Global.ContentManager.Load<Texture2D>("Art/game_button"), new Vector2(0, 0));
-            _highScoreButton = new Button(Global.ContentManager.Load<Texture2D>("Art/highscore_button"), new Vector2(75, 0));
+            _gameButton = new Button(Global.ContentManager.Load<Texture2D>("Art/game_button"), new Vector2(50, 0));
+            _highScoreButton = new Button(Global.ContentManager.Load<Texture2D>("Art/highscore_button"), new Vector2(150, 175));
         }
 
         public void Kill()
@@ -65,6 +65,9 @@ namespace Space_Assault.States
 
         public void Update(GameTime elapsedTime)
         {
+            _gameButton.Update();
+            _highScoreButton.Update();
+
             if (_gameButton.Pressed)
             {
                 Global.Controller.Push(Controller.EGameStates.EndlessModeScene);

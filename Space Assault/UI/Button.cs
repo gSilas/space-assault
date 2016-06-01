@@ -23,11 +23,10 @@ namespace Space_Assault.Entities
             Pressed = false;
             _color = new Color(255, 255, 255);
             _size = new Vector2(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 8, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 30);
+            _rect = new Rectangle((int)_position.X, (int)_position.Y, (int)_size.X, (int)_size.X);
         }
         public void Update()
-        {
-            _rect = new Rectangle((int)_position.X, (int)_position.Y,(int)_size.X, (int)_size.X);
-
+        { 
             Rectangle mouseRect = new Rectangle(MouseHandler.MouseState.X, MouseHandler.MouseState.Y, 1, 1);
 
             if (mouseRect.Intersects(_rect))
