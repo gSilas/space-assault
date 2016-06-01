@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Space_Assault.Utils
 {
-    public struct HighscoreEntity : IComparable<HighscoreEntity>
+    public class HighscoreEntity : IComparable<HighscoreEntity>
     {
         public string Name { get; set; }
         public int Points { get; set; }
@@ -78,9 +78,7 @@ namespace Space_Assault.Utils
             highScoreDoc.AppendChild(highScoreDoc.CreateElement("Highscore"));
 
             int i = 1;
-            XmlElement curNum;
-            XmlElement curName;
-            XmlElement curPoints;
+            XmlElement curNum, curName, curPoints;
 
             foreach (HighscoreEntity entry in scoresList)
             {

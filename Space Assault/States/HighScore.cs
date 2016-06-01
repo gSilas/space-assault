@@ -26,10 +26,7 @@ namespace Space_Assault.States
 
         public void Update(GameTime elapsedTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-            {
 
-            }
         }
 
         public void Draw(GameTime elapsedTime)

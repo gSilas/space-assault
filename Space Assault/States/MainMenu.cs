@@ -89,6 +89,7 @@ namespace Space_Assault.States
             if (_highScoreButton.Pressed)
             {
                 Global.Controller.Push(Controller.EGameStates.HighScore);
+                Global.Controller.Push(Controller.EGameStates.HighScoreEnter);
                 Global.Controller.Pop(Controller.EGameStates.MainMenu);
             }
         }
