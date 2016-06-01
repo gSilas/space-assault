@@ -39,7 +39,8 @@ namespace Space_Assault
             // Create a new SpriteBatch, which can be used to draw textures.
 
             Global.SpriteBatch = new SpriteBatch(GraphicsDevice);
-          
+            Global.BackgroundBatch = new SpriteBatch(GraphicsDevice);
+
             base.Initialize();
         }
 
@@ -86,9 +87,13 @@ namespace Space_Assault
 
             // TODO: Add your drawing code here
             Global.SpriteBatch.Begin();
+
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+
             Global.SpriteBatch.DrawString(Global.Arial, (1/gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
+
             Global.Controller.Draw(gameTime);
+            
             Global.SpriteBatch.End();
             base.Draw(gameTime);
         }
