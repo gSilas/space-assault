@@ -56,6 +56,7 @@ namespace Space_Assault.States
         public void Kill()
         {
             IsStopped = true;
+            _hauptmenuButton.Pressed = false;
         }
 
         public void Resume()
