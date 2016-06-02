@@ -48,6 +48,10 @@ namespace Space_Assault.States
         public void Kill()
         {
             IsStopped = true;
+            foreach (var button in Buttons)
+            {
+                button.Pressed = false;
+            }
         }
 
         public void Resume()
