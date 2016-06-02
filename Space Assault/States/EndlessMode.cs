@@ -46,7 +46,7 @@ namespace Space_Assault.States
 
             _station = new Station(new Vector3(0, 0, 0), 0);
             _drone = new Drone(new Vector3(0,0,20));
-            _asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
+            _asteroidField = new AsteroidBuilder(new Vector3(500,0,-500));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
             _removeAsteroid = new List<Asteroid>();
             _removeBullets = new List<Bullet>();

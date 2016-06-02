@@ -13,7 +13,7 @@ namespace Space_Assault.Entities.Weapon
             ListOfBullets = new List<Bullet>();
             GlobalTimeSpan = TimeSpan.FromSeconds(0);
             LastShotTime = TimeSpan.FromSeconds(0);
-            CoolDownTime = TimeSpan.FromMilliseconds(300d);
+            CoolDownTime = TimeSpan.FromMilliseconds(200d);
         }
 
         public override void LoadContent()
