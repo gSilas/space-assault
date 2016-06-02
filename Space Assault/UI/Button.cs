@@ -12,9 +12,11 @@ namespace Space_Assault.UI
         private Rectangle _rect;
         private SpriteFont _font;
         private string  _label;
+        public string name;
         private Vector2 _vector;
         public bool Pressed;
         private Color _color;
+
 
         public Button(string font, string label, int x, int y)
         {
@@ -32,6 +34,15 @@ namespace Space_Assault.UI
             _rect = new Rectangle((int)_position.X, (int)_position.Y, _texture.Bounds.Width, _texture.Height);
         }
 
+        public Button(string name, Texture2D newTexture, Vector2 position)
+        {
+            this.name = name;
+            _texture = newTexture;
+            _position = position;
+            Pressed = false;
+            _color = new Color(255, 255, 255);
+            _rect = new Rectangle((int)_position.X, (int)_position.Y, _texture.Bounds.Width, _texture.Height);
+        }
 
         public void Update()
         {

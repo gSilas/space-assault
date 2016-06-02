@@ -15,8 +15,6 @@ namespace Space_Assault.States
 
         // General
         List<Button> Buttons = new List<Button>();
-        private Button _gameButton;
-        private Button _highScoreButton;
 
         //#################################
         // Constructor
@@ -31,16 +29,20 @@ namespace Space_Assault.States
         //#################################
         public void LoadContent()
         {
-            //Button
-            _gameButton = new Button(Global.ContentManager.Load<Texture2D>("UI/play"), new Vector2(150, 150));
-            _highScoreButton = new Button(Global.ContentManager.Load<Texture2D>("UI/highscore"), new Vector2(150, 250));
-            
-            int init_x = 100;
-            int init_y = 100;
+            // Add Buttons
+            int button_x = 150;
+            int button_y = 150;
+            int margin = 50;
+
+            Buttons.Add(new Button("play",Global.ContentManager.Load<Texture2D>("UI/play"), new Vector2(button_x, button_y + Buttons.Count * margin)));
+            Buttons.Add(new Button("tutorial", Global.ContentManager.Load<Texture2D>("UI/tutorial"), new Vector2(button_x, button_y + Buttons.Count * margin)));
+            Buttons.Add(new Button("highscore", Global.ContentManager.Load<Texture2D>("UI/highscore"), new Vector2(button_x, button_y + Buttons.Count * margin)));
+            Buttons.Add(new Button("credits", Global.ContentManager.Load<Texture2D>("UI/credits"), new Vector2(button_x, button_y + Buttons.Count * margin)));
+            Buttons.Add(new Button("end",Global.ContentManager.Load<Texture2D>("UI/end"), new Vector2(button_x, button_y + Buttons.Count * margin)));
+
+            /* Alternative nonTexture Button
             Buttons.Add(new Button("Arial", "StartGame", init_x, init_y));
-            Buttons.Add(new Button("Arial", "Highscore", init_x, init_y * (Buttons.Count+1)));
-            Buttons.Add(new Button("Arial", "Credits", init_x, init_y * (Buttons.Count + 1)));
-            Buttons.Add(new Button("Arial", "Exit", init_x, init_y * (Buttons.Count + 1)));
+            */
         }
 
         public void Kill()
@@ -60,15 +62,10 @@ namespace Space_Assault.States
         //#################################
         public void Draw(GameTime elapsedTime)
         {
-            /*
             foreach (var button in Buttons)
             {
                 button.Draw();
             }
-            */
-
-            _gameButton.Draw();
-            _highScoreButton.Draw();
         }
 
         //#################################
@@ -77,20 +74,34 @@ namespace Space_Assault.States
 
         public void Update(GameTime elapsedTime)
         {
-            _gameButton.Update();
-            _highScoreButton.Update();
+            foreach (var button in Buttons)
+            {
+                button.Update();
 
-            if (_gameButton.Pressed)
-            {
-                Global.Controller.Push(Controller.EGameStates.EndlessModeScene);
-                Global.Controller.Pop(Controller.EGameStates.MenuBackground);
-                Global.Controller.Pop(Controller.EGameStates.MainMenu);
-            }
-            if (_highScoreButton.Pressed)
-            {
-                Global.Controller.Push(Controller.EGameStates.HighScore);
-                Global.Controller.Push(Controller.EGameStates.HighScoreEnter);
-                Global.Controller.Pop(Controller.EGameStates.MainMenu);
+                if (button.Pressed)
+                { 
+                    switch (button.name)
+                    {
+                        case ("play"):
+                            Global.Controller.Push(Controller.EGameStates.EndlessModeScene);
+                            Global.Controller.Pop(Controller.EGameStates.MenuBackground);
+                            Global.Controller.Pop(Controller.EGameStates.MainMenu);
+                            break;
+                        case ("tutorial"):
+                            break;
+                        case ("highscore"):
+                            Global.Controller.Push(Controller.EGameStates.HighScore);
+                            Global.Controller.Push(Controller.EGameStates.HighScoreEnter);
+                            Global.Controller.Pop(Controller.EGameStates.MainMenu);
+                            break;
+                        case ("credits"):
+                            break;
+                        case ("end"):
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
         }
 
