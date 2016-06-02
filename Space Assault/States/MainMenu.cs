@@ -97,6 +97,7 @@ namespace Space_Assault.States
                         case ("credits"):
                             break;
                         case ("end"):
+                            Global.SpaceAssault.Exit();
                             break;
                         default:
                             break;

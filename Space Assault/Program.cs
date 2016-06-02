@@ -14,7 +14,8 @@ namespace Space_Assault
         [STAThread]
         static void Main()
         {
-            using (var game = new SpaceAssault())
+            Global.SpaceAssault = new SpaceAssault();
+            using (var game = Global.SpaceAssault)
                 game.Run();
         }
     }
