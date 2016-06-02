@@ -10,20 +10,20 @@ namespace Space_Assault.Utils
     class AsteroidBuilder
     {
         private Vector3 _position;
-        private List<Asteroid> _asteroids;
+        public List<Asteroid> Asteroids;
         private TimeSpan _lastChunkTime;
 
         public AsteroidBuilder(Vector3 position)
         {
             _position = position;
-            _asteroids = new List<Asteroid>();
+            Asteroids = new List<Asteroid>();
             LoadContent();
             BuildChunks();
         }
 
         private void BuildChunks()
         {
-            _asteroids.AddRange(AsteroidChunk.RandomChunks());
+            Asteroids.AddRange(AsteroidChunk.RandomChunks());
         }
 
         private void LoadContent()
@@ -33,7 +33,7 @@ namespace Space_Assault.Utils
 
         public void Update(GameTime gameTime)
         {
-            foreach (var ast in _asteroids)
+            foreach (var ast in Asteroids)
             {
                 ast.Update(gameTime);
             }
@@ -46,7 +46,7 @@ namespace Space_Assault.Utils
 
         public void Draw()
         {
-            foreach (var ast in _asteroids)
+            foreach (var ast in Asteroids)
             {
                 ast.Draw();
             }

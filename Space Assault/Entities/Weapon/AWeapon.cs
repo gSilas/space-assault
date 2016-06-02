@@ -8,7 +8,7 @@ namespace Space_Assault.Entities.Weapon
     public abstract class AWeapon
     {
         //draw
-        protected List<Bullet> ListOfBullets;
+        public List<Bullet> ListOfBullets;
 
         protected Model BulletModel;
 

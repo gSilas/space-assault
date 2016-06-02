@@ -6,6 +6,7 @@ using Space_Assault.Entities;
 using Space_Assault.Utils;
 using System.Diagnostics;
 using Space_Assault.Effects;
+using Space_Assault.Entities.Weapon;
 
 namespace Space_Assault.States
 {
@@ -32,6 +33,9 @@ namespace Space_Assault.States
         private Drone _drone;
         private Texture2D _background;
 
+        private List<Bullet> _removeBullets;
+        private List<Asteroid> _removeAsteroid;
+
 
         //#################################
         // Constructor
@@ -44,7 +48,8 @@ namespace Space_Assault.States
             _drone = new Drone(new Vector3(0,0,20));
             _asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
-
+            _removeAsteroid = new List<Asteroid>();
+            _removeBullets = new List<Bullet>();
             IsStopped = false;
             Debug.WriteLine("DisplayModeXY: " + "{" + Global.GraphicsManager.PreferredBackBufferWidth.ToString() + " ;" +  Global.GraphicsManager.PreferredBackBufferHeight.ToString() + "}");
             
@@ -118,6 +123,26 @@ namespace Space_Assault.States
             _asteroidField.Update(elapsedTime);
 
             _particleEngine.Update();
+
+            foreach (var ast in _asteroidField.Asteroids)
+            {
+                foreach (var bullet in _drone.GetBulletList())
+                {
+                    if (Collider3D.Intersection(ast, bullet))
+                    {
+                        _removeAsteroid.Add(ast);
+                        _removeBullets.Add(bullet);
+                    }
+                }
+            }
+            foreach (var ast in _removeAsteroid)
+            {
+                _asteroidField.Asteroids.Remove(ast);
+            }
+            foreach (var bullet in _removeBullets)
+            {
+                _drone.GetBulletList().Remove(bullet);
+            }
         }
 
         public bool IsStopped { get; set; }

@@ -105,7 +105,7 @@ namespace Space_Assault.Entities
             //shooting the gun
             if (Keyboard.GetState().IsKeyDown(Keys.F))
             {
-               _gun.Shoot(Position, RotationMatrix.Forward, 4f);
+               _gun.Shoot(Position, RotationMatrix.Forward, 6f);
             }
 
             _gun.Update(gameTime);
@@ -132,6 +132,11 @@ namespace Space_Assault.Entities
                     RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
                 }
             }
+        }
+
+        public List<Bullet> GetBulletList()
+        {
+            return _gun.ListOfBullets;
         }
 
         public override void Draw()
