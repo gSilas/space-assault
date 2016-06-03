@@ -62,7 +62,8 @@ namespace Space_Assault.States
         public void LoadContent()
         {
             //UI
-            Labels.Add(new Label("Arial", "Score: ", 100, Global.GraphicsManager.PreferredBackBufferHeight - 100, Color.White));
+            Labels.Add(new Label("Arial", "Life: ", 100, Global.GraphicsManager.PreferredBackBufferHeight - 100, Color.White));
+            Labels.Add(new Label("Arial", "Score: ", 200, Global.GraphicsManager.PreferredBackBufferHeight - 100, Color.White));
 
             // Sound
             soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/stationSound"));
@@ -112,10 +113,10 @@ namespace Space_Assault.States
             _drone.Draw();
             _asteroidField.Draw();
 
-            foreach (var label in Labels)
-            {
-                label.Draw(_score);
-            }
+            Labels[0].Draw(_drone._health);
+            Labels[1].Draw(_score);
+
+            
         }
 
         //#################################
