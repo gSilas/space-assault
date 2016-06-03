@@ -34,7 +34,6 @@ namespace Space_Assault.States
         private AsteroidBuilder _asteroidField;
         private Drone _drone;
         private Texture2D _background;
-        private int _score;
         private List<Bullet> _removeBullets;
         private List<Asteroid> _removeAsteroid;
 
@@ -121,7 +120,7 @@ namespace Space_Assault.States
             _asteroidField.Draw();
 
             Labels[0].Draw(_drone._health);
-            Labels[1].Draw(_score);
+            Labels[1].Draw(Global.HighScorePoints);
 
             
         }
@@ -153,7 +152,7 @@ namespace Space_Assault.States
                             _explosionSound.Play();
                             _removeAsteroid.Add(ast);
                             _removeBullets.Add(bullet);
-                            _score+=50;
+                            Global.HighScorePoints+=50;
                         }
                     }
                     if (Collider3D.Intersection(ast, _station))
@@ -180,7 +179,6 @@ namespace Space_Assault.States
             }
             if(_drone._health <= 0 || _station._health <= 0)
             {
-                Global.HighScorePoints = 1500;
                 _stationSound.Stop();
                 Global.Controller.Push(Controller.EGameStates.MenuBackground);
                 Global.Controller.Push(Controller.EGameStates.HighScore);
