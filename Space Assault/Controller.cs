@@ -52,7 +52,7 @@ namespace Space_Assault
         }
 
         //Removes an Gamestate from Draw and Update vectors
-        public void Deactivate(EGameStates gameState)
+        public void Pop(EGameStates gameState)
         {
             IGameState state = Switch(gameState);
 
@@ -117,7 +117,7 @@ namespace Space_Assault
             return state;
         }
 
-        public void Pop(EGameStates gameState)
+        public void Reset(EGameStates gameState)
         {
             IGameState state = Switch(gameState);
             foreach (var states in _currentGameStates)
@@ -129,6 +129,7 @@ namespace Space_Assault
                 }
             }
             _currentGameStates.Remove(state);
+            Push(gameState);
         }
 
         //Adds a Gamestate to the list of initialized Gamestates and adds it to update and draw vectors

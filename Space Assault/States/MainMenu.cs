@@ -84,19 +84,19 @@ namespace Space_Assault.States
                     {
                         case ("play"):
                             Global.Controller.Push(Controller.EGameStates.EndlessModeScene);
-                            Global.Controller.Deactivate(Controller.EGameStates.MenuBackground);
-                            Global.Controller.Deactivate(Controller.EGameStates.MainMenu);
+                            Global.Controller.Pop(Controller.EGameStates.MenuBackground);
+                            Global.Controller.Pop(Controller.EGameStates.MainMenu);
                             break;
                         case ("tutorial"):
                             break;
                         case ("highscore"):
                             Global.Controller.Push(Controller.EGameStates.HighScore);
                             Global.Controller.Push(Controller.EGameStates.HighScoreEnter);
-                            Global.Controller.Deactivate(Controller.EGameStates.MainMenu);
+                            Global.Controller.Pop(Controller.EGameStates.MainMenu);
                             break;
                         case ("credits"):
                             Global.Controller.Push(Controller.EGameStates.Credits);
-                            Global.Controller.Deactivate(Controller.EGameStates.MainMenu);
+                            Global.Controller.Pop(Controller.EGameStates.MainMenu);
                             break;
                         case ("end"):
                             Global.SpaceAssault.Exit();
