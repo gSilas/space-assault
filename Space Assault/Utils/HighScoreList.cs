@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Space_Assault.Utils
 {
-    public class HighscoreEntity : IComparable<HighscoreEntity>
+    public struct HighscoreEntity : IComparable<HighscoreEntity>
     {
         public string Name { get; set; }
         public int Points { get; set; }
@@ -27,6 +27,7 @@ namespace Space_Assault.Utils
         {
             _listLength = 10;
             _scoresList = new HighscoreEntity[_listLength];
+
             _filePath = "HighScoreList.xml";
 
             //wenn die Datei nicht existiert erstelle sie
@@ -107,7 +108,7 @@ namespace Space_Assault.Utils
             newEntry.Name = Name;
             newEntry.Points = Points;
 
-            // neuer eintrag ist besser als letzter platz
+            //neuer eintrag ist besser als letzter eintrag
             if (_scoresList[_scoresList.Length - 1].Points < newEntry.Points)
                 _scoresList[_scoresList.Length - 1] = newEntry;
 
@@ -121,9 +122,8 @@ namespace Space_Assault.Utils
                     _scoresList[i] = tempEntity;
                 }
             }
-
-            Debug.WriteLine("Entry added");
             SaveFile();
+            Debug.WriteLine("Entry added");
         }
     }
 }
