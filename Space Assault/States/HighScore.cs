@@ -34,6 +34,7 @@ namespace Space_Assault.States
             {
                 Global.Controller.Push(Controller.EGameStates.MainMenu);
                 Global.Controller.Pop(Controller.EGameStates.HighScore);
+                Global.Controller.Reset(Controller.EGameStates.HighScoreEnter);
                 Global.Controller.Pop(Controller.EGameStates.HighScoreEnter);
             }
         }
