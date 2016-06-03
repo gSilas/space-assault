@@ -28,7 +28,7 @@ namespace Space_Assault
 
         public static Camera Camera;
 
-        public static HighScoreList HighScore = new HighScoreList();
+        public static HighScoreList HighScoreList = new HighScoreList();
 
         //fonts
         public static SpriteFont Arial;

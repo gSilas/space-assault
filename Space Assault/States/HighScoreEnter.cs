@@ -64,7 +64,7 @@ namespace Space_Assault.States
 
                 if (curKey == Keys.Enter && _entryString.Length > 0)
                 {
-                    Global.HighScore.Add(_entryString, Global.HighScorePoints);
+                    Global.HighScoreList.Add(_entryString, Global.HighScorePoints);
                     _entryString = "";
                     Global.HighScorePoints = 0;
                     Global.Controller.Pop(Controller.EGameStates.HighScoreEnter);

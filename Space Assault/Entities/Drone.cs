@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Space_Assault.Entities.Weapon;
 using System.Collections.Generic;
 using System;
+using Space_Assault.Utils;
 
 /// <summary>
 ///  Movement, Schießen, Health, Sterben, neu Spawnen.
@@ -18,9 +19,9 @@ namespace Space_Assault.Entities
         private float _moveSpeedForward;
         private float _moveSpeedBackward;
         private float _moveSpeedModifier;
-        private float health;
-        private float armor;
-        private SoundEffectInstance _droneMoveSound;
+        public int _health;
+        private int _armor;
+        public SoundEffectInstance _droneMoveSound;
         private List<SoundEffect> _soundEffects;
         private AWeapon _gun;
 
@@ -36,8 +37,8 @@ namespace Space_Assault.Entities
             _turnSpeed = 10.0f;
             _moveSpeedForward = 1.0f;
             _moveSpeedBackward = -0.5f;
-            health = 100;
-            armor = 100;
+            _health = 100;
+            _armor = 100;
             _soundEffects = new List<SoundEffect>();
             _gun = new RailGun();
             _gun.Initialize();
@@ -49,8 +50,8 @@ namespace Space_Assault.Entities
             _turnSpeed = 1.0f;
             _moveSpeedForward = 1.0f;
             _moveSpeedBackward = -0.5f;
-            health = 100;
-            armor = 100;
+            _health = 100;
+            _armor = 100;
             _moveSpeedModifier = 0;
             Position = _spawnPos;
         }
@@ -68,6 +69,23 @@ namespace Space_Assault.Entities
 
         public override void Update(GameTime gameTime)
         {
+            Vector3 direction = new Vector3(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, 0, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f) - MouseHandler.Position;
+            direction.Normalize();
+            float vectorDirection;
+            for (float i = 0.5f; i < _turnSpeed; i++)
+            {
+                vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
+                if (vectorDirection > 0.01)
+                {
+                    //turn left
+                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.5f));
+                }
+                else if (vectorDirection < -0.01)
+                {
+                    //turn right
+                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
+                }
+            }
 
             //movement
             if (Keyboard.GetState().IsKeyDown(Keys.W))
@@ -103,35 +121,15 @@ namespace Space_Assault.Entities
             Position -= RotationMatrix.Forward * _moveSpeedModifier;
 
             //shooting the gun
-            if (Keyboard.GetState().IsKeyDown(Keys.F))
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-               _gun.Shoot(Position, RotationMatrix.Forward, 6f);
+                _gun.Shoot(Position, RotationMatrix.Forward, 6f);
             }
 
             _gun.Update(gameTime);
 
-       
-            //TODO: health, armor update
-        }
 
-        public void turn(Vector3 direction)
-        {
-            direction.Normalize();
-            float vectorDirection;
-            for (float i = 0.5f; i < _turnSpeed; i++)
-            {
-                vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
-                if (vectorDirection > 0.01)
-                {
-                    //turn left
-                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.5f));
-                }
-                else if (vectorDirection < -0.01)
-                {
-                    //turn right
-                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
-                }
-            }
+            //TODO: health, armor update
         }
 
         public List<Bullet> GetBulletList()

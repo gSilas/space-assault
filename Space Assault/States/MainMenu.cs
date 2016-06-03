@@ -91,7 +91,6 @@ namespace Space_Assault.States
                             break;
                         case ("highscore"):
                             Global.Controller.Push(Controller.EGameStates.HighScore);
-                            Global.Controller.Push(Controller.EGameStates.HighScoreEnter);
                             Global.Controller.Pop(Controller.EGameStates.MainMenu);
                             break;
                         case ("credits"):

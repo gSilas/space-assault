@@ -19,7 +19,7 @@ namespace Space_Assault.States
 
         private ParticleEngine _particleEngine;
         //The emitter for the particles. Just a point emitter
-        private Vector2 _emitter = new Vector2(0,0);
+        private Vector2 _emitter = new Vector2(0, 0);
 
         // General
         private SoundEffectInstance _stationSound;
@@ -32,7 +32,7 @@ namespace Space_Assault.States
         private AsteroidBuilder _asteroidField;
         private Drone _drone;
         private Texture2D _background;
-
+        private int _score;
         private List<Bullet> _removeBullets;
         private List<Asteroid> _removeAsteroid;
 
@@ -45,14 +45,12 @@ namespace Space_Assault.States
             soundEffects = new List<SoundEffect>();
 
             _station = new Station(new Vector3(0, 0, 0), 0);
-            _drone = new Drone(new Vector3(0,0,20));
-            _asteroidField = new AsteroidBuilder(new Vector3(500,0,-500));
+            _drone = new Drone(new Vector3(0, 0, 20));
+            _asteroidField = new AsteroidBuilder(new Vector3(500, 0, -500));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
             _removeAsteroid = new List<Asteroid>();
             _removeBullets = new List<Bullet>();
             IsStopped = false;
-            Debug.WriteLine("DisplayModeXY: " + "{" + Global.GraphicsManager.PreferredBackBufferWidth.ToString() + " ;" +  Global.GraphicsManager.PreferredBackBufferHeight.ToString() + "}");
-            
         }
 
         //#################################
@@ -72,13 +70,14 @@ namespace Space_Assault.States
             _station.LoadContent();
             _drone.LoadContent();
             Texture2D texture = Global.ContentManager.Load<Texture2D>("Effects/particle_texture");
-            _particleEngine = new ParticleEngine(texture, new Vector2(0, Global.GraphicsManager.PreferredBackBufferHeight/2));
+            _particleEngine = new ParticleEngine(texture, new Vector2(0, Global.GraphicsManager.PreferredBackBufferHeight / 2));
         }
 
         public void Kill()
         {
             IsStopped = true;
             _stationSound.Stop();
+            _drone._droneMoveSound.Stop();
 
         }
 
@@ -96,6 +95,8 @@ namespace Space_Assault.States
         //#################################
         public void Draw(GameTime elapsedTime)
         {
+            Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
+
             Global.BackgroundBatch.Begin();
             _particleEngine.Draw(Global.BackgroundBatch);
             Global.BackgroundBatch.End();
@@ -116,32 +117,53 @@ namespace Space_Assault.States
             _station.Update(elapsedTime);
             _drone.Update(elapsedTime);
 
-            _drone.turn(new Vector3(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, 0, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f)- MouseHandler.Position);
-
             Global.Camera.Target = _drone.Position;
             Global.Camera.Position = Global.Camera.Target + new Vector3(0, 500, 500);
             _asteroidField.Update(elapsedTime);
 
             _particleEngine.Update();
 
-            foreach (var ast in _asteroidField.Asteroids)
+            //collision handling
             {
-                foreach (var bullet in _drone.GetBulletList())
+                foreach (var ast in _asteroidField.Asteroids)
                 {
-                    if (Collider3D.Intersection(ast, bullet))
+                    foreach (var bullet in _drone.GetBulletList())
+                    {
+                        if (Collider3D.Intersection(ast, bullet))
+                        {
+                            _removeAsteroid.Add(ast);
+                            _removeBullets.Add(bullet);
+                            _score+=50;
+                        }
+                    }
+                    if (Collider3D.Intersection(ast, _station))
                     {
                         _removeAsteroid.Add(ast);
-                        _removeBullets.Add(bullet);
+                        _station._health -= 34;
+                    }
+                    if (Collider3D.Intersection(ast, _drone))
+                    {
+                        _removeAsteroid.Add(ast);
+                        _drone._health -= 30;
                     }
                 }
+                foreach (var ast in _removeAsteroid)
+                {
+                    _asteroidField.Asteroids.Remove(ast);
+                }
+                foreach (var bullet in _removeBullets)
+                {
+                    _drone.GetBulletList().Remove(bullet);
+                }
             }
-            foreach (var ast in _removeAsteroid)
+            if(_drone._health <= 0 || _station._health <= 0)
             {
-                _asteroidField.Asteroids.Remove(ast);
-            }
-            foreach (var bullet in _removeBullets)
-            {
-                _drone.GetBulletList().Remove(bullet);
+                Global.HighScorePoints = 1500;
+                _stationSound.Stop();
+                Global.Controller.Push(Controller.EGameStates.MenuBackground);
+                Global.Controller.Push(Controller.EGameStates.HighScore);
+                Global.Controller.Push(Controller.EGameStates.HighScoreEnter);
+                Global.Controller.Pop(Controller.EGameStates.EndlessModeScene);
             }
         }
 

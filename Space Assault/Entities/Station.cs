@@ -7,6 +7,7 @@ namespace Space_Assault.Entities
     {
         private float _angle;
         private bool _up;
+        public int _health;
 
         public Station(Vector3 position, float angle)
         {
@@ -18,6 +19,7 @@ namespace Space_Assault.Entities
         public override void Initialize()
         {
             _up = true;
+            _health = 100;
         }
 
         public override void LoadContent()

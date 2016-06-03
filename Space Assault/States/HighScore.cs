@@ -22,7 +22,7 @@ namespace Space_Assault.States
 
         public void LoadContent()
         {
-            Global.HighScore.LoadFile();
+            Global.HighScoreList.LoadFile();
             _hauptmenuButton = new Button(Global.ContentManager.Load<Texture2D>("UI/hauptmenu"), new Vector2(100, 580));
         }
 
@@ -34,7 +34,6 @@ namespace Space_Assault.States
             {
                 Global.Controller.Push(Controller.EGameStates.MainMenu);
                 Global.Controller.Pop(Controller.EGameStates.HighScore);
-                Global.Controller.Reset(Controller.EGameStates.HighScoreEnter);
                 Global.Controller.Pop(Controller.EGameStates.HighScoreEnter);
             }
         }
@@ -45,11 +44,11 @@ namespace Space_Assault.States
             int spaltenAbstand = 200;
             int spawnPointX = 80;
             int spawnPointY = 80;
-            for (int i = 0; i < Global.HighScore._listLength; i++)
+            for (int i = 0; i < Global.HighScoreList._listLength; i++)
             {
                 Global.SpriteBatch.DrawString(Global.Arial, (i + 1) + ". Platz", new Vector2(spawnPointX, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
-                Global.SpriteBatch.DrawString(Global.Arial, Global.HighScore._scoresList[i].Name, new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
-                Global.SpriteBatch.DrawString(Global.Arial, (Global.HighScore._scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand * 2, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
+                Global.SpriteBatch.DrawString(Global.Arial, Global.HighScoreList._scoresList[i].Name, new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
+                Global.SpriteBatch.DrawString(Global.Arial, (Global.HighScoreList._scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand * 2, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
             }
 
             _hauptmenuButton.Draw();

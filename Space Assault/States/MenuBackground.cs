@@ -63,6 +63,7 @@ namespace Space_Assault.States
 
         public void Draw(GameTime elapsedTime)
         {
+            Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 45, 60), new Vector3(-30, 0, 0), Vector3.Up);
             // Drawing the particles 
             Global.BackgroundBatch.Begin();
             particleEngine.Draw(Global.BackgroundBatch);
