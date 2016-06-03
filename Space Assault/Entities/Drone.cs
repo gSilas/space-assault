@@ -21,8 +21,10 @@ namespace Space_Assault.Entities
         private float _moveSpeedModifier;
         public int _health;
         private int _armor;
-        public SoundEffectInstance _droneMoveSound;
         private List<SoundEffect> _soundEffects;
+        public SoundEffectInstance _droneMoveSound;
+        private SoundEffectInstance _zuppSound;
+
         private AWeapon _gun;
 
         public Drone(Vector3 position)
@@ -59,12 +61,21 @@ namespace Space_Assault.Entities
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
+
+            // Sounds
             _soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/droneMovement")); //only placeholder for now
-            _gun.LoadContent();
+            _soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/zupp"));
+
+
             // Play that can be manipulated after the fact
             _droneMoveSound = _soundEffects[0].CreateInstance();
             _droneMoveSound.Volume = 0.1f;
             _droneMoveSound.IsLooped = true;
+
+            _zuppSound = _soundEffects[1].CreateInstance();
+            _zuppSound.Volume = 0.3f;
+
+            _gun.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
@@ -123,6 +134,7 @@ namespace Space_Assault.Entities
             //shooting the gun
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
+                _zuppSound.Play();
                 _gun.Shoot(Position, RotationMatrix.Forward, 6f);
             }
 

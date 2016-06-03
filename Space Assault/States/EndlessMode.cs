@@ -24,6 +24,7 @@ namespace Space_Assault.States
 
         // General
         private SoundEffectInstance _stationSound;
+        private SoundEffectInstance _explosionSound;
 
         // Sound
         List<SoundEffect> soundEffects;
@@ -67,12 +68,18 @@ namespace Space_Assault.States
 
             // Sound
             soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/stationSound"));
+            soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/explosion"));
 
             // Play that can be manipulated after the fact
             _stationSound = soundEffects[0].CreateInstance();
             _stationSound.Volume = 0.1f;
             _stationSound.IsLooped = true;
             _stationSound.Play();
+
+            _explosionSound = soundEffects[1].CreateInstance();
+            _explosionSound.Volume = 0.3f;
+
+
 
             _station.LoadContent();
             _drone.LoadContent();
@@ -143,6 +150,7 @@ namespace Space_Assault.States
                     {
                         if (Collider3D.Intersection(ast, bullet))
                         {
+                            _explosionSound.Play();
                             _removeAsteroid.Add(ast);
                             _removeBullets.Add(bullet);
                             _score+=50;
@@ -150,11 +158,13 @@ namespace Space_Assault.States
                     }
                     if (Collider3D.Intersection(ast, _station))
                     {
+                        _explosionSound.Play();
                         _removeAsteroid.Add(ast);
                         _station._health -= 34;
                     }
                     if (Collider3D.Intersection(ast, _drone))
                     {
+                        _explosionSound.Play();
                         _removeAsteroid.Add(ast);
                         _drone._health -= 30;
                     }

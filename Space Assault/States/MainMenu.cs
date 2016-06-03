@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Space_Assault.UI;
 using System.Collections.Generic;
@@ -16,12 +17,19 @@ namespace Space_Assault.States
         // General
         List<Button> Buttons = new List<Button>();
 
+        // Sound
+        List<SoundEffect> soundEffects;
+
+        // General
+        private SoundEffectInstance _clickSound;
+
         //#################################
         // Constructor
         //#################################
         public MainMenu()
         {
             IsStopped = false;
+            soundEffects = new List<SoundEffect>();
         }
 
         //#################################
@@ -29,6 +37,14 @@ namespace Space_Assault.States
         //#################################
         public void LoadContent()
         {
+
+            // Sounds
+            soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/dark_click"));
+
+            // Play that can be manipulated after the fact
+            _clickSound = soundEffects[0].CreateInstance();
+            _clickSound.Volume = 0.4f;
+
             // Add Buttons
             int button_x = 150;
             int button_y = 150;
@@ -79,7 +95,8 @@ namespace Space_Assault.States
                 button.Update();
 
                 if (button.Pressed)
-                { 
+                {
+                    _clickSound.Play();
                     switch (button.name)
                     {
                         case ("play"):

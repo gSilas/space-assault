@@ -168,12 +168,6 @@
 /processorParam:Quality=Best
 /build:Sounds/stationSound.wav
 
-#begin Sounds/zupp.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sounds/zupp.wav
-
 #begin UI/credits.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -269,4 +263,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/entry.png
+
+#begin Sounds/explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/explosion.wav
+
+#begin Sounds/zupp.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/zupp.wav
 
