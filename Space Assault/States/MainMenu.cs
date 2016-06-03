@@ -39,10 +39,6 @@ namespace Space_Assault.States
             Buttons.Add(new Button("highscore", Global.ContentManager.Load<Texture2D>("UI/highscore"), new Vector2(button_x, button_y + Buttons.Count * margin)));
             Buttons.Add(new Button("credits", Global.ContentManager.Load<Texture2D>("UI/credits"), new Vector2(button_x, button_y + Buttons.Count * margin)));
             Buttons.Add(new Button("end",Global.ContentManager.Load<Texture2D>("UI/end"), new Vector2(button_x, button_y + Buttons.Count * margin)));
-
-            /* Alternative nonTexture Button
-            Buttons.Add(new Button("Arial", "StartGame", init_x, init_y));
-            */
         }
 
         public void Kill()
@@ -99,6 +95,8 @@ namespace Space_Assault.States
                             Global.Controller.Pop(Controller.EGameStates.MainMenu);
                             break;
                         case ("credits"):
+                            Global.Controller.Push(Controller.EGameStates.Credits);
+                            Global.Controller.Pop(Controller.EGameStates.MainMenu);
                             break;
                         case ("end"):
                             Global.SpaceAssault.Exit();

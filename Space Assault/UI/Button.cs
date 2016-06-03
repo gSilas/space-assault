@@ -10,20 +10,10 @@ namespace Space_Assault.UI
         private Texture2D _texture;
         private Vector2 _position;
         private Rectangle _rect;
-        private SpriteFont _font;
-        private string  _label;
         public string name;
-        private Vector2 _vector;
         public bool Pressed;
         private Color _color;
 
-
-        public Button(string font, string label, int x, int y)
-        {
-            _font = Global.ContentManager.Load<SpriteFont>("Fonts/"+font);
-            _label = label;
-            _vector = new Vector2(x, y);
-        }
 
         public Button(Texture2D newTexture, Vector2 position)
         {
@@ -71,10 +61,7 @@ namespace Space_Assault.UI
 
         public void Draw()
         {
-            if (_texture != null)
-                Global.SpriteBatch.Draw(_texture, _rect, _color);
-            else
-                Global.SpriteBatch.DrawString(_font, _label, _vector, Color.Black);
+            Global.SpriteBatch.Draw(_texture, _rect, _color);    
         }
     }
 }

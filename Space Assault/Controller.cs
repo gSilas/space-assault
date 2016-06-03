@@ -17,7 +17,8 @@ namespace Space_Assault
             PauseMenu,
             OptionsMenu,
             HighScore,
-            HighScoreEnter
+            HighScoreEnter,
+            Credits
         }
         //Current GameStates,Drawables,Updateables has to be initialized
         //public IGameState _currentGameState;
@@ -105,6 +106,9 @@ namespace Space_Assault
                     break;
                 case EGameStates.HighScoreEnter:
                     state = new HighScoreEnter();
+                    break;
+                case EGameStates.Credits:
+                    state = new Credits();
                     break;
                 default:
                     state = new MainMenu();
