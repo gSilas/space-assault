@@ -51,7 +51,7 @@ namespace Space_Assault.States
             if (_hauptmenuButton.Pressed)
             {
                 Global.Controller.Push(Controller.EGameStates.MainMenu);
-                Global.Controller.Pop(Controller.EGameStates.Credits);
+                Global.Controller.Deactivate(Controller.EGameStates.Credits);
             }
         }
 
