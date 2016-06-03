@@ -7,6 +7,7 @@ using Space_Assault.Utils;
 using System.Diagnostics;
 using Space_Assault.Effects;
 using Space_Assault.Entities.Weapon;
+using Space_Assault.UI;
 
 namespace Space_Assault.States
 {
@@ -36,6 +37,8 @@ namespace Space_Assault.States
         private List<Bullet> _removeBullets;
         private List<Asteroid> _removeAsteroid;
 
+        //UI
+        List<Label> Labels = new List<Label>();
 
         //#################################
         // Constructor
@@ -58,6 +61,9 @@ namespace Space_Assault.States
         //#################################
         public void LoadContent()
         {
+            //UI
+            Labels.Add(new Label("Arial", "Score: ", 100, Global.GraphicsManager.PreferredBackBufferHeight - 100, Color.White));
+
             // Sound
             soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/stationSound"));
 
@@ -105,6 +111,11 @@ namespace Space_Assault.States
             _station.Draw();
             _drone.Draw();
             _asteroidField.Draw();
+
+            foreach (var label in Labels)
+            {
+                label.Draw(_score);
+            }
         }
 
         //#################################

@@ -62,6 +62,7 @@
     <Compile Include="States\IGameState.cs" />
     <Compile Include="States\HighScore.cs" />
     <Compile Include="States\MainMenu.cs" />
+    <Compile Include="UI\Interface.cs" />
     <Compile Include="UI\Label.cs" />
     <Compile Include="Utils\3DCollider.cs" />
     <Compile Include="Utils\AsteroidBuilder.cs" />

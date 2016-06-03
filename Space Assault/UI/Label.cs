@@ -18,15 +18,16 @@ namespace Space_Assault.UI
             _color = color;
         }
 
-        public void Update()
-        {
-
-        }
-
+        public void Update(){}
 
         public void Draw()
         {
-            Global.SpriteBatch.DrawString(_font, _label, _vector, _color);
+            Global.SpriteBatch.DrawString(_font , _label, _vector, _color);
+        }
+
+        public void Draw(int variable)
+        {
+            Global.SpriteBatch.DrawString(_font , _label + variable, _vector, _color);
         }
     }
 }
