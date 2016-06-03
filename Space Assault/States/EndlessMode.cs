@@ -164,6 +164,8 @@ namespace Space_Assault.States
                 Global.Controller.Push(Controller.EGameStates.HighScore);
                 Global.Controller.Push(Controller.EGameStates.HighScoreEnter);
                 Global.Controller.Pop(Controller.EGameStates.EndlessModeScene);
+                _station._health = 100;
+                _drone._health = 100;
             }
         }
 
