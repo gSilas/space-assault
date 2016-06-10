@@ -13,7 +13,7 @@ namespace SpaceAssault
         //#################################
         public SpaceAssaultGame()
         {
-
+            IsMouseVisible = true;
             Global.GraphicsManager = new GraphicsDeviceManager(this);
             Global.ContentManager = Content;
             Global.ContentManager.RootDirectory = "Content";
