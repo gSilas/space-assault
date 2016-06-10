@@ -1,6 +1,4 @@
-using Microsoft.Xna.Framework;
-
-namespace SpaceAssault
+namespace SpaceAssault.Screens
 {
     // The options screen is brought up over the top of the main menu
     // screen, and gives the user a chance to configure the game

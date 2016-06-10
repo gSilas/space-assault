@@ -1,14 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SpaceAssault.Entities;
-using SpaceAssault.Utils;
-using System.Collections.Generic;
 using SpaceAssault.Entities.Weapon;
+using SpaceAssault.ScreenManager;
+using SpaceAssault.Utils;
 
-namespace SpaceAssault
+namespace SpaceAssault.Screens
 {
 
     // This screen implements the actual game logic. It is just a

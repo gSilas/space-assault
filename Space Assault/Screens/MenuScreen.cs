@@ -1,10 +1,10 @@
-
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.ScreenManager;
 
-namespace SpaceAssault
+namespace SpaceAssault.Screens
 {
     ///Base class for screens that contain a menu of options. The user can
     // move up and down to select an entry, or cancel to back out of the screen.

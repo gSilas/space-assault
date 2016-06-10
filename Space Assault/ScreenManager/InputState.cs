@@ -1,10 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Input.Touch;
-using System.Collections.Generic;
 
-
-namespace SpaceAssault
+namespace SpaceAssault.ScreenManager
 {
     // Helper for reading input from keyboard and mouse
     public class InputState

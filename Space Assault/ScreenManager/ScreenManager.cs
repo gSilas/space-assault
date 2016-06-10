@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-
-namespace SpaceAssault
+namespace SpaceAssault.ScreenManager
 {
     // The screen manager manages one or more GameScreen instances.
     public class ScreenManager : DrawableGameComponent

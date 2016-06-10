@@ -1,8 +1,6 @@
-
-using SpaceAssault.Screens;
 using Microsoft.Xna.Framework;
 
-namespace SpaceAssault
+namespace SpaceAssault.Screens
 {
     // The main menu screen is the first thing displayed when the game starts up.
     class MainMenuScreen : MenuScreen

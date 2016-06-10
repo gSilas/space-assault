@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.Screens;
 
 namespace SpaceAssault
 {
     public class SpaceAssaultGame : Game
     {
-        ScreenManager screenManager;
+        ScreenManager.ScreenManager screenManager;
 
         //#################################
         // Constructor
@@ -21,7 +22,7 @@ namespace SpaceAssault
             Global.GraphicsManager.PreferredBackBufferWidth = Global.PreferredBackBufferWidth;
 
             // Create the screen manager component.
-            screenManager = new ScreenManager(this);
+            screenManager = new ScreenManager.ScreenManager(this);
 
             Components.Add(screenManager);
 

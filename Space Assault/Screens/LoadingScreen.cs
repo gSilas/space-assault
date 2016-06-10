@@ -1,8 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.ScreenManager;
 
-namespace SpaceAssault
+namespace SpaceAssault.Screens
 {
     // The loading screen coordinates transitions between the menu system and the
     // game itself. Normally one screen will transition off at the same time as
@@ -26,7 +27,7 @@ namespace SpaceAssault
 
         // The constructor is private: loading screens should
         // be activated via the static Load method instead.
-        private LoadingScreen(ScreenManager screenManager, bool loadingIsSlow,
+        private LoadingScreen(ScreenManager.ScreenManager screenManager, bool loadingIsSlow,
                               GameScreen[] screensToLoad)
         {
             this.loadingIsSlow = loadingIsSlow;
@@ -37,7 +38,7 @@ namespace SpaceAssault
 
 
         // Activates the loading screen.
-        public static void Load(ScreenManager screenManager, bool loadingIsSlow,
+        public static void Load(ScreenManager.ScreenManager screenManager, bool loadingIsSlow,
                                 PlayerIndex? controllingPlayer,
                                 params GameScreen[] screensToLoad)
         {
