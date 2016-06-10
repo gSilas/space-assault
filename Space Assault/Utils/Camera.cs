@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Space_Assault.Utils
+namespace SpaceAssault.Utils
 {
     //TODO make movable and better constructor
     public struct Camera

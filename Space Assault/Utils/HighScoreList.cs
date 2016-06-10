@@ -3,7 +3,7 @@ using System.Xml;
 using System.IO;
 using System.Diagnostics;
 
-namespace Space_Assault.Utils
+namespace SpaceAssault.Utils
 {
     public struct HighscoreEntity : IComparable<HighscoreEntity>
     {

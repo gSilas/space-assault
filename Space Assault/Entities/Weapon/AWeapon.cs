@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Space_Assault.Entities.Weapon
+namespace SpaceAssault.Entities.Weapon
 {
     public abstract class AWeapon
     {

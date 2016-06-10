@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Space_Assault.Entities;
+using SpaceAssault.Entities;
 
-namespace Space_Assault.Utils
+namespace SpaceAssault.Utils
 {
     class AsteroidBuilder
     {
@@ -28,7 +28,7 @@ namespace Space_Assault.Utils
 
         private void LoadContent()
         {
-            AsteroidChunk.LoadContent(Global.ContentManager.Load<Model>("Models/asteroid"),_position);
+            AsteroidChunk.LoadContent(Global.ContentManager.Load<Model>("Models/asteroid"), _position);
         }
 
         public void Update(GameTime gameTime)
@@ -37,7 +37,7 @@ namespace Space_Assault.Utils
             {
                 ast.Update(gameTime);
             }
-            if(gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromSeconds(3))))
+            if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromSeconds(3))))
             {
                 BuildChunks();
                 _lastChunkTime = gameTime.TotalGameTime;
@@ -61,7 +61,7 @@ namespace Space_Assault.Utils
         public static List<Asteroid> RandomChunks()
         {
             Random random = new Random();
-            int seed = random.Next(Enum.GetValues(typeof(PatternType)).Cast<int>().Min(),Enum.GetValues(typeof(PatternType)).Cast<int>().Max()+1);
+            int seed = random.Next(Enum.GetValues(typeof(PatternType)).Cast<int>().Min(), Enum.GetValues(typeof(PatternType)).Cast<int>().Max() + 1);
             return ChunkAsteroids((PatternType)seed);
         }
 
@@ -89,19 +89,19 @@ namespace Space_Assault.Utils
         private static List<Asteroid> MakeStringToChunk(string[] lines, PatternType t)
         {
             List<Asteroid> astList = new List<Asteroid>();
-                foreach (string line in lines)
-                {
-                    string[] coords = line.Split(' ');
-                    Vector3 astPos = new Vector3();
-                    astPos.X = float.Parse(coords[0]);
-                    astPos.Y = float.Parse(coords[1]);
-                    astPos.Z = float.Parse(coords[2]) * (int)(t + 1);
-                    Asteroid ast = new Asteroid(astPos+_position, float.Parse(coords[3]),new Vector3(-1, 0, 1), 2f);
-                    ast.Initialize();
-                    ast.LoadContent(_model);
-                    astList.Add(ast);
-                }
-                return astList;
+            foreach (string line in lines)
+            {
+                string[] coords = line.Split(' ');
+                Vector3 astPos = new Vector3();
+                astPos.X = float.Parse(coords[0]);
+                astPos.Y = float.Parse(coords[1]);
+                astPos.Z = float.Parse(coords[2]) * (int)(t + 1);
+                Asteroid ast = new Asteroid(astPos + _position, float.Parse(coords[3]), new Vector3(-1, 0, 1), 2f);
+                ast.Initialize();
+                ast.LoadContent(_model);
+                astList.Add(ast);
+            }
+            return astList;
         }
 
         public enum PatternType

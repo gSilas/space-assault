@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Space_Assault
+namespace SpaceAssault
 {
 #if WINDOWS || LINUX
     /// <summary>
@@ -14,8 +14,7 @@ namespace Space_Assault
         [STAThread]
         static void Main()
         {
-            Global.SpaceAssault = new SpaceAssault();
-            using (var game = Global.SpaceAssault)
+            using (var game = new SpaceAssaultGame())
                 game.Run();
         }
     }

@@ -1,17 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Space_Assault.Utils;
+using SpaceAssault.Utils;
 
 /// <summary>
 /// Everything in here has to have values assigned either in here or on it's first occurence
 /// </summary>
-namespace Space_Assault
+namespace SpaceAssault
 {
     public static class Global
     {
         //core stuff
-        public static SpaceAssault SpaceAssault;
+        public static SpaceAssaultGame SpaceAssault;
 
         public static SpriteBatch SpriteBatch;
 
@@ -21,17 +21,15 @@ namespace Space_Assault
 
         public static GraphicsDeviceManager GraphicsManager;
 
-        public static int PreferredBackBufferHeight = 768;
-        public static int PreferredBackBufferWidth = 1366;
-
-        public static Controller Controller;
+        public static int PreferredBackBufferHeight = 800;
+        public static int PreferredBackBufferWidth = 1280;
 
         public static Camera Camera;
 
         public static HighScoreList HighScoreList = new HighScoreList();
 
         //fonts
-        public static SpriteFont Arial;
+        public static SpriteFont Font;
 
         //highscore points
         public static int HighScorePoints;

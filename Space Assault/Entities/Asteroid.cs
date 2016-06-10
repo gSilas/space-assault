@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Space_Assault.Entities
+namespace SpaceAssault.Entities
 {
     class Asteroid : AEntity
     {

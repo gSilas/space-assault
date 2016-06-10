@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Space_Assault.Utils
+namespace SpaceAssault.Utils
 {
     static class MouseHandler
     {

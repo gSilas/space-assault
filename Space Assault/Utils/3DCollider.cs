@@ -1,6 +1,6 @@
-﻿using Space_Assault.Entities;
+﻿using SpaceAssault.Entities;
 
-namespace Space_Assault.Utils
+namespace SpaceAssault.Utils
 {
         public static class Collider3D
         {

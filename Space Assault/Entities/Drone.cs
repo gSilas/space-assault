@@ -2,15 +2,15 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Space_Assault.Entities.Weapon;
+using SpaceAssault.Entities.Weapon;
 using System.Collections.Generic;
 using System;
-using Space_Assault.Utils;
+using SpaceAssault.Utils;
 
 /// <summary>
 ///  Movement, Schießen, Health, Sterben, neu Spawnen.
 /// </summary>
-namespace Space_Assault.Entities
+namespace SpaceAssault.Entities
 {
     class Drone : AEntity
     {
@@ -21,9 +21,6 @@ namespace Space_Assault.Entities
         private float _moveSpeedModifier;
         public int _health;
         private int _armor;
-        private List<SoundEffect> _soundEffects;
-        public SoundEffectInstance _droneMoveSound;
-        private SoundEffectInstance _zuppSound;
 
         private AWeapon _gun;
 
@@ -41,7 +38,6 @@ namespace Space_Assault.Entities
             _moveSpeedBackward = -0.5f;
             _health = 100;
             _armor = 100;
-            _soundEffects = new List<SoundEffect>();
             _gun = new RailGun();
             _gun.Initialize();
         }
@@ -61,20 +57,6 @@ namespace Space_Assault.Entities
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
-
-            // Sounds
-            _soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/droneMovement")); //only placeholder for now
-            _soundEffects.Add(Global.ContentManager.Load<SoundEffect>("Sounds/zupp"));
-
-
-            // Play that can be manipulated after the fact
-            _droneMoveSound = _soundEffects[0].CreateInstance();
-            _droneMoveSound.Volume = 0.1f;
-            _droneMoveSound.IsLooped = true;
-
-            _zuppSound = _soundEffects[1].CreateInstance();
-            _zuppSound.Volume = 0.3f;
-
             _gun.LoadContent();
         }
 
@@ -102,27 +84,23 @@ namespace Space_Assault.Entities
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 //forward
-                _droneMoveSound.Play();
                 if (_moveSpeedModifier < _moveSpeedForward) _moveSpeedModifier += 0.04f;
                 else _moveSpeedModifier = _moveSpeedForward;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 //backward
-                _droneMoveSound.Play();
                 if (_moveSpeedModifier > _moveSpeedBackward) _moveSpeedModifier -= 0.04f;
                 else _moveSpeedModifier = _moveSpeedBackward;
             }
             else if (_moveSpeedModifier > 0.02f)
             {
                 //forward slowing down
-                _droneMoveSound.Stop();
                 _moveSpeedModifier -= 0.02f;
             }
             else if (_moveSpeedModifier < -0.02f)
             {
                 //backward slowing down
-                _droneMoveSound.Stop();
                 _moveSpeedModifier += 0.02f;
             }
             else
@@ -134,7 +112,6 @@ namespace Space_Assault.Entities
             //shooting the gun
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                _zuppSound.Play();
                 _gun.Shoot(Position, RotationMatrix.Forward, 6f);
             }
 

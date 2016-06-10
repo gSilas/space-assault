@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Space_Assault.Entities
+namespace SpaceAssault.Entities
 {
-    class Station: AEntity
+    class Station : AEntity
     {
         private float _angle;
         private bool _up;

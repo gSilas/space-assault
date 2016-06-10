@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Space_Assault.Entities
+namespace SpaceAssault.Entities
 {
-    public abstract  class AEntity
+    public abstract class AEntity
     {
         private Model _model;
         private Vector3 _position;
@@ -11,7 +11,7 @@ namespace Space_Assault.Entities
 
         public Model Model
         {
-            get { return _model;}
+            get { return _model; }
             protected set { _model = value; }
         }
 
@@ -41,7 +41,7 @@ namespace Space_Assault.Entities
                 {
                     effect.EnableDefaultLighting();
                     effect.PreferPerPixelLighting = true;
-                    effect.World = RotationMatrix*Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
+                    effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
                     effect.View = Global.Camera.ViewMatrix;
                     effect.Projection = Global.Camera.ProjectionMatrix;
                 }

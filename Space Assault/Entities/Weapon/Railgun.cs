@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Space_Assault.Entities.Weapon
+namespace SpaceAssault.Entities.Weapon
 {
     class RailGun: AWeapon
     {
