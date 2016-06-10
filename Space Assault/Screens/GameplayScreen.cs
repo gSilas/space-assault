@@ -36,7 +36,7 @@ namespace SpaceAssault.Screens
             _station = new Station(new Vector3(0, 0, 0), 0);
             _drone = new Drone(new Vector3(0, 0, 20));
             //_asteroidField = new AsteroidBuilder(new Vector3(500, 0, -500));
-            Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 500, 500), _drone.Position, Vector3.Up);
+            Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
             _removeAsteroid = new List<Asteroid>();
             _removeBullets = new List<Bullet>();
             _drone.Initialize();
@@ -89,6 +89,7 @@ namespace SpaceAssault.Screens
                 //3D Model
                 _station.Update(gameTime);
                 _drone.Update(gameTime);
+                Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, _drone.Position + new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
             }
         }
 
@@ -140,8 +141,9 @@ namespace SpaceAssault.Screens
                                                Color.CornflowerBlue, 0, 0);
 
             Global.SpriteBatch.Begin();
-            Global.SpriteBatch.DrawString(gameFont, "// TODO", playerPosition, Color.Green);
+            //Global.SpriteBatch.DrawString(gameFont, "// TODO", playerPosition, Color.Green);
             Global.SpriteBatch.End();
+            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             _station.Draw();
             _drone.Draw();
