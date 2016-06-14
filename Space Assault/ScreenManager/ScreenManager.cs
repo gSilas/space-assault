@@ -118,9 +118,8 @@ namespace SpaceAssault.ScreenManager
 
 
         // Adds a new screen to the screen manager.
-        public void AddScreen(GameScreen screen, PlayerIndex? controllingPlayer)
+        public void AddScreen(GameScreen screen)
         {
-            screen.ControllingPlayer = controllingPlayer;
             screen.ScreenManager = this;
             screen.IsExiting = false;
 

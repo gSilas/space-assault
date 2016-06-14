@@ -6,26 +6,22 @@ namespace SpaceAssault.ScreenManager
     // Helper for reading input from keyboard and mouse
     public class InputState
     {
-        public const int MaxInputs = 4;
-        public readonly KeyboardState[] CurrentKeyboardStates;
-        public readonly KeyboardState[] LastKeyboardStates;
+        public KeyboardState CurrentKeyboardState;
+        public KeyboardState LastKeyboardState;
 
         // Constructs a new input state.
         public InputState()
         {
-            CurrentKeyboardStates = new KeyboardState[MaxInputs];
-            LastKeyboardStates = new KeyboardState[MaxInputs];
+            CurrentKeyboardState = new KeyboardState();
+            LastKeyboardState = new KeyboardState();
 
         }
 
         // Reads the latest state of the keyboard and gamepad.
         public void Update()
         {
-            for (int i = 0; i < MaxInputs; i++)
-            {
-                LastKeyboardStates[i] = CurrentKeyboardStates[i];
-                CurrentKeyboardStates[i] = Keyboard.GetState((PlayerIndex)i);
-            }
+                LastKeyboardState = CurrentKeyboardState;
+                CurrentKeyboardState = Keyboard.GetState();
         }
 
 
@@ -33,24 +29,10 @@ namespace SpaceAssault.ScreenManager
         // controllingPlayer parameter specifies which player to read input for.
         // If this is null, it will accept input from any player. When a keypress
         // is detected, the output playerIndex reports which player pressed it.
-        public bool IsNewKeyPress(Keys key, PlayerIndex? controllingPlayer,
-                                            out PlayerIndex playerIndex)
+        public bool IsNewKeyPress(Keys key)
         {
-            if (controllingPlayer.HasValue)
-            {
-                // Read input from the specified player.
-                playerIndex = controllingPlayer.Value;
-
-                int i = (int)playerIndex;
-
-                return (CurrentKeyboardStates[i].IsKeyDown(key) &&
-                        LastKeyboardStates[i].IsKeyUp(key));
-            }
-            else
-            {
-                // Accept input from any player.
-                return (IsNewKeyPress(key, PlayerIndex.One, out playerIndex));
-            }
+                return (CurrentKeyboardState.IsKeyDown(key) &&
+                        LastKeyboardState.IsKeyUp(key));
         }
 
 
@@ -58,11 +40,10 @@ namespace SpaceAssault.ScreenManager
         // The controllingPlayer parameter specifies which player to read input for.
         // If this is null, it will accept input from any player. When the action
         // is detected, the output playerIndex reports which player pressed it.
-        public bool IsMenuSelect(PlayerIndex? controllingPlayer,
-                                 out PlayerIndex playerIndex)
+        public bool IsMenuSelect()
         {
-            return IsNewKeyPress(Keys.Space, controllingPlayer, out playerIndex) ||
-                   IsNewKeyPress(Keys.Enter, controllingPlayer, out playerIndex);
+            return IsNewKeyPress(Keys.Space) ||
+                   IsNewKeyPress(Keys.Enter);
         }
 
 
@@ -70,43 +51,37 @@ namespace SpaceAssault.ScreenManager
         // The controllingPlayer parameter specifies which player to read input for.
         // If this is null, it will accept input from any player. When the action
         // is detected, the output playerIndex reports which player pressed it.
-        public bool IsMenuCancel(PlayerIndex? controllingPlayer,
-                                 out PlayerIndex playerIndex)
+        public bool IsMenuCancel()
         {
-            return IsNewKeyPress(Keys.Escape, controllingPlayer, out playerIndex);
+            return IsNewKeyPress(Keys.Escape);
         }
 
 
         // Checks for a "menu up" input action.
         // The controllingPlayer parameter specifies which player to read
         // input for. If this is null, it will accept input from any player.
-        public bool IsMenuUp(PlayerIndex? controllingPlayer)
+        public bool IsMenuUp()
         {
-            PlayerIndex playerIndex;
 
-            return IsNewKeyPress(Keys.Up, controllingPlayer, out playerIndex);
+            return IsNewKeyPress(Keys.Up);
         }
 
 
         // Checks for a "menu down" input action.
         // The controllingPlayer parameter specifies which player to read
         // input for. If this is null, it will accept input from any player.
-        public bool IsMenuDown(PlayerIndex? controllingPlayer)
+        public bool IsMenuDown()
         {
-            PlayerIndex playerIndex;
-
-            return IsNewKeyPress(Keys.Down, controllingPlayer, out playerIndex);
+            return IsNewKeyPress(Keys.Down);
         }
 
 
         // Checks for a "pause the game" input action.
         // The controllingPlayer parameter specifies which player to read
         // input for. If this is null, it will accept input from any player.
-        public bool IsPauseGame(PlayerIndex? controllingPlayer)
+        public bool IsPauseGame()
         {
-            PlayerIndex playerIndex;
-
-            return IsNewKeyPress(Keys.Escape, controllingPlayer, out playerIndex);
+            return IsNewKeyPress(Keys.Escape);
         }
     }
 }

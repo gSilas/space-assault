@@ -60,7 +60,6 @@
     <Compile Include="Screens\MessageBoxScreen.cs" />
     <Compile Include="Screens\OptionsMenuScreen.cs" />
     <Compile Include="Screens\PauseMenuScreen.cs" />
-    <Compile Include="Screens\PlayerIndexEventArgs.cs" />
     <Compile Include="SpaceAssaultGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

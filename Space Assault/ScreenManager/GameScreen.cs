@@ -126,13 +126,13 @@ namespace SpaceAssault.ScreenManager
         // from any connected gamepad, but whichever player makes a selection from
         // this menu is given control over all subsequent screens, so other gamepads
         // are inactive until the controlling player returns to the main menu.
-        public PlayerIndex? ControllingPlayer
+        /*public PlayerIndex? ControllingPlayer
         {
             get { return controllingPlayer; }
             internal set { controllingPlayer = value; }
         }
 
-        PlayerIndex? controllingPlayer;
+        PlayerIndex? controllingPlayer;*/
 
 
         // Load graphics content for the screen.

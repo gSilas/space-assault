@@ -40,14 +40,11 @@ namespace SpaceAssault.Screens
 
         // Event raised when the menu entry is selected.
         // </summary>
-        public event EventHandler<PlayerIndexEventArgs> Selected;
 
 
         // Method for raising the Selected event.
-        protected internal virtual void OnSelectEntry(PlayerIndex playerIndex)
+        protected internal virtual void OnSelectEntry()
         {
-            if (Selected != null)
-                Selected(this, new PlayerIndexEventArgs(playerIndex));
         }
 
 

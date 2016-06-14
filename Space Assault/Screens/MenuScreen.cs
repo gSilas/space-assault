@@ -37,7 +37,7 @@ namespace SpaceAssault.Screens
         public override void HandleInput(InputState input)
         {
             // Move to the previous menu entry?
-            if (input.IsMenuUp(ControllingPlayer))
+            if (input.IsMenuUp())
             {
                 selectedEntry--;
 
@@ -46,7 +46,7 @@ namespace SpaceAssault.Screens
             }
 
             // Move to the next menu entry?
-            if (input.IsMenuDown(ControllingPlayer))
+            if (input.IsMenuDown())
             {
                 selectedEntry++;
 
@@ -59,37 +59,36 @@ namespace SpaceAssault.Screens
             // If we pass a null controlling player, the InputState helper returns to
             // us which player actually provided the input. We pass that through to
             // OnSelectEntry and OnCancel, so they can tell which player triggered them.
-            PlayerIndex playerIndex;
 
-            if (input.IsMenuSelect(ControllingPlayer, out playerIndex))
+            if (input.IsMenuSelect())
             {
-                OnSelectEntry(selectedEntry, playerIndex);
+                OnSelectEntry(selectedEntry);
             }
-            else if (input.IsMenuCancel(ControllingPlayer, out playerIndex))
+            else if (input.IsMenuCancel())
             {
-                OnCancel(playerIndex);
+                OnCancel();
             }
         }
 
 
         // Handler for when the user has chosen a menu entry.
-        protected virtual void OnSelectEntry(int entryIndex, PlayerIndex playerIndex)
+        protected virtual void OnSelectEntry(int entryIndex)
         {
-            menuEntries[entryIndex].OnSelectEntry(playerIndex);
+            menuEntries[entryIndex].OnSelectEntry();
         }
 
 
         // Handler for when the user has cancelled the menu.
-        protected virtual void OnCancel(PlayerIndex playerIndex)
+        protected virtual void OnCancel()
         {
             ExitScreen();
         }
 
 
         // Helper overload makes it easy to use OnCancel as a MenuEntry event handler.
-        protected void OnCancel(object sender, PlayerIndexEventArgs e)
+        protected void OnCancel(object sender)
         {
-            OnCancel(e.PlayerIndex);
+            OnCancel();
         }
 
 

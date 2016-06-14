@@ -35,13 +35,6 @@ namespace SpaceAssault.Screens
             SetMenuEntryText();
 
             MenuEntry back = new MenuEntry("Back");
-
-            // Hook up menu event handlers.
-            enumMenuEntry.Selected += enumMenuEntrySelected;
-            languageMenuEntry.Selected += LanguageMenuEntrySelected;
-            fullscreenMenuEntry.Selected += fullscreenMenuEntrySelected;
-            staticNumberMenuEntry.Selected += staticNumberMenuEntrySelected;
-            back.Selected += OnCancel;
             
             // Add entries to the menu.
             MenuEntries.Add(enumMenuEntry);
@@ -62,7 +55,7 @@ namespace SpaceAssault.Screens
         }
 
         // Event handler for when the Ungulate menu entry is selected.
-        void enumMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void enumMenuEntrySelected(object sender)
         {
             currentEnum++;
 
@@ -74,7 +67,7 @@ namespace SpaceAssault.Screens
 
 
         // Event handler for when the Language menu entry is selected.
-        void LanguageMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void LanguageMenuEntrySelected(object sender)
         {
             currentLanguage = (currentLanguage + 1) % languages.Length;
 
@@ -83,7 +76,7 @@ namespace SpaceAssault.Screens
 
 
         // Event handler for when the Frobnicate menu entry is selected.
-        void fullscreenMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void fullscreenMenuEntrySelected(object sender)
         {
             fullscreen = !fullscreen;
 
@@ -92,7 +85,7 @@ namespace SpaceAssault.Screens
 
 
         // Event handler for when the Elf menu entry is selected.
-        void staticNumberMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void staticNumberMenuEntrySelected(object sender)
         {
             num++;
 

@@ -104,13 +104,12 @@ namespace SpaceAssault.Screens
                 throw new ArgumentNullException("input");
 
             // Look up inputs for the active player profile.
-            int playerIndex = (int)ControllingPlayer.Value;
 
-            KeyboardState keyboardState = input.CurrentKeyboardStates[playerIndex];
+            KeyboardState keyboardState = input.CurrentKeyboardState;
 
-            if (input.IsPauseGame(ControllingPlayer))
+            if (input.IsPauseGame())
             {
-                ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
+                ScreenManager.AddScreen(new PauseMenuScreen());
             }
             else
             {

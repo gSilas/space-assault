@@ -39,7 +39,6 @@ namespace SpaceAssault.Screens
 
         // Activates the loading screen.
         public static void Load(ScreenManager.ScreenManager screenManager, bool loadingIsSlow,
-                                PlayerIndex? controllingPlayer,
                                 params GameScreen[] screensToLoad)
         {
             // Tell all the current screens to transition off.
@@ -51,7 +50,7 @@ namespace SpaceAssault.Screens
                                                             loadingIsSlow,
                                                             screensToLoad);
 
-            screenManager.AddScreen(loadingScreen, controllingPlayer);
+            screenManager.AddScreen(loadingScreen);
         }
 
 
@@ -71,7 +70,7 @@ namespace SpaceAssault.Screens
                 {
                     if (screen != null)
                     {
-                        ScreenManager.AddScreen(screen, ControllingPlayer);
+                        ScreenManager.AddScreen(screen);
                     }
                 }
 
