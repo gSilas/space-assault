@@ -27,8 +27,11 @@ namespace SpaceAssault
             Components.Add(screenManager);
 
             // Activate the first screens.
-            //screenManager.AddScreen(new BackgroundScreen());
-            //screenManager.AddScreen(new MainMenuScreen());
+            /*
+             * We are gonna ingore the Menu from now on and gonna focus on the gameplay
+            screenManager.AddScreen(new BackgroundScreen());
+            screenManager.AddScreen(new MainMenuScreen());
+            */
             screenManager.AddScreen(new GameplayScreen());
 
         }
