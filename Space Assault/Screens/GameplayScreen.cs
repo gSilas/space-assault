@@ -36,7 +36,7 @@ namespace SpaceAssault.Screens
             _station = new Station(new Vector3(0, 0, 0), 0);
             _drone = new Drone(new Vector3(0, 0, 20));
             //_asteroidField = new AsteroidBuilder(new Vector3(500, 0, -500));
-            Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
+            
             _removeAsteroid = new List<Asteroid>();
             _removeBullets = new List<Bullet>();
             _drone.Initialize();
@@ -50,18 +50,12 @@ namespace SpaceAssault.Screens
         {
             gameFont = Global.ContentManager.Load<SpriteFont>("Fonts/gamefont");
 
-            // A real game would probably have more content than this sample, so
-            // it would take longer to load. We simulate that by delaying for a
-            // while, giving you a chance to admire the beautiful loading screen.
-            Thread.Sleep(1000);
-
-            // once the load has finished, we use ResetElapsedTime to tell the game's
-            // timing mechanism that we have just finished a very long frame, and that
-            // it should not try to catch up.
-            ScreenManager.Game.ResetElapsedTime();
+            Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
             _station.LoadContent();
             _drone.LoadContent();
             _asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
+
+            Thread.Sleep(1000);
         }
 
 
