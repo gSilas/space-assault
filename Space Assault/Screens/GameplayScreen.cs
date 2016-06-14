@@ -41,7 +41,7 @@ namespace SpaceAssault.Screens
             _removeBullets = new List<Bullet>();
             _drone.Initialize();
             _station.Initialize();
-            _asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
+           // _asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
         }
 
 
@@ -61,6 +61,7 @@ namespace SpaceAssault.Screens
             ScreenManager.Game.ResetElapsedTime();
             _station.LoadContent();
             _drone.LoadContent();
+            _asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
         }
 
 
