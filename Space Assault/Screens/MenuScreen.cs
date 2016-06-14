@@ -78,15 +78,18 @@ namespace SpaceAssault.Screens
         }
 
 
-        // Handler for when the user has cancelled the menu.
+        /// <summary>
+        /// Notifies derived classes that the menu has been cancelled.
+        /// </summary>
         protected virtual void OnCancel()
         {
             ExitScreen();
         }
 
-
-        // Helper overload makes it easy to use OnCancel as a MenuEntry event handler.
-        protected void OnCancel(object sender)
+        /// <summary>
+        /// Helper overload makes it easy to use OnCancel as a MenuEntry event handler.
+        /// </summary>
+        protected virtual void OnCancel(object sender, EventArgs e)
         {
             OnCancel();
         }

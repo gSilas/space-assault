@@ -13,6 +13,9 @@ namespace SpaceAssault.Screens
         string message;
         Texture2D gradientTexture;
 
+        public event EventHandler<EventArgs> Accepted;
+        public event EventHandler<EventArgs> Cancelled;
+
         // Constructor
         public MessageBoxScreen(string message)
             : this(message, true)
@@ -50,17 +53,20 @@ namespace SpaceAssault.Screens
         // Responds to user input, accepting or cancelling the message box.
         public override void HandleInput(InputState input)
         {
-            // We pass in our ControllingPlayer, which may either be null (to
-            // accept input from any player) or a specific index. If we pass a null
-            // controlling player, the InputState helper returns to us which player
-            // actually provided the input. We pass that through to our Accepted and
-            // Cancelled events, so they can tell which player triggered them.
             if (input.IsMenuSelect())
             {
+                // Raise the accepted event, then exit the message box.
+                if (Accepted != null)
+                    Accepted(this, EventArgs.Empty);
+
                 ExitScreen();
             }
             else if (input.IsMenuCancel())
             {
+                // Raise the cancelled event, then exit the message box.
+                if (Cancelled != null)
+                    Cancelled(this, EventArgs.Empty);
+
                 ExitScreen();
             }
         }

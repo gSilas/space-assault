@@ -38,13 +38,16 @@ namespace SpaceAssault.Screens
             set { position = value; }
         }
 
-        // Event raised when the menu entry is selected.
-        // </summary>
-
+        /// <summary>
+        /// Event raised when the menu entry is selected.
+        /// </summary>
+        public event EventHandler<EventArgs> Selected;
 
         // Method for raising the Selected event.
         protected internal virtual void OnSelectEntry()
         {
+            if (Selected != null)
+                Selected(this, EventArgs.Empty);
         }
 
 

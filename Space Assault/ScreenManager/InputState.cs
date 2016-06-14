@@ -1,27 +1,39 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
+/// <summary>
+/// with help from https://roecode.wordpress.com/2008/01/17/xna-framework-gameengine-development-part-6-inputgamecomponent/
+/// </summary>
+/// 
 namespace SpaceAssault.ScreenManager
 {
     // Helper for reading input from keyboard and mouse
     public class InputState
     {
         public KeyboardState CurrentKeyboardState;
+        public MouseState CurrentMouseState;
+
         public KeyboardState LastKeyboardState;
+        public MouseState LastMouseState;
 
-        // Constructs a new input state.
-        public InputState()
+        private Point _lastMouseLocation;
+
+        private Vector2 _mouseMoved;
+        public Vector2 MouseMoved
         {
-            CurrentKeyboardState = new KeyboardState();
-            LastKeyboardState = new KeyboardState();
-
+            get { return _mouseMoved; }
         }
 
         // Reads the latest state of the keyboard and gamepad.
         public void Update()
         {
-                LastKeyboardState = CurrentKeyboardState;
-                CurrentKeyboardState = Keyboard.GetState();
+            LastKeyboardState = CurrentKeyboardState;
+            LastMouseState = CurrentMouseState;
+
+            CurrentKeyboardState = Keyboard.GetState();
+            CurrentMouseState = Mouse.GetState();
+
+            _mouseMoved = new Vector2(LastMouseState.X - CurrentMouseState.X, LastMouseState.Y - CurrentMouseState.Y);
+            _lastMouseLocation = new Point(CurrentMouseState.X, CurrentMouseState.Y);
         }
 
 

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+/// <summary>
+/// With help from https://roecode.wordpress.com/2008/01/28/xna-framework-gameengine-development-part-7-screenmanagergamecomponent/
+/// </summary>
 namespace SpaceAssault.ScreenManager
 {
     // The screen manager manages one or more GameScreen instances.
@@ -49,6 +51,8 @@ namespace SpaceAssault.ScreenManager
         // Unload graphics content.
         protected override void UnloadContent()
         {
+            base.UnloadContent();
+
             // Tell each of the screens to unload their content.
             foreach (GameScreen screen in screens)
             {
@@ -124,12 +128,12 @@ namespace SpaceAssault.ScreenManager
             screen.IsExiting = false;
 
             // If we have a graphics device, tell the screen to load content.
+            screens.Add(screen);
             if (isInitialized)
             {
                 screen.LoadContent();
             }
-
-            screens.Add(screen);
+           
         }
 
 
