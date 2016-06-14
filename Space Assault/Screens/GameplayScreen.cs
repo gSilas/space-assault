@@ -41,6 +41,7 @@ namespace SpaceAssault.Screens
             _removeBullets = new List<Bullet>();
             _drone.Initialize();
             _station.Initialize();
+            _asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
         }
 
 
@@ -89,6 +90,7 @@ namespace SpaceAssault.Screens
                 //3D Model
                 _station.Update(gameTime);
                 _drone.Update(gameTime);
+                _asteroidField.Update(gameTime);
                 Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, _drone.Position + new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
             }
         }
@@ -147,6 +149,7 @@ namespace SpaceAssault.Screens
 
             _station.Draw();
             _drone.Draw();
+            _asteroidField.Draw();
 
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || pauseAlpha > 0)
