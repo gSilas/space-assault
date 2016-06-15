@@ -6,6 +6,7 @@ using SpaceAssault.Entities.Weapon;
 using System.Collections.Generic;
 using System;
 using SpaceAssault.Utils;
+using SpaceAssault.ScreenManager;
 
 /// <summary>
 ///  Movement, Schießen, Health, Sterben, neu Spawnen.
@@ -18,7 +19,10 @@ namespace SpaceAssault.Entities
         private float _turnSpeed;
         private float _moveSpeedForward;
         private float _moveSpeedBackward;
+        private float _moveSpeedLeft;
+        private float _moveSpeedRight;
         private float _moveSpeedModifier;
+        private float _moveSpeedModifierSideways;
         public int _health;
         private int _armor;
 
@@ -36,6 +40,8 @@ namespace SpaceAssault.Entities
             _turnSpeed = 10.0f;
             _moveSpeedForward = 1.0f;
             _moveSpeedBackward = -0.5f;
+            _moveSpeedLeft = 0.5f;
+            _moveSpeedRight = -0.5f;
             _health = 100;
             _armor = 100;
             _gun = new RailGun();
@@ -48,9 +54,12 @@ namespace SpaceAssault.Entities
             _turnSpeed = 1.0f;
             _moveSpeedForward = 1.0f;
             _moveSpeedBackward = -0.5f;
+            _moveSpeedLeft = 0.5f;
+            _moveSpeedRight = -0.5f;
             _health = 100;
             _armor = 100;
             _moveSpeedModifier = 0;
+            _moveSpeedModifierSideways = 0;
             Position = _spawnPos;
         }
 
@@ -62,6 +71,16 @@ namespace SpaceAssault.Entities
 
         public override void Update(GameTime gameTime)
         {
+            _gun.Update(gameTime);
+
+            //TODO: health, armor update
+        }
+
+        public void HandleInput()
+        {
+            /// <summary>
+            /// handling rotation of the drone
+            /// </summary>
             Vector3 direction = new Vector3(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, 0, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f) - MouseHandler.Position;
             direction.Normalize();
             float vectorDirection;
@@ -80,7 +99,9 @@ namespace SpaceAssault.Entities
                 }
             }
 
-            //movement
+            /// <summary>
+            /// foward & backward movement
+            /// </summary>
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 //forward
@@ -109,16 +130,45 @@ namespace SpaceAssault.Entities
             }
             Position -= RotationMatrix.Forward * _moveSpeedModifier;
 
-            //shooting the gun
+            /// <summary>
+            /// left & right movement
+            /// </summary>
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                //left
+                if (_moveSpeedModifierSideways < _moveSpeedLeft) _moveSpeedModifierSideways += 0.04f;
+                else _moveSpeedModifierSideways = _moveSpeedLeft;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                //right
+                if (_moveSpeedModifierSideways > _moveSpeedRight) _moveSpeedModifierSideways -= 0.04f;
+                else _moveSpeedModifierSideways = _moveSpeedRight;
+            }
+            else if (_moveSpeedModifierSideways > 0.02f)
+            {
+                //left slowing down
+                _moveSpeedModifierSideways -= 0.02f;
+            }
+            else if (_moveSpeedModifierSideways < -0.02f)
+            {
+                //right slowing down
+                _moveSpeedModifierSideways += 0.02f;
+            }
+            else
+            {
+                _moveSpeedModifierSideways = 0.0f;
+            }
+            Position -= RotationMatrix.Left * _moveSpeedModifierSideways;
+
+
+            /// <summary>
+            /// shooting the gun
+            /// </summary>
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 _gun.Shoot(Position, RotationMatrix.Forward, 6f);
             }
-
-            _gun.Update(gameTime);
-
-
-            //TODO: health, armor update
         }
 
         public List<Bullet> GetBulletList()

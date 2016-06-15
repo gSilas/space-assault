@@ -18,7 +18,7 @@ namespace SpaceAssault.Screens
     class GameplayScreen : GameScreen
     {
         SpriteFont gameFont;
-        Vector2 playerPosition = new Vector2(100, 100);
+
         float pauseAlpha;
 
         private Station _station;
@@ -108,25 +108,7 @@ namespace SpaceAssault.Screens
             }
             else
             {
-                // Otherwise move the player position.
-                Vector2 movement = Vector2.Zero;
-
-                if (keyboardState.IsKeyDown(Keys.Left))
-                    movement.X--;
-
-                if (keyboardState.IsKeyDown(Keys.Right))
-                    movement.X++;
-
-                if (keyboardState.IsKeyDown(Keys.Up))
-                    movement.Y--;
-
-                if (keyboardState.IsKeyDown(Keys.Down))
-                    movement.Y++;
-
-                if (movement.Length() > 1)
-                    movement.Normalize();
-
-                playerPosition += movement * 2;
+                _drone.HandleInput();
             }
         }
 
