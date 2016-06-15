@@ -17,8 +17,6 @@ namespace SpaceAssault.Utils
         {
             _position = position;
             Asteroids = new List<Asteroid>();
-            LoadContent();
-            BuildChunks();
         }
 
         private void BuildChunks()
@@ -26,9 +24,10 @@ namespace SpaceAssault.Utils
             Asteroids.AddRange(AsteroidChunk.RandomChunks());
         }
 
-        private void LoadContent()
+        public void LoadContent()
         {
             AsteroidChunk.LoadContent(Global.ContentManager.Load<Model>("Models/asteroid"), _position);
+            BuildChunks();
         }
 
         public void Update(GameTime gameTime)

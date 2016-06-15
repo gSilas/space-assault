@@ -41,7 +41,7 @@ namespace SpaceAssault.Screens
             _removeBullets = new List<Bullet>();
             _drone.Initialize();
             _station.Initialize();
-           // _asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
+            _asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
         }
 
 
@@ -53,7 +53,8 @@ namespace SpaceAssault.Screens
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
             _station.LoadContent();
             _drone.LoadContent();
-            _asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
+            _asteroidField.LoadContent();
+            //_asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
 
             Thread.Sleep(1000);
         }
