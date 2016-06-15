@@ -156,8 +156,8 @@
 /processorParam:ColorKeyEnabled=True
 /processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
+/processorParam:ResizeToPowerOfTwo=True
+/processorParam:MakeSquare=True
 /processorParam:TextureFormat=Color
 /build:Models/Concrete.Precast Structural Concrete.Smooth.bump.jpg
 
