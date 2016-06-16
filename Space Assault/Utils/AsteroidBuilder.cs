@@ -61,7 +61,7 @@ namespace SpaceAssault.Utils
         {
             Random random = new Random();
             int seed = random.Next(Enum.GetValues(typeof(PatternType)).Cast<int>().Min(), Enum.GetValues(typeof(PatternType)).Cast<int>().Max() + 1);
-            return ChunkAsteroids();
+            return StrangeFieldChunkAsteroids();
         }
 
         public static List<Asteroid> CircleChunkAsteroids()
