@@ -61,7 +61,7 @@ namespace SpaceAssault.Utils
         {
             Random random = new Random();
             int seed = random.Next(Enum.GetValues(typeof(PatternType)).Cast<int>().Min(), Enum.GetValues(typeof(PatternType)).Cast<int>().Max() + 1);
-            return CircleChunkAsteroids();
+            return ChunkAsteroids();
         }
 
         public static List<Asteroid> CircleChunkAsteroids()
@@ -72,6 +72,38 @@ namespace SpaceAssault.Utils
                 Vector3 astPos = _position;
                 astPos.X = ((float)(astPos.X+ 100 * Math.Cos(i)));
                 astPos.Z = ((float)(astPos.Z+ 100 * Math.Sin(i)));
+                Asteroid ast = new Asteroid(astPos, MathHelper.ToDegrees(90), new Vector3(-1, 0, 1), 2f);
+                ast.Initialize();
+                ast.LoadContent(_model);
+                astList.Add(ast);
+            }
+            return astList;
+        }
+
+        public static List<Asteroid> HyperbolicChunkAsteroids()
+        {
+            List<Asteroid> astList = new List<Asteroid>();
+            for (double i = 0; i < 2 * Math.PI; i = i + (1.0d / 6.0d) * Math.PI)
+            {
+                Vector3 astPos = _position;
+                astPos.X = ((float)(astPos.X + 55 * Math.Sinh(i)));
+                astPos.Z = ((float)(astPos.Z + 55 * Math.Sin(i)));
+                Asteroid ast = new Asteroid(astPos, MathHelper.ToDegrees(90), new Vector3(-1, 0, 1), 2f);
+                ast.Initialize();
+                ast.LoadContent(_model);
+                astList.Add(ast);
+            }
+            return astList;
+        }
+
+        public static List<Asteroid> StrangeFieldChunkAsteroids()
+        {
+            List<Asteroid> astList = new List<Asteroid>();
+            for (double i = 0; i < 2 * Math.PI; i = i + (1.0d / 6.0d) * Math.PI)
+            {
+                Vector3 astPos = _position;
+                astPos.X = ((float)(astPos.X + 100 * Math.Tan(i)));
+                astPos.Z = ((float)(astPos.Z + 100 * Math.Atan(i)));
                 Asteroid ast = new Asteroid(astPos, MathHelper.ToDegrees(90), new Vector3(-1, 0, 1), 2f);
                 ast.Initialize();
                 ast.LoadContent(_model);
