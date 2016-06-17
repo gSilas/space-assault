@@ -116,6 +116,7 @@ namespace SpaceAssault.Screens
             else
             {
                 _drone.HandleInput();
+                _enemyShip.FlyVector(new Vector3(20,0,20));
             }
         }
 

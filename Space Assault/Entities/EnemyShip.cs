@@ -15,10 +15,10 @@ namespace SpaceAssault.Entities
         private Vector3 _spawnPos;
         private float _moveSpeedForward;
         //private float _moveSpeedBackward;
-        //private float _turnSpeed;
+        private float _turnSpeed;
         //private float _moveSpeedModifier;
-        private Vector3 _direction= new Vector3(0,0,0);
-        private float _moveSpeedModifier;
+        private Vector3 _direction;
+       // private float _moveSpeedModifier;
  
         public int _health;
         private int _armor;
@@ -36,7 +36,8 @@ namespace SpaceAssault.Entities
             RotationMatrix = Matrix.Identity;
             
             _moveSpeedForward = 0.6f;
-            //_turnSpeed = 10.0f;
+            _turnSpeed = 5.0f;
+            _direction = new Vector3(0, 0, 0);
             //_moveSpeedBackward = -0.5f;
 
             _health = 100;
@@ -80,7 +81,24 @@ namespace SpaceAssault.Entities
         }
         public void FlyVector(Vector3 direction)
         {
-            _direction=direction;
+            //_direction=direction;
+            direction.Normalize();
+            float vectorDirection;
+            for (float i = 0.5f; i < _turnSpeed; i++)
+            {
+                vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
+                if (vectorDirection > 0.01)
+                {
+                    //turn left
+                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.5f));
+                }
+                else if (vectorDirection < -0.01)
+                {
+                    //turn right
+                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
+                }
+            }
+            Position -= RotationMatrix.Forward;
         }
 
 
