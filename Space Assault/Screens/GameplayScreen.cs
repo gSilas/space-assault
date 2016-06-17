@@ -36,7 +36,7 @@ namespace SpaceAssault.Screens
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
             _station = new Station(new Vector3(0, 0, 0), 0);
             _drone = new Drone(new Vector3(0, 0, 20));
-            _enemyShip= new EnemyShip(new Vector3(20,20,20));
+            _enemyShip= new EnemyShip(new Vector3(100,0,-100));
             //_asteroidField = new AsteroidBuilder(new Vector3(500, 0, -500));
             
             _removeAsteroid = new List<Asteroid>();

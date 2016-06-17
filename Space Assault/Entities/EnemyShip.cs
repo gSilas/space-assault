@@ -46,7 +46,7 @@ namespace SpaceAssault.Entities
         }
         public override void LoadContent()
         {
-            Model = Global.ContentManager.Load<Model>("Models/drone");
+            Model = Global.ContentManager.Load<Model>("Models/enemyship");
             _gun.LoadContent();
         }
         public override void Update(GameTime gameTime)
