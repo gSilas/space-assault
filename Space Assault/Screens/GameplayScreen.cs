@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,7 +37,7 @@ namespace SpaceAssault.Screens
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
             _station = new Station(new Vector3(0, 0, 0), 0);
             _drone = new Drone(new Vector3(0, 0, 20));
-            _enemyShip= new EnemyShip(new Vector3(100,0,-100));
+            _enemyShip= new EnemyShip(new Vector3(300,0,-150));
             //_asteroidField = new AsteroidBuilder(new Vector3(500, 0, -500));
             
             _removeAsteroid = new List<Asteroid>();
@@ -116,9 +117,16 @@ namespace SpaceAssault.Screens
             else
             {
                 _drone.HandleInput();
-                _enemyShip.FlyVector(new Vector3(20,0,20));
+                _enemyShip.FlyVector(_enemyShip.Position-_drone.Position);
+                //euklidian Distance of Drone/enemyship Position
+                if (Math.Sqrt(Math.Pow(_enemyShip.Position.X - _drone.Position.X, 2) + Math.Pow(_enemyShip.Position.Y - _drone.Position.Y, 2)) < 100)
+                {
+                    _enemyShip.Shoot(_drone.Position);
+                }
+
             }
         }
+
 
 
         // Draws the gameplay screen.

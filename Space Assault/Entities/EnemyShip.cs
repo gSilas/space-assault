@@ -17,7 +17,7 @@ namespace SpaceAssault.Entities
         //private float _moveSpeedBackward;
         private float _turnSpeed;
         //private float _moveSpeedModifier;
-        private Vector3 _direction;
+        //private Vector3 _direction;
        // private float _moveSpeedModifier;
  
         public int _health;
@@ -35,9 +35,9 @@ namespace SpaceAssault.Entities
         {
             RotationMatrix = Matrix.Identity;
             
-            _moveSpeedForward = 0.6f;
+            _moveSpeedForward = 0.02f;
             _turnSpeed = 5.0f;
-            _direction = new Vector3(0, 0, 0);
+
             //_moveSpeedBackward = -0.5f;
 
             _health = 100;
@@ -53,7 +53,7 @@ namespace SpaceAssault.Entities
         public override void Update(GameTime gameTime)
         {
             _gun.Update(gameTime);
-            Position += _direction * _moveSpeedForward;
+            //Position += _direction * _moveSpeedForward;
             //TODO: health, armor update
         }
         public List<Bullet> GetBulletList()
@@ -99,6 +99,11 @@ namespace SpaceAssault.Entities
                 }
             }
             Position -= RotationMatrix.Forward;
+        }
+
+        public void Shoot(Vector3 direction)
+        {
+            _gun.Shoot(Position, RotationMatrix.Forward, 6f);
         }
 
 
