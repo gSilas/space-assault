@@ -24,6 +24,7 @@ namespace SpaceAssault.Screens
         private Station _station;
         private AsteroidBuilder _asteroidField;
         private Drone _drone;
+        private EnemyShip _enemyShip;
         private Texture2D _background;
         private List<Bullet> _removeBullets;
         private List<Asteroid> _removeAsteroid;
@@ -35,12 +36,14 @@ namespace SpaceAssault.Screens
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
             _station = new Station(new Vector3(0, 0, 0), 0);
             _drone = new Drone(new Vector3(0, 0, 20));
+            _enemyShip= new EnemyShip(new Vector3(20,20,20));
             //_asteroidField = new AsteroidBuilder(new Vector3(500, 0, -500));
             
             _removeAsteroid = new List<Asteroid>();
             _removeBullets = new List<Bullet>();
             _drone.Initialize();
             _station.Initialize();
+            _enemyShip.Initialize();
             _asteroidField = new AsteroidBuilder(new Vector3(0,0,1));
         }
 
@@ -53,6 +56,7 @@ namespace SpaceAssault.Screens
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
             _station.LoadContent();
             _drone.LoadContent();
+            _enemyShip.LoadContent();
             _asteroidField.LoadContent();
             //_asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
 
@@ -86,6 +90,9 @@ namespace SpaceAssault.Screens
                 //3D Model
                 _station.Update(gameTime);
                 _drone.Update(gameTime);
+                _enemyShip.Update(gameTime);
+                //_enemyShip.FlyVector(_drone.Position);
+                
                 _asteroidField.Update(gameTime);
                 Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, _drone.Position + new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
             }
@@ -126,6 +133,7 @@ namespace SpaceAssault.Screens
 
             _station.Draw();
             _drone.Draw();
+            _enemyShip.Draw();
             _asteroidField.Draw();
 
             // If the game is transitioning on or off, fade it out to black.
