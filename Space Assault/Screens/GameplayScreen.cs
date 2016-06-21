@@ -45,7 +45,7 @@ namespace SpaceAssault.Screens
             _drone.Initialize();
             _station.Initialize();
             _enemyShip.Initialize();
-            _asteroidField = new AsteroidBuilder(new Vector3(0,0,1));
+            _asteroidField = new AsteroidBuilder();
         }
 
 
@@ -94,7 +94,7 @@ namespace SpaceAssault.Screens
                 _enemyShip.Update(gameTime);
                 //_enemyShip.FlyVector(_drone.Position);
                 
-                _asteroidField.Update(gameTime);
+                _asteroidField.Update(gameTime,_station.Position,1000f);
                 Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, _drone.Position + new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
             }
         }
