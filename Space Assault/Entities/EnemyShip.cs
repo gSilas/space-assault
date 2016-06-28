@@ -35,7 +35,7 @@ namespace SpaceAssault.Entities
         {
             RotationMatrix = Matrix.Identity;
             
-            _moveSpeedForward = 0.02f;
+            _moveSpeedForward = 0.5f;
             _turnSpeed = 5.0f;
 
             //_moveSpeedBackward = -0.5f;
@@ -98,7 +98,7 @@ namespace SpaceAssault.Entities
                     RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
                 }
             }
-            Position -= RotationMatrix.Forward;
+            Position -= RotationMatrix.Forward * _moveSpeedForward;
         }
 
         public void Shoot(Vector3 direction)
