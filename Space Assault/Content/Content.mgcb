@@ -142,7 +142,7 @@
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=True
 /processorParam:RotationX=0
-/processorParam:RotationY=0
+/processorParam:RotationY=180
 /processorParam:RotationZ=0
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False

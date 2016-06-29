@@ -9,10 +9,11 @@ namespace SpaceAssault.Entities.Weapon
         private Vector3 _direction;
         private float _travelspeed;
 
-        public Bullet(Vector3 position, Vector3 direction, float travelspeed, Model model)
+        public Bullet(Vector3 position, Matrix droneRotateMatrix, float travelspeed, Model model)
         {
             Position = position;
-            _direction = direction;
+            _direction = droneRotateMatrix.Forward;
+            RotationMatrix = droneRotateMatrix;
             _travelspeed = travelspeed;
             Model = model;
         }

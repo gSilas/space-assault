@@ -103,7 +103,7 @@ namespace SpaceAssault.Entities
 
         public void Shoot(Vector3 direction)
         {
-            _gun.Shoot(Position, RotationMatrix.Forward, 6f);
+            _gun.Shoot(Position, RotationMatrix, 6f);
         }
 
 

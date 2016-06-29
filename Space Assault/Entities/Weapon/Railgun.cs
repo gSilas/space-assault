@@ -21,11 +21,11 @@ namespace SpaceAssault.Entities.Weapon
             BulletModel = Global.ContentManager.Load<Model>("Models/bullet");
         }
 
-        public override void Shoot(Vector3 position, Vector3 direction, float travelspeed)
+        public override void Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
         {
             if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
             {
-                ListOfBullets.Add(new Bullet(position, direction, travelspeed, BulletModel));
+                ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
                 LastShotTime = GlobalTimeSpan;
             }
 
