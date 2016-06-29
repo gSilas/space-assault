@@ -167,7 +167,11 @@ namespace SpaceAssault.Entities
             /// </summary>
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                _gun.Shoot(Position, RotationMatrix, 6f);
+                _gun.Shoot(Position + RotationMatrix.Left * 4.5f, RotationMatrix, 6f);
+            }
+            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+            {
+                _gun.Shoot(Position - RotationMatrix.Left * 4.5f, RotationMatrix, 6f);
             }
         }
 
