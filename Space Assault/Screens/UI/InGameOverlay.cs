@@ -52,7 +52,7 @@ namespace SpaceAssault.Screens
             Labels[1].Draw(Global.HighScorePoints);
             Labels[2].Draw(_stationHealth);
 
-            if (_distance < 150)
+            if (_distance < 150 && Global.HighScorePoints > 1000)
                 Labels[3].Draw();
 
             if (Global.HighScorePoints > 1000)

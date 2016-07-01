@@ -285,7 +285,7 @@ namespace SpaceAssault.Screens
 
             if (Keyboard.GetState().IsKeyDown(Keys.B))
             {
-                if((Vector3.Distance(_station.Position, _drone.Position)-_stationHeight) < 150)
+                if((Vector3.Distance(_station.Position, _drone.Position)-_stationHeight) < 150 && Global.HighScorePoints > 1000)
                     ScreenManager.AddScreen(new ShopScreen());
             }
 
