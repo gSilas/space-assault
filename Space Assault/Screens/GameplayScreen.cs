@@ -139,6 +139,27 @@ namespace SpaceAssault.Screens
 
                 _asteroidField.Update(gameTime,_station.Position,1000f);
                 Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, _drone.Position + new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
+
+                /// <summary>
+                /// enemy "KI"
+                /// </summary>
+                foreach (var enemyShip in _enemyShips)
+                {
+                    double distanceToDrone = Math.Sqrt(Math.Pow(enemyShip.Position.X - _drone.Position.X, 2) + Math.Pow(enemyShip.Position.Z - _drone.Position.Z, 2));
+                    double distanceToStation = Math.Sqrt(Math.Pow(enemyShip.Position.X - _station.Position.X, 2) + Math.Pow(enemyShip.Position.Z - _station.Position.Z, 2));
+
+                    if (distanceToDrone < 300)
+                        enemyShip.FlyVector(enemyShip.Position - _drone.Position);
+                    else if (distanceToStation > 100)
+                        enemyShip.FlyVector(enemyShip.Position - _station.Position);
+
+                    //euklidian Distance of Drone/enemyship Position
+                    if (distanceToDrone < 150)
+                        enemyShip.Shoot(_drone.Position);
+
+                    if (distanceToStation < 150)
+                        enemyShip.Shoot(_station.Position);
+                }
             }
 
 
@@ -220,27 +241,6 @@ namespace SpaceAssault.Screens
             foreach (var bullet in _removeBullets)
             {
                 _drone.GetBulletList().Remove(bullet);
-            }
-
-            /// <summary>
-            /// enemy "KI"
-            /// </summary>
-            foreach (var enemyShip in _enemyShips)
-            {
-                double distanceToDrone = Math.Sqrt(Math.Pow(enemyShip.Position.X - _drone.Position.X, 2) + Math.Pow(enemyShip.Position.Z - _drone.Position.Z, 2));
-                double distanceToStation = Math.Sqrt(Math.Pow(enemyShip.Position.X - _station.Position.X, 2) + Math.Pow(enemyShip.Position.Z - _station.Position.Z, 2));
-
-                if (distanceToDrone < 300)
-                    enemyShip.FlyVector(enemyShip.Position - _drone.Position);
-                else if(distanceToStation > 100)
-                    enemyShip.FlyVector(enemyShip.Position - _station.Position);
-
-                //euklidian Distance of Drone/enemyship Position
-                if (distanceToDrone < 150)
-                    enemyShip.Shoot(_drone.Position);
-
-                if(distanceToStation < 150)
-                    enemyShip.Shoot(_station.Position);
             }
 
         }
