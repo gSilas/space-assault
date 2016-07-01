@@ -230,7 +230,12 @@ namespace SpaceAssault.Screens
                         _drone._health -= 5;
                         _removeBullets.Add(bullet);
                     }
-                   
+                    if (Collider3D.Intersection(bullet, _station))
+                    {
+                        _station._health -= 5;
+                        _removeBullets.Add(bullet);
+                    }
+
                 }
             }
             foreach (var ast in _asteroidField.Asteroids)
