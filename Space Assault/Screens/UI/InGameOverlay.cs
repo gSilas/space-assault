@@ -30,10 +30,11 @@ namespace SpaceAssault.Screens
         public void LoadContent()
         {
             //UI
-            Labels.Add(new Label("gamefont", "Health: ", 100, Global.GraphicsManager.PreferredBackBufferHeight - 100, Color.White));
-            Labels.Add(new Label("gamefont", "Score: ", 220, Global.GraphicsManager.PreferredBackBufferHeight - 100, Color.White));
-            Labels.Add(new Label("gamefont", "StationHealth: ", Global.GraphicsManager.PreferredBackBufferWidth-200, Global.GraphicsManager.PreferredBackBufferHeight - 100, Color.White));
-            Labels.Add(new Label("gamefont", "Press B for Shop", Global.GraphicsManager.PreferredBackBufferWidth / 2, Global.GraphicsManager.PreferredBackBufferHeight - 100, Color.White));
+            Labels.Add(new Label("gamefont", "Health: ", 50, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
+            Labels.Add(new Label("gamefont", "Score: ", 170, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
+            Labels.Add(new Label("gamefont", "StationHealth: ", Global.GraphicsManager.PreferredBackBufferWidth-200, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
+            Labels.Add(new Label("gamefont", "Press B for Shop", Global.GraphicsManager.PreferredBackBufferWidth / 2, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
+            Labels.Add(new Label("gamefont", "Upgrade available", Global.GraphicsManager.PreferredBackBufferWidth - 180, 50, Color.GreenYellow));
         }
 
         // Draws the background screen.
@@ -53,6 +54,9 @@ namespace SpaceAssault.Screens
 
             if (_distance < 150)
                 Labels[3].Draw();
+
+            if (Global.HighScorePoints > 1000)
+                Labels[4].Draw();
         }
 
     }

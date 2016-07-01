@@ -36,6 +36,8 @@ namespace SpaceAssault.Screens
         private int _deathCounter = 0;
         private int _stationHeight = 80;
 
+        bool _dronepdate = true;
+
         // Constructor.
         public GameplayScreen()
         {
@@ -98,6 +100,17 @@ namespace SpaceAssault.Screens
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
+
+            if (_dronepdate)
+            {
+                if (ShopScreen._health == 2)
+                {
+                    _drone._health = 200;
+                    _dronepdate = false;
+                }
+
+            }
+
 
             // Gradually fade in or out depending on whether we are covered by the pause screen.
             if (coveredByOtherScreen)

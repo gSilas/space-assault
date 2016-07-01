@@ -12,7 +12,7 @@ namespace SpaceAssault.Screens
         MenuEntry healthMenuEntry;
 
         static int _damage = 1;
-        static int _health = 1;
+        public static int _health = 1;
 
         // Constructor.
         public ShopScreen()
