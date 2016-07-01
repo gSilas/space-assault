@@ -161,7 +161,8 @@ namespace SpaceAssault.Screens
                         Global.HighScorePoints -= 50;
                     }
                 }
-                foreach (var enemyShip in _enemyShips)
+
+                if (Collider3D.Intersection(bullet,_enemyShip))
                 {
                     if (Collider3D.Intersection(bullet, enemyShip))
                     {
@@ -190,14 +191,23 @@ namespace SpaceAssault.Screens
                         }
                     }
 
-                    if (Collider3D.Intersection(bullet, _drone))
+                if (Collider3D.Intersection(bullet, _drone))
+                {
+                    _drone._health -= 5;
+                    _removeBullets.Add(bullet);
+                }
+            }
+            foreach (var ast in _asteroidField.Asteroids)
+            {
+                foreach (var ast2 in _asteroidField.Asteroids)
+                {
+                    if (ast!=ast2 && Collider3D.Intersection(ast2, ast))
                     {
-                        _drone._health -= 5;
-                        _removeBullets.Add(bullet);
+                        _removeAsteroid.Add(ast);
                     }
                 }
             }
-                foreach (var ast in _removeAsteroid)
+            foreach (var ast in _removeAsteroid)
             {
                 _asteroidField.Asteroids.Remove(ast);
             }

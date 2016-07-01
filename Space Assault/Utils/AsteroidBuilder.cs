@@ -48,7 +48,7 @@ namespace SpaceAssault.Utils
             {
                 ast.Update(gameTime);
             }
-            if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromSeconds(3))))
+            if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(500))))
             {
                 BuildChunks();
                 _lastChunkTime = gameTime.TotalGameTime;
