@@ -36,7 +36,7 @@ namespace SpaceAssault.Screens
         private int _deathCounter = 0;
         private int _stationHeight = 80;
 
-        bool _dronepdate = true;
+        public static bool _dronepdate = true;
 
         // Constructor.
         public GameplayScreen()
