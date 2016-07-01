@@ -150,7 +150,7 @@ namespace SpaceAssault.Screens
 
                     if (distanceToDrone < 300)
                         enemyShip.FlyVector(enemyShip.Position - _drone.Position);
-                    else if (distanceToStation > 100)
+                    else if (distanceToStation > 140)
                         enemyShip.FlyVector(enemyShip.Position - _station.Position);
 
                     //euklidian Distance of Drone/enemyship Position
@@ -259,12 +259,7 @@ namespace SpaceAssault.Screens
             {
                 ScreenManager.AddScreen(new PauseMenuScreen());
             }
-            else
-            {
-            }
         }
-
-
 
         // Draws the gameplay screen.
         public override void Draw(GameTime gameTime)
