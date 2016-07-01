@@ -13,10 +13,11 @@ namespace SpaceAssault.Entities
         private float _turnSpeed;
         //private float _moveSpeedModifier;
         //private Vector3 _direction;
-       // private float _moveSpeedModifier;
+        //private float _moveSpeedModifier;
  
         public int _health;
         private int _armor;
+        private bool _isNotDead;
 
         private AWeapon _gun;
 
@@ -41,6 +42,20 @@ namespace SpaceAssault.Entities
             _gun.Initialize();
         }
 
+        public void Reset()
+        {
+            RotationMatrix = Matrix.Identity;
+            _health = 100;
+            _armor = 100;
+            Position = _spawnPos;
+        }
+
+        public bool IsNotDead
+        {
+            get { return _isNotDead; }
+            protected set { _isNotDead = value; }
+        }
+
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/enemyship2");
@@ -49,6 +64,7 @@ namespace SpaceAssault.Entities
         public override void Update(GameTime gameTime)
         {
             _gun.Update(gameTime);
+            if (_health <= 0) this.Reset();
             //Position += _direction * _moveSpeedForward;
             //TODO: health, armor update
         }

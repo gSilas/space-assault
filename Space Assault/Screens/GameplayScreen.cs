@@ -117,7 +117,6 @@ namespace SpaceAssault.Screens
                 _drone.Reset();
                 _deathCounter++;
             }
-
             if(_deathCounter >= 3)
             {
 
