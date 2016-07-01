@@ -44,7 +44,7 @@ namespace SpaceAssault.Screens
             _station = new Station(new Vector3(0, _stationHeight, 0), 0);
             _drone = new Drone(new Vector3(150, 0, 100));
             //_asteroidField = new AsteroidBuilder(new Vector3(500, 0, -500));
-            _ui = new InGameOverlay(_drone._health, _station._health);
+            _ui = new InGameOverlay(_drone._health, _station._health, (Vector3.Distance(_station.Position, _drone.Position) - _stationHeight));
 
 
 
@@ -136,7 +136,7 @@ namespace SpaceAssault.Screens
                 //_enemyShip.FlyVector(_drone.Position);
 
                 //UI
-                _ui.Update(_drone._health, _station._health);
+                _ui.Update(_drone._health, _station._health, (Vector3.Distance(_station.Position, _drone.Position) - _stationHeight));
 
                 _asteroidField.Update(gameTime,_station.Position,1000f);
                 Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, _drone.Position + new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
