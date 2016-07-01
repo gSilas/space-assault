@@ -155,6 +155,16 @@ namespace SpaceAssault.Screens
                     _removeBullets.Add(bullet);
                 }
             }
+            foreach (var ast in _asteroidField.Asteroids)
+            {
+                foreach (var ast2 in _asteroidField.Asteroids)
+                {
+                    if (ast!=ast2 && Collider3D.Intersection(ast2, ast))
+                    {
+                        _removeAsteroid.Add(ast);
+                    }
+                }
+            }
             foreach (var ast in _removeAsteroid)
             {
                 _asteroidField.Asteroids.Remove(ast);
