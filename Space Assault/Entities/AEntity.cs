@@ -8,11 +8,18 @@ namespace SpaceAssault.Entities
         private Model _model;
         private Vector3 _position;
         private Matrix _rotationMatrix = Matrix.Identity;
+        private float _scale = 1;
 
         public Model Model
         {
             get { return _model; }
             protected set { _model = value; }
+        }
+
+        public float Scale
+        {
+            get { return _scale; }
+            protected set { _scale = value; }
         }
 
         public Vector3 Position
@@ -41,7 +48,7 @@ namespace SpaceAssault.Entities
                 {
                     effect.EnableDefaultLighting();
                     effect.PreferPerPixelLighting = true;
-                    effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
+                    effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(_scale);
                     effect.View = Global.Camera.ViewMatrix;
                     effect.Projection = Global.Camera.ProjectionMatrix;
                 }

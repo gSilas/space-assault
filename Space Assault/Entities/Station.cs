@@ -13,7 +13,7 @@ namespace SpaceAssault.Entities
         {
             _angle = angle;
             Position = position;
-
+            Scale = 0.5f;
         }
 
         public override void Initialize()
