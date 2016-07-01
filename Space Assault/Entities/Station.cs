@@ -8,6 +8,7 @@ namespace SpaceAssault.Entities
         private float _angle;
         private bool _up;
         public int _health;
+        private bool _isNotDead;
 
         public Station(Vector3 position, float angle)
         {
@@ -20,6 +21,11 @@ namespace SpaceAssault.Entities
         {
             _up = true;
             _health = 100;
+        }
+        public bool IsNotDead
+        {
+            get { return _isNotDead; }
+            protected set { _isNotDead = value; }
         }
 
         public override void LoadContent()
@@ -40,6 +46,8 @@ namespace SpaceAssault.Entities
                 _up = false;
             }
             RotationMatrix = Matrix.CreateRotationY(_angle);
+
+            if (_health <= 0) IsNotDead = false;
         }
     }
 }
