@@ -120,6 +120,28 @@ namespace SpaceAssault.Screens
                     _removeBullets.Add(bullet);
                 }
             }
+            foreach (var bullet in _enemyShip.GetBulletList())
+            {
+                foreach (var ast in _asteroidField.Asteroids)
+                {
+                    if (Collider3D.Intersection(bullet, ast))
+                    {
+                        _removeAsteroid.Add(ast);
+                        _removeBullets.Add(bullet);
+                    }
+                    if (Collider3D.Intersection(ast,_enemyShip))
+                    {
+                        _enemyShip._health -= 20;
+                        _removeAsteroid.Add(ast);
+                    }
+                }
+
+                if (Collider3D.Intersection(bullet, _drone))
+                {
+                    _drone._health -= 20;
+                    _removeBullets.Add(bullet);
+                }
+            }
             foreach (var ast in _removeAsteroid)
             {
                 _asteroidField.Asteroids.Remove(ast);
