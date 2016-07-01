@@ -12,6 +12,7 @@ namespace SpaceAssault.Entities.Weapon
         public List<Bullet> RemoveListOfBullets;
 
         protected Model BulletModel;
+        protected Model BulletModel2;
 
         protected TimeSpan CoolDownTime;
 

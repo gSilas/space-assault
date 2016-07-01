@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.Screens;
 
 namespace SpaceAssault.Entities.Weapon
 {
@@ -20,13 +21,17 @@ namespace SpaceAssault.Entities.Weapon
         public override void LoadContent()
         {
             BulletModel = Global.ContentManager.Load<Model>("Models/laser");
+            BulletModel2 = Global.ContentManager.Load<Model>("Models/laser2");
         }
 
         public override void Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
         {
             if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
             {
-                ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
+                if(GameplayScreen._dronepdate)
+                    ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
+                else
+                    ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel2));
                 LastShotTime = GlobalTimeSpan;
             }
 
