@@ -20,7 +20,9 @@ namespace SpaceAssault.Screens
     {
         SpriteFont gameFont;
 
-        float pauseAlpha;
+        float _pauseAlpha;
+        float _deadDroneAlpha;
+        float _actualDeadDroneAlpha;
 
         private Station _station;
         private AsteroidBuilder _asteroidField;
@@ -89,9 +91,24 @@ namespace SpaceAssault.Screens
 
             // Gradually fade in or out depending on whether we are covered by the pause screen.
             if (coveredByOtherScreen)
-                pauseAlpha = Math.Min(pauseAlpha + 1f / 32, 1);
+                _pauseAlpha = Math.Min(_pauseAlpha + 1f / 32, 1);
             else
-                pauseAlpha = Math.Max(pauseAlpha - 1f / 32, 0);
+                _pauseAlpha = Math.Max(_pauseAlpha - 1f / 32, 0);
+
+            /// <summary>
+            /// handles what happens if drone is dead
+            /// </summary>
+            if (!_drone.IsNotDead)
+                _deadDroneAlpha = Math.Min(_deadDroneAlpha + 1f / 32, 1);
+            else
+                _deadDroneAlpha = Math.Max(_deadDroneAlpha - 1f / 32, 0);
+
+            if (_actualDeadDroneAlpha >= 1f)
+            {
+                _drone.Reset();
+            }
+
+
 
             if (IsActive)
             {
@@ -179,7 +196,6 @@ namespace SpaceAssault.Screens
             }
             else
             {
-                _drone.HandleInput();
                 _enemyShip.FlyVector(_enemyShip.Position-_drone.Position);
                 //euklidian Distance of Drone/enemyship Position
                 if (Math.Sqrt(Math.Pow(_enemyShip.Position.X - _drone.Position.X, 2) + Math.Pow(_enemyShip.Position.Y - _drone.Position.Y, 2)) < 100)
@@ -206,10 +222,19 @@ namespace SpaceAssault.Screens
             _asteroidField.Draw();
             _ui.Draw();
 
-            // If the game is transitioning on or off, fade it out to black.
-            if (TransitionPosition > 0 || pauseAlpha > 0)
+            //if drone is dead fade to black
+            if (_deadDroneAlpha > 0)
             {
-                float alpha = MathHelper.Lerp(1f - TransitionAlpha, 1f, pauseAlpha / 2);
+                _actualDeadDroneAlpha = MathHelper.Lerp(0f, 2f, _deadDroneAlpha / 2);
+                Console.WriteLine(_actualDeadDroneAlpha);
+                ScreenManager.FadeBackBufferToBlack(_actualDeadDroneAlpha);
+            }
+
+
+            // If the game is transitioning on or off, fade it out to black.
+            if (TransitionPosition > 0 || _pauseAlpha > 0)
+            {
+                float alpha = MathHelper.Lerp(1f - TransitionAlpha, 1f, _pauseAlpha / 2);
 
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
