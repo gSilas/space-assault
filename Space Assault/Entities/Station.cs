@@ -20,7 +20,7 @@ namespace SpaceAssault.Entities
         public override void Initialize()
         {
             _up = true;
-            _health = 100;
+            _health = 10000;
         }
         public bool IsNotDead
         {

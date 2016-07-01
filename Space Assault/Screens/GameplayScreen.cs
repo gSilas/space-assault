@@ -101,6 +101,9 @@ namespace SpaceAssault.Screens
         {
             base.Update(gameTime, otherScreenHasFocus, false);
 
+            if (_station._health <= 0)
+                ScreenManager.Game.Exit();
+
             if (_dronepdate)
             {
                 if (ShopScreen._health == 2)
