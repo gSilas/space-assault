@@ -234,7 +234,7 @@ namespace SpaceAssault.Screens
                         {
                             //enemyShip.Position = new Vector3(100,10,100);
                         }
-                        if (gameTime.TotalGameTime > (ast.LifeTime.Add(TimeSpan.FromMinutes(1d))))
+                        if (gameTime.TotalGameTime > (ast.LifeTime.Add(TimeSpan.FromMinutes(0.7d))))
                         {
                             _removeAsteroid.Add(ast);
                         }
