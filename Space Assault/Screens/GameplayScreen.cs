@@ -109,7 +109,7 @@ namespace SpaceAssault.Screens
                     }
                     if (Collider3D.Intersection(ast, _drone))
                     {
-                        _drone._health -= _drone._health*1/3;
+                        _drone._health -= 20;
                         _removeAsteroid.Add(ast);
                     }
                 }
