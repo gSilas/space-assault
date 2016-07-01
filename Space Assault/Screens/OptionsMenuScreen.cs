@@ -20,7 +20,7 @@ namespace SpaceAssault.Screens
         }
 
         static enumMenu currentEnum = enumMenu.enum1;
-        static string[] languages = { "English", "Deutsch"};
+        static string[] languages = { "English", "Deutsch" };
         static int currentLanguage = 0;
         static bool fullscreen = true;
         static int num = 42;
@@ -28,7 +28,7 @@ namespace SpaceAssault.Screens
         // Constructor.
         public OptionsMenuScreen() : base("Options")
         {
-            // Create our menu entries.
+            // Create our menu entries.me
             enumMenuEntry = new MenuEntry(string.Empty);
             languageMenuEntry = new MenuEntry(string.Empty);
             fullscreenMenuEntry = new MenuEntry(string.Empty);
@@ -62,7 +62,7 @@ namespace SpaceAssault.Screens
             staticNumberMenuEntry.Text = "Number: " + num;
         }
 
-        // Event handler for when the Ungulate menu entry is selected.
+        // Event handler for when the Enum menu entry is selected.
         void enumMenuEntrySelected(object sender, EventArgs e)
         {
             currentEnum++;
@@ -83,7 +83,7 @@ namespace SpaceAssault.Screens
         }
 
 
-        // Event handler for when the Frobnicate menu entry is selected.
+        // Event handler for when the Fullscreen menu entry is selected.
         void fullscreenMenuEntrySelected(object sender, EventArgs e)
         {
             fullscreen = !fullscreen;
@@ -92,7 +92,7 @@ namespace SpaceAssault.Screens
         }
 
 
-        // Event handler for when the Elf menu entry is selected.
+        // Event handler for when the Number menu entry is selected.
         void staticNumberMenuEntrySelected(object sender, EventArgs e)
         {
             num++;

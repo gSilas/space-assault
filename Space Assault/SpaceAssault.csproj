@@ -57,6 +57,7 @@
     <Compile Include="Screens\CreditsMenuScreen.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />
     <Compile Include="Screens\HighscoreMenuScreen.cs" />
+    <Compile Include="Screens\ShopScreen.cs" />
     <Compile Include="Screens\UI\InGameOverlay.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
