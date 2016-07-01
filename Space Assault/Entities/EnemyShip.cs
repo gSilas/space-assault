@@ -1,12 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using SpaceAssault.Entities.Weapon;
 using System.Collections.Generic;
-using System;
-using SpaceAssault.Utils;
-using SpaceAssault.ScreenManager;
 
 namespace SpaceAssault.Entities
 {
@@ -47,7 +42,7 @@ namespace SpaceAssault.Entities
         }
         public override void LoadContent()
         {
-            Model = Global.ContentManager.Load<Model>("Models/enemyship");
+            Model = Global.ContentManager.Load<Model>("Models/enemyship2");
             _gun.LoadContent();
         }
         public override void Update(GameTime gameTime)

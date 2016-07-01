@@ -67,6 +67,7 @@ namespace SpaceAssault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
             _gun.LoadContent();
+            //RotationMatrix = Matrix.CreateRotationX();
         }
 
         public override void Update(GameTime gameTime)
@@ -168,6 +169,7 @@ namespace SpaceAssault.Entities
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 _gun.Shoot(Position + RotationMatrix.Left * 4.5f, RotationMatrix, 6f);
+                _gun.Shoot(Position - RotationMatrix.Left * 4.5f, RotationMatrix, 6f);
             }
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {

@@ -27,7 +27,7 @@ namespace SpaceAssault.Utils
 
         public void LoadContent()
         {
-           _model = Global.ContentManager.Load<Model>("Models/asteroid");
+           _model = Global.ContentManager.Load<Model>("Models/asteroid2");
             BuildChunks();
         }
 

@@ -10,6 +10,7 @@ namespace SpaceAssault.Screens
         // Constructor fills in the menu contents.
         public MainMenuScreen() : base("Main Menu")
         {
+
             // Create our menu entries.
             MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
             MenuEntry highscoreMenuEntry = new MenuEntry("Highscore");

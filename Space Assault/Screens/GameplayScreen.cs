@@ -35,9 +35,9 @@ namespace SpaceAssault.Screens
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-            _station = new Station(new Vector3(0, 0, 0), 0);
-            _drone = new Drone(new Vector3(0, 0, 20));
-            _enemyShip= new EnemyShip(new Vector3(300,0,-150));
+            _station = new Station(new Vector3(0, 80, 0), 0);
+            _drone = new Drone(new Vector3(150, 0, 100));
+            _enemyShip= new EnemyShip(new Vector3(600,0,-300));
             //_asteroidField = new AsteroidBuilder(new Vector3(500, 0, -500));
             
             _removeAsteroid = new List<Asteroid>();
@@ -106,8 +106,7 @@ namespace SpaceAssault.Screens
             if (input == null)
                 throw new ArgumentNullException("input");
 
-            // Look up inputs for the active player profile.
-
+            // Look up inputs for the player.
             KeyboardState keyboardState = input.CurrentKeyboardState;
 
             if (input.IsPauseGame())
@@ -133,7 +132,7 @@ namespace SpaceAssault.Screens
         public override void Draw(GameTime gameTime)
         {
             Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.CornflowerBlue, 0, 0);
+                                               Color.Black, 0, 0);
 
             Global.SpriteBatch.Begin();
             //Global.SpriteBatch.DrawString(gameFont, "// TODO", playerPosition, Color.Green);
@@ -153,5 +152,6 @@ namespace SpaceAssault.Screens
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
         }
+
     }
 }

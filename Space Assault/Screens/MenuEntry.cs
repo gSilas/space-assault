@@ -77,7 +77,7 @@ namespace SpaceAssault.Screens
         {
 
             // Draw the selected entry in yellow, otherwise white.
-            Color color = isSelected ? Color.DarkGray : Color.White;
+            Color color = isSelected ? Color.White : Color.DarkGray;
 
             // Pulsate the size of the selected menu entry.
             double time = gameTime.TotalGameTime.TotalSeconds;

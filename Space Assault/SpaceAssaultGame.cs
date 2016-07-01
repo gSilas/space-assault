@@ -32,6 +32,7 @@ namespace SpaceAssault
             screenManager.AddScreen(new BackgroundScreen());
             screenManager.AddScreen(new MainMenuScreen());
             */
+
             screenManager.AddScreen(new GameplayScreen());
 
         }

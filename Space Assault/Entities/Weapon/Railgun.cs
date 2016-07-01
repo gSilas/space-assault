@@ -19,7 +19,7 @@ namespace SpaceAssault.Entities.Weapon
 
         public override void LoadContent()
         {
-            BulletModel = Global.ContentManager.Load<Model>("Models/bullet");
+            BulletModel = Global.ContentManager.Load<Model>("Models/laser");
         }
 
         public override void Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)

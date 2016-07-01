@@ -1,3 +1,5 @@
+using System;
+
 namespace SpaceAssault.Screens
 {
     // The options screen is brought up over the top of the main menu
@@ -33,9 +35,15 @@ namespace SpaceAssault.Screens
             staticNumberMenuEntry = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
-
             MenuEntry back = new MenuEntry("Back");
-            
+
+            // Hook up menu event handlers.
+            enumMenuEntry.Selected += enumMenuEntrySelected;
+            languageMenuEntry.Selected += LanguageMenuEntrySelected;
+            fullscreenMenuEntry.Selected += fullscreenMenuEntrySelected;
+            staticNumberMenuEntry.Selected += staticNumberMenuEntrySelected;
+            back.Selected += OnCancel;
+
             // Add entries to the menu.
             MenuEntries.Add(enumMenuEntry);
             MenuEntries.Add(languageMenuEntry);
@@ -55,7 +63,7 @@ namespace SpaceAssault.Screens
         }
 
         // Event handler for when the Ungulate menu entry is selected.
-        void enumMenuEntrySelected(object sender)
+        void enumMenuEntrySelected(object sender, EventArgs e)
         {
             currentEnum++;
 
@@ -67,7 +75,7 @@ namespace SpaceAssault.Screens
 
 
         // Event handler for when the Language menu entry is selected.
-        void LanguageMenuEntrySelected(object sender)
+        void LanguageMenuEntrySelected(object sender, EventArgs e)
         {
             currentLanguage = (currentLanguage + 1) % languages.Length;
 
@@ -76,7 +84,7 @@ namespace SpaceAssault.Screens
 
 
         // Event handler for when the Frobnicate menu entry is selected.
-        void fullscreenMenuEntrySelected(object sender)
+        void fullscreenMenuEntrySelected(object sender, EventArgs e)
         {
             fullscreen = !fullscreen;
 
@@ -85,7 +93,7 @@ namespace SpaceAssault.Screens
 
 
         // Event handler for when the Elf menu entry is selected.
-        void staticNumberMenuEntrySelected(object sender)
+        void staticNumberMenuEntrySelected(object sender, EventArgs e)
         {
             num++;
 

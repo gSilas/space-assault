@@ -6,7 +6,7 @@ using SpaceAssault.ScreenManager;
 
 namespace SpaceAssault.Screens
 {
-    ///Base class for screens that contain a menu of options. The user can
+    // Base class for screens that contain a menu of options. The user can
     // move up and down to select an entry, or cancel to back out of the screen.
     abstract class MenuScreen : GameScreen
     {
@@ -54,12 +54,7 @@ namespace SpaceAssault.Screens
                     selectedEntry = 0;
             }
 
-            // Accept or cancel the menu? We pass in our ControllingPlayer, which may
-            // either be null (to accept input from any player) or a specific index.
-            // If we pass a null controlling player, the InputState helper returns to
-            // us which player actually provided the input. We pass that through to
-            // OnSelectEntry and OnCancel, so they can tell which player triggered them.
-
+            // Accept or cancel the menu.
             if (input.IsMenuSelect())
             {
                 OnSelectEntry(selectedEntry);
@@ -78,17 +73,13 @@ namespace SpaceAssault.Screens
         }
 
 
-        /// <summary>
-        /// Notifies derived classes that the menu has been cancelled.
-        /// </summary>
+        // Notifies derived classes that the menu has been cancelled.
         protected virtual void OnCancel()
         {
             ExitScreen();
         }
 
-        /// <summary>
-        /// Helper overload makes it easy to use OnCancel as a MenuEntry event handler.
-        /// </summary>
+        // Helper overload makes it easy to use OnCancel as a MenuEntry event handler.
         protected virtual void OnCancel(object sender, EventArgs e)
         {
             OnCancel();
