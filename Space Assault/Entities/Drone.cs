@@ -26,7 +26,12 @@ namespace SpaceAssault.Entities
         public int _health;
         private int _armor;
 
+        private bool _isNotDead;
+
         private AWeapon _gun;
+
+        //used for scaling all speed values beside turnSpeed;
+        private float _speedScaling = 2f;
 
         public Drone(Vector3 position)
         {
@@ -38,12 +43,13 @@ namespace SpaceAssault.Entities
         {
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 10.0f;
-            _moveSpeedForward = 1.0f;
-            _moveSpeedBackward = -0.5f;
-            _moveSpeedLeft = 0.5f;
-            _moveSpeedRight = -0.5f;
+            _moveSpeedForward = 1.0f * _speedScaling;
+            _moveSpeedBackward = -0.5f * _speedScaling;
+            _moveSpeedLeft = 0.5f * _speedScaling;
+            _moveSpeedRight = -0.5f * _speedScaling;
             _health = 100;
             _armor = 100;
+            _isNotDead = true;
             _gun = new RailGun();
             _gun.Initialize();
         }
@@ -51,13 +57,14 @@ namespace SpaceAssault.Entities
         public void Reset()
         {
             RotationMatrix = Matrix.Identity;
-            _turnSpeed = 1.0f;
-            _moveSpeedForward = 1.0f;
-            _moveSpeedBackward = -0.5f;
-            _moveSpeedLeft = 0.5f;
-            _moveSpeedRight = -0.5f;
+            _turnSpeed = 10.0f;
+            _moveSpeedForward = 1.0f * _speedScaling;
+            _moveSpeedBackward = -0.5f * _speedScaling;
+            _moveSpeedLeft = 0.5f * _speedScaling;
+            _moveSpeedRight = -0.5f * _speedScaling;
             _health = 100;
             _armor = 100;
+            _isNotDead = true;
             _moveSpeedModifier = 0;
             _moveSpeedModifierSideways = 0;
             Position = _spawnPos;
@@ -73,11 +80,21 @@ namespace SpaceAssault.Entities
         public override void Update(GameTime gameTime)
         {
             _gun.Update(gameTime);
-
+            if (IsNotDead)
+            {
+                this.HandleInput();
+            }
+            if (_health <= 0) IsNotDead = false;
             //TODO: health, armor update
         }
 
-        public void HandleInput()
+        public bool IsNotDead
+        {
+            get { return _isNotDead; }
+            protected set { _isNotDead = value; }
+        }
+
+        private void HandleInput()
         {
             /// <summary>
             /// handling rotation of the drone
@@ -184,19 +201,22 @@ namespace SpaceAssault.Entities
 
         public override void Draw()
         {
-            _gun.Draw();
-
-            foreach (var mesh in Model.Meshes)
+            if (IsNotDead)
             {
-                foreach (BasicEffect effect in mesh.Effects)
+                _gun.Draw();
+
+                foreach (var mesh in Model.Meshes)
                 {
-                    effect.EnableDefaultLighting();
-                    effect.PreferPerPixelLighting = true;
-                    effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
-                    effect.View = Global.Camera.ViewMatrix;
-                    effect.Projection = Global.Camera.ProjectionMatrix;
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.PreferPerPixelLighting = true;
+                        effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
+                        effect.View = Global.Camera.ViewMatrix;
+                        effect.Projection = Global.Camera.ProjectionMatrix;
+                    }
+                    mesh.Draw();
                 }
-                mesh.Draw();
             }
 
         }
