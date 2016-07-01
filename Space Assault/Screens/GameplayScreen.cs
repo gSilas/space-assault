@@ -107,6 +107,17 @@ namespace SpaceAssault.Screens
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
                     }
+                    if (Collider3D.Intersection(ast, _drone))
+                    {
+                        _drone._health -= _drone._health*1/3;
+                        _removeAsteroid.Add(ast);
+                    }
+                }
+
+                if (Collider3D.Intersection(bullet,_enemyShip))
+                {
+                    _enemyShip._health -= 20;
+                    _removeBullets.Add(bullet);
                 }
             }
             foreach (var ast in _removeAsteroid)
