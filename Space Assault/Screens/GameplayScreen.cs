@@ -97,6 +97,27 @@ namespace SpaceAssault.Screens
                 _asteroidField.Update(gameTime,_station.Position,1000f);
                 Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, _drone.Position + new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
             }
+
+            foreach (var bullet in _drone.GetBulletList())
+            {
+                foreach (var ast in _asteroidField.Asteroids)
+                {
+                    if (Collider3D.Intersection(bullet, ast))
+                    {
+                        _removeAsteroid.Add(ast);
+                        _removeBullets.Add(bullet);
+                    }
+                }
+            }
+            foreach (var ast in _removeAsteroid)
+            {
+                _asteroidField.Asteroids.Remove(ast);
+            }
+            foreach (var bullet in _removeBullets)
+            {
+                _drone.GetBulletList().Remove(bullet);
+            }
+
         }
 
         // Lets the game respond to player input. Unlike the Update method,
