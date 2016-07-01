@@ -40,6 +40,7 @@ namespace SpaceAssault.Entities
             _gun = new RailGun();
             _gun.Initialize();
         }
+
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/enemyship2");
