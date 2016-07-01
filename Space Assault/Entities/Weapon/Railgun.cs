@@ -36,5 +36,14 @@ namespace SpaceAssault.Entities.Weapon
             }
 
         }
+        public override void Shoot2(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
+        {
+            if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
+            {
+                  ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
+                  LastShotTime = GlobalTimeSpan;
+            }
+
+        }
     }
 }
