@@ -34,13 +34,14 @@ namespace SpaceAssault.Screens
         private InGameOverlay _ui;
 
         private int _deathCounter = 0;
+        private int _stationHeight = 80;
 
         // Constructor.
         public GameplayScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-            _station = new Station(new Vector3(0, 80, 0), 0);
+            _station = new Station(new Vector3(0, _stationHeight, 0), 0);
             _drone = new Drone(new Vector3(150, 0, 100));
             //_asteroidField = new AsteroidBuilder(new Vector3(500, 0, -500));
             _ui = new InGameOverlay(_drone._health);
@@ -269,7 +270,13 @@ namespace SpaceAssault.Screens
             // Look up inputs for the player.
             KeyboardState keyboardState = input.CurrentKeyboardState;
 
-            if (input.IsPauseGame())
+            if (Keyboard.GetState().IsKeyDown(Keys.B))
+            {
+                if((Vector3.Distance(_station.Position, _drone.Position)-_stationHeight) < 150)
+                    ScreenManager.AddScreen(new ShopScreen());
+            }
+
+                if (input.IsPauseGame())
             {
                 ScreenManager.AddScreen(new PauseMenuScreen());
             }
