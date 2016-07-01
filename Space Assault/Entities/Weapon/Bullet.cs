@@ -8,6 +8,7 @@ namespace SpaceAssault.Entities.Weapon
     {
         private Vector3 _direction;
         private float _travelspeed;
+        public int Bulletlife;
 
         public Bullet(Vector3 position, Matrix droneRotateMatrix, float travelspeed, Model model)
         {
@@ -16,10 +17,13 @@ namespace SpaceAssault.Entities.Weapon
             RotationMatrix = droneRotateMatrix;
             _travelspeed = travelspeed;
             Model = model;
+            Bulletlife = 500;
         }
         public override void Update(GameTime gameTime)
         {
             Position -= _direction*_travelspeed;
+            Bulletlife--;
+           
         }
 
         public override void LoadContent()

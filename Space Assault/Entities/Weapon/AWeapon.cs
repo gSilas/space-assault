@@ -9,6 +9,7 @@ namespace SpaceAssault.Entities.Weapon
     {
         //draw
         public List<Bullet> ListOfBullets;
+        public List<Bullet> RemoveListOfBullets;
 
         protected Model BulletModel;
 
@@ -31,6 +32,14 @@ namespace SpaceAssault.Entities.Weapon
             foreach (Bullet bullet in ListOfBullets)
             {
                 bullet.Update(gameTime);
+                if (bullet.Bulletlife < 0)
+                {
+                    RemoveListOfBullets.Add(bullet);
+                }
+            }
+            foreach (Bullet bullet in RemoveListOfBullets)
+            {
+                ListOfBullets.Remove(bullet);
             }
         }
 

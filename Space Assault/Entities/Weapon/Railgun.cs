@@ -11,6 +11,7 @@ namespace SpaceAssault.Entities.Weapon
         public override void Initialize()
         {
             ListOfBullets = new List<Bullet>();
+            RemoveListOfBullets = new List<Bullet>();
             GlobalTimeSpan = TimeSpan.FromSeconds(0);
             LastShotTime = TimeSpan.FromSeconds(0);
             CoolDownTime = TimeSpan.FromMilliseconds(200d);

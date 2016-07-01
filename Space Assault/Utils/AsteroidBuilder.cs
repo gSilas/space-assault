@@ -53,7 +53,6 @@ namespace SpaceAssault.Utils
                 BuildChunks();
                 _lastChunkTime = gameTime.TotalGameTime;
             }
-
         }
 
         public void Draw()
