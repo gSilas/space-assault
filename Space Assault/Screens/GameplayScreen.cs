@@ -206,12 +206,21 @@ namespace SpaceAssault.Screens
                             _removeAsteroid.Add(ast);
                             _removeBullets.Add(bullet);
                         }
+                        if (Collider3D.Intersection(_station, ast))
+                        {
+                            _removeAsteroid.Add(ast);
+                            _station._health -= 10;
+                        }
                         if (Collider3D.Intersection(ast, enemyShip))
                         {
                             enemyShip._health -= 5;
                             _removeAsteroid.Add(ast);
                         }
-                        if (gameTime.TotalGameTime > (ast.LifeTime.Add(TimeSpan.FromMinutes(1.5d))))
+                        if (Collider3D.Intersection(_drone, enemyShip))
+                        {
+                            //enemyShip.Position = new Vector3(100,10,100);
+                        }
+                        if (gameTime.TotalGameTime > (ast.LifeTime.Add(TimeSpan.FromMinutes(1d))))
                         {
                             _removeAsteroid.Add(ast);
                         }
