@@ -164,6 +164,10 @@ namespace SpaceAssault.Screens
                         _enemyShip._health -= 5;
                         _removeAsteroid.Add(ast);
                     }
+                    if (gameTime.TotalGameTime > (ast.LifeTime.Add(TimeSpan.FromMinutes(1.5d))))
+                    {
+                        _removeAsteroid.Add(ast);
+                    }
                 }
 
                 if (Collider3D.Intersection(bullet, _drone))

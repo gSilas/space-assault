@@ -92,7 +92,7 @@ namespace SpaceAssault.Utils
                 }
                 Random rand = new Random();
                 int angle = rand.Next(-360, 360);
-                Asteroid ast = new Asteroid(_position,angle, _direction, 2f);
+                Asteroid ast = new Asteroid(_position,angle, _direction, 0.9f);
                 ast.Initialize();
                 ast.LoadContent(_model);
                 astList.Add(ast);

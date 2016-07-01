@@ -9,6 +9,8 @@ namespace SpaceAssault.Entities
         private float _angle;
         private Vector3 _direction;
         private float _speed;
+        public TimeSpan LifeTime;
+        private bool _setTime;
 
         public Asteroid(Vector3 position, float angle, Vector3 direction, float movespeed)
         {
@@ -16,6 +18,7 @@ namespace SpaceAssault.Entities
             Position = position;
             _direction = direction;
             _speed = movespeed;
+            _setTime = false;
         }
 
         public void LoadContent(Model model)
@@ -35,7 +38,13 @@ namespace SpaceAssault.Entities
         }
 
         public override void Update(GameTime gameTime)
-        {           
+        {
+            if (!_setTime)
+            {
+                LifeTime = gameTime.TotalGameTime;
+                _setTime = true;
+            }     
+
             _angle += 0.005f;
             RotationMatrix = Matrix.CreateRotationY(_angle);
 
