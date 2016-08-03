@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities.Weapon;
 using System.Collections.Generic;
@@ -113,11 +114,30 @@ namespace SpaceAssault.Entities
             Position -= RotationMatrix.Forward * _moveSpeedForward;
         }
 
+
+
         public void Shoot(Vector3 direction)
         {
             _gun.Shoot2(Position, RotationMatrix, 6f);
         }
 
+        public void Inteligence(Vector3 targedPosition)
+        {
+            
+            double distanceToTarged = Math.Sqrt(Math.Pow(Position.X - targedPosition.X, 2) + Math.Pow(Position.Z - targedPosition.Z, 2));
+
+
+            //if (distanceToTarged < 300)
+                FlyVector(Position - targedPosition);
+            if (distanceToTarged < 150)
+            {
+                FlyVector(new Vector3(0, 0, 0));
+                Shoot(targedPosition);
+            }
+
+         
+
+        }
 
     }
 }
