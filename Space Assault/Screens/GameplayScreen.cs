@@ -163,20 +163,7 @@ namespace SpaceAssault.Screens
                 /// </summary>
                 foreach (var enemyShip in _enemyShips)
                 {
-                    double distanceToDrone = Math.Sqrt(Math.Pow(enemyShip.Position.X - _drone.Position.X, 2) + Math.Pow(enemyShip.Position.Z - _drone.Position.Z, 2));
-                    double distanceToStation = Math.Sqrt(Math.Pow(enemyShip.Position.X - _station.Position.X, 2) + Math.Pow(enemyShip.Position.Z - _station.Position.Z, 2));
-
-                    if (distanceToDrone < 300)
-                        enemyShip.FlyVector(enemyShip.Position - _drone.Position);
-                    else if (distanceToStation > 140)
-                        enemyShip.FlyVector(enemyShip.Position - _station.Position);
-
-                    //euklidian Distance of Drone/enemyship Position
-                    if (distanceToDrone < 150)
-                        enemyShip.Shoot(_drone.Position);
-
-                    if (distanceToStation < 150)
-                        enemyShip.Shoot(_station.Position);
+                    enemyShip.Inteligence(_drone.Position);
                 }
             }
 
