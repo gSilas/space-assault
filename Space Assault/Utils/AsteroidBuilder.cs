@@ -27,31 +27,34 @@ namespace SpaceAssault.Utils
            _model = Global.ContentManager.Load<Model>("Models/asteroid2");
         }
 
-        public void Update(GameTime gameTime, Vector3 stationPosition)
+        public void Update(GameTime gameTime, Vector3 targetPosition)
         { 
             foreach (var ast in Asteroids)
             {
                 ast.Update(gameTime);
             }
-            if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(1500))))
+            if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(1000))))
             {
-                chunk(stationPosition);
+                Chunk(targetPosition);
                _lastChunkTime = gameTime.TotalGameTime;
             }
         }
 
-        private void chunk(Vector3 stationPosition)
+        private void Chunk(Vector3 targetPosition)
         {
-            for (int i = 0; i < 10; i++)
+            int zdist;
+            int xoffset;
+            for (int i = 0; i < 15; i++)
             {
-                int zdist = rand.Next(-500, 500);
+                zdist = rand.Next(-200,200);
+                xoffset = rand.Next(-35, 35);
 
                 Vector3 position = new Vector3();
-                position.X = stationPosition.X + 1500;
-                position.Z = stationPosition.Z + zdist;
+                position.X = targetPosition.X + 300 + xoffset;
+                position.Z = targetPosition.Z + zdist;
                 position.Y = 0f;
 
-                Vector3 direction = new Vector3(stationPosition.X - 1500, 0, stationPosition.Z + zdist);
+                Vector3 direction = new Vector3(targetPosition.X - 300 + xoffset, 0, targetPosition.Z + zdist) - position;
                 direction.Y = 0;
                 direction.Normalize();
 

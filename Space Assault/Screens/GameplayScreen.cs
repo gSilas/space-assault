@@ -154,7 +154,7 @@ namespace SpaceAssault.Screens
                 //UI
                 _ui.Update(_drone._health, _station._health, (Vector3.Distance(_station.Position, _drone.Position) - _stationHeight));
 
-                _asteroidField.Update(gameTime,_station.Position);
+                _asteroidField.Update(gameTime,_drone.Position);
                 Console.WriteLine(_asteroidField.Asteroids.Count);
                 Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, _drone.Position + new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
 
