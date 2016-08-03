@@ -9,50 +9,63 @@ namespace SpaceAssault.Utils
 {
     class AsteroidBuilder
     {
-        private Vector3 _position;
-        private Vector3 _direction;
         private Model _model;
         public List<Asteroid> Asteroids;
+        private List<Asteroid> addList;
         private TimeSpan _lastChunkTime;
+        private Random rand;
 
         public AsteroidBuilder()
         {
             Asteroids = new List<Asteroid>();
-        }
-
-        private void BuildChunks()
-        {
-            Asteroids.AddRange(RandomChunks());
+            addList = new List<Asteroid>();
+            rand = new Random();
         }
 
         public void LoadContent()
         {
            _model = Global.ContentManager.Load<Model>("Models/asteroid2");
-            BuildChunks();
         }
 
-        public void Update(GameTime gameTime, Vector3 targetPosition, float radiusFromTarget)
-        {
-            Random rand = new Random();
-            int angle = rand.Next(1, 360);
-            _position = new Vector3();
-            _position.X = targetPosition.X + radiusFromTarget * (float)Math.Sin(angle);
-            _position.Z = targetPosition.Z + radiusFromTarget * (float)Math.Cos(angle);
-            _position.Y = 0f;
-
-            _direction = (targetPosition - _position);
-            _direction.Y = 0;
-            _direction.Normalize();
-
+        public void Update(GameTime gameTime, Vector3 targetPosition)
+        { 
             foreach (var ast in Asteroids)
             {
                 ast.Update(gameTime);
             }
-            if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(1500))))
+            if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(1000))))
             {
-                BuildChunks();
-                _lastChunkTime = gameTime.TotalGameTime;
+                Chunk(targetPosition);
+               _lastChunkTime = gameTime.TotalGameTime;
             }
+        }
+
+        private void Chunk(Vector3 targetPosition)
+        {
+            int zdist;
+            int xoffset;
+            for (int i = 0; i < 15; i++)
+            {
+                zdist = rand.Next(-200,200);
+                xoffset = rand.Next(-35, 35);
+
+                Vector3 position = new Vector3();
+                position.X = targetPosition.X + 300 + xoffset;
+                position.Z = targetPosition.Z + zdist;
+                position.Y = 0f;
+
+                Vector3 direction = new Vector3(targetPosition.X - 300 + xoffset, 0, targetPosition.Z + zdist) - position;
+                direction.Y = 0;
+                direction.Normalize();
+
+                int angle = rand.Next(-360, 360);
+                Asteroid ast = new Asteroid(position, angle, direction, 0.9f);
+                ast.Initialize();
+                ast.LoadContent(_model);
+                addList.Add(ast);
+            }
+            Asteroids.AddRange(addList);
+            addList.Clear();
         }
 
         public void Draw()
@@ -61,45 +74,6 @@ namespace SpaceAssault.Utils
             {
                 ast.Draw();
             }
-        }
-
-        private List<Asteroid> RandomChunks()
-        {
-           Random random = new Random();
-           int select = random.Next(0, 3);
-           return ChunkAsteroids(select);
-        }
-
-        private List<Asteroid> ChunkAsteroids(int identifier)
-        {
-            List<Asteroid> astList = new List<Asteroid>();
-            for (int i =0; i < 360; i= i +30)
-            {               
-                if (identifier == 0)
-                {
-                    _position.X = ((float)(_position.X + 100 * Math.Cos(i)));
-                    _position.Z = ((float)(_position.Z + 100 * Math.Sin(i)));
-                }
-                else if (identifier == 1)
-                {
-                    _position.X = ((float)(_position.X + 20 * Math.Tan(i)));
-                    _position.Z = ((float)(_position.Z + 20 * Math.Atan(i)));
-                }
-                else if (identifier == 2)
-                {
-                    _position.X = ((float)(_position.X + 20 * Math.Sinh(i)));
-                    _position.Z = ((float)(_position.Z + 20 * Math.Sin(i)));
-                }
-                Random rand = new Random();
-                int angle = rand.Next(-360, 360);
-                Asteroid ast = new Asteroid(_position,angle, _direction, 0.9f);
-                ast.Initialize();
-                ast.LoadContent(_model);
-                astList.Add(ast);
-
-            }
-            
-            return astList;
         }
     }
 }
