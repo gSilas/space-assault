@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace SpaceAssault.ScreenManager
+namespace SpaceAssault.ScreenManagers
 {
     // Helper for reading input from keyboard and mouse
     public class InputState
@@ -59,6 +59,17 @@ namespace SpaceAssault.ScreenManager
         public bool IsPauseGame()
         {
             return IsNewKeyPress(Keys.Escape);
+        }
+
+        //mouse stuff
+        public Vector3 MousePosition
+        {
+            get { return new Vector3(Mouse.GetState().Position.X, 0, Mouse.GetState().Position.Y); }
+        }
+
+        public bool IsLeftMouseButtonPressed()
+        {
+            return Mouse.GetState().LeftButton == ButtonState.Pressed;
         }
     }
 }

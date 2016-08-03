@@ -6,7 +6,7 @@ using SpaceAssault.Entities.Weapon;
 using System.Collections.Generic;
 using System;
 using SpaceAssault.Utils;
-using SpaceAssault.ScreenManager;
+using SpaceAssault.ScreenManagers;
 
 /// <summary>
 ///  Movement, Schießen, Health, Sterben, neu Spawnen.

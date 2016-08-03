@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 
-namespace SpaceAssault.ScreenManager
+namespace SpaceAssault.ScreenManagers
 {
     // The screen manager manages one or more GameScreen instances.
     public class ScreenManager : DrawableGameComponent
@@ -109,6 +109,7 @@ namespace SpaceAssault.ScreenManager
         // Tells each screen to draw itself.
         public override void Draw(GameTime gameTime)
         {
+
             foreach (GameScreen screen in screens)
             {
                 if (screen.ScreenState == ScreenState.Hidden)

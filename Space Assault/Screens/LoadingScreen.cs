@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceAssault.ScreenManager;
+using SpaceAssault.ScreenManagers;
 
 namespace SpaceAssault.Screens
 {
@@ -27,7 +27,7 @@ namespace SpaceAssault.Screens
 
         // The constructor is private: loading screens should
         // be activated via the static Load method instead.
-        private LoadingScreen(ScreenManager.ScreenManager screenManager, bool loadingIsSlow,
+        private LoadingScreen(ScreenManager screenManager, bool loadingIsSlow,
                               GameScreen[] screensToLoad)
         {
             this.loadingIsSlow = loadingIsSlow;
@@ -38,7 +38,7 @@ namespace SpaceAssault.Screens
 
 
         // Activates the loading screen.
-        public static void Load(ScreenManager.ScreenManager screenManager, bool loadingIsSlow,
+        public static void Load(ScreenManager screenManager, bool loadingIsSlow,
                                 params GameScreen[] screensToLoad)
         {
             // Tell all the current screens to transition off.

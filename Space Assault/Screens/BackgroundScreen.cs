@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities;
-using SpaceAssault.ScreenManager;
+using SpaceAssault.ScreenManagers;
 using SpaceAssault.Utils;
 
 namespace SpaceAssault.Screens

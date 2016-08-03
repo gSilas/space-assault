@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Screens;
+using SpaceAssault.ScreenManagers;
+using System;
 
 namespace SpaceAssault
 {
     public class SpaceAssaultGame : Game
     {
-        ScreenManager.ScreenManager screenManager;
+        ScreenManager screenManager;
 
         //#################################
         // Constructor
@@ -22,12 +23,12 @@ namespace SpaceAssault
             Global.GraphicsManager.PreferredBackBufferWidth = Global.PreferredBackBufferWidth;
 
             // Create the screen manager component.
-            screenManager = new ScreenManager.ScreenManager(this);
+            screenManager = new ScreenManager(this);
 
             Components.Add(screenManager);
 
             // Activate the first screens.
-            screenManager.AddScreen(new BackgroundScreen());
+            //screenManager.AddScreen(new BackgroundScreen());
             screenManager.AddScreen(new MainMenuScreen());
         }
 

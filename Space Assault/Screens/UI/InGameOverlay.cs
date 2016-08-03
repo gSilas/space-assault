@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceAssault.ScreenManager;
+using SpaceAssault.ScreenManagers;
 using SpaceAssault.Utils;
 using System.Collections.Generic;
 using System;

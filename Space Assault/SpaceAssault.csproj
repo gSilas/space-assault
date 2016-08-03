@@ -7,7 +7,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B9B2A002-2328-493F-BAD8-348AFE115469}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SpaceAssault</RootNamespace>
     <AssemblyName>SpaceAssault</AssemblyName>
@@ -50,9 +50,9 @@
     <Compile Include="Entities\Weapon\Bullet.cs" />
     <Compile Include="Entities\Weapon\Railgun.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="ScreenManager\GameScreen.cs" />
-    <Compile Include="ScreenManager\InputState.cs" />
-    <Compile Include="ScreenManager\ScreenManager.cs" />
+    <Compile Include="ScreenManagers\GameScreen.cs" />
+    <Compile Include="ScreenManagers\InputState.cs" />
+    <Compile Include="ScreenManagers\ScreenManager.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
     <Compile Include="Screens\CreditsMenuScreen.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />

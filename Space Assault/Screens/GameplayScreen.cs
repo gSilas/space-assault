@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SpaceAssault.Entities;
 using SpaceAssault.Entities.Weapon;
-using SpaceAssault.ScreenManager;
+using SpaceAssault.ScreenManagers;
 using SpaceAssault.Utils;
 
 namespace SpaceAssault.Screens
@@ -303,7 +303,6 @@ namespace SpaceAssault.Screens
         {
             Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.Black, 0, 0);
-
             Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             _station.Draw();
@@ -331,6 +330,7 @@ namespace SpaceAssault.Screens
 
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
+
         }
 
     }

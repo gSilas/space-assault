@@ -46,8 +46,7 @@ namespace SpaceAssault.Screens
         // Method for raising the Selected event.
         protected internal virtual void OnSelectEntry()
         {
-            if (Selected != null)
-                Selected(this, EventArgs.Empty);
+            Selected?.Invoke(this, EventArgs.Empty);
         }
 
 

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceAssault.ScreenManager;
+using SpaceAssault.ScreenManagers;
 
 namespace SpaceAssault.Screens
 {
@@ -36,6 +36,20 @@ namespace SpaceAssault.Screens
         // or cancelling the menu.
         public override void HandleInput(InputState input)
         {
+            // mouse click on menu?
+            /*
+            if (input.IsLeftMouseButtonPressed())
+            {
+                for (int i = 0; i < menuEntries.Count; i++)
+                {
+                    MenuEntry menuEntry = menuEntries[i];
+
+                    if (menuEntry.Position)
+
+                    input.MousePosition;
+                }
+            }*/
+            //Console.WriteLine("MenuEntry 1 Pos:" + menuEntries[0].Position);
             // Move to the previous menu entry?
             if (input.IsMenuUp())
             {

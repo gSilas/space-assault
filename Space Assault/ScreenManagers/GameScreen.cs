@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace SpaceAssault.ScreenManager
+namespace SpaceAssault.ScreenManagers
 {
     // Enum describes the screen transition state.
     public enum ScreenState
