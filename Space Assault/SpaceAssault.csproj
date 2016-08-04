@@ -72,6 +72,7 @@
     <Compile Include="Utils\3DCollider.cs" />
     <Compile Include="Utils\AsteroidBuilder.cs" />
     <Compile Include="Utils\Camera.cs" />
+    <Compile Include="Utils\FleetBuilder.cs" />
     <Compile Include="Utils\HighScoreList.cs" />
     <Compile Include="Utils\Label.cs" />
     <Compile Include="Utils\Mousehandler.cs" />

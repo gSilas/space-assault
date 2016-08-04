@@ -26,6 +26,7 @@ namespace SpaceAssault.Screens
 
         private Station _station;
         private AsteroidBuilder _asteroidField;
+        private FleetBuilder _fleet;
         private Drone _drone;
         private Texture2D _background;
         private List<Bullet> _removeBullets;
@@ -56,6 +57,7 @@ namespace SpaceAssault.Screens
             _drone.Initialize();
             _station.Initialize();
             _asteroidField = new AsteroidBuilder();
+            _fleet = new FleetBuilder();
 
             _enemyShips.Add(new EnemyShip(new Vector3(600, 0, -300)));
 
@@ -79,6 +81,7 @@ namespace SpaceAssault.Screens
             }
             _asteroidField.LoadContent();
             //_asteroidField = new AsteroidBuilder(new Vector3(0,0,0));
+            _fleet.LoadContent();
 
             _ui.LoadContent();
 
@@ -155,15 +158,22 @@ namespace SpaceAssault.Screens
                 _ui.Update(_drone._health, _station._health, (Vector3.Distance(_station.Position, _drone.Position) - _stationHeight));
 
                 _asteroidField.Update(gameTime,_drone.Position);
+                
                 Console.WriteLine(_asteroidField.Asteroids.Count);
                 Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, _drone.Position + new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
-
+                _fleet.Update(gameTime,_drone.Position);
                 /// <summary>
                 /// enemy "KI"
                 /// </summary>
-                foreach (var enemyShip in _enemyShips)
+                /*foreach (var enemyShip in _enemyShips)
                 {
                     enemyShip.Inteligence(_drone.Position);
+                }
+                */
+                foreach (var ship in _fleet.EnemyShips)
+                {
+                    ship.Inteligence(_drone.Position);
+                    ship.Update(gameTime);
                 }
             }
 
@@ -200,9 +210,9 @@ namespace SpaceAssault.Screens
                 }
 
             }
-            foreach (var enemyShip in _enemyShips)
+            foreach (var ship in _fleet.EnemyShips)
             {
-                foreach (var bullet in enemyShip.GetBulletList())
+                foreach (var bullet in ship.GetBulletList())
                 {
                     foreach (var ast in _asteroidField.Asteroids)
                     {
@@ -216,12 +226,12 @@ namespace SpaceAssault.Screens
                             _removeAsteroid.Add(ast);
                             _station._health -= 10;
                         }
-                        if (Collider3D.Intersection(ast, enemyShip))
+                        if (Collider3D.Intersection(ast, ship))
                         {
-                            enemyShip._health -= 5;
+                            ship._health -= 5;
                             _removeAsteroid.Add(ast);
                         }
-                        if (Collider3D.Intersection(_drone, enemyShip))
+                        if (Collider3D.Intersection(_drone, ship))
                         {
                             //enemyShip.Position = new Vector3(100,10,100);
                         }
@@ -300,6 +310,7 @@ namespace SpaceAssault.Screens
                 enemyShip.Draw();
             }
             _asteroidField.Draw();
+            _fleet.Draw();
             _ui.Draw();
 
             //if drone is dead fade to black

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities.Weapon;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace SpaceAssault.Entities
 {
@@ -65,17 +66,17 @@ namespace SpaceAssault.Entities
         public override void Update(GameTime gameTime)
         {
             _gun.Update(gameTime);
-            if (_health <= 0) this.Reset();
-            //Position += _direction * _moveSpeedForward;
+            if (_health <= 0) this.Reset(); 
             //TODO: health, armor update
+
         }
         public List<Bullet> GetBulletList()
         {
             return _gun.ListOfBullets;
         }
-
+        
         public override void Draw()
-        {
+        {   
             _gun.Draw();
 
             foreach (var mesh in Model.Meshes)
@@ -92,26 +93,30 @@ namespace SpaceAssault.Entities
             }
 
         }
+
         public void FlyVector(Vector3 direction)
         {
-            //_direction=direction;
-            direction.Normalize();
-            float vectorDirection;
-            for (float i = 0.5f; i < _turnSpeed; i++)
-            {
-                vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
-                if (vectorDirection > 0.01)
+
+                direction.Normalize();
+                float vectorDirection;
+                for (float i = 0.5f; i < _turnSpeed; i++)
                 {
-                    //turn left
-                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.5f));
+                    vectorDirection = RotationMatrix.Forward.Z*direction.X - RotationMatrix.Forward.X*direction.Z;
+                    if (vectorDirection > 0.01)
+                    {
+                        //turn left
+                        RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.5f));
+                    }
+                    else if (vectorDirection < -0.01)
+                    {
+                        //turn right
+                        RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
+                    }
                 }
-                else if (vectorDirection < -0.01)
-                {
-                    //turn right
-                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
-                }
-            }
-            Position -= RotationMatrix.Forward * _moveSpeedForward;
+
+                Position -= RotationMatrix.Forward*_moveSpeedForward;
+            
+
         }
 
 
@@ -128,11 +133,11 @@ namespace SpaceAssault.Entities
 
 
             //if (distanceToTarged < 300)
-                FlyVector(Position - targedPosition);
+            FlyVector(Position - targedPosition);
+
             if (distanceToTarged < 150)
             {
-                FlyVector(new Vector3(0, 0, 0));
-                Shoot(targedPosition);
+                //Shoot(targedPosition);
             }
 
          

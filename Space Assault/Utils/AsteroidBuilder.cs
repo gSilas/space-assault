@@ -50,7 +50,7 @@ namespace SpaceAssault.Utils
                 xoffset = rand.Next(-35, 35);
 
                 Vector3 position = new Vector3();
-                position.X = targetPosition.X + 300 + xoffset;
+                position.X = targetPosition.X + 350 + xoffset;
                 position.Z = targetPosition.Z + zdist;
                 position.Y = 0f;
 
