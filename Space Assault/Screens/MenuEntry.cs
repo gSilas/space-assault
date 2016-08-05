@@ -96,13 +96,13 @@ namespace SpaceAssault.Screens
 
 
         // Queries how much space this menu entry requires.
-        public virtual int GetHeight(MenuScreen screen)
+        public virtual int GetHeight()
         {
             return Global.Font.LineSpacing;
         }
 
         // Queries how wide the entry is, used for centering on the screen.
-        public virtual int GetWidth(MenuScreen screen)
+        public virtual int GetWidth()
         {
             return (int)Global.Font.MeasureString(Text).X;
         }

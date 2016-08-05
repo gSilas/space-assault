@@ -62,13 +62,6 @@ namespace SpaceAssault.Screens
         // Draws the background screen.
         public override void Draw(GameTime gameTime)
         {
-            Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-            Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
-
-            Global.SpriteBatch.Begin();
-            //Global.SpriteBatch.Draw(backgroundTexture, fullscreen, new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
-            Global.SpriteBatch.End();
-            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             _station.Draw();
         }
     }
