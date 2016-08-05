@@ -42,7 +42,7 @@ namespace SpaceAssault.Screens
         // Unloads graphics content for this screen.
         public override void UnloadContent()
         {
-            Global.ContentManager.Unload();
+            //Global.ContentManager.Unload();
         }
 
 
