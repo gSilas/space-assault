@@ -2,6 +2,7 @@
 using SpaceAssault.Screens;
 using SpaceAssault.ScreenManagers;
 using System;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceAssault
 {
@@ -41,6 +42,12 @@ namespace SpaceAssault
 
             // The real drawing happens inside the screen manager component.
             base.Draw(gameTime);
+
+            //FPS COUNTER
+            Global.SpriteBatch.Begin();
+            Global.SpriteBatch.DrawString(Global.Font, (1 / gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
+            Global.SpriteBatch.End();
+            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         }
     }
 }
