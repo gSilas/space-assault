@@ -46,27 +46,77 @@ namespace SpaceAssault.Utils
                 ship.Draw();
             }
         }
-        private void Formation(Vector3 targetPosition)
+        //drone position damit alles außerhalb des Bilschirms spawned
+        private void Formation(Vector3 DronePosition)
         {
             int zdist;
             int xoffset;
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 1; i++)
             {
                 zdist = rand.Next(-200, 200);
                 xoffset = rand.Next(-35, 35);
 
                 Vector3 position = new Vector3();
-                position.X = targetPosition.X + 350 + xoffset;
-                position.Z = targetPosition.Z  + zdist;
+                position.X = DronePosition.X + 150 + xoffset;
+                position.Z = DronePosition.Z + zdist;
                 position.Y = 0f;
-
-
-                int angle = rand.Next(-360, 360);
-                EnemyShip ship = new EnemyShip(position);
-                ship.Initialize();
-                ship.LoadContent();
-                addList.Add(ship);
+                Arrow(position);
             }
+
+
+        }
+
+        private void Triangle(Vector3 SpawnPosition)
+        {
+            int Rand= rand.Next(40, 60);
+            int zRand = rand.Next(40, 60);
+            EnemyShip ship = new EnemyShip(SpawnPosition+new Vector3(SpawnPosition.X+Rand, 0, SpawnPosition.Z + Rand));
+            EnemyShip ship2 = new EnemyShip(SpawnPosition + new Vector3(SpawnPosition.X, 0, SpawnPosition.Z + Rand));
+            EnemyShip ship3 = new EnemyShip(SpawnPosition + new Vector3(SpawnPosition.X+Rand, 0, SpawnPosition.Z));
+
+            ship.Initialize();
+            ship.LoadContent();
+            addList.Add(ship);
+            
+            ship2.Initialize();
+            ship2.LoadContent();
+            addList.Add(ship2);
+            //Console.WriteLine("WRONG PLACE");
+            ship3.Initialize();
+            ship3.LoadContent();
+            addList.Add(ship3);
+
+            EnemyShips.AddRange(addList);
+            addList.Clear();
+        }
+        private void Arrow(Vector3 SpawnPosition)
+        {
+            int Rand = rand.Next(40, 60);
+            int zRand = rand.Next(40, 60);
+            EnemyShip ship = new EnemyShip(SpawnPosition + new Vector3(SpawnPosition.X + Rand, 0, SpawnPosition.Z + Rand));
+            EnemyShip ship2 = new EnemyShip(SpawnPosition + new Vector3(SpawnPosition.X, 0, SpawnPosition.Z + Rand));
+            EnemyShip ship3 = new EnemyShip(SpawnPosition + new Vector3(SpawnPosition.X + Rand, 0, SpawnPosition.Z));
+            EnemyShip ship4 = new EnemyShip(SpawnPosition + new Vector3(SpawnPosition.X + Rand, 0, SpawnPosition.Z+2*Rand));
+            Console.WriteLine("test");
+            //EnemyShip ship4 = new EnemyShip(SpawnPosition+ new Vector3(0,0,0)); //funktioniert damit nicht  WAT
+            Console.WriteLine("test2");
+            ship.Initialize();
+            ship.LoadContent();
+            addList.Add(ship);
+
+            ship2.Initialize();
+            ship2.LoadContent();
+            addList.Add(ship2);
+
+            ship3.Initialize();
+            ship3.LoadContent();
+            addList.Add(ship3);
+
+            ship4.Initialize();
+            ship4.LoadContent();
+            addList.Add(ship4);
+            Console.WriteLine("test3");
+
             EnemyShips.AddRange(addList);
             addList.Clear();
         }

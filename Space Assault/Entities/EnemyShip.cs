@@ -137,7 +137,7 @@ namespace SpaceAssault.Entities
 
             if (distanceToTarged < 150)
             {
-                //Shoot(targedPosition);
+                Shoot(targedPosition);
             }
 
          
