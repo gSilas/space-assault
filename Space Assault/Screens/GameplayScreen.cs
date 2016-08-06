@@ -159,7 +159,7 @@ namespace SpaceAssault.Screens
 
                 _asteroidField.Update(gameTime,_drone.Position);
                 
-                Console.WriteLine(_asteroidField.Asteroids.Count);
+                //Console.WriteLine(_asteroidField.Asteroids.Count);
                 Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, _drone.Position + new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
                 _fleet.Update(gameTime,_drone.Position);
                 /// <summary>
@@ -316,7 +316,7 @@ namespace SpaceAssault.Screens
             if (_deadDroneAlpha > 0)
             {
                 _actualDeadDroneAlpha = MathHelper.Lerp(0f, 2f, _deadDroneAlpha / 2);
-                Console.WriteLine(_actualDeadDroneAlpha);
+                //Console.WriteLine(_actualDeadDroneAlpha);
                 ScreenManager.FadeBackBufferToBlack(_actualDeadDroneAlpha);
             }
 
