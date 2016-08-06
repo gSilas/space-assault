@@ -8,6 +8,8 @@ namespace SpaceAssault.ScreenManagers
     {
         public KeyboardState CurrentKeyboardState;
         public KeyboardState LastKeyboardState;
+        public MouseState CurrentMouseState;
+        public MouseState LastMouseState;
 
 
         // Reads the latest state of the keyboard and gamepad.
@@ -15,6 +17,9 @@ namespace SpaceAssault.ScreenManagers
         {
             LastKeyboardState = CurrentKeyboardState;
             CurrentKeyboardState = Keyboard.GetState();
+
+            LastMouseState = CurrentMouseState;
+            CurrentMouseState = Mouse.GetState();
         }
 
 
@@ -64,12 +69,12 @@ namespace SpaceAssault.ScreenManagers
         //mouse stuff
         public Vector3 MousePosition
         {
-            get { return new Vector3(Mouse.GetState().Position.X, 0, Mouse.GetState().Position.Y); }
+            get { return new Vector3(CurrentMouseState.Position.X, 0, CurrentMouseState.Position.Y); }
         }
 
         public bool IsLeftMouseButtonPressed()
         {
-            return Mouse.GetState().LeftButton == ButtonState.Pressed;
+            return (CurrentMouseState.LeftButton == ButtonState.Pressed && LastMouseState.LeftButton != ButtonState.Pressed);
         }
     }
 }

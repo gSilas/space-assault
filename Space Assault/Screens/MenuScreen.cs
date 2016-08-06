@@ -37,19 +37,37 @@ namespace SpaceAssault.Screens
         public override void HandleInput(InputState input)
         {
             // mouse click on menu?
-            /*
+            
             if (input.IsLeftMouseButtonPressed())
             {
+                Vector2 cornerA;
+                Vector2 cornerD;
                 for (int i = 0; i < menuEntries.Count; i++)
                 {
-                    MenuEntry menuEntry = menuEntries[i];
+                    //calculating 2 diagonal corners of current menuEntry (upper left, bottom right)
+                    cornerA = menuEntries[i].Position;
+                    cornerA.Y -= menuEntries[i].GetHeight() / 2f;
 
-                    if (menuEntry.Position)
+                    cornerD = menuEntries[i].Position;
+                    cornerD.Y += menuEntries[i].GetHeight() / 2f;
+                    cornerD.X += menuEntries[i].GetWidth();
 
-                    input.MousePosition;
+                    if (cornerA.X < input.MousePosition.X && cornerA.Y < input.MousePosition.Z)
+                    {
+                        if(cornerD.X > input.MousePosition.X && cornerD.Y > input.MousePosition.Z)
+                        {
+                            if(selectedEntry == i)
+                            {
+                                OnSelectEntry(selectedEntry);
+                            }
+                            else selectedEntry = i;
+                        }
+                    }
+                    else continue;
+
                 }
-            }*/
-            //Console.WriteLine("MenuEntry 1 Pos:" + menuEntries[0].Position);
+            }
+
             // Move to the previous menu entry?
             if (input.IsMenuUp())
             {
@@ -115,11 +133,9 @@ namespace SpaceAssault.Screens
             // update each menu entry's location in turn
             for (int i = 0; i < menuEntries.Count; i++)
             {
-                MenuEntry menuEntry = menuEntries[i];
-
                 // each entry is to be centered horizontally
-                position.X = ScreenManager.GraphicsDevice.Viewport.Width / 10;
-                //position.X = ScreenManager.GraphicsDevice.Viewport.Width / 5 - menuEntry.GetWidth(this) / 2;
+                position.X = Global.GraphicsManager.GraphicsDevice.Viewport.Width / 10;
+                //position.X = ScreenManager.GraphicsDevice.Viewport.Width / 5 - menuEntries[i].GetWidth() / 2;
 
                 if (ScreenState == ScreenState.TransitionOn)
                     position.X -= transitionOffset * 256;
@@ -127,10 +143,10 @@ namespace SpaceAssault.Screens
                     position.X += transitionOffset * 512;
 
                 // set the entry's position
-                menuEntry.Position = position;
+                menuEntries[i].Position = position;
 
                 // move down for the next entry the size of this entry
-                position.Y += menuEntry.GetHeight(this);
+                position.Y += menuEntries[i].GetHeight();
             }
         }
 

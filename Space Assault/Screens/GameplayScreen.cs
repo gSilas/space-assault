@@ -301,7 +301,6 @@ namespace SpaceAssault.Screens
         {
             Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.Black, 0, 0);
-            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             _station.Draw();
             _drone.Draw();
@@ -330,6 +329,7 @@ namespace SpaceAssault.Screens
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
 
+            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         }
 
     }
