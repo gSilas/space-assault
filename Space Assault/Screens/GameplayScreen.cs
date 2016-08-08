@@ -92,7 +92,7 @@ namespace SpaceAssault.Screens
         // Unload graphics content used by the game.
         public override void UnloadContent()
         {
-            Global.ContentManager.Unload();
+            //Global.ContentManager.Unload();
         }
 
 
@@ -105,7 +105,7 @@ namespace SpaceAssault.Screens
             base.Update(gameTime, otherScreenHasFocus, false);
 
             if (_station._health <= 0)
-                ScreenManager.Game.Exit();
+                LoadingScreen.Load(ScreenManager, true, new MainMenuScreen());
 
             if (_dronepdate)
             {
