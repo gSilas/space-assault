@@ -25,30 +25,28 @@ namespace SpaceAssault.Utils
                     Vector2 pos = new Vector2(x, y);                 
                     int xo = _rand.Next(0, 501);
                     int yo = _rand.Next(0, 501);
-                    int yrand = _rand.Next(-5001, -2000);
+                    int height = _rand.Next(1, 8) * -1000;
                     Tile t = new Tile(pos,xo,yo,_tex);
-                    _tileList.Add(Tuple.Create<Tile,int>(t,yrand));
+                    _tileList.Add(Tuple.Create<Tile,int>(t,height));
                 }
             }
         }
 
         public void Draw()
         {
-            Global.BackgroundBatch.Begin(0, null, null, DepthStencilState.Default, RasterizerState.CullNone, _basicEffect);
+            
             foreach (var tileTuple in _tileList)
-            {
+            {               
                 _basicEffect.World = Matrix.CreateRotationX(MathHelper.ToRadians(90)) * Matrix.CreateWorld(new Vector3(-50000 / 2, tileTuple.Item2, -50000 / 2), Vector3.Forward, Vector3.Up) * Matrix.CreateScale(0.2f);
                 _basicEffect.View = Global.Camera.ViewMatrix;
                 _basicEffect.Projection = Global.Camera.ProjectionMatrix;
                 _basicEffect.DiffuseColor = Color.LightYellow.ToVector3();
                 _basicEffect.TextureEnabled = true;
-                _basicEffect.DirectionalLight0.Enabled = true;
-                _basicEffect.DirectionalLight0.SpecularColor = Color.LightYellow.ToVector3();
-                _basicEffect.DirectionalLight0.DiffuseColor = Color.LightYellow.ToVector3();
-                _basicEffect.DirectionalLight0.Direction = Vector3.Up;
+                Global.BackgroundBatch.Begin(0, null, null, DepthStencilState.Default, RasterizerState.CullNone, _basicEffect);
                 tileTuple.Item1.Draw();
+                Global.BackgroundBatch.End();
             }
-            Global.BackgroundBatch.End();
+            
         }
 
         internal class Tile
