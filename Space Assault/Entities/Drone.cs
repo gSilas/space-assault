@@ -101,7 +101,7 @@ namespace SpaceAssault.Entities
             /// handling rotation of the drone
             /// </summary>
 
-            //projection of mouse on screen ontu the 2d plane in the game http://stackoverflow.com/questions/11503226/c-sharp-xna-mouse-position-projected-to-3d-plane
+            //projection of mouse from screen unto the 2d plane in the game http://stackoverflow.com/questions/11503226/c-sharp-xna-mouse-position-projected-to-3d-plane
             Vector3 nearScreenPoint = new Vector3(MouseHandler.Position, 0);
             Vector3 farScreenPoint = new Vector3(MouseHandler.Position, 1);
             Vector3 nearWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(nearScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
