@@ -101,12 +101,21 @@ namespace SpaceAssault.Entities
             /// handling rotation of the drone
             /// </summary>
 
-            Vector2 screenDirection = new Vector2(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f) - MouseHandler.Position;
+            //projection of mouse on screen ontu the 2d plane in the game http://stackoverflow.com/questions/11503226/c-sharp-xna-mouse-position-projected-to-3d-plane
+            Vector3 nearScreenPoint = new Vector3(MouseHandler.Position, 0);
+            Vector3 farScreenPoint = new Vector3(MouseHandler.Position, 1);
+            Vector3 nearWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(nearScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
+            Vector3 farWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(farScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
+            Vector3 direction = farWorldPoint - nearWorldPoint;
+            float zFactor = -nearWorldPoint.Y / direction.Y;
+            Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
+
+            Vector3 screenDirection = this.Position - zeroWorldPoint;
             screenDirection.Normalize();
             float worldDirection;
             for (float i = 0.5f; i < _turnSpeed; i++)
             {
-                worldDirection = RotationMatrix.Forward.Z * screenDirection.X - RotationMatrix.Forward.X * screenDirection.Y;
+                worldDirection = RotationMatrix.Forward.Z * screenDirection.X - RotationMatrix.Forward.X * screenDirection.Z;
                 if (worldDirection > 0.01)
                 {
                     //turn left
@@ -192,7 +201,7 @@ namespace SpaceAssault.Entities
                 {
                     _alternatingGunLogic = false;
                 }
-                else if(_gun.Shoot(Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f))
+                else if (_gun.Shoot(Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f))
                 {
                     _alternatingGunLogic = true;
                 }
