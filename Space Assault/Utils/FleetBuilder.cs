@@ -37,7 +37,9 @@ namespace SpaceAssault.Utils
             
             if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(2000))))
             {
-                Formation(targetPosition);
+                //maximale Anzahl an Flotten
+                if(this.EnemyShips.Count<6)
+                    Formation(targetPosition);
                 _lastChunkTime = gameTime.TotalGameTime;
             }
         }

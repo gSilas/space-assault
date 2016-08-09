@@ -154,7 +154,7 @@ namespace SpaceAssault.Screens
                 /// <summary>
                 /// enemy "KI"
                 /// </summary>
-
+                
                 foreach (var ship in _fleet.EnemyShips)
                 {
                     ship.Intelligence(_drone.Position);

@@ -59,19 +59,19 @@ namespace SpaceAssault.Entities
         
         public override void Intelligence(Vector3 targedPosition)
         {
-            
+
             double distanceToTarged = Math.Sqrt(Math.Pow(Position.X - targedPosition.X, 2) + Math.Pow(Position.Z - targedPosition.Z, 2));
 
 
-            //if (distanceToTarged < 300)
+           
             FlyVector(Position - targedPosition);
 
             if (distanceToTarged < 150)
             {
-                Shoot(targedPosition);
+                //Shoot(targedPosition);
             }
 
-         
+
 
         }
 

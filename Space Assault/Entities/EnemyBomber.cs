@@ -9,6 +9,7 @@ namespace SpaceAssault.Entities
 {
     class EnemyBomber : AEnemys
     {
+        private bool neuerAnflug = false;
 
 
         public EnemyBomber(Vector3 position)
@@ -51,19 +52,34 @@ namespace SpaceAssault.Entities
         {
 
             double distanceToTarged = Math.Sqrt(Math.Pow(Position.X - targedPosition.X, 2) + Math.Pow(Position.Z - targedPosition.Z, 2));
+            double distanceToStation = Math.Sqrt(Math.Pow(Position.X - 0, 2) + Math.Pow(Position.Z - 0, 2));
 
+            //Console.WriteLine(distanceToStation);
+            //Console.WriteLine(neuerAnflug);
 
-            //if (distanceToTarged < 300)
-            FlyVector(Position - targedPosition);
+            if (distanceToStation < 200)
+                neuerAnflug = true;
+            else
+                if (distanceToTarged < 200)
+                    FlyVector(-(Position - targedPosition));
 
-            if (distanceToTarged < 150)
+            if (neuerAnflug == true)
             {
-                Shoot(targedPosition);
+                FlyVector(-(Position - new Vector3(0, 0, 0)));
+                if (distanceToStation > 500)
+                    neuerAnflug = false;
             }
+            if (neuerAnflug == false)
+                FlyVector(Position - new Vector3(0, 0, 0));
 
 
+            if (distanceToStation < 400&&neuerAnflug==false)
+                {
+                    Shoot(targedPosition);
+                }
+            }
 
         }
 
     }
-}
+
