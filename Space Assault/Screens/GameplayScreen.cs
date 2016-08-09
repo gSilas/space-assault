@@ -98,7 +98,7 @@ namespace SpaceAssault.Screens
             base.Update(gameTime, otherScreenHasFocus, false);
 
             if (_station._health <= 0)
-                LoadingScreen.Load(ScreenManager, true, new MainMenuScreen());
+                LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen());
 
             if (_dronepdate)
             {
