@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using SpaceAssault.Screens;
 using SpaceAssault.ScreenManagers;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceAssault
 {
@@ -41,15 +39,6 @@ namespace SpaceAssault
 
             // The real drawing happens inside the screen manager component.
             base.Draw(gameTime);
-
-            //crosshair
-            Global.SpriteBatch.Begin();
-            Global.SpriteBatch.DrawString(Global.Font, "X", Mouse.GetState().Position.ToVector2() + new Vector2(-6, -7), Color.LightGoldenrodYellow);
-
-            //FPS COUNTER
-            Global.SpriteBatch.DrawString(Global.Font, (1 / gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
-            Global.SpriteBatch.End();
-            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         }
     }
 }
