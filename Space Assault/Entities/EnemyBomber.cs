@@ -45,7 +45,8 @@ namespace SpaceAssault.Entities
 
         public override void Shoot(Vector3 direction)
         {
-            _gun.Shoot2(Position, RotationMatrix, 1f);
+            //_gun.Shoot2(Position, RotationMatrix, 1f);
+            _gun.Shoot(Position - RotationMatrix.Forward * 22.0f, RotationMatrix, 1f);
         }
 
         public override void Intelligence(Vector3 targedPosition)
