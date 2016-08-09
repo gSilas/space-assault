@@ -71,6 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\3DCollider.cs" />
     <Compile Include="Utils\AsteroidBuilder.cs" />
+    <Compile Include="Utils\Background.cs" />
     <Compile Include="Utils\Camera.cs" />
     <Compile Include="Utils\FleetBuilder.cs" />
     <Compile Include="Utils\HighScoreList.cs" />

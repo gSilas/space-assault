@@ -33,6 +33,7 @@ namespace SpaceAssault.Screens
         private List<Asteroid> _removeAsteroid;
         private List<EnemyShip> _enemyShips;
         private InGameOverlay _ui;
+        private Background _back;
 
         private int _deathCounter = 0;
         private int _stationHeight = 80;
@@ -48,9 +49,7 @@ namespace SpaceAssault.Screens
             _drone = new Drone(new Vector3(150, 0, 100));
             //_asteroidField = new AsteroidBuilder(new Vector3(500, 0, -500));
             _ui = new InGameOverlay(_drone._health, _station._health, (Vector3.Distance(_station.Position, _drone.Position) - _stationHeight));
-
-
-
+            _back = new Background();
             _removeAsteroid = new List<Asteroid>();
             _removeBullets = new List<Bullet>();
             _enemyShips = new List<EnemyShip>();
@@ -299,19 +298,26 @@ namespace SpaceAssault.Screens
         // Draws the gameplay screen.
         public override void Draw(GameTime gameTime)
         {
-            Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target,
-                                               Color.Black, 0, 0);
+            Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target,Color.Black, 0, 0);
+
+            _back.Draw();
+
+            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             _station.Draw();
             _drone.Draw();
+
             foreach (var enemyShip in _enemyShips)
             {
                 enemyShip.Draw();
             }
-            _asteroidField.Draw();
-            _fleet.Draw();
-            _ui.Draw();
 
+            _asteroidField.Draw();
+
+            _fleet.Draw();
+
+            _ui.Draw();
+            
             //if drone is dead fade to black
             if (_deadDroneAlpha > 0)
             {
@@ -328,8 +334,8 @@ namespace SpaceAssault.Screens
 
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
+            
 
-            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         }
 
     }

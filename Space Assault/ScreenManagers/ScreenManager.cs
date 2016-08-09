@@ -113,7 +113,6 @@ namespace SpaceAssault.ScreenManagers
             {
                 if (screen.ScreenState == ScreenState.Hidden)
                     continue;
-
                 screen.Draw(gameTime);
             }
         }
@@ -168,10 +167,7 @@ namespace SpaceAssault.ScreenManagers
             Viewport viewport = GraphicsDevice.Viewport;
 
             Global.SpriteBatch.Begin();
-            Global.SpriteBatch.Draw(blankTexture,
-                             new Rectangle(0, 0, viewport.Width, viewport.Height),
-                             Color.Black * alpha);
-
+            Global.SpriteBatch.Draw(blankTexture, new Rectangle(0, 0, viewport.Width, viewport.Height),Color.Black * alpha);
             Global.SpriteBatch.End();
         }
     }
