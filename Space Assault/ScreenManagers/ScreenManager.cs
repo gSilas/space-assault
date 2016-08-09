@@ -122,7 +122,7 @@ namespace SpaceAssault.ScreenManagers
             //crosshair
             Global.SpriteBatch.Begin();
             //Global.SpriteBatch.DrawString(Global.Font, "X", Mouse.GetState().Position.ToVector2() + new Vector2(-6, -7), Color.LightGoldenrodYellow);
-            Global.SpriteBatch.Draw(_crosshair, Mouse.GetState().Position.ToVector2() + new Vector2(-6, -7), Color.White);
+            Global.SpriteBatch.Draw(_crosshair, Mouse.GetState().Position.ToVector2() + new Vector2((_crosshair.Width + 1) / -2, _crosshair.Height / -2), Color.White);
 
             //FPS COUNTER
             Global.SpriteBatch.DrawString(Global.Font, (1 / gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
