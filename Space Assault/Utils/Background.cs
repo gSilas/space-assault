@@ -17,9 +17,9 @@ namespace SpaceAssault.Utils
             _rand = new Random();
             _tileList = new List<Tile>();
             Texture2D tex = Global.ContentManager.Load<Texture2D>("Images/star");
-            for (int x = 0; x < 1300; x += 100)
+            for (int x = 0; x < 15000; x += 300)
             {
-                for (int y = 0; y < 800; y += 100)
+                for (int y = 0; y < 15000; y += 300)
                 {
                     Vector2 pos = new Vector2(x, y);                 
                     int xo = _rand.Next(0, 1001);
@@ -32,7 +32,7 @@ namespace SpaceAssault.Utils
 
         public void Draw()
         {
-            _basicEffect.World = Matrix.CreateRotationX(MathHelper.ToRadians(90))*Matrix.CreateWorld(Vector3.Zero, Vector3.Forward, Vector3.Up)*Matrix.CreateScale(0.1f);
+            _basicEffect.World = Matrix.CreateRotationX(MathHelper.ToRadians(90))*Matrix.CreateWorld(new Vector3(-15000/2,-10000,-15000/2), Vector3.Forward, Vector3.Up)*Matrix.CreateScale(0.1f);
             _basicEffect.View = Global.Camera.ViewMatrix;
             _basicEffect.Projection = Global.Camera.ProjectionMatrix;
 
