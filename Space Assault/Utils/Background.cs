@@ -28,7 +28,7 @@ namespace SpaceAssault.Utils
                 for (int y = 0; y < 50000; y += 1000)
                 {
                     Vector2 pos = new Vector2(x + _rand.Next(0, 1001), y + _rand.Next(0, 1001));                 
-                    int height = _rand.Next(1, 8) * -1000;
+                    int height = _rand.Next(50, 90) * -100;
                     Tile t = new Tile(pos,_tex);
                     _tileList.Add(Tuple.Create<Tile,int>(t,height));
                 }
@@ -40,7 +40,7 @@ namespace SpaceAssault.Utils
             Global.BackgroundBatch.Begin(SpriteSortMode.Immediate, null, null, DepthStencilState.Default, RasterizerState.CullNone, _basicEffect);
             foreach (var tileTuple in _tileList)
             {               
-                _basicEffect.World = Matrix.CreateRotationX(MathHelper.ToRadians(90)) * Matrix.CreateWorld(new Vector3(-50000 / 2, tileTuple.Item2, -50000 / 2), Vector3.Forward, Vector3.Up) * Matrix.CreateScale(0.2f);
+                _basicEffect.World = Matrix.CreateRotationX(MathHelper.ToRadians(90)) * Matrix.CreateWorld(new Vector3(-50000 / 2, tileTuple.Item2, -50000 / 2), Vector3.Forward, Vector3.Up) * Matrix.CreateScale(0.8f);
                 _basicEffect.View = Global.Camera.ViewMatrix;
                 _basicEffect.Projection = Global.Camera.ProjectionMatrix;
                 _basicEffect.DiffuseColor = Color.LightYellow.ToVector3();
