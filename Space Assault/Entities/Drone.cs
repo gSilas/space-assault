@@ -25,6 +25,7 @@ namespace SpaceAssault.Entities
         private float _moveSpeedModifierSideways;
         public int _health;
         private int _armor;
+        private bool _alternatingGunLogic = false;
 
         private bool _isNotDead;
 
@@ -99,18 +100,19 @@ namespace SpaceAssault.Entities
             /// <summary>
             /// handling rotation of the drone
             /// </summary>
-            Vector3 direction = new Vector3(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, 0, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f) - MouseHandler.Position;
-            direction.Normalize();
-            float vectorDirection;
+
+            Vector2 screenDirection = new Vector2(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f) - MouseHandler.Position;
+            screenDirection.Normalize();
+            float worldDirection;
             for (float i = 0.5f; i < _turnSpeed; i++)
             {
-                vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
-                if (vectorDirection > 0.01)
+                worldDirection = RotationMatrix.Forward.Z * screenDirection.X - RotationMatrix.Forward.X * screenDirection.Y;
+                if (worldDirection > 0.01)
                 {
                     //turn left
                     RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.5f));
                 }
-                else if (vectorDirection < -0.01)
+                else if (worldDirection < -0.01)
                 {
                     //turn right
                     RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
@@ -183,14 +185,17 @@ namespace SpaceAssault.Entities
             /// <summary>
             /// shooting the gun
             /// </summary>
+
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                _gun.Shoot(Position + RotationMatrix.Left * 4.5f, RotationMatrix, 6f);
-                _gun.Shoot(Position - RotationMatrix.Left * 4.5f, RotationMatrix, 6f);
-            }
-            if (Mouse.GetState().RightButton == ButtonState.Pressed)
-            {
-                _gun.Shoot(Position - RotationMatrix.Left * 4.5f, RotationMatrix, 6f);
+                if (_alternatingGunLogic && _gun.Shoot(Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f))
+                {
+                    _alternatingGunLogic = false;
+                }
+                else if(_gun.Shoot(Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f))
+                {
+                    _alternatingGunLogic = true;
+                }
             }
         }
 

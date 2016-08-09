@@ -7,7 +7,7 @@ using SpaceAssault.Screens;
 
 namespace SpaceAssault.Entities.Weapon
 {
-    class RailGun: AWeapon
+    class RailGun : AWeapon
     {
         public override void Initialize()
         {
@@ -24,26 +24,29 @@ namespace SpaceAssault.Entities.Weapon
             BulletModel2 = Global.ContentManager.Load<Model>("Models/laser2");
         }
 
-        public override void Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
+        public override bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
         {
             if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
             {
-                if(GameplayScreen._dronepdate)
+                if (GameplayScreen._dronepdate)
                     ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
                 else
                     ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel2));
                 LastShotTime = GlobalTimeSpan;
+                return true;
             }
+            return false;
 
         }
-        public override void Shoot2(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
+        public override bool Shoot2(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
         {
             if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
             {
-                  ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
-                  LastShotTime = GlobalTimeSpan;
+                ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
+                LastShotTime = GlobalTimeSpan;
+                return true;
             }
-
+            return false;
         }
     }
 }

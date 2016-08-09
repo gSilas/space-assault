@@ -5,9 +5,9 @@ namespace SpaceAssault.Utils
 {
     static class MouseHandler
     {
-        public static Vector3 Position 
+        public static Vector2 Position 
         {
-            get { return new Vector3(Mouse.GetState().Position.X,0, Mouse.GetState().Position.Y); }
+            get { return Mouse.GetState().Position.ToVector2(); }
         }
 
         public static MouseState MouseState
