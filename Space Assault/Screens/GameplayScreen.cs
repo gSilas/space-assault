@@ -300,11 +300,6 @@ namespace SpaceAssault.Screens
             _station.Draw();
             _drone.Draw();
 
-            foreach (var enemyShip in _enemyShips)
-            {
-                enemyShip.Draw();
-            }
-
             _asteroidField.Draw();
 
             _fleet.Draw();
