@@ -26,7 +26,7 @@ namespace SpaceAssault.Entities
 
         private bool _isNotDead;
 
-        private AWeapon _gun;
+        public AWeapon Gun;
 
         //used for scaling all speed values beside turnSpeed;
         private float _speedScaling = 2f;
@@ -48,8 +48,8 @@ namespace SpaceAssault.Entities
             _health = 100;
             _armor = 100;
             _isNotDead = true;
-            _gun = new RailGun();
-            _gun.Initialize();
+            Gun = new RailGun();
+            Gun.Initialize();
         }
 
         public void Reset()
@@ -72,14 +72,14 @@ namespace SpaceAssault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            _gun.LoadContent();
+            Gun.LoadContent();
             //RotationMatrix = Matrix.CreateRotationX();
         }
 
         public override void Update(GameTime gameTime)
         {
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            _gun.Update(gameTime);
+            Gun.Update(gameTime);
             if (IsNotDead)
             {
                 this.HandleInput();
@@ -196,11 +196,11 @@ namespace SpaceAssault.Entities
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if (_alternatingGunLogic && _gun.Shoot(Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f))
+                if (_alternatingGunLogic && Gun.Shoot(Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f))
                 {
                     _alternatingGunLogic = false;
                 }
-                else if (_gun.Shoot(Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f))
+                else if (Gun.Shoot(Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f))
                 {
                     _alternatingGunLogic = true;
                 }
@@ -209,14 +209,14 @@ namespace SpaceAssault.Entities
 
         public List<Bullet> GetBulletList()
         {
-            return _gun.ListOfBullets;
+            return Gun.ListOfBullets;
         }
 
         public override void Draw()
         {
             if (IsNotDead)
             {
-                _gun.Draw();
+                Gun.Draw();
 
                 foreach (var mesh in Model.Meshes)
                 {

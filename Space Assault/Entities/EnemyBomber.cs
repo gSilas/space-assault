@@ -13,7 +13,7 @@ namespace SpaceAssault.Entities
 
         public EnemyBomber(Vector3 position)
         {
-            _spawnPos = position;
+            SpawnPos = position;
             Position = position;
         }
 
@@ -21,15 +21,15 @@ namespace SpaceAssault.Entities
         {
             RotationMatrix = Matrix.Identity;
 
-            _moveSpeedForward = 0.5f;
-            _turnSpeed = 5.0f;
+            MoveSpeedForward = 0.5f;
+            TurnSpeed = 5.0f;
 
             //_moveSpeedBackward = -0.5f;
 
-            _health = 40;
-            _armor = 100;
-            _gun = new PhotonBomb();
-            _gun.Initialize();
+            Health = 40;
+            Armor = 100;
+            Gun = new PhotonBomb();
+            Gun.Initialize();
         }
 
 
@@ -37,22 +37,22 @@ namespace SpaceAssault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/enemyship");
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            _gun.LoadContent();
+            Gun.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
-            _gun.Update(gameTime);
-            if (_health <= 0) IsDead = true;
+            Gun.Update(gameTime);
+            if (Health <= 0) IsDead = true;
 
             Spheres = Collider3D.UpdateBoundingSphere(this);
             
             //besser mit Zeit
-            if (gameTime.TotalGameTime > (_getBetterwithTime.Add(TimeSpan.FromSeconds(60))))
+            if (gameTime.TotalGameTime > (GetBetterwithTime.Add(TimeSpan.FromSeconds(60))))
             {
-                _health = _health + 50;
-
-                _getBetterwithTime = gameTime.TotalGameTime;
+                Health = Health + 50;
+                Gun.makeDmg += 5;
+                GetBetterwithTime = gameTime.TotalGameTime;
                 //Console.WriteLine("UpDATED");
             }
             //TODO: health, armor update
@@ -63,7 +63,7 @@ namespace SpaceAssault.Entities
         public override void Shoot(Vector3 direction)
         {
             //_gun.Shoot2(Position, RotationMatrix, 1f);
-            _gun.Shoot(Position - RotationMatrix.Forward * 22.0f, RotationMatrix, 1f);
+            Gun.Shoot(Position - RotationMatrix.Forward * 22.0f, RotationMatrix, 1f);
         }
 
         public override void Intelligence(Vector3 targedPosition)

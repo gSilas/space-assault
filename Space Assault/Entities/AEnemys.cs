@@ -11,36 +11,36 @@ namespace SpaceAssault.Entities
 {
     public abstract class AEnemys : AEntity
     {
-        protected Vector3 _spawnPos;
-        protected float _moveSpeedForward;
-        protected float _turnSpeed;
-        protected TimeSpan _getBetterwithTime;
-        public int _health;
-        protected int _armor;
-        protected bool _isDead;
-        protected AWeapon _gun;
+        protected Vector3 SpawnPos;
+        protected float MoveSpeedForward;
+        protected float TurnSpeed;
+        protected TimeSpan GetBetterwithTime;
+        public int Health;
+        protected int Armor;
+        protected bool isDead;
+        public AWeapon Gun;
 
 
         public bool IsDead
         {
-            get { return _isDead; }
-            protected set { _isDead = value; }
+            get { return isDead; }
+            protected set { isDead = value; }
         }
 
         public void Reset()
         {
             RotationMatrix = Matrix.Identity;
-            _health = 100;
-            _armor = 100;
-            Position = _spawnPos;
+            Health = 100;
+            Armor = 100;
+            Position = SpawnPos;
         }
         public List<Bullet> GetBulletList()
         {
-            return _gun.ListOfBullets;
+            return Gun.ListOfBullets;
         }
         public override void Draw()
         {
-            _gun.Draw();
+            Gun.Draw();
 
             foreach (var mesh in Model.Meshes)
             {
@@ -62,7 +62,7 @@ namespace SpaceAssault.Entities
 
             direction.Normalize();
             float vectorDirection;
-            for (float i = 0.5f; i < _turnSpeed; i++)
+            for (float i = 0.5f; i < TurnSpeed; i++)
             {
                 vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
                 if (vectorDirection > 0.01)
@@ -77,7 +77,7 @@ namespace SpaceAssault.Entities
                 }
             }
 
-            Position -= RotationMatrix.Forward * _moveSpeedForward;
+            Position -= RotationMatrix.Forward * MoveSpeedForward;
 
 
         }

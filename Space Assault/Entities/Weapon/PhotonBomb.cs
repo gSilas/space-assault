@@ -17,6 +17,8 @@ namespace SpaceAssault.Entities.Weapon
             GlobalTimeSpan = TimeSpan.FromSeconds(0);
             LastShotTime = TimeSpan.FromSeconds(0);
             CoolDownTime = TimeSpan.FromMilliseconds(2000d);
+            makeDmg = 5;
+            DmgStation = true;
         }
 
         public override void LoadContent()

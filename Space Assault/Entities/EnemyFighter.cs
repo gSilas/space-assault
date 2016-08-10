@@ -11,7 +11,7 @@ namespace SpaceAssault.Entities
 
         public EnemyFighter(Vector3 position)
         {
-            _spawnPos = position;
+            SpawnPos = position;
             Position = position;
         }
 
@@ -19,37 +19,37 @@ namespace SpaceAssault.Entities
         {
             RotationMatrix = Matrix.Identity;
             
-            _moveSpeedForward = 0.5f;
-            _turnSpeed = 5.0f;
+            MoveSpeedForward = 0.5f;
+            TurnSpeed = 5.0f;
 
            
 
-            _health = 30;
-            _armor = 100;
-            _gun = new RailGun();
-            _gun.Initialize();
+            Health = 30;
+            Armor = 100;
+            Gun = new RailGun();
+            Gun.Initialize();
         }
         
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/enemyship2");
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            _gun.LoadContent();
+            Gun.LoadContent();
         }
         public override void Update(GameTime gameTime)
         {
-            _gun.Update(gameTime);
-            if (_health <= 0) IsDead = true;
+            Gun.Update(gameTime);
+            if (Health <= 0) IsDead = true;
 
             Spheres = Collider3D.UpdateBoundingSphere(this);
             //Werden Besser jede Minute
-            if (gameTime.TotalGameTime > (_getBetterwithTime.Add(TimeSpan.FromSeconds(60))))
+            if (gameTime.TotalGameTime > (GetBetterwithTime.Add(TimeSpan.FromSeconds(60))))
             {
-                _health = _health + 50;
-
-                _getBetterwithTime = gameTime.TotalGameTime;
+                Health = Health + 30;
+                Gun.makeDmg += 5;
+                GetBetterwithTime = gameTime.TotalGameTime;
                 //Console.WriteLine("UpDATED");
-                _gun=new RailGun();
+                Gun=new RailGun();
             }
             //TODO: health, armor update
 
@@ -57,7 +57,7 @@ namespace SpaceAssault.Entities
 
         public override void Shoot(Vector3 direction)
         {
-            _gun.Shoot2(Position, RotationMatrix, 6f);
+            Gun.Shoot2(Position, RotationMatrix, 6f);
         }
         
         public override void Intelligence(Vector3 targedPosition)

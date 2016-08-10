@@ -17,8 +17,10 @@ namespace SpaceAssault.Entities.Weapon
             GlobalTimeSpan = TimeSpan.FromSeconds(0);
             LastShotTime = TimeSpan.FromSeconds(0);
             CoolDownTime = TimeSpan.FromMilliseconds(200d);
+            makeDmg = 10;
+            DmgStation = false;
         }
-
+        
         public override void LoadContent()
         {
             BulletModel = Global.ContentManager.Load<Model>("Models/laser");

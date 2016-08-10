@@ -7,6 +7,9 @@ namespace SpaceAssault.Entities.Weapon
 {
     public abstract class AWeapon
     {
+        protected int Damage;
+        protected bool DmgStation;
+
         //draw
         public List<Bullet> ListOfBullets;
         public List<Bullet> RemoveListOfBullets;
@@ -52,6 +55,18 @@ namespace SpaceAssault.Entities.Weapon
                 bullet.Draw();
             }
         }
-        
+
+        public int makeDmg
+        {
+            get { return Damage; }
+            set { Damage = value; }
+        }
+
+        public bool CanDamageStation
+        {
+            get { return DmgStation; }
+            set { DmgStation = value; }
+        }
+
     }
 }

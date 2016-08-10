@@ -187,7 +187,7 @@ namespace SpaceAssault.Screens
                     {
                         if (Collider3D.IntersectionSphere(bullet, ship))
                         {
-                            ship._health -= 10;
+                            ship.Health -= _drone.Gun.makeDmg;
                             _removeBullets.Add(bullet);
                             Global.HighScorePoints += 20;
                         }
@@ -214,7 +214,7 @@ namespace SpaceAssault.Screens
                         if (Collider3D.IntersectionSphere(ast, ship))
                         {
                            
-                            ship._health -= 5;
+                            ship.Health -= 5;
                             _removeAsteroid.Add(ast);
                         }
                         if (Collider3D.IntersectionSphere(_drone, ship))
@@ -228,12 +228,13 @@ namespace SpaceAssault.Screens
                     }
                     if (Collider3D.IntersectionSphere(bullet, _drone))
                     {
-                        _drone._health -= 5;
+                        _drone._health -= ship.Gun.makeDmg;
                         _removeBullets.Add(bullet);
                     }
                     if (Collider3D.IntersectionSphere(bullet, _station))
                     {
-                        _station._health -= 5;
+                        if(ship.Gun.CanDamageStation)
+                            _station._health -= ship.Gun.makeDmg;
                         _removeBullets.Add(bullet);
                     }
 
