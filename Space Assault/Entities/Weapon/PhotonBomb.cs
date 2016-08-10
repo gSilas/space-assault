@@ -24,6 +24,7 @@ namespace SpaceAssault.Entities.Weapon
         public override void LoadContent()
         {
             BulletModel = Global.ContentManager.Load<Model>("Models/bullet");
+            BulletModel2 = Global.ContentManager.Load<Model>("Models/bullet"); // another model?
         }
 
         public override bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
