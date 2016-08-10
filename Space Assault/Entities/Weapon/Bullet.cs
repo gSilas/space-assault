@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Entities.Weapon
 {
@@ -17,10 +18,12 @@ namespace SpaceAssault.Entities.Weapon
             RotationMatrix = droneRotateMatrix;
             _travelspeed = travelspeed;
             Model = model;
+            Spheres = Collider3D.UpdateBoundingSphere(this);
             Bulletlife = 500;
         }
         public override void Update(GameTime gameTime)
         {
+            Spheres = Collider3D.UpdateBoundingSphere(this);
             Position -= _direction*_travelspeed;
             Bulletlife--;
            

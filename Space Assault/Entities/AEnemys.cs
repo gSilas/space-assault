@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using SpaceAssault.Entities.Weapon;
 
 using Microsoft.Xna.Framework.Graphics;
-
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Entities
 {
@@ -30,7 +30,7 @@ namespace SpaceAssault.Entities
         {
             _gun.Update(gameTime);
             if (_health <= 0) IsDead = true;
-
+            Spheres = Collider3D.UpdateBoundingSphere(this);
             //TODO: health, armor update
 
         }

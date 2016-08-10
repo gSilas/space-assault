@@ -14,12 +14,14 @@ namespace SpaceAssault.Screens
     {
         Texture2D backgroundTexture;
         private Station _station;
+        private Background _back;
 
         // Constructor.
         public BackgroundScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            
         }
 
         // Loads graphics content for this screen. The background texture is quite
@@ -36,6 +38,7 @@ namespace SpaceAssault.Screens
 
             _station = new Station(Vector3.Zero, 0);
             _station.LoadContent();
+            _back = new Background();
         }
 
 
@@ -56,6 +59,7 @@ namespace SpaceAssault.Screens
         {
             base.Update(gameTime, otherScreenHasFocus, false);
             _station.Update(gameTime);
+            
         }
 
 
@@ -63,6 +67,7 @@ namespace SpaceAssault.Screens
         public override void Draw(GameTime gameTime)
         {
             _station.Draw();
+            _back.Draw();
         }
     }
 }

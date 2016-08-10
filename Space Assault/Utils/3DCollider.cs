@@ -1,4 +1,6 @@
-﻿using SpaceAssault.Entities;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.Entities;
 
 namespace SpaceAssault.Utils
 {
@@ -24,5 +26,30 @@ namespace SpaceAssault.Utils
                 }
                 return false;
             }
+        public static BoundingSphere[] UpdateBoundingSphere(AEntity e)
+        {
+            BoundingSphere[] spheres = new BoundingSphere[e.Model.Meshes.Count];
+            for (var i = 0; i < e.Model.Meshes.Count; i++)
+            {
+                var eBoundingSphere = e.Model.Meshes[i].BoundingSphere;
+                eBoundingSphere.Center += e.Position;
+                spheres[i] = eBoundingSphere;
+            }
+            return spheres;
         }
+        public static bool IntersectionSphere(AEntity e1, AEntity e2)
+        {
+            for (var i = 0; i < e1.Spheres.Length; i++)
+            {
+                for (var j = 0; j < e2.Spheres.Length; j++)
+                {
+                    if (e1.Spheres[i].Intersects(e2.Spheres[j]))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
 }

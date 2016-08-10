@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Entities
 {
@@ -24,6 +25,7 @@ namespace SpaceAssault.Entities
         public void LoadContent(Model model)
         {
             Model = model;
+            Spheres = Collider3D.UpdateBoundingSphere(this);
         }
 
 
@@ -47,7 +49,7 @@ namespace SpaceAssault.Entities
 
             _angle += 0.005f;
             RotationMatrix = Matrix.CreateRotationY(_angle);
-
+            Spheres = Collider3D.UpdateBoundingSphere(this);
             Position += _direction * _speed;
         }
         

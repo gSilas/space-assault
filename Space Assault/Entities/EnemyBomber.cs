@@ -2,8 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities.Weapon;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Entities
 {
@@ -37,6 +36,7 @@ namespace SpaceAssault.Entities
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/enemyship");
+            Spheres = Collider3D.UpdateBoundingSphere(this);
             _gun.LoadContent();
         }
 

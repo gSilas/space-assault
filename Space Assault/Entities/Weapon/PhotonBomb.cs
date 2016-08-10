@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Screens;
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Entities.Weapon
 {
@@ -21,7 +22,6 @@ namespace SpaceAssault.Entities.Weapon
         public override void LoadContent()
         {
             BulletModel = Global.ContentManager.Load<Model>("Models/bullet");
-
         }
 
         public override bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
