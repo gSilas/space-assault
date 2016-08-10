@@ -24,26 +24,12 @@ namespace SpaceAssault.Entities
 
            
 
-            _health = 50;
+            _health = 30;
             _armor = 100;
             _gun = new RailGun();
             _gun.Initialize();
         }
-        /*
-        public void Reset()
-        {
-            RotationMatrix = Matrix.Identity;
-            _health = 100;
-            _armor = 100;
-            Position = _spawnPos;
-        }
-
-        public bool IsNotDead
-        {
-            get { return _isNotDead; }
-            protected set { _isNotDead = value; }
-        }
-        */
+        
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/enemyship2");
@@ -54,7 +40,8 @@ namespace SpaceAssault.Entities
         {
             _gun.Update(gameTime);
             if (_health <= 0) IsDead = true;
-            
+
+            Spheres = Collider3D.UpdateBoundingSphere(this);
             //Werden Besser jede Minute
             if (gameTime.TotalGameTime > (_getBetterwithTime.Add(TimeSpan.FromSeconds(60))))
             {

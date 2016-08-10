@@ -14,7 +14,7 @@ namespace SpaceAssault.Entities
         protected Vector3 _spawnPos;
         protected float _moveSpeedForward;
         protected float _turnSpeed;
-
+        protected TimeSpan _getBetterwithTime;
         public int _health;
         protected int _armor;
         protected bool _isDead;
@@ -26,14 +26,7 @@ namespace SpaceAssault.Entities
             get { return _isDead; }
             protected set { _isDead = value; }
         }
-        public override void Update(GameTime gameTime)
-        {
-            _gun.Update(gameTime);
-            if (_health <= 0) IsDead = true;
-            Spheres = Collider3D.UpdateBoundingSphere(this);
-            //TODO: health, armor update
 
-        }
         public void Reset()
         {
             RotationMatrix = Matrix.Identity;

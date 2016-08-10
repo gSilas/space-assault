@@ -26,7 +26,7 @@ namespace SpaceAssault.Entities
 
             //_moveSpeedBackward = -0.5f;
 
-            _health = 100;
+            _health = 40;
             _armor = 100;
             _gun = new PhotonBomb();
             _gun.Initialize();
@@ -45,6 +45,9 @@ namespace SpaceAssault.Entities
             _gun.Update(gameTime);
             if (_health <= 0) IsDead = true;
 
+            Spheres = Collider3D.UpdateBoundingSphere(this);
+            
+            //besser mit Zeit
             if (gameTime.TotalGameTime > (_getBetterwithTime.Add(TimeSpan.FromSeconds(60))))
             {
                 _health = _health + 50;
