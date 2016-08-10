@@ -14,6 +14,7 @@ namespace SpaceAssault.Utils
         private List<AEnemys> addList;
         private TimeSpan _lastChunkTime;
         private Random rand;
+        public String WhereTheyCome;
        
 
         public FleetBuilder()
@@ -55,18 +56,61 @@ namespace SpaceAssault.Utils
         {
             int zdist;
             int xoffset;
-            int formationchoice;
             for (int i = 0; i < 1; i++)
             {
-                zdist = rand.Next(-200, 200);
-                xoffset = rand.Next(-35, 35);
-
+                int Corner = rand.Next(1, 4);
                 Vector3 position = new Vector3();
-                position.X = DronePosition.X + 350 + xoffset;
-                position.Z = DronePosition.Z + zdist;
-                position.Y = 0f;
+                //Corner = 3;
+                switch (Corner)
+                {
+                    case 1:
+                        //unten rechts
+                        zdist = rand.Next(0, 400);
+                        xoffset = rand.Next(-35, 35);
 
-                formationchoice = rand.Next(1, 4);
+
+                        position.X = DronePosition.X + 350 + xoffset;
+                        position.Z = DronePosition.Z + zdist;
+                        position.Y = 0f;
+                        WhereTheyCome = "Neue Flotte von unten rechts";
+                        break;
+                    case 2:
+                        //oben rechts
+                        zdist = rand.Next(-400, 0);
+                        xoffset = rand.Next(-35, 35);
+
+
+                        position.X = DronePosition.X + 350 + xoffset;
+                        position.Z = DronePosition.Z + zdist;
+                        position.Y = 0f;
+                        WhereTheyCome = "Neue Flotte von oben rechts";
+                        break;
+                    case 3:
+                        //unten links
+                        zdist = rand.Next(0, 400);
+                        xoffset = rand.Next(-35, 35);
+
+
+                        position.X = DronePosition.X - 350 + xoffset;
+                        position.Z = DronePosition.Z + zdist;
+                        position.Y = 0f;
+                        WhereTheyCome = "Neue Flotte von unten links";
+                        break;
+                    case 4:
+                        //oben links
+                        zdist = rand.Next(-400, 0);
+                        xoffset = rand.Next(-35, 35);
+
+
+                        position.X = DronePosition.X - 350 + xoffset;
+                        position.Z = DronePosition.Z + zdist;
+                        position.Y = 0f;
+                        WhereTheyCome = "Neue Flotte von oben links";
+                        break;
+                }
+                Console.WriteLine(WhereTheyCome);
+
+                int formationchoice = rand.Next(1, 4);
                 //Console.WriteLine(formationchoice+"<<<<<<<<<<<<<<");
                 switch (formationchoice)
                 {

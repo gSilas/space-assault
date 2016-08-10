@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SpaceAssault.Entities.Weapon;
@@ -84,6 +85,7 @@ namespace SpaceAssault.Entities
             {
                 this.HandleInput();
             }
+            //Console.WriteLine(Position);
             if (_health <= 0) IsNotDead = false;
             //TODO: health, armor update
         }
