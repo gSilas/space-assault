@@ -50,7 +50,23 @@ namespace SpaceAssault.Entities
             Model = Global.ContentManager.Load<Model>("Models/enemyship2");
             _gun.LoadContent();
         }
+        public override void Update(GameTime gameTime)
+        {
+            _gun.Update(gameTime);
+            if (_health <= 0) IsDead = true;
+            
+            //Werden Besser jede Minute
+            if (gameTime.TotalGameTime > (_getBetterwithTime.Add(TimeSpan.FromSeconds(60))))
+            {
+                _health = _health + 50;
 
+                _getBetterwithTime = gameTime.TotalGameTime;
+                //Console.WriteLine("UpDATED");
+                _gun=new RailGun();
+            }
+            //TODO: health, armor update
+
+        }
 
         public override void Shoot(Vector3 direction)
         {

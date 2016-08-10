@@ -213,6 +213,7 @@ namespace SpaceAssault.Screens
                         }
                         if (Collider3D.Intersection(ast, ship))
                         {
+                           
                             ship._health -= 5;
                             _removeAsteroid.Add(ast);
                         }

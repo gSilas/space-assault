@@ -40,7 +40,21 @@ namespace SpaceAssault.Entities
             _gun.LoadContent();
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            _gun.Update(gameTime);
+            if (_health <= 0) IsDead = true;
 
+            if (gameTime.TotalGameTime > (_getBetterwithTime.Add(TimeSpan.FromSeconds(60))))
+            {
+                _health = _health + 50;
+
+                _getBetterwithTime = gameTime.TotalGameTime;
+                //Console.WriteLine("UpDATED");
+            }
+            //TODO: health, armor update
+
+        }
 
 
         public override void Shoot(Vector3 direction)
@@ -60,9 +74,9 @@ namespace SpaceAssault.Entities
 
             if (distanceToStation < 200)
                 neuerAnflug = true;
-            else
-                if (distanceToTarged < 200)
-                    FlyVector(-(Position - targedPosition));
+           
+            if (distanceToTarged < 200)
+                FlyVector(-(Position - targedPosition));
 
             if (neuerAnflug == true)
             {
@@ -71,7 +85,13 @@ namespace SpaceAssault.Entities
                     neuerAnflug = false;
             }
             if (neuerAnflug == false)
-                FlyVector(Position - new Vector3(0, 0, 0));
+                if (distanceToTarged < 200)
+                    FlyVector(-(Position - targedPosition));
+                else
+                {
+                    FlyVector(Position - new Vector3(0, 0, 0));
+                }
+            
 
 
             if (distanceToStation < 400&&neuerAnflug==false)
