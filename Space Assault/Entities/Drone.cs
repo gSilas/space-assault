@@ -1,12 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SpaceAssault.Entities.Weapon;
 using System.Collections.Generic;
-using System;
 using SpaceAssault.Utils;
-using SpaceAssault.ScreenManagers;
 
 /// <summary>
 ///  Movement, Schießen, Health, Sterben, neu Spawnen.
@@ -74,12 +71,14 @@ namespace SpaceAssault.Entities
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
+            Spheres = Collider3D.UpdateBoundingSphere(this);
             _gun.LoadContent();
             //RotationMatrix = Matrix.CreateRotationX();
         }
 
         public override void Update(GameTime gameTime)
         {
+            Spheres = Collider3D.UpdateBoundingSphere(this);
             _gun.Update(gameTime);
             if (IsNotDead)
             {

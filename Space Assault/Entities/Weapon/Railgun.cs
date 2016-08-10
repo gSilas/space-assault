@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Screens;
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Entities.Weapon
 {

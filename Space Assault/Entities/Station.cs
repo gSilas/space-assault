@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Entities
 {
@@ -31,10 +32,12 @@ namespace SpaceAssault.Entities
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/station");
+            Spheres = Collider3D.UpdateBoundingSphere(this);
         }
 
         public override void Update(GameTime gameTime)
         {
+            Spheres = Collider3D.UpdateBoundingSphere(this);
             _angle += 0.005f;
             if (Position.Y < 1 && _up)
                 Position += new Vector3(0, 0.002f, 0);

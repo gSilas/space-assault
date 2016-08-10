@@ -45,7 +45,7 @@ namespace SpaceAssault.Utils
                 _basicEffect.Projection = Global.Camera.ProjectionMatrix;
                 _basicEffect.DiffuseColor = Color.LightYellow.ToVector3();
                 _basicEffect.TextureEnabled = true;
-                tileTuple.Item1.Draw();            
+                tileTuple.Item1.Draw(); 
             }
             Global.BackgroundBatch.End();
         }

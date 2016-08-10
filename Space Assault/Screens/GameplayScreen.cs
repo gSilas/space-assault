@@ -168,13 +168,13 @@ namespace SpaceAssault.Screens
             {
                 foreach (var ast in _asteroidField.Asteroids)
                 {
-                    if (Collider3D.Intersection(bullet, ast))
+                    if (Collider3D.IntersectionSphere(bullet, ast))
                     {
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
                         Global.HighScorePoints += 50;
                     }
-                    if (Collider3D.Intersection(ast, _drone))
+                    if (Collider3D.IntersectionSphere(ast, _drone))
                     {
                         _drone._health -= 5;
                         _removeAsteroid.Add(ast);
@@ -183,9 +183,9 @@ namespace SpaceAssault.Screens
                 }
                 foreach (var ship in _fleet.EnemyShips)
                 {
-                    if (Collider3D.Intersection(bullet, ship))
+                    if (Collider3D.IntersectionSphere(bullet, ship))
                     {
-                        if (Collider3D.Intersection(bullet, ship))
+                        if (Collider3D.IntersectionSphere(bullet, ship))
                         {
                             ship._health -= 10;
                             _removeBullets.Add(bullet);
@@ -201,23 +201,23 @@ namespace SpaceAssault.Screens
                 {
                     foreach (var ast in _asteroidField.Asteroids)
                     {
-                        if (Collider3D.Intersection(bullet, ast))
+                        if (Collider3D.IntersectionSphere(bullet, ast))
                         {
                             _removeAsteroid.Add(ast);
                             _removeBullets.Add(bullet);
                         }
-                        if (Collider3D.Intersection(_station, ast))
+                        if (Collider3D.IntersectionSphere(_station, ast))
                         {
                             _removeAsteroid.Add(ast);
                             _station._health -= 10;
                         }
-                        if (Collider3D.Intersection(ast, ship))
+                        if (Collider3D.IntersectionSphere(ast, ship))
                         {
                            
                             ship._health -= 5;
                             _removeAsteroid.Add(ast);
                         }
-                        if (Collider3D.Intersection(_drone, ship))
+                        if (Collider3D.IntersectionSphere(_drone, ship))
                         {
                             //EnemyFighter.Position = new Vector3(100,10,100);
                         }
@@ -226,12 +226,12 @@ namespace SpaceAssault.Screens
                             _removeAsteroid.Add(ast);
                         }
                     }
-                    if (Collider3D.Intersection(bullet, _drone))
+                    if (Collider3D.IntersectionSphere(bullet, _drone))
                     {
                         _drone._health -= 5;
                         _removeBullets.Add(bullet);
                     }
-                    if (Collider3D.Intersection(bullet, _station))
+                    if (Collider3D.IntersectionSphere(bullet, _station))
                     {
                         _station._health -= 5;
                         _removeBullets.Add(bullet);
@@ -246,7 +246,7 @@ namespace SpaceAssault.Screens
             {
                 foreach (var ast2 in _asteroidField.Asteroids)
                 {
-                    if (ast!=ast2 && Collider3D.Intersection(ast2, ast))
+                    if (ast!=ast2 && Collider3D.IntersectionSphere(ast2, ast))
                     {
                         _removeAsteroid.Add(ast);
                     }
