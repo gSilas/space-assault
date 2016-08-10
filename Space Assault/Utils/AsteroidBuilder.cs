@@ -44,10 +44,12 @@ namespace SpaceAssault.Utils
         {
             int zdist;
             int xoffset;
+            int movespeed;
             for (int i = 0; i < 15; i++)
             {
                 zdist = rand.Next(-200,200);
                 xoffset = rand.Next(-35, 35);
+                movespeed = rand.Next(60, 100);
 
                 Vector3 position = new Vector3();
                 position.X = targetPosition.X + 350 + xoffset;
@@ -59,7 +61,7 @@ namespace SpaceAssault.Utils
                 direction.Normalize();
 
                 int angle = rand.Next(-360, 360);
-                Asteroid ast = new Asteroid(position, angle, direction, 0.9f);
+                Asteroid ast = new Asteroid(position, angle, direction, (float)movespeed/100);
                 ast.Initialize();
                 ast.LoadContent(_model);
                 addList.Add(ast);
