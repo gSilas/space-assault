@@ -40,7 +40,7 @@ namespace SpaceAssault.ScreenManagers
 
             Global.Font = Global.ContentManager.Load<SpriteFont>("Fonts/menufont");
             _blankTexture = Global.ContentManager.Load<Texture2D>("Images/blank");
-            _crosshair = Global.ContentManager.Load<Texture2D>("Images/FadenkreuzTest");
+            _crosshair = Global.ContentManager.Load<Texture2D>("Images/Fadenkreuz_1");
 
             // Tell each of the screens to load their content.
             foreach (GameScreen screen in _screens)
