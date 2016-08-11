@@ -43,9 +43,9 @@ namespace SpaceAssault.Entities
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 10.0f;
             _moveSpeedForward = 1.0f * _speedScaling;
-            _moveSpeedBackward = -0.5f * _speedScaling;
-            _moveSpeedLeft = 0.5f * _speedScaling;
-            _moveSpeedRight = -0.5f * _speedScaling;
+            _moveSpeedBackward = -1.0f * _speedScaling;
+            _moveSpeedLeft = 1.0f * _speedScaling;
+            _moveSpeedRight = -1.0f * _speedScaling;
             _health = 100;
             _armor = 100;
             _isNotDead = true;
@@ -58,9 +58,9 @@ namespace SpaceAssault.Entities
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 10.0f;
             _moveSpeedForward = 1.0f * _speedScaling;
-            _moveSpeedBackward = -0.5f * _speedScaling;
-            _moveSpeedLeft = 0.5f * _speedScaling;
-            _moveSpeedRight = -0.5f * _speedScaling;
+            _moveSpeedBackward = -1.0f * _speedScaling;
+            _moveSpeedLeft = 1.0f * _speedScaling;
+            _moveSpeedRight = -1.0f * _speedScaling;
             _health = 100;
             _armor = 100;
             _isNotDead = true;
