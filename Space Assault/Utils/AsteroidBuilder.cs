@@ -10,16 +10,16 @@ namespace SpaceAssault.Utils
     class AsteroidBuilder
     {
         private Model _model;
-        public List<Asteroid> Asteroids;
-        private List<Asteroid> addList;
+        public List<Asteroid> _asteroidList;
+        private List<Asteroid> _asteroidsToAdd;
         private TimeSpan _lastChunkTime;
-        private Random rand;
+        private Random _rand;
 
         public AsteroidBuilder()
         {
-            Asteroids = new List<Asteroid>();
-            addList = new List<Asteroid>();
-            rand = new Random();
+            _asteroidList = new List<Asteroid>();
+            _asteroidsToAdd = new List<Asteroid>();
+            _rand = new Random();
         }
 
         public void LoadContent()
@@ -29,14 +29,14 @@ namespace SpaceAssault.Utils
 
         public void Update(GameTime gameTime, Vector3 targetPosition)
         { 
-            foreach (var ast in Asteroids)
+            foreach (var ast in _asteroidList)
             {
                 ast.Update(gameTime);
             }
             if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(1000))))
             {
+                _lastChunkTime = gameTime.TotalGameTime;
                 Chunk(targetPosition);
-               _lastChunkTime = gameTime.TotalGameTime;
             }
         }
 
@@ -47,9 +47,9 @@ namespace SpaceAssault.Utils
             int movespeed;
             for (int i = 0; i < 15; i++)
             {
-                zdist = rand.Next(-200,200);
-                xoffset = rand.Next(-35, 35);
-                movespeed = rand.Next(60, 100);
+                zdist = _rand.Next(-200,200);
+                xoffset = _rand.Next(-35, 35);
+                movespeed = _rand.Next(60, 100);
 
                 Vector3 position = new Vector3();
                 position.X = targetPosition.X + 350 + xoffset;
@@ -60,19 +60,19 @@ namespace SpaceAssault.Utils
                 direction.Y = 0;
                 direction.Normalize();
 
-                int angle = rand.Next(-360, 360);
-                Asteroid ast = new Asteroid(position, angle, direction, (float)movespeed/100);
+                int angle = _rand.Next(-360, 360);
+                Asteroid ast = new Asteroid(position, angle, direction, (float)movespeed/100, _lastChunkTime);
                 ast.Initialize();
                 ast.LoadContent(_model);
-                addList.Add(ast);
+                _asteroidsToAdd.Add(ast);
             }
-            Asteroids.AddRange(addList);
-            addList.Clear();
+            _asteroidList.AddRange(_asteroidsToAdd);
+            _asteroidsToAdd.Clear();
         }
 
         public void Draw()
         {
-            foreach (var ast in Asteroids)
+            foreach (var ast in _asteroidList)
             {
                 ast.Draw();
             }

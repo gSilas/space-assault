@@ -170,7 +170,7 @@ namespace SpaceAssault.Screens
             /* bullet of drone with asteroids & enemy ships */
             foreach (var bullet in _drone.GetBulletList())
             {
-                foreach (var ast in _asteroidField.Asteroids)
+                foreach (var ast in _asteroidField._asteroidList)
                 {
                     if (Collider3D.IntersectionSphere(bullet, ast))
                     {
@@ -194,8 +194,13 @@ namespace SpaceAssault.Screens
             }
 
             /* asteroids with drone & station & other asteroids & enemy ships*/
-            foreach (var ast in _asteroidField.Asteroids)
+            foreach (var ast in _asteroidField._asteroidList)
             {
+                if (gameTime.TotalGameTime > (ast._originTime.Add(TimeSpan.FromMinutes(0.7d))))
+                {
+                    _removeAsteroid.Add(ast);
+                }
+
                 if (Collider3D.IntersectionSphere(ast, _drone))
                 {
                     _drone._health -= 5;
@@ -211,7 +216,7 @@ namespace SpaceAssault.Screens
                     continue;
                 }
 
-                foreach (var ast2 in _asteroidField.Asteroids)
+                foreach (var ast2 in _asteroidField._asteroidList)
                 {
                     if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
                     {
@@ -236,11 +241,6 @@ namespace SpaceAssault.Screens
                         }
                     }
                  }
-
-                if (gameTime.TotalGameTime > (ast.LifeTime.Add(TimeSpan.FromMinutes(0.7d))))
-                {
-                    _removeAsteroid.Add(ast);
-                }
             }
 
             /* enemy ships with drone and their bullets with drone & station */
@@ -275,7 +275,7 @@ namespace SpaceAssault.Screens
             }
             foreach (var ast in _removeAsteroid)
             {
-                _asteroidField.Asteroids.Remove(ast);
+                _asteroidField._asteroidList.Remove(ast);
             }
             foreach (var bullet in _removeBullets)
             {
