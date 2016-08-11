@@ -24,11 +24,11 @@ namespace SpaceAssault.Utils
             //50*50 Tiles with 1 Star / Tile
             //StarPosition inbetween x = 1000 y = 1000
 
-            for (int x = 0; x < 50000; x += 1000)
+            for (int x = 0; x < 10000; x += 500)
             {
-                for (int y = 0; y < 50000; y += 1000)
+                for (int y = 0; y < 10000; y += 500)
                 {
-                    Vector2 pos = new Vector2(x + _rand.Next(0, 1001), y + _rand.Next(0, 1001));                 
+                    Vector2 pos = new Vector2(x + _rand.Next(0, 501), y + _rand.Next(0, 501));                 
                     float scale = (float)_rand.NextDouble();
                     Tile t = new Tile(pos,_tex, scale);
                     _tileList.Add(t);
@@ -36,11 +36,11 @@ namespace SpaceAssault.Utils
             }
         }
 
-        public void Draw()
+        public void Draw(float angle,Vector3 pos)
         {
             if (!_setworld)
             {
-                _basicEffect.World = Matrix.CreateRotationX(MathHelper.ToRadians(90)) * Matrix.CreateWorld(new Vector3(-50000 / 2, -2500, -50000 / 2), Vector3.Forward, Vector3.Up);
+                _basicEffect.World = Matrix.CreateRotationX(MathHelper.ToRadians(angle)) * Matrix.CreateWorld(pos, Vector3.Forward, Vector3.Up);
                 _basicEffect.View = Global.Camera.ViewMatrix;
                 _basicEffect.Projection = Global.Camera.ProjectionMatrix;
                 _basicEffect.DiffuseColor = Color.LightYellow.ToVector3();
