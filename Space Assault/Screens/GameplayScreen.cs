@@ -177,6 +177,7 @@ namespace SpaceAssault.Screens
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
                         Global.HighScorePoints += 50;
+                        continue;
                     }
                 }
                 foreach (var ship in _fleet.EnemyShips)
@@ -186,6 +187,7 @@ namespace SpaceAssault.Screens
                         ship.Health -= _drone.Gun.makeDmg;
                         _removeBullets.Add(bullet);
                         Global.HighScorePoints += 20;
+                        continue;
                     }
                 }
 
@@ -199,12 +201,14 @@ namespace SpaceAssault.Screens
                     _drone._health -= 5;
                     _removeAsteroid.Add(ast);
                     Global.HighScorePoints -= 50;
+                    continue;
                 }
 
                 if (Collider3D.IntersectionSphere(_station, ast))
                 {
                     _removeAsteroid.Add(ast);
                     _station._health -= 10;
+                    continue;
                 }
 
                 foreach (var ast2 in _asteroidField.Asteroids)
@@ -212,6 +216,7 @@ namespace SpaceAssault.Screens
                     if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
                     {
                         _removeAsteroid.Add(ast);
+                        continue;
                     }
                 }
                 foreach (var ship in _fleet.EnemyShips)
@@ -220,6 +225,7 @@ namespace SpaceAssault.Screens
                     {
                         ship.Health -= 5;
                         _removeAsteroid.Add(ast);
+                        continue;
                     }
                     foreach (var bullet in ship.GetBulletList())
                     {
@@ -227,6 +233,7 @@ namespace SpaceAssault.Screens
                         {
                             _removeAsteroid.Add(ast);
                             _removeBullets.Add(bullet);
+                            continue;
                         }
                     }
                  }
@@ -234,6 +241,7 @@ namespace SpaceAssault.Screens
                 if (gameTime.TotalGameTime > (ast.LifeTime.Add(TimeSpan.FromMinutes(0.7d))))
                 {
                     _removeAsteroid.Add(ast);
+                    continue;
                 }
             }
 
@@ -250,13 +258,14 @@ namespace SpaceAssault.Screens
                     {
                         _drone._health -= ship.Gun.makeDmg;
                         _removeBullets.Add(bullet);
+                        continue;
                     }
 
-                    if (Collider3D.IntersectionSphere(bullet, _station))
+                    if (ship.Gun.CanDamageStation && Collider3D.IntersectionSphere(bullet, _station))
                     {
-                        if (ship.Gun.CanDamageStation)
-                            _station._health -= ship.Gun.makeDmg;
+                        _station._health -= ship.Gun.makeDmg;
                         _removeBullets.Add(bullet);
+                        continue;
                     }
                 }
                 if (ship.IsDead == true)
