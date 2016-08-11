@@ -285,7 +285,9 @@ namespace SpaceAssault.Screens
             {
                 _drone.GetBulletList().Remove(bullet);
             }
-
+            _removeAsteroid.Clear();
+            _removeBullets.Clear();
+            _removeAEnemys.Clear();
         }
 
         // Lets the game respond to player input. Unlike the Update method,
