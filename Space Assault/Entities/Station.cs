@@ -33,11 +33,15 @@ namespace SpaceAssault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/station");
             Spheres = Collider3D.UpdateBoundingSphere(this);
+            for(int i = 0; i < Spheres.Length; i++)
+            {
+                Spheres[i].Radius = Spheres[i].Radius * 0.75f;
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
-            Spheres = Collider3D.UpdateBoundingSphere(this);
+            //Spheres = Collider3D.UpdateBoundingSphere(this);
             _angle += 0.005f;
             if (Position.Y < 1 && _up)
                 Position += new Vector3(0, 0.002f, 0);
