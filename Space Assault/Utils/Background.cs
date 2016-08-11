@@ -24,9 +24,9 @@ namespace SpaceAssault.Utils
             //50*50 Tiles with 1 Star / Tile
             //StarPosition inbetween x = 1000 y = 1000
 
-            for (int x = 0; x < 10000; x += 500)
+            for (int x = 0; x < 15000; x += 500)
             {
-                for (int y = 0; y < 10000; y += 500)
+                for (int y = 0; y < 15000; y += 500)
                 {
                     Vector2 pos = new Vector2(x + _rand.Next(0, 501), y + _rand.Next(0, 501));                 
                     float scale = (float)_rand.NextDouble();
