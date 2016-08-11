@@ -149,7 +149,7 @@ namespace SpaceAssault.Screens
                 _asteroidField.Update(gameTime,_drone.Position);
                 
                 //Console.WriteLine(_asteroidField.Asteroids.Count);
-                Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, _drone.Position + new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
+                Global.Camera.updateCameraPositionTarget(_drone.Position + new Vector3(0, 250, 250), _drone.Position);
                 _fleet.Update(gameTime,_drone.Position);
                 /// <summary>
                 /// enemy "KI"

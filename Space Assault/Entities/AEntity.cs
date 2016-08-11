@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Entities
 {
@@ -56,17 +57,20 @@ namespace SpaceAssault.Entities
 
         public virtual void Draw()
         {
-            foreach (var mesh in Model.Meshes)
+            if (Collider3D.BoundingFrustumIntersection(this))
             {
-                foreach (BasicEffect effect in mesh.Effects)
+                foreach (var mesh in Model.Meshes)
                 {
-                    effect.EnableDefaultLighting();
-                    effect.PreferPerPixelLighting = true;
-                    _world = effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(_scale);
-                    effect.View = Global.Camera.ViewMatrix;
-                    effect.Projection = Global.Camera.ProjectionMatrix;
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.PreferPerPixelLighting = true;
+                        _world = effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(_scale);
+                        effect.View = Global.Camera.ViewMatrix;
+                        effect.Projection = Global.Camera.ProjectionMatrix;
+                    }
+                    mesh.Draw();
                 }
-                mesh.Draw();
             }
         }
     }
