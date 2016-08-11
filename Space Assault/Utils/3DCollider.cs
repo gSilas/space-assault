@@ -54,6 +54,9 @@ namespace SpaceAssault.Utils
 
         public static bool BoundingFrustumIntersection(AEntity e1)
         {
+            //var tempCamera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), new Vector3(0, 0, 0), Vector3.Up);
+            //BoundingFrustum boundingFrustum = new BoundingFrustum(tempCamera.ViewMatrix * tempCamera.ProjectionMatrix);
+
             BoundingFrustum boundingFrustum = new BoundingFrustum(Global.Camera.ViewMatrix * Global.Camera.ProjectionMatrix);
             for (var i = 0; i < e1.Model.Meshes.Count; i++)
             {

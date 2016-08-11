@@ -41,18 +41,20 @@ namespace SpaceAssault.Entities
         public override void Draw()
         {
             Gun.Draw();
-
-            foreach (var mesh in Model.Meshes)
+            if (Collider3D.BoundingFrustumIntersection(this))
             {
-                foreach (BasicEffect effect in mesh.Effects)
+                foreach (var mesh in Model.Meshes)
                 {
-                    effect.EnableDefaultLighting();
-                    effect.PreferPerPixelLighting = true;
-                    effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
-                    effect.View = Global.Camera.ViewMatrix;
-                    effect.Projection = Global.Camera.ProjectionMatrix;
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.PreferPerPixelLighting = true;
+                        effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
+                        effect.View = Global.Camera.ViewMatrix;
+                        effect.Projection = Global.Camera.ProjectionMatrix;
+                    }
+                    mesh.Draw();
                 }
-                mesh.Draw();
             }
 
         }
