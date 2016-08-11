@@ -67,7 +67,7 @@ namespace SpaceAssault.Screens
         public override void Draw(GameTime gameTime)
         {
             _station.Draw();
-            _back.Draw();
+            _back.Draw(0,new Vector3(-8500,-5000,-5000));
         }
     }
 }
