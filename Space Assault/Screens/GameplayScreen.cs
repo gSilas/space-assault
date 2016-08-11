@@ -201,12 +201,14 @@ namespace SpaceAssault.Screens
                     _drone._health -= 5;
                     _removeAsteroid.Add(ast);
                     Global.HighScorePoints -= 50;
+                    continue;
                 }
 
                 if (Collider3D.IntersectionSphere(_station, ast))
                 {
                     _removeAsteroid.Add(ast);
                     _station._health -= 10;
+                    continue;
                 }
 
                 foreach (var ast2 in _asteroidField.Asteroids)
@@ -223,7 +225,6 @@ namespace SpaceAssault.Screens
                     {
                         ship.Health -= 5;
                         _removeAsteroid.Add(ast);
-                        break;
                     }
                     foreach (var bullet in ship.GetBulletList())
                     {
@@ -245,28 +246,26 @@ namespace SpaceAssault.Screens
             /* enemy ships with drone and their bullets with drone & station */
             foreach (var ship in _fleet.EnemyShips)
             {
-                if (Collider3D.IntersectionSphere(_drone, ship))
+                if (ship.IsDead == true)
                 {
-                    //EnemyFighter.Position = new Vector3(100,10,100);
+                    _removeAEnemys.Add(ship);
+                    continue;
                 }
+
                 foreach (var bullet in ship.GetBulletList())
                 {
                     if (Collider3D.IntersectionSphere(bullet, _drone))
                     {
                         _drone._health -= ship.Gun.makeDmg;
                         _removeBullets.Add(bullet);
-                        break;
                     }
 
                     if (ship.Gun.CanDamageStation && Collider3D.IntersectionSphere(bullet, _station))
                     {
                         _station._health -= ship.Gun.makeDmg;
                         _removeBullets.Add(bullet);
-                        break;
                     }
                 }
-                if (ship.IsDead == true)
-                    _removeAEnemys.Add(ship);
             }
 
 
