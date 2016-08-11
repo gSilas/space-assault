@@ -7,19 +7,20 @@ namespace SpaceAssault.Utils
 {
     class Background
     {
-        private List<Tuple<Tile, int>> _tileList;
+        private List<Tile> _tileList;
         private Random _rand;
         private BasicEffect _basicEffect;
         private Texture2D _tex;
         private RasterizerState _rast;
+        private bool _setworld;
 
         public Background()
         {
             _basicEffect = new BasicEffect(Global.GraphicsManager.GraphicsDevice);
             _rand = new Random();
-            _tileList = new List<Tuple<Tile,int>>();
+            _tileList = new List<Tile>();
             _tex = Global.ContentManager.Load<Texture2D>("Images/star");
-
+            _setworld = false;
             //50*50 Tiles with 1 Star / Tile
             //StarPosition inbetween x = 1000 y = 1000
 
@@ -28,44 +29,50 @@ namespace SpaceAssault.Utils
                 for (int y = 0; y < 50000; y += 1000)
                 {
                     Vector2 pos = new Vector2(x + _rand.Next(0, 1001), y + _rand.Next(0, 1001));                 
-                    int height = _rand.Next(50, 90) * -100;
-                    Tile t = new Tile(pos,_tex);
-                    _tileList.Add(Tuple.Create<Tile,int>(t,height));
+                    float scale = (float)_rand.NextDouble();
+                    Tile t = new Tile(pos,_tex, scale);
+                    _tileList.Add(t);
                 }
             }
         }
 
         public void Draw()
         {
-            Global.BackgroundBatch.Begin(SpriteSortMode.Immediate, null, null, DepthStencilState.Default, RasterizerState.CullNone, _basicEffect);
-            foreach (var tileTuple in _tileList)
-            {               
-                _basicEffect.World = Matrix.CreateRotationX(MathHelper.ToRadians(90)) * Matrix.CreateWorld(new Vector3(-50000 / 2, tileTuple.Item2, -50000 / 2), Vector3.Forward, Vector3.Up) * Matrix.CreateScale(0.8f);
+            if (!_setworld)
+            {
+                _basicEffect.World = Matrix.CreateRotationX(MathHelper.ToRadians(90)) * Matrix.CreateWorld(new Vector3(-50000 / 2, -2500, -50000 / 2), Vector3.Forward, Vector3.Up);
                 _basicEffect.View = Global.Camera.ViewMatrix;
                 _basicEffect.Projection = Global.Camera.ProjectionMatrix;
                 _basicEffect.DiffuseColor = Color.LightYellow.ToVector3();
                 _basicEffect.TextureEnabled = true;
-                tileTuple.Item1.Draw(); 
+                _setworld = true;
+            }
+            Global.BackgroundBatch.Begin(SpriteSortMode.Deferred, null, null, DepthStencilState.Default, RasterizerState.CullNone, _basicEffect);
+            foreach (var tile in _tileList)
+            {                             
+                tile.Draw(); 
             }
             Global.BackgroundBatch.End();
         }
 
         internal class Tile
         {
-            private Vector2 _position;
             private Texture2D _texture;
+            private Rectangle _rect;
 
-
-            public Tile(Vector2 position, Texture2D tex)
+            public Tile(Vector2 position, Texture2D tex,float scale)
             {
-
-                _position = position;
+                
                 _texture = tex;
+                _rect = tex.Bounds;
+                _rect.Location = position.ToPoint();
+                _rect.Height = (int)(_rect.Height * scale);
+                _rect.Width = (int)(_rect.Width * scale);
             }
 
             public void Draw()
             {
-                Global.BackgroundBatch.Draw(_texture,_position , Color.White);         
+                Global.BackgroundBatch.Draw(_texture,_rect, Color.White);         
             }
         }
     }
