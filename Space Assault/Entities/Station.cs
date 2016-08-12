@@ -44,12 +44,12 @@ namespace SpaceAssault.Entities
             //Spheres = Collider3D.UpdateBoundingSphere(this);
             _angle += 0.005f;
             if (Position.Y < 1 && _up)
-                Position += new Vector3(0, 10f, 0);
+                Position += new Vector3(0, 0.002f, 0);
             else if (Position.Y < 0)
                 _up = true;
             else
             {
-                Position -= new Vector3(0, 10f, 0);
+                Position -= new Vector3(0, 0.002f, 0);
                 _up = false;
             }
             RotationMatrix = Matrix.CreateRotationY(_angle);
