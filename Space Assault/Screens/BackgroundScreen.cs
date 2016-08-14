@@ -16,7 +16,7 @@ namespace SpaceAssault.Screens
         Texture2D backgroundTexture;
         private Station _station;
         private Background _back;
-        private ISoundEngine engine;
+        private ISoundEngine _engine;
 
         // Constructor.
         public BackgroundScreen()
@@ -41,8 +41,9 @@ namespace SpaceAssault.Screens
             _station.LoadContent();
             _back = new Background();
 
-            engine = new ISoundEngine();
-            ISound music = engine.Play3D("C:/Users/hyperion/Source/Repos/space-assault/Space Assault/Content/Media/Music/SUBSET_-_05_-_Nazca.mp3", 0, 0, 0, true);
+            _engine = new ISoundEngine();
+            ISound music = _engine.Play3D("Content/Media/Music/SUBSET_-_05_-_Nazca.mp3", 0, 0, 0, true);
+
         }
 
 
@@ -50,6 +51,7 @@ namespace SpaceAssault.Screens
         public override void UnloadContent()
         {
             //Global.ContentManager.Unload();
+            _engine.Dispose();
         }
 
 
