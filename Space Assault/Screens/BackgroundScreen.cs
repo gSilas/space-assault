@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities;
 using SpaceAssault.ScreenManagers;
 using SpaceAssault.Utils;
+using IrrKlang;
 
 namespace SpaceAssault.Screens
 {
@@ -15,13 +16,13 @@ namespace SpaceAssault.Screens
         Texture2D backgroundTexture;
         private Station _station;
         private Background _back;
+        private ISoundEngine engine;
 
         // Constructor.
         public BackgroundScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-            
         }
 
         // Loads graphics content for this screen. The background texture is quite
@@ -39,6 +40,9 @@ namespace SpaceAssault.Screens
             _station = new Station(Vector3.Zero, 0);
             _station.LoadContent();
             _back = new Background();
+
+            engine = new ISoundEngine();
+            ISound music = engine.Play3D("C:/Users/hyperion/Source/Repos/space-assault/Space Assault/Content/Media/Music/SUBSET_-_05_-_Nazca.mp3", 0, 0, 0, true);
         }
 
 
@@ -69,5 +73,6 @@ namespace SpaceAssault.Screens
             _station.Draw();
             _back.Draw(0,new Vector3(-9000,-8000,-5000));
         }
+
     }
 }
