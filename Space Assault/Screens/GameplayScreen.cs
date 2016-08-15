@@ -7,6 +7,7 @@ using SpaceAssault.Entities;
 using SpaceAssault.Entities.Weapon;
 using SpaceAssault.ScreenManagers;
 using SpaceAssault.Utils;
+using IrrKlang;
 
 namespace SpaceAssault.Screens
 {
@@ -32,6 +33,10 @@ namespace SpaceAssault.Screens
         private int _deathCounter = 0;
         private int _stationHeight = 80;
         public static bool _dronepdate = true;
+
+        //Sound
+        private ISoundEngine _engine;
+        private ISound _explosionSound;
 
         // Constructor
         public GameplayScreen()
@@ -59,6 +64,8 @@ namespace SpaceAssault.Screens
         public override void LoadContent()
         {
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
+
+            _engine = new ISoundEngine();
 
             gameFont = Global.ContentManager.Load<SpriteFont>("Fonts/gamefont");
             _station.LoadContent();
@@ -150,6 +157,7 @@ namespace SpaceAssault.Screens
                             _removeAsteroid.Add(ast);
                             _removeBullets.Add(bullet);
                             Global.HighScorePoints += 50;
+                            PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                             break;
                         }
                     }
@@ -160,6 +168,7 @@ namespace SpaceAssault.Screens
                             ship.Health -= _drone.Gun.makeDmg;
                             _removeBullets.Add(bullet);
                             Global.HighScorePoints += 20;
+                            PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
                             break;
                         }
                     }
@@ -179,6 +188,7 @@ namespace SpaceAssault.Screens
                         _drone._health -= 5;
                         _removeAsteroid.Add(ast);
                         Global.HighScorePoints -= 50;
+                        PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                         continue;
                     }
 
@@ -309,6 +319,15 @@ namespace SpaceAssault.Screens
                 float alpha = MathHelper.Lerp(1f - TransitionAlpha, 1f, _pauseAlpha / 2);
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
+        }
+
+        protected void PlayExplosionSound(Vector3D pos)
+        {
+            var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
+            _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
+            _explosionSound = _engine.Play3D("Content/Media/Music/Explosion.wav", pos, false, true, StreamMode.AutoDetect, true);
+            _explosionSound.Volume = 1f;
+            _explosionSound.Paused = false;
         }
 
     }
