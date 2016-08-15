@@ -5,11 +5,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Screens;
 using SpaceAssault.Utils;
+using IrrKlang;
 
 namespace SpaceAssault.Entities.Weapon
 {
     class RailGun : AWeapon
     {
+        private ISoundEngine _engine;
+        private ISound _shootSound;
         public override void Initialize()
         {
             ListOfBullets = new List<Bullet>();
@@ -25,12 +28,17 @@ namespace SpaceAssault.Entities.Weapon
         {
             BulletModel = Global.ContentManager.Load<Model>("Models/laser");
             BulletModel2 = Global.ContentManager.Load<Model>("Models/laser2");
+            _engine = new ISoundEngine();
         }
 
         public override bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
         {
             if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
             {
+                //_engine.SetListenerPosition(new Vector3D(Global.Camera.Position.X, Global.Camera.Position.Y, Global.Camera.Position.Z), new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z));
+                _shootSound = _engine.Play3D("Content/Media/Music/Laser_Shoot.wav", new Vector3D(0, 0, 0), false, false, StreamMode.AutoDetect, true);
+                _shootSound.Volume = 0.5f;
+
                 if (GameplayScreen._dronepdate)
                     ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
                 else
@@ -45,6 +53,10 @@ namespace SpaceAssault.Entities.Weapon
         {
             if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
             {
+                //_engine.SetListenerPosition(new Vector3D(Global.Camera.Position.X, Global.Camera.Position.Y, Global.Camera.Position.Z), new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z));
+                _shootSound = _engine.Play3D("Content/Media/Music/Laser_Shoot.wav", new Vector3D(0, 0, 0), false, false, StreamMode.AutoDetect, true);
+                _shootSound.Volume = 0.5f;
+
                 ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
                 LastShotTime = GlobalTimeSpan;
                 return true;
