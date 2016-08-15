@@ -137,12 +137,14 @@ namespace SpaceAssault.Entities
                 //forward
                 if (_moveSpeedModifier < _moveSpeedForward) _moveSpeedModifier += 0.04f;
                 else _moveSpeedModifier = _moveSpeedForward;
+                //Position -= new Vector3(0, 0, 1) * _moveSpeedModifier;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 //backward
                 if (_moveSpeedModifier > _moveSpeedBackward) _moveSpeedModifier -= 0.04f;
                 else _moveSpeedModifier = _moveSpeedBackward;
+                //Position -= new Vector3(0, 0, 1) * _moveSpeedModifier;
             }
             else if (_moveSpeedModifier > 0.02f)
             {
@@ -158,7 +160,7 @@ namespace SpaceAssault.Entities
             {
                 _moveSpeedModifier = 0.0f;
             }
-            Position -= RotationMatrix.Forward * _moveSpeedModifier;
+            Position -= new Vector3(0,0,1) * _moveSpeedModifier;
 
             /// <summary>
             /// left & right movement
@@ -189,7 +191,7 @@ namespace SpaceAssault.Entities
             {
                 _moveSpeedModifierSideways = 0.0f;
             }
-            Position -= RotationMatrix.Left * _moveSpeedModifierSideways;
+            Position -= new Vector3(1,0,0) * _moveSpeedModifierSideways;
 
 
             /// <summary>
