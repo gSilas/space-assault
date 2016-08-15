@@ -85,6 +85,7 @@
     <Compile Include="Entities\Station.cs" />
     <Compile Include="Entities\Weapon\AWeapon.cs" />
     <Compile Include="Entities\Weapon\Bullet.cs" />
+    <Compile Include="Entities\Weapon\EnemyLaser.cs" />
     <Compile Include="Entities\Weapon\PhotonBomb.cs" />
     <Compile Include="Entities\Weapon\Railgun.cs" />
     <Compile Include="Global.cs" />
@@ -147,6 +148,7 @@
     <Content Include="Content\Media\Music\Laser_Shoot.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Media\Music\Laser_Shoot_try.wav" />
     <Content Include="Content\Media\Music\SUBSET_-_05_-_Nazca.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -335,3 +335,9 @@
 /processor:PassThroughProcessor
 /build:Media/Music/SUBSET_-_05_-_Nazca.mp3
 
+#begin Media/Music/Laser_Shoot_try.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Media/Music/Laser_Shoot_try.wav
+

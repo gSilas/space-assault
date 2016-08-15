@@ -18,11 +18,11 @@ namespace SpaceAssault.Entities
         public override void Initialize()
         {
             RotationMatrix = Matrix.Identity;
-            MoveSpeedForward = 0.5f;
+            MoveSpeedForward = 1.2f;
             TurnSpeed = 5.0f;
             Health = 30;
             Armor = 100;
-            Gun = new RailGun();
+            Gun = new EnemyLaser();
             Gun.Initialize();
         }
 
@@ -52,7 +52,7 @@ namespace SpaceAssault.Entities
 
         public override void Shoot(Vector3 direction)
         {
-            Gun.Shoot2(Position, RotationMatrix, 6f);
+            Gun.Shoot(Position, RotationMatrix, 3f);
         }
 
         public override void Intelligence(Vector3 targedPosition)
@@ -62,7 +62,7 @@ namespace SpaceAssault.Entities
 
             if (distanceToTarged < 150)
             {
-                //Shoot(targedPosition);
+                Shoot(targedPosition);
             }
         }
 

@@ -194,6 +194,7 @@ namespace SpaceAssault.Screens
 
                     if (Collider3D.IntersectionSphere(_station, ast))
                     {
+                        ast.IsDead = true;
                         _removeAsteroid.Add(ast);
                         _station._health -= 10;
                         continue;
@@ -203,6 +204,7 @@ namespace SpaceAssault.Screens
                     {
                         if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
                         {
+                            ast.IsDead = true;
                             _removeAsteroid.Add(ast);
                             break;
                         }

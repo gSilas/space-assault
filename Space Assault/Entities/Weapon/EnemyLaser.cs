@@ -8,7 +8,7 @@ using IrrKlang;
 
 namespace SpaceAssault.Entities.Weapon
 {
-    class RailGun : AWeapon
+    class EnemyLaser : AWeapon
     {
         private ISoundEngine _engine;
         private ISound _shootSound;
@@ -18,11 +18,11 @@ namespace SpaceAssault.Entities.Weapon
             RemoveListOfBullets = new List<Bullet>();
             GlobalTimeSpan = TimeSpan.FromSeconds(0);
             LastShotTime = TimeSpan.FromSeconds(0);
-            CoolDownTime = TimeSpan.FromMilliseconds(200d);
+            CoolDownTime = TimeSpan.FromMilliseconds(600d);
             makeDmg = 10;
             DmgStation = false;
         }
-        
+
         public override void LoadContent()
         {
             BulletModel = Global.ContentManager.Load<Model>("Models/laser");

@@ -29,7 +29,7 @@ namespace SpaceAssault.Entities.Weapon
 
         //Schusslogik für einzelne Waffen
         public abstract bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed);
-        public abstract bool Shoot2(Vector3 position, Matrix droneRotateMatrix, float travelspeed);
+        //public abstract bool Shoot2(Vector3 position, Matrix droneRotateMatrix, float travelspeed);
 
         public void Update(GameTime gameTime)
         {
