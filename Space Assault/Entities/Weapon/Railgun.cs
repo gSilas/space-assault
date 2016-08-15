@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Screens;
@@ -35,9 +34,11 @@ namespace SpaceAssault.Entities.Weapon
         {
             if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
             {
-                //_engine.SetListenerPosition(new Vector3D(Global.Camera.Position.X, Global.Camera.Position.Y, Global.Camera.Position.Z), new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z));
-                _shootSound = _engine.Play3D("Content/Media/Music/Laser_Shoot.wav", new Vector3D(0, 0, 0), false, false, StreamMode.AutoDetect, true);
+                var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
+                _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
+                _shootSound = _engine.Play3D("Content/Media/Music/Laser_Shoot.wav", curListenerPos + new Vector3D(0, 15, 0), false, true, StreamMode.AutoDetect, true);
                 _shootSound.Volume = 0.5f;
+                _shootSound.Paused = false;
 
                 if (GameplayScreen._dronepdate)
                     ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
@@ -53,7 +54,7 @@ namespace SpaceAssault.Entities.Weapon
         {
             if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
             {
-                //_engine.SetListenerPosition(new Vector3D(Global.Camera.Position.X, Global.Camera.Position.Y, Global.Camera.Position.Z), new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z));
+                _engine.SetListenerPosition(new Vector3D(Global.Camera.Position.X, Global.Camera.Position.Y, Global.Camera.Position.Z), new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z));
                 _shootSound = _engine.Play3D("Content/Media/Music/Laser_Shoot.wav", new Vector3D(0, 0, 0), false, false, StreamMode.AutoDetect, true);
                 _shootSound.Volume = 0.5f;
 
