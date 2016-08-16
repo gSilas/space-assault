@@ -155,7 +155,7 @@ namespace SpaceAssault.Screens
             _fleet.LoadContent();
             _ui.LoadContent();
 
-            _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Music/Explosion.wav");
+            _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Music/Explosion.wav", StreamMode.AutoDetect, true);
         }
 
         //#################################

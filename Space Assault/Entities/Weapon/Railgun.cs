@@ -29,7 +29,7 @@ namespace SpaceAssault.Entities.Weapon
             BulletModel = Global.ContentManager.Load<Model>("Models/laser");
             BulletModel2 = Global.ContentManager.Load<Model>("Models/laser2");
             _engine = new ISoundEngine();
-            _shootSource = _engine.AddSoundSourceFromFile("Content/Media/Music/Laser_Shoot.wav");
+            _shootSource = _engine.AddSoundSourceFromFile("Content/Media/Music/Laser_Shoot.wav", StreamMode.AutoDetect, true);
         }
 
         public override bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
