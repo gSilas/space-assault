@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities.Weapon;
@@ -35,7 +36,6 @@ namespace SpaceAssault.Entities
         public override void Update(GameTime gameTime)
         {
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            Gun.Update(gameTime);
             if (Health <= 0) IsDead = true;
 
             //Werden Besser jede Minute
@@ -50,19 +50,14 @@ namespace SpaceAssault.Entities
             //TODO: health, armor update
         }
 
-        public override void Shoot(Vector3 direction)
+        public override void Intelligence(Vector3 targetPosition, ref List<Bullet> bulletList)
         {
-            Gun.Shoot(Position, RotationMatrix, 3f);
-        }
-
-        public override void Intelligence(Vector3 targedPosition)
-        {
-            double distanceToTarged = Math.Sqrt(Math.Pow(Position.X - targedPosition.X, 2) + Math.Pow(Position.Z - targedPosition.Z, 2));
-            FlyVector(Position - targedPosition);
+            double distanceToTarged = Math.Sqrt(Math.Pow(Position.X - targetPosition.X, 2) + Math.Pow(Position.Z - targetPosition.Z, 2));
+            FlyVector(Position - targetPosition);
 
             if (distanceToTarged < 150)
             {
-                Shoot(targedPosition);
+                Gun.Shoot(Position, RotationMatrix, 3f, ref bulletList);
             }
         }
 

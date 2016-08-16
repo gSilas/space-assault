@@ -22,53 +22,55 @@ namespace SpaceAssault.Entities
         private float _moveSpeedModifier;
         private float _moveSpeedModifierSideways;
 
-        public int MaxHealth;
-        public int Health;
-        public int Armor;
+        public int _maxHealth;
+        public int _health;
+        public int _armor;
+        public int _makeDmg;
 
         //shieldLogic
-        public int MaxShield;
-       public int Shield;
+        public int _maxShield;
+        public int _shield;
         private int _shieldpast;
         private TimeSpan _shieldrefreshdelay;
-        private bool _wasDamaged=false;
+        private bool _wasDamaged = false;
 
 
-        public int _updatePoints;
-        public int _totalUpdates;
         private bool _alternatingGunLogic = false;
         private bool _isNotDead;
 
-      
+
         public AWeapon Gun;
 
         //used for scaling all speed values beside turnSpeed;
         private float _speedScaling = 2f;
 
-        public Drone(Vector3 position)
+        public Drone(Vector3 position, int makeDmg, int maxHealth, int armor, int maxShield)
         {
             _spawnPos = position;
             Position = position;
+            _makeDmg = makeDmg;
+            _maxHealth = maxHealth;
+            _armor = armor;
+            _maxShield = maxShield;
+
         }
 
         public override void Initialize()
         {
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 10.0f;
-            _moveSpeedForward = 1.0f*_speedScaling;
+            _moveSpeedForward = 1.0f * _speedScaling;
             _moveSpeedBackward = -1.0f * _speedScaling;
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
-            MaxShield = 100;
-            _shieldpast = MaxShield;
-            Shield = MaxShield;
-
-            MaxHealth = 100;
-            Health = MaxHealth;
-            Armor = 1;
+            _shieldpast = _maxShield;
+            _shield = _maxShield;
+            _health = _maxHealth;
             _isNotDead = true;
+
             Gun = new RailGun();
             Gun.Initialize();
+            Gun.makeDmg = _makeDmg;
         }
 
         public void Reset()
@@ -79,16 +81,13 @@ namespace SpaceAssault.Entities
             _moveSpeedBackward = -1.0f * _speedScaling;
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
-            Health = MaxHealth;
-            Shield = MaxShield;
-          
-            
-            
+            _health = _maxHealth;
+            _shield = _maxShield;
+
             _isNotDead = true;
             _moveSpeedModifier = 0;
             _moveSpeedModifierSideways = 0;
             Position = _spawnPos;
-
         }
 
         public override void LoadContent()
@@ -103,26 +102,19 @@ namespace SpaceAssault.Entities
         {
             //Console.WriteLine("Test:"+MaxHealth+" "+Health+" "+Armor);
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            Gun.Update(gameTime);
-            if (IsNotDead)
-            {
-                this.HandleInput();
-            }
-           
+
             if (gameTime.TotalGameTime > (_shieldrefreshdelay.Add(TimeSpan.FromSeconds(3))))
             {
-            
-                if (Shield == _shieldpast)
+
+                if (_shield == _shieldpast)
                     _wasDamaged = false;
-                _shieldpast = Shield;
+                _shieldpast = _shield;
                 _shieldrefreshdelay = gameTime.TotalGameTime;
             }
-            if (_wasDamaged == false&& Shield<MaxShield)
-                Shield += 1;
+            if (_wasDamaged == false && _shield < _maxShield)
+                _shield += 1;
 
-            if (Health <= 0) IsNotDead = false;
-
-           
+            if (_health <= 0) IsNotDead = false;
         }
 
         public bool IsNotDead
@@ -134,15 +126,15 @@ namespace SpaceAssault.Entities
         public void getHit(int howMuch)
         {
             _wasDamaged = true;
-            if (Shield >= 0)
-                Shield -= howMuch;
+            if (_shield >= 0)
+                _shield -= howMuch;
             else
             {
-                if (howMuch>Armor)
-                    Health -= (howMuch-Armor);
+                if (howMuch > _armor)
+                    _health -= (howMuch - _armor);
             }
         }
-        private void HandleInput()
+        public void HandleInput(ref List<Bullet> bulletList)
         {
             /// <summary>
             /// handling rotation of the drone
@@ -206,7 +198,7 @@ namespace SpaceAssault.Entities
             {
                 _moveSpeedModifier = 0.0f;
             }
-            Position -= new Vector3(0,0,1) * _moveSpeedModifier;
+            Position -= new Vector3(0, 0, 1) * _moveSpeedModifier;
 
             /// <summary>
             /// left & right movement
@@ -237,37 +229,28 @@ namespace SpaceAssault.Entities
             {
                 _moveSpeedModifierSideways = 0.0f;
             }
-            Position -= new Vector3(1,0,0) * _moveSpeedModifierSideways;
-
+            Position -= new Vector3(1, 0, 0) * _moveSpeedModifierSideways;
 
             /// <summary>
             /// shooting the gun
             /// </summary>
-
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if (_alternatingGunLogic && Gun.Shoot(Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f))
+                if (_alternatingGunLogic && Gun.Shoot(Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f, ref bulletList))
                 {
                     _alternatingGunLogic = false;
                 }
-                else if (Gun.Shoot(Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f))
+                else if (Gun.Shoot(Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f, ref bulletList))
                 {
                     _alternatingGunLogic = true;
                 }
             }
         }
 
-        public List<Bullet> GetBulletList()
-        {
-            return Gun.ListOfBullets;
-        }
-
         public override void Draw()
         {
             if (IsNotDead)
             {
-                Gun.Draw();
-
                 foreach (var mesh in Model.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)
