@@ -40,6 +40,7 @@ namespace SpaceAssault.Screens
 
             Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.PreferredBackBufferHeight - 80), new Point(300, 60)), Color.Red, _drone.MaxHealth));
             Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.PreferredBackBufferHeight - 90), new Point(300, 60)), Color.Blue, _drone.MaxShield));
+            Bars.Add(new Bar(new Rectangle(new Point(Global.GraphicsManager.PreferredBackBufferWidth-400, Global.GraphicsManager.PreferredBackBufferHeight - 750), new Point(300, 60)), Color.Green, 10000));
 
             foreach (var bar in Bars)
             {
@@ -65,6 +66,7 @@ namespace SpaceAssault.Screens
 
             Bars[0].Draw(_drone.Health, _drone.MaxHealth);
             Bars[1].Draw(_drone.Shield, _drone.MaxShield);
+            Bars[2].Draw(_station._health, 10000);
 
         }
 
