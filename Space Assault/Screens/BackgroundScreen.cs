@@ -21,7 +21,11 @@ namespace SpaceAssault.Screens
         private ISoundEngine _engine;
         float posOnCircle = 0;
         private Frame _frame;
-        private Dialog _dialog;
+        private Dialog _welcomedialog;
+        private Dialog _pilotdialog;
+        private Random _rand;
+        private int _id;
+        private int _id2;
 
         // Constructor.
         public BackgroundScreen()
@@ -37,21 +41,34 @@ namespace SpaceAssault.Screens
         // would remain loaded forever.
         public override void LoadContent()
         {
+            //Random IDs
+            _rand = new Random();
+            _id = _rand.Next(10000, 99999);
+            _id2 = _rand.Next(10000, 99999);
 
-            backgroundTexture = Global.ContentManager.Load<Texture2D>("Images/background");
-            _frame = new Frame();
-            _dialog = new Dialog(100,600,128,1024);
+            //Camera
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 40, 150) * 1.7f, new Vector3(-100, 0, 0), Vector3.Up);
 
+            //Station
             _station = new Station(Vector3.Zero, 0);
             _station.LoadContent();
-            _back = new Background();
+
+            //Sound
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
             _engine.SetListenerPosition(new Vector3D(0,0,0), new Vector3D(0, 0, 1));
             _music = _engine.Play3D("Content/Media/Music/SUBSET_-_05_-_Nazca.mp3", new Vector3D(0, 0, 0), true, false, StreamMode.AutoDetect, true);
             _music.Volume = 1.0f;
+
+            //Dialogs + Background + Frame
+            _welcomedialog = new Dialog(100, 600, 128, 832);
+            _pilotdialog = new Dialog(800, 50, 128, 320);
+            _pilotdialog.LoadContent();
+            _welcomedialog.LoadContent();
+
+            _frame = new Frame();
             _frame.LoadContent();
-            _dialog.LoadContent();
+
+            _back = new Background();
         }
 
 
@@ -87,7 +104,8 @@ namespace SpaceAssault.Screens
         {
             _station.Draw();
             _back.Draw(0, new Vector3(-9000, -8000, -5000));
-            _dialog.Draw("Welcome pilot! " + gameTime.TotalGameTime.TotalSeconds.ToString().Remove(5) + " seconds without accidents! :)");
+            _welcomedialog.Draw("Welcome pilot! " + gameTime.TotalGameTime.TotalSeconds.ToString().Remove(5) + " seconds without accidents! :)");
+            _pilotdialog.Draw("Pilot ID:   "+ _id +  "\nStation ID: " + _id2);
             _frame.Draw();
             
             
