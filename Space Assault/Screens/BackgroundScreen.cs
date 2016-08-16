@@ -19,7 +19,7 @@ namespace SpaceAssault.Screens
         private ISound _music;
         private ISoundEngine _engine;
         float posOnCircle = 0;
-
+        private Frame _frame;
 
         // Constructor.
         public BackgroundScreen()
@@ -37,7 +37,7 @@ namespace SpaceAssault.Screens
         {
 
             backgroundTexture = Global.ContentManager.Load<Texture2D>("Images/background");
-
+            _frame = new Frame();
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 40, 150) * 1.7f, new Vector3(-100, 0, 0), Vector3.Up);
 
             _station = new Station(Vector3.Zero, 0);
@@ -47,7 +47,7 @@ namespace SpaceAssault.Screens
             _engine.SetListenerPosition(new Vector3D(0,0,0), new Vector3D(0, 0, 1));
             _music = _engine.Play3D("Content/Media/Music/SUBSET_-_05_-_Nazca.mp3", new Vector3D(0, 0, 0), true, false, StreamMode.AutoDetect, true);
             _music.Volume = 1.0f;
-
+            _frame.LoadContent();
         }
 
 
@@ -82,6 +82,7 @@ namespace SpaceAssault.Screens
         public override void Draw(GameTime gameTime)
         {
             _station.Draw();
+            _frame.Draw();
             _back.Draw(0, new Vector3(-9000, -8000, -5000));
         }
 
