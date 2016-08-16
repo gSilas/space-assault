@@ -31,10 +31,17 @@ namespace SpaceAssault.Entities.Weapon
         {
             if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
             {
-                if (GameplayScreen._dronepdate)
-                    ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
-                else
-                    ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel2));
+                switch (ShopScreen._droneDamageLevel)
+                {
+                    case 1:
+                        ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
+                        break;
+                    case 2:
+                        ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel2));
+                        break;
+                    default:
+                        break;
+                }
                 LastShotTime = GlobalTimeSpan;
                 return true;
             }

@@ -74,7 +74,8 @@ namespace SpaceAssault.ScreenManagers
 
         public bool IsLeftMouseButtonPressed()
         {
-            return (CurrentMouseState.LeftButton == ButtonState.Pressed && LastMouseState.LeftButton != ButtonState.Pressed);
+            //&& LastMouseState.LeftButton != ButtonState.Pressed
+            return (CurrentMouseState.LeftButton == ButtonState.Pressed );
         }
     }
 }

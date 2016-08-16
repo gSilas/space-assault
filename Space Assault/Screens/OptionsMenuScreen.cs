@@ -22,7 +22,7 @@ namespace SpaceAssault.Screens
         static enumMenu currentEnum = enumMenu.enum1;
         static string[] languages = { "English", "Deutsch" };
         static int currentLanguage = 0;
-        static bool fullscreen = true;
+        static bool fullscreen = false;
         static int num = 42;
 
         // Constructor.
@@ -45,10 +45,10 @@ namespace SpaceAssault.Screens
             back.Selected += OnCancel;
 
             // Add entries to the menu.
-            MenuEntries.Add(enumMenuEntry);
-            MenuEntries.Add(languageMenuEntry);
+            //MenuEntries.Add(enumMenuEntry);
+            //MenuEntries.Add(languageMenuEntry);
             MenuEntries.Add(fullscreenMenuEntry);
-            MenuEntries.Add(staticNumberMenuEntry);
+            //MenuEntries.Add(staticNumberMenuEntry);
             MenuEntries.Add(back);
         }
 
@@ -78,7 +78,6 @@ namespace SpaceAssault.Screens
         void LanguageMenuEntrySelected(object sender, EventArgs e)
         {
             currentLanguage = (currentLanguage + 1) % languages.Length;
-
             SetMenuEntryText();
         }
 
@@ -87,8 +86,8 @@ namespace SpaceAssault.Screens
         void fullscreenMenuEntrySelected(object sender, EventArgs e)
         {
             fullscreen = !fullscreen;
-
             SetMenuEntryText();
+            Global.GraphicsManager.ToggleFullScreen();
         }
 
 
@@ -96,7 +95,6 @@ namespace SpaceAssault.Screens
         void staticNumberMenuEntrySelected(object sender, EventArgs e)
         {
             num++;
-
             SetMenuEntryText();
         }
     }

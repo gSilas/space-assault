@@ -23,8 +23,9 @@ namespace SpaceAssault.Entities
         private float _moveSpeedModifierSideways;
         public int _health;
         private int _armor;
+        public int _updatePoints;
+        public int _totalUpdates;
         private bool _alternatingGunLogic = false;
-
         private bool _isNotDead;
 
         public AWeapon Gun;

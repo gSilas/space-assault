@@ -8,19 +8,25 @@ using SpaceAssault.Entities.Weapon;
 using SpaceAssault.ScreenManagers;
 using SpaceAssault.Utils;
 using IrrKlang;
+using SpaceAssault.Utils.Particle;
+using SpaceAssault.Utils.Particle.Settings;
+using System.ComponentModel;
 
 namespace SpaceAssault.Screens
 {
     class GameplayScreen : GameScreen
     {
+        //#################################
+        // Variables
+        //#################################
         SpriteFont gameFont;
 
-        //used for faiding to black
+        // Fade to black
         float _deadDroneAlpha;
         float _actualDeadDroneAlpha;
         float _pauseAlpha;
 
-        // gameplay shit
+        // Gameplay
         private Station _station;
         private AsteroidBuilder _asteroidField;
         private FleetBuilder _fleet;
@@ -31,14 +37,27 @@ namespace SpaceAssault.Screens
         private InGameOverlay _ui;
         private Background _back;
         private int _deathCounter = 0;
-        private int _stationHeight = 80;
-        public static bool _dronepdate = true;
+        public static int _stationHeight = 80;
 
-        //Sound
+        // Sound
         private ISoundEngine _engine;
         private ISound _explosionSound;
 
+        // Particle
+        ParticleSystem explosionParticles;
+        ParticleSystem explosionSmokeParticles;
+        ParticleSystem projectileTrailParticles;
+        ParticleSystem smokePlumeParticles;
+
+        List<Projectile> projectiles = new List<Projectile>();
+        TimeSpan timeToNextProjectile = TimeSpan.Zero;
+
+        Model grid;
+
+
+        //#################################
         // Constructor
+        //#################################
         public GameplayScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
@@ -52,20 +71,82 @@ namespace SpaceAssault.Screens
             _station.Initialize();
             _asteroidField = new AsteroidBuilder();
             _fleet = new FleetBuilder();
-            _ui = new InGameOverlay(_drone._health, _station._health, (Vector3.Distance(_station.Position, _drone.Position) - _stationHeight));
+            _ui = new InGameOverlay(_drone, _station);
 
             //remove lists for collisions etc 
             _removeAsteroid = new List<Asteroid>();
             _removeBullets = new List<Bullet>();
             _removeAEnemys = new List<AEnemys>();
+
+            // Particle
+            explosionParticles = new ExplosionParticleSystem();
+            explosionSmokeParticles = new ExplosionSmokeParticleSystem();
+            projectileTrailParticles = new ProjectileTrailParticleSystem();
+            smokePlumeParticles = new SmokePlumeParticleSystem();
+
         }
 
-        // Load graphics content for the game.
+        //#################################
+        // HelperClass Explosion (Particle)
+        //#################################
+        void UpdateExplosions(GameTime gameTime)
+        {
+            timeToNextProjectile -= gameTime.ElapsedGameTime;
+
+            if (timeToNextProjectile <= TimeSpan.Zero)
+            {
+                // Create a new projectile once per second. The real work of moving
+                // and creating particles is handled inside the Projectile class.
+                projectiles.Add(new Projectile(explosionParticles,
+                                               explosionSmokeParticles,
+                                               projectileTrailParticles));
+
+                timeToNextProjectile += TimeSpan.FromSeconds(1);
+            }
+        }
+
+        //#################################
+        // HelperClass Projectile (Particle)
+        //#################################
+        void UpdateProjectiles(GameTime gameTime)
+        {
+            int i = 0;
+
+            while (i < projectiles.Count)
+            {
+                if (!projectiles[i].Update(gameTime))
+                {
+                    // Remove projectiles at the end of their life.
+                    projectiles.RemoveAt(i);
+                }
+                else
+                {
+                    // Advance to the next projectile.
+                    i++;
+                }
+            }
+        }
+
+        //#################################
+        // HelperClass Smoke (Particle)
+        //#################################
+        void UpdateSmokePlume()
+        {
+            // This is trivial: we just create one new smoke particle per frame.
+            smokePlumeParticles.AddParticle(Vector3.Zero, Vector3.Zero);
+        }
+
+        //#################################
+        // LoadContent
+        //#################################
         public override void LoadContent()
         {
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
 
             _engine = new ISoundEngine();
+
+            // Particle
+            grid = Global.ContentManager.Load<Model>("Models/grid");
 
             gameFont = Global.ContentManager.Load<SpriteFont>("Fonts/gamefont");
             _station.LoadContent();
@@ -75,17 +156,22 @@ namespace SpaceAssault.Screens
             _ui.LoadContent();
         }
 
-        // Unload graphics content used by the game.
+        //#################################
+        // UnloadContent
+        //#################################
         public override void UnloadContent()
         {
             //Global.ContentManager.Unload();
         }
 
-        // updating
+        //#################################
+        // Update
+        //#################################
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
+
 
             // Gradually fade in or out depending on whether we are covered by the pause screen.
             if (coveredByOtherScreen)
@@ -100,10 +186,21 @@ namespace SpaceAssault.Screens
                 // calling update of objects where necessary
                 _station.Update(gameTime);
                 _drone.Update(gameTime);
-                _ui.Update(_drone._health, _station._health, (Vector3.Distance(_station.Position, _drone.Position) - _stationHeight));
                 _asteroidField.Update(gameTime, _drone.Position);
                 Global.Camera.updateCameraPositionTarget(_drone.Position + new Vector3(0, 250, 250), _drone.Position);
                 _fleet.Update(gameTime, _drone.Position);
+
+                // Particle
+                //UpdateExplosions(gameTime);
+                UpdateSmokePlume();
+                UpdateProjectiles(gameTime);
+
+
+                //explosionParticles.Update(gameTime);
+                //explosionSmokeParticles.Update(gameTime);
+                smokePlumeParticles.Update(gameTime);
+                projectileTrailParticles.Update(gameTime);
+                
 
                 // if station dies go back to MainMenu
                 // TODO: change to EndScreen and HighScore list)
@@ -111,14 +208,10 @@ namespace SpaceAssault.Screens
                     LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen());
 
                 //upgrading the health of drone and _droneupdate is used by other object to make the game harder
-                if (_dronepdate)
+                if (Global.HighScorePoints > 1000 * (_drone._totalUpdates + 1))
                 {
-                    if (ShopScreen._health == 2)
-                    {
-                        _drone._health = 200;
-                        _dronepdate = false;
-                    }
-
+                    _drone._updatePoints++;
+                    _drone._totalUpdates++;
                 }
 
                 // fading out/in when drone is dead & alive again
@@ -271,7 +364,9 @@ namespace SpaceAssault.Screens
             }
         }
 
-        // this will only be called when the gameplay screen is active (called in ScreenManager)
+        //#################################
+        // Handle input
+        //#################################
         public override void HandleInput(InputState input)
         {
             if (input == null)
@@ -284,7 +379,7 @@ namespace SpaceAssault.Screens
             if (input.IsNewKeyPress(Keys.B))
             {
                 if ((Vector3.Distance(_station.Position, _drone.Position) - _stationHeight) < 150 && Global.HighScorePoints > 1000)
-                    ScreenManager.AddScreen(new ShopScreen());
+                    ScreenManager.AddScreen(new ShopScreen(_drone));
             }
 
             //player hits ESC it pauses the game
@@ -294,10 +389,24 @@ namespace SpaceAssault.Screens
             }
         }
 
-        // Draws the gameplay screen
+        //#################################
+        // Grid Helper
+        //#################################
+        void DrawGrid(Matrix view, Matrix projection)
+        {
+            Global.GraphicsManager.GraphicsDevice.BlendState = BlendState.Opaque;
+            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            Global.GraphicsManager.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+
+            grid.Draw(Matrix.Identity, view, projection);
+        }
+
+        //#################################
+        // Draw
+        //#################################
         public override void Draw(GameTime gameTime)
         {
-            Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0);
+            Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
 
             // calling draw of objects where necessary
             _back.Draw(90, new Vector3(-5000, -2500, -5000));
@@ -306,6 +415,21 @@ namespace SpaceAssault.Screens
             _asteroidField.Draw();
             _fleet.Draw();
             _ui.Draw();
+
+            //DrawGrid(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+
+
+            explosionParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+            explosionSmokeParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+            projectileTrailParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+
+            explosionParticles.Draw(gameTime);
+            explosionSmokeParticles.Draw(gameTime);
+            projectileTrailParticles.Draw(gameTime);
+
+            smokePlumeParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+            smokePlumeParticles.Draw(gameTime);
+
 
             //if drone is dead fade to black
             if (_deadDroneAlpha > 0)
@@ -323,6 +447,9 @@ namespace SpaceAssault.Screens
             }
         }
 
+        //#################################
+        // Sound
+        //#################################
         protected void PlayExplosionSound(Vector3D pos)
         {
             var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
