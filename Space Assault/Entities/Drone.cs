@@ -78,6 +78,7 @@ namespace SpaceAssault.Entities
             _health = 100;
             _shield = 100;
             _armor = 1;
+            
             _isNotDead = true;
             _moveSpeedModifier = 0;
             _moveSpeedModifierSideways = 0;
