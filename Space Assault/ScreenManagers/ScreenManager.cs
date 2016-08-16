@@ -37,6 +37,7 @@ namespace SpaceAssault.ScreenManagers
             // Create a new SpriteBatch, which can be used to draw textures.
             Global.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Global.BackgroundBatch = new SpriteBatch(GraphicsDevice);
+            Global.UIBatch = new SpriteBatch(GraphicsDevice);
 
             Global.Font = Global.ContentManager.Load<SpriteFont>("Fonts/menufont");
             _blankTexture = Global.ContentManager.Load<Texture2D>("Images/blank");

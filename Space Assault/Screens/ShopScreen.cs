@@ -86,6 +86,7 @@ namespace SpaceAssault.Screens
             if (this._drone._updatePoints > 0)
             {
                 _droneDamageLevel++;
+                this._drone.Gun.makeDmg += 10;
                 this._drone._updatePoints--;
                 SetMenuEntryText();
             }
@@ -96,7 +97,7 @@ namespace SpaceAssault.Screens
             if (this._drone._updatePoints > 0)
             {
                 _droneHealthLevel++;
-                this._drone._health += 100;
+                this._drone.MaxHealth += 100;
                 this._drone._updatePoints--;
                 SetMenuEntryText();
             }
@@ -107,7 +108,7 @@ namespace SpaceAssault.Screens
             if (this._drone._updatePoints > 0)
             {
                 _droneArmorLevel++;
-                //this._drone._armor+=1;
+                this._drone.Armor+=1;
                 this._drone._updatePoints--;
                 SetMenuEntryText();
             }
@@ -117,7 +118,7 @@ namespace SpaceAssault.Screens
             if (this._drone._updatePoints > 0)
             {
                 _droneArmorLevel++;
-                //this._drone._maxshield+=50;
+                this._drone.MaxShield+=50;
                 this._drone._updatePoints--;
                 SetMenuEntryText();
             }

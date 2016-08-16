@@ -10,7 +10,6 @@ using SpaceAssault.Utils;
 using IrrKlang;
 using SpaceAssault.Utils.Particle;
 using SpaceAssault.Utils.Particle.Settings;
-using System.ComponentModel;
 
 namespace SpaceAssault.Screens
 {
@@ -38,7 +37,7 @@ namespace SpaceAssault.Screens
         private Background _back;
         private int _deathCounter = 0;
         public static int _stationHeight = 80;
-
+        private Frame _frame;
         // Sound
         private ISoundSource _explosionSource;
         private ISoundEngine _engine;
@@ -72,7 +71,7 @@ namespace SpaceAssault.Screens
             _asteroidField = new AsteroidBuilder();
             _fleet = new FleetBuilder();
             _ui = new InGameOverlay(_drone, _station);
-
+            _frame = new Frame();
             //remove lists for collisions etc 
             _removeAsteroid = new List<Asteroid>();
             _removeBullets = new List<Bullet>();
@@ -155,7 +154,7 @@ namespace SpaceAssault.Screens
             _asteroidField.LoadContent();
             _fleet.LoadContent();
             _ui.LoadContent();
-
+            _frame.LoadContent();
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Music/Explosion.wav", StreamMode.AutoDetect, true);
         }
 
@@ -423,6 +422,7 @@ namespace SpaceAssault.Screens
             _asteroidField.Draw();
             _fleet.Draw();
             _ui.Draw();
+            _frame.Draw();
 
             //DrawGrid(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
 

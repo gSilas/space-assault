@@ -43,7 +43,7 @@ namespace SpaceAssault.Screens
         //#################################
         public void Draw()
         {
-            Labels[0].Draw(this._drone._health);
+            Labels[0].Draw(this._drone.Health);
             Labels[1].Draw(Global.HighScorePoints);
             Labels[2].Draw(this._station._health);
 
