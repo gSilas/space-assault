@@ -13,7 +13,6 @@ namespace SpaceAssault.Screens
         // Variables
         //#################################
         List<Label> Labels = new List<Label>();
-        private Drone _drone;
         private Station _station;
         List<Bar> Bars = new List<Bar>();
         private UIItem _shields = new UIItem();
@@ -61,7 +60,7 @@ namespace SpaceAssault.Screens
             {
                 Labels[0].Draw(droneFleet._updatePoints);
 
-                if ((Vector3.Distance(this._station.Position, this._drone.Position) - GameplayScreen._stationHeight) < 150)
+                if ((Vector3.Distance(this._station.Position, droneFleet.GetActiveDrone().Position) - GameplayScreen._stationHeight) < 150)
                     Labels[2].Draw();
             }
             
