@@ -13,7 +13,7 @@ namespace SpaceAssault.Utils
         private List<Drone> _droneShips;
 
         public List<Bullet> _bulletList;
-        private List<Bullet> _removeListOfBullets;
+        private List<Bullet> _removeBulletList;
         protected TimeSpan _globalTimeSpan;
 
         public int _updatePoints;
@@ -28,7 +28,7 @@ namespace SpaceAssault.Utils
         {
             _droneShips = new List<Drone>();
             _bulletList = new List<Bullet>();
-            _removeListOfBullets = new List<Bullet>();
+            _removeBulletList = new List<Bullet>();
             _makeDmg = 10;
             _maxHealth = 100;
             _armor = 1;
@@ -37,6 +37,21 @@ namespace SpaceAssault.Utils
 
         public void Update(GameTime gameTime)
         {
+            foreach (Bullet bullet in _bulletList)
+            {
+                bullet.Update(gameTime);
+                if (bullet._bulletlife < 0)
+                {
+                    _removeBulletList.Add(bullet);
+                }
+            }
+
+            foreach (Bullet bullet in _removeBulletList)
+            {
+                _bulletList.Remove(bullet);
+            }
+            _removeBulletList.Clear();
+
             foreach (var drone in _droneShips)
             {
                 drone.Update(gameTime);
@@ -44,7 +59,7 @@ namespace SpaceAssault.Utils
 
             if (GetActiveDrone().IsNotDead)
             {
-                GetActiveDrone().HandleInput(ref _bulletList);
+                GetActiveDrone().HandleInput(gameTime, ref _bulletList);
             }
         }
 

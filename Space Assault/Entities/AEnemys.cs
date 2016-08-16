@@ -80,6 +80,6 @@ namespace SpaceAssault.Entities
 
         }
 
-        public abstract void Intelligence(Vector3 targedPosition, ref List<Bullet> bulletList);
+        public abstract void Intelligence(GameTime gameTime, Vector3 targedPosition, ref List<Bullet> bulletList);
     }
 }

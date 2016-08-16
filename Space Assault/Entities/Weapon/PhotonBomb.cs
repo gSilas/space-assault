@@ -25,9 +25,9 @@ namespace SpaceAssault.Entities.Weapon
             BulletModel2 = Global.ContentManager.Load<Model>("Models/bullet"); // another model?
         }
 
-        public override bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed, ref List<Bullet> bulletList)
+        public override bool Shoot(GameTime gameTime, Vector3 position, Matrix droneRotateMatrix, float travelspeed, ref List<Bullet> bulletList)
         {
-            if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
+            if (gameTime.TotalGameTime > LastShotTime.Add(CoolDownTime))
             {
                 switch (ShopScreen._droneDamageLevel)
                 {
@@ -40,7 +40,7 @@ namespace SpaceAssault.Entities.Weapon
                     default:
                         break;
                 }
-                LastShotTime = GlobalTimeSpan;
+                LastShotTime = gameTime.TotalGameTime;
                 return true;
             }
             return false;

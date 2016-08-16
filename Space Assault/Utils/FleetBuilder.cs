@@ -49,7 +49,7 @@ namespace SpaceAssault.Utils
             // updating every ship
             foreach (var ship in _enemyShips)
             {
-                ship.Intelligence(targetPosition, ref _bulletList);
+                ship.Intelligence(gameTime, targetPosition, ref _bulletList);
                 ship.Update(gameTime);
             }
             

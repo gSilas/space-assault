@@ -134,7 +134,7 @@ namespace SpaceAssault.Entities
                     _health -= (howMuch - _armor);
             }
         }
-        public void HandleInput(ref List<Bullet> bulletList)
+        public void HandleInput(GameTime gameTime, ref List<Bullet> bulletList)
         {
             /// <summary>
             /// handling rotation of the drone
@@ -236,11 +236,11 @@ namespace SpaceAssault.Entities
             /// </summary>
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if (_alternatingGunLogic && Gun.Shoot(Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f, ref bulletList))
+                if (_alternatingGunLogic && Gun.Shoot(gameTime, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f, ref bulletList))
                 {
                     _alternatingGunLogic = false;
                 }
-                else if (Gun.Shoot(Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f, ref bulletList))
+                else if (Gun.Shoot(gameTime, Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f, ref bulletList))
                 {
                     _alternatingGunLogic = true;
                 }

@@ -20,7 +20,7 @@ namespace SpaceAssault.Entities.Weapon
             RotationMatrix = droneRotateMatrix;
             Model = model;
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            _bulletlife = 500;
+            _bulletlife = 600;
             _direction = droneRotateMatrix.Forward;
             _travelspeed = travelspeed;
             _damage = damage;

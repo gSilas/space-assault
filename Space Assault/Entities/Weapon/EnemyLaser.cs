@@ -30,9 +30,9 @@ namespace SpaceAssault.Entities.Weapon
             BulletModel2 = Global.ContentManager.Load<Model>("Models/laser2");
         }
 
-        public override bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed, ref List<Bullet> bulletList)
+        public override bool Shoot(GameTime gameTime, Vector3 position, Matrix droneRotateMatrix, float travelspeed, ref List<Bullet> bulletList)
         {
-            if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
+            if (gameTime.TotalGameTime > LastShotTime.Add(CoolDownTime))
             {
                 //TODO: Shootsound pos should be that of the enemy spaceship shooting
                 var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
@@ -52,7 +52,7 @@ namespace SpaceAssault.Entities.Weapon
                     default:
                         break;
                 }
-                LastShotTime = GlobalTimeSpan;
+                LastShotTime = gameTime.TotalGameTime;
                 return true;
             }
             return false;

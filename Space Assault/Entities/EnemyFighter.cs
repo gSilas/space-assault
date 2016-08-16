@@ -50,14 +50,14 @@ namespace SpaceAssault.Entities
             //TODO: health, armor update
         }
 
-        public override void Intelligence(Vector3 targetPosition, ref List<Bullet> bulletList)
+        public override void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList)
         {
             double distanceToTarged = Math.Sqrt(Math.Pow(Position.X - targetPosition.X, 2) + Math.Pow(Position.Z - targetPosition.Z, 2));
             FlyVector(Position - targetPosition);
 
             if (distanceToTarged < 150)
             {
-                Gun.Shoot(Position, RotationMatrix, 3f, ref bulletList);
+                Gun.Shoot(gameTime, Position, RotationMatrix, 3f, ref bulletList);
             }
         }
 

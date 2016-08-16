@@ -59,7 +59,7 @@ namespace SpaceAssault.Entities
 
         }
 
-        public override void Intelligence(Vector3 targedPosition, ref List<Bullet> bulletList)
+        public override void Intelligence(GameTime gameTime, Vector3 targedPosition, ref List<Bullet> bulletList)
         {
 
             double distanceToTarged = Math.Sqrt(Math.Pow(Position.X - targedPosition.X, 2) + Math.Pow(Position.Z - targedPosition.Z, 2));
@@ -92,7 +92,7 @@ namespace SpaceAssault.Entities
 
             if (distanceToStation < 400 && neuerAnflug == false)
             {
-                Gun.Shoot(Position - RotationMatrix.Forward * 22.0f, RotationMatrix, 0.7f, ref bulletList);
+                Gun.Shoot(gameTime, Position - RotationMatrix.Forward * 22.0f, RotationMatrix, 0.7f, ref bulletList);
             }
 
         }

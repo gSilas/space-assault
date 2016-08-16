@@ -30,16 +30,15 @@ namespace SpaceAssault.Entities.Weapon
             BulletModel2 = Global.ContentManager.Load<Model>("Models/laser2");        
         }
 
-        public override bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed, ref List<Bullet> bulletList)
+        public override bool Shoot(GameTime gameTime, Vector3 position, Matrix droneRotateMatrix, float travelspeed, ref List<Bullet> bulletList)
         {
-            if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
+            if (gameTime.TotalGameTime > LastShotTime.Add(CoolDownTime))
             {
                 var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
                 _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
                 var _shootSound = _engine.Play3D(_shootSource, curListenerPos.X, curListenerPos.Y+15f, curListenerPos.Z, false, true, true);
                 _shootSound.Volume = 0.5f;
                 _shootSound.Paused = false;
-
                 switch (ShopScreen._droneDamageLevel)
                 {
                     case 1:
@@ -51,7 +50,7 @@ namespace SpaceAssault.Entities.Weapon
                     default:
                         break;
                 }
-                LastShotTime = GlobalTimeSpan;
+                LastShotTime = gameTime.TotalGameTime;
                 return true;
             }
             return false;
