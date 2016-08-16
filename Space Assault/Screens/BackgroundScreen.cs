@@ -16,9 +16,10 @@ namespace SpaceAssault.Screens
         Texture2D backgroundTexture;
         private Station _station;
         private Background _back;
-        private ISoundEngine _engine;
         private ISound _music;
+        private ISoundEngine _engine;
         float posOnCircle = 0;
+
 
         // Constructor.
         public BackgroundScreen()
@@ -42,8 +43,7 @@ namespace SpaceAssault.Screens
             _station = new Station(Vector3.Zero, 0);
             _station.LoadContent();
             _back = new Background();
-
-            _engine = new ISoundEngine();
+            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
             _engine.SetListenerPosition(new Vector3D(0,0,0), new Vector3D(0, 0, 1));
             _music = _engine.Play3D("Content/Media/Music/SUBSET_-_05_-_Nazca.mp3", new Vector3D(0, 0, 0), true, false, StreamMode.AutoDetect, true);
             _music.Volume = 1.0f;

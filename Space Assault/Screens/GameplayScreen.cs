@@ -40,8 +40,8 @@ namespace SpaceAssault.Screens
         public static int _stationHeight = 80;
 
         // Sound
-        private ISoundEngine _engine;
         private ISoundSource _explosionSource;
+        private ISoundEngine _engine;
 
         // Particle
         ParticleSystem explosionParticles;
@@ -83,6 +83,9 @@ namespace SpaceAssault.Screens
             explosionSmokeParticles = new ExplosionSmokeParticleSystem();
             projectileTrailParticles = new ProjectileTrailParticleSystem();
             smokePlumeParticles = new SmokePlumeParticleSystem();
+
+
+            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
         }
 
@@ -143,8 +146,6 @@ namespace SpaceAssault.Screens
         {
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), _drone.Position, Vector3.Up);
 
-            _engine = new ISoundEngine();
-
             // Particle
             grid = Global.ContentManager.Load<Model>("Models/grid");
 
@@ -164,6 +165,9 @@ namespace SpaceAssault.Screens
         public override void UnloadContent()
         {
             //Global.ContentManager.Unload();
+
+            _engine.StopAllSounds();
+            _engine.Dispose();
         }
 
         //#################################
@@ -202,7 +206,7 @@ namespace SpaceAssault.Screens
                 //explosionSmokeParticles.Update(gameTime);
                 smokePlumeParticles.Update(gameTime);
                 projectileTrailParticles.Update(gameTime);
-                
+
 
                 // if station dies go back to MainMenu
                 // TODO: change to EndScreen and HighScore list)
