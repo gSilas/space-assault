@@ -41,7 +41,7 @@ namespace SpaceAssault.Screens
 
         // Sound
         private ISoundEngine _engine;
-        private ISound _explosionSound;
+        private ISoundSource _explosionSource;
 
         // Particle
         ParticleSystem explosionParticles;
@@ -154,6 +154,8 @@ namespace SpaceAssault.Screens
             _asteroidField.LoadContent();
             _fleet.LoadContent();
             _ui.LoadContent();
+
+            _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Music/Explosion.wav");
         }
 
         //#################################
@@ -454,7 +456,7 @@ namespace SpaceAssault.Screens
         {
             var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
             _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
-            _explosionSound = _engine.Play3D("Content/Media/Music/Explosion.wav", pos, false, true, StreamMode.AutoDetect, true);
+            var _explosionSound = _engine.Play3D(_explosionSource, pos.X, pos.Y, pos.Z, false, true, true);
             _explosionSound.Volume = 1f;
             _explosionSound.Paused = false;
         }

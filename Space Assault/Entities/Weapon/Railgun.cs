@@ -11,7 +11,8 @@ namespace SpaceAssault.Entities.Weapon
     class RailGun : AWeapon
     {
         private ISoundEngine _engine;
-        private ISound _shootSound;
+        private ISoundSource _shootSource;
+
         public override void Initialize()
         {
             ListOfBullets = new List<Bullet>();
@@ -28,6 +29,7 @@ namespace SpaceAssault.Entities.Weapon
             BulletModel = Global.ContentManager.Load<Model>("Models/laser");
             BulletModel2 = Global.ContentManager.Load<Model>("Models/laser2");
             _engine = new ISoundEngine();
+            _shootSource = _engine.AddSoundSourceFromFile("Content/Media/Music/Laser_Shoot.wav");
         }
 
         public override bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
@@ -36,7 +38,8 @@ namespace SpaceAssault.Entities.Weapon
             {
                 var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
                 _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
-                _shootSound = _engine.Play3D("Content/Media/Music/Laser_Shoot.wav", curListenerPos + new Vector3D(0, 15, 0), false, true, StreamMode.AutoDetect, true);
+                //_shootSound = _engine.Play3D(, curListenerPos + new Vector3D(0, 15, 0), false, true, StreamMode.AutoDetect, true);
+                var _shootSound = _engine.Play3D(_shootSource, curListenerPos.X, curListenerPos.Y+15f, curListenerPos.Z, false, true, true);
                 _shootSound.Volume = 0.5f;
                 _shootSound.Paused = false;
 
