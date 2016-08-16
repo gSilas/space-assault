@@ -374,7 +374,7 @@ namespace SpaceAssault.Screens
         //#################################
         public override void Draw(GameTime gameTime)
         {
-            Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
+            Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target, Color.DarkBlue, 0, 0);
 
             // calling draw of objects where necessary
             _back.Draw(90, new Vector3(-5000, -2500, -5000));
