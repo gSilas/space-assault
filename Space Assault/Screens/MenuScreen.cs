@@ -36,9 +36,9 @@ namespace SpaceAssault.Screens
         // or cancelling the menu.
         public override void HandleInput(InputState input)
         {
+
             // mouse click on menu?
-            
-            if (input.IsLeftMouseButtonPressed())
+            if (input.IsLeftMouseButtonNewPressed())
             {
                 Vector2 cornerA;
                 Vector2 cornerD;
@@ -54,13 +54,21 @@ namespace SpaceAssault.Screens
 
                     if (cornerA.X < input.MousePosition.X && cornerA.Y < input.MousePosition.Z)
                     {
-                        if(cornerD.X > input.MousePosition.X && cornerD.Y > input.MousePosition.Z)
+                        if (cornerD.X > input.MousePosition.X && cornerD.Y > input.MousePosition.Z)
                         {
-                            if(selectedEntry == i)
+
+                            // menuEntry needs a double click
+                            /*
+                            if (selectedEntry == i)
                             {
                                 OnSelectEntry(selectedEntry);
                             }
                             else selectedEntry = i;
+                            */
+
+                            // menuEntry needs one click
+                            selectedEntry = i;
+                            OnSelectEntry(selectedEntry);
                         }
                     }
                     else continue;

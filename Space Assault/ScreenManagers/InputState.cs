@@ -72,10 +72,14 @@ namespace SpaceAssault.ScreenManagers
             get { return new Vector3(CurrentMouseState.Position.X, 0, CurrentMouseState.Position.Y); }
         }
 
+        public bool IsLeftMouseButtonNewPressed()
+        {
+            return (CurrentMouseState.LeftButton == ButtonState.Pressed && LastMouseState.LeftButton != ButtonState.Pressed);
+        }
+
         public bool IsLeftMouseButtonPressed()
         {
-            //&& LastMouseState.LeftButton != ButtonState.Pressed
-            return (CurrentMouseState.LeftButton == ButtonState.Pressed );
+            return CurrentMouseState.LeftButton == ButtonState.Pressed;
         }
     }
 }
