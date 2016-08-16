@@ -21,13 +21,15 @@ namespace SpaceAssault.Entities
         private float _moveSpeedRight;
         private float _moveSpeedModifier;
         private float _moveSpeedModifierSideways;
-        public int _health;
+
+        public int MaxHealth;
+        public int Health;
+        public int Armor;
 
         //shieldLogic
-        private int _maxShield;
+        public int MaxShield;
         private int _shield;
         private int _shieldpast;
-        private int _armor;
         private TimeSpan _shieldrefreshdelay;
         private bool _wasDamaged=false;
 
@@ -57,11 +59,11 @@ namespace SpaceAssault.Entities
             _moveSpeedBackward = -1.0f * _speedScaling;
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
-            _maxShield = 100;
-            _shieldpast = _maxShield;
-            _shield = _maxShield;
-            _health = 100;
-            _armor = 1;
+            MaxShield = 100;
+            _shieldpast = MaxShield;
+            _shield = MaxShield;
+            Health = 100;
+            Armor = 1;
             _isNotDead = true;
             Gun = new RailGun();
             Gun.Initialize();
@@ -75,9 +77,10 @@ namespace SpaceAssault.Entities
             _moveSpeedBackward = -1.0f * _speedScaling;
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
-            _health = 100;
-            _shield = 100;
-            _armor = 1;
+            Health = MaxHealth;
+            _shield = MaxShield;
+          
+            
             
             _isNotDead = true;
             _moveSpeedModifier = 0;
@@ -111,10 +114,10 @@ namespace SpaceAssault.Entities
                 _shieldpast = _shield;
                 _shieldrefreshdelay = gameTime.TotalGameTime;
             }
-            if (_wasDamaged == false&& _shield<_maxShield)
+            if (_wasDamaged == false&& _shield<MaxShield)
                 _shield += 1;
 
-            if (_health <= 0) IsNotDead = false;
+            if (Health <= 0) IsNotDead = false;
 
            
         }
@@ -132,8 +135,8 @@ namespace SpaceAssault.Entities
                 _shield -= howMuch;
             else
             {
-                if (howMuch>_armor)
-                    _health -= (howMuch-_armor);
+                if (howMuch>Armor)
+                    Health -= (howMuch-Armor);
             }
         }
         private void HandleInput()
