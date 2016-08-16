@@ -29,6 +29,7 @@ namespace SpaceAssault.Screens.UI
         {
             var location = _rect.Location;
             var count = currValue / _segmentCount;
+            var maxCount = maxValue / _segmentCount;
 
             if (_max != maxValue){
                 _segmentCount = (maxValue / (_rect.Size.X / _size.X));

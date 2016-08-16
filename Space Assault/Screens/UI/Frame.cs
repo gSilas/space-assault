@@ -15,7 +15,7 @@ namespace SpaceAssault.Utils
             //64x64 TILES
             _edge = Global.ContentManager.Load<Texture2D>("Images/UI/frame_edge");
             _frame = Global.ContentManager.Load<Texture2D>("Images/UI/frame_line");
-            _screen = Global.ContentManager.Load<Texture2D>("Images/UI/frame_screeno");
+            _screen = Global.ContentManager.Load<Texture2D>("Images/UI/frame_screenoe");
 
             _size = new Point(_edge.Width / 2, _edge.Height / 2);
         }
