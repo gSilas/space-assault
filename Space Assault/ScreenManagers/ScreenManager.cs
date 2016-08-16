@@ -39,7 +39,8 @@ namespace SpaceAssault.ScreenManagers
             Global.BackgroundBatch = new SpriteBatch(GraphicsDevice);
             Global.UIBatch = new SpriteBatch(GraphicsDevice);
 
-            Global.Font = Global.ContentManager.Load<SpriteFont>("Fonts/menufont");
+            Global.GameFont = Global.ContentManager.Load<SpriteFont>("Fonts/menufont");
+            Global.DialogFont = Global.ContentManager.Load<SpriteFont>("Fonts/pc_senior/pcsenior");
             _blankTexture = Global.ContentManager.Load<Texture2D>("Images/blank");
             _crosshair = Global.ContentManager.Load<Texture2D>("Images/Fadenkreuz_1");
 
@@ -126,7 +127,7 @@ namespace SpaceAssault.ScreenManagers
             Global.SpriteBatch.Draw(_crosshair, Mouse.GetState().Position.ToVector2() + new Vector2((_crosshair.Width + 1) / -2, _crosshair.Height / -2), Color.White);
 
             //FPS COUNTER
-            Global.SpriteBatch.DrawString(Global.Font, (1 / gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
+            Global.SpriteBatch.DrawString(Global.GameFont, (1 / gameTime.ElapsedGameTime.TotalSeconds).ToString("N1"), new Vector2(3, 3), Color.LightGreen);
             Global.SpriteBatch.End();
             Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         }

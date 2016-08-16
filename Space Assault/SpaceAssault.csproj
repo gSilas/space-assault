@@ -98,6 +98,7 @@
     <Compile Include="Screens\HighscoreMenuScreen.cs" />
     <Compile Include="Screens\ShopScreen.cs" />
     <Compile Include="Screens\UI\Bar.cs" />
+    <Compile Include="Screens\UI\Dialog.cs" />
     <Compile Include="Screens\UI\InGameOverlay.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />

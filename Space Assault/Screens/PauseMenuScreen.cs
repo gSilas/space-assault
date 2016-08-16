@@ -8,11 +8,11 @@ namespace SpaceAssault.Screens
     {
         // Constructor.
         public PauseMenuScreen()
-            : base("Paused")
+            : base("Interrupted")
         {
             // Create our menu entries.
-            MenuEntry resumeGameMenuEntry = new MenuEntry("Resume Game");
-            MenuEntry quitGameMenuEntry = new MenuEntry("Quit Game");
+            MenuEntry resumeGameMenuEntry = new MenuEntry("Resume Mission");
+            MenuEntry quitGameMenuEntry = new MenuEntry("Quit Station");
 
             // Hook up menu event handlers.
             resumeGameMenuEntry.Selected += OnCancel;
@@ -26,7 +26,7 @@ namespace SpaceAssault.Screens
         // Event handler for when the Quit Game menu entry is selected.
         void QuitGameMenuEntrySelected(object sender, EventArgs e)
         {
-            const string message = "Are you sure you want to quit this game?";
+            const string message = "Are you sure you want to abandon your Mission?";
             MessageBoxScreen confirmQuitMessageBox = new MessageBoxScreen(message);
             confirmQuitMessageBox.Accepted += ConfirmQuitMessageBoxAccepted;
             ScreenManager.AddScreen(confirmQuitMessageBox);

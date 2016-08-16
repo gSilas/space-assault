@@ -200,13 +200,13 @@ namespace SpaceAssault.Screens
 
             // Draw the menu title on the screen
             Vector2 titlePosition = new Vector2(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2, 80);
-            Vector2 titleOrigin = Global.Font.MeasureString(menuTitle) / 2;
+            Vector2 titleOrigin = Global.GameFont.MeasureString(menuTitle) / 2;
             Color titleColor = new Color(192, 192, 192) * TransitionAlpha;
             float titleScale = 1.25f;
 
             titlePosition.Y -= transitionOffset * 100;
 
-            Global.SpriteBatch.DrawString(Global.Font, menuTitle, titlePosition, titleColor, 0,
+            Global.SpriteBatch.DrawString(Global.GameFont, menuTitle, titlePosition, titleColor, 0,
                                    titleOrigin, titleScale, SpriteEffects.None, 0);
 
             Global.SpriteBatch.End();

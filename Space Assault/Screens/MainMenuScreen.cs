@@ -8,15 +8,15 @@ namespace SpaceAssault.Screens
     class MainMenuScreen : MenuScreen
     {
         // Constructor fills in the menu contents.
-        public MainMenuScreen() : base("Main Menu")
+        public MainMenuScreen() : base("Dronecontrol")
         {
 
             // Create our menu entries.
-            MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
-            MenuEntry highscoreMenuEntry = new MenuEntry("Highscore");
-            MenuEntry optionsMenuEntry = new MenuEntry("Options");
-            MenuEntry creditsMenuEntry = new MenuEntry("Credits");
-            MenuEntry exitMenuEntry = new MenuEntry("Exit");
+            MenuEntry playGameMenuEntry = new MenuEntry("Current Mission");
+            MenuEntry highscoreMenuEntry = new MenuEntry("Personal Record");
+            MenuEntry optionsMenuEntry = new MenuEntry("Station Configuration");
+            MenuEntry creditsMenuEntry = new MenuEntry("Honorable Mentions");
+            MenuEntry exitMenuEntry = new MenuEntry("Quit Dronecontrol");
 
             // Hook up menu event handlers.
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
