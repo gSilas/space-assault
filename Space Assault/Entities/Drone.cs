@@ -62,7 +62,9 @@ namespace SpaceAssault.Entities
             MaxShield = 100;
             _shieldpast = MaxShield;
             _shield = MaxShield;
-            Health = 100;
+
+            MaxHealth = 100;
+            Health = MaxHealth;
             Armor = 1;
             _isNotDead = true;
             Gun = new RailGun();
@@ -99,6 +101,7 @@ namespace SpaceAssault.Entities
 
         public override void Update(GameTime gameTime)
         {
+            //Console.WriteLine("Test:"+MaxHealth+" "+Health+" "+Armor);
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.Update(gameTime);
             if (IsNotDead)
