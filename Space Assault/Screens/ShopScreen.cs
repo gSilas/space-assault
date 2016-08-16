@@ -14,10 +14,15 @@ namespace SpaceAssault.Screens
         //#################################
         MenuEntry damageMenuEntry;
         MenuEntry healthMenuEntry;
+        MenuEntry armorMenuEntry;
+        MenuEntry shieldMenuEntry;
 
         List<Label> Labels = new List<Label>();
         public static int _droneDamageLevel = 1;
         public static int _droneHealthLevel = 1;
+        public static int _droneArmorLevel = 1;
+        public static int _droneShieldLevel = 1;
+
         private Drone _drone;
 
         //#################################
@@ -31,6 +36,9 @@ namespace SpaceAssault.Screens
             // Create our menu entries.
             damageMenuEntry = new MenuEntry(string.Empty);
             healthMenuEntry = new MenuEntry(string.Empty);
+            armorMenuEntry = new MenuEntry(string.Empty);
+            shieldMenuEntry=new MenuEntry(string.Empty);
+
             SetMenuEntryText();
 
             MenuEntry back = new MenuEntry("Close Shop");
@@ -38,11 +46,16 @@ namespace SpaceAssault.Screens
             // Hook up menu event handlers.
             damageMenuEntry.Selected += damageMenuEntrySelected;
             healthMenuEntry.Selected += healthMenuEntrySelected;
+            armorMenuEntry.Selected += armorMenuEntrySelected;
+            shieldMenuEntry.Selected += shieldMenuEntrySelected;
+
             back.Selected += OnCancel;
 
             // Add entries to the menu.
             MenuEntries.Add(damageMenuEntry);
             MenuEntries.Add(healthMenuEntry);
+            MenuEntries.Add(armorMenuEntry);
+            MenuEntries.Add(shieldMenuEntry);
             MenuEntries.Add(back);
         }
 
@@ -63,6 +76,8 @@ namespace SpaceAssault.Screens
         {
             damageMenuEntry.Text = "Damage Level: " + _droneDamageLevel;
             healthMenuEntry.Text = "Health Level: " + _droneHealthLevel;
+            armorMenuEntry.Text = "Armor Level: " + _droneArmorLevel;
+            shieldMenuEntry.Text = "Shield Level: " + _droneShieldLevel;
         }
 
         // Event handler for when the Damage menu entry is selected.
@@ -71,6 +86,7 @@ namespace SpaceAssault.Screens
             if (this._drone._updatePoints > 0)
             {
                 _droneDamageLevel++;
+                this._drone.Gun.makeDmg += 10;
                 this._drone._updatePoints--;
                 SetMenuEntryText();
             }
@@ -81,7 +97,28 @@ namespace SpaceAssault.Screens
             if (this._drone._updatePoints > 0)
             {
                 _droneHealthLevel++;
-                this._drone._health += 100;
+                this._drone.MaxHealth += 100;
+                this._drone._updatePoints--;
+                SetMenuEntryText();
+            }
+        }
+
+        void armorMenuEntrySelected(object sender, EventArgs e)
+        {
+            if (this._drone._updatePoints > 0)
+            {
+                _droneArmorLevel++;
+                this._drone.Armor+=1;
+                this._drone._updatePoints--;
+                SetMenuEntryText();
+            }
+        }
+        void shieldMenuEntrySelected(object sender, EventArgs e)
+        {
+            if (this._drone._updatePoints > 0)
+            {
+                _droneArmorLevel++;
+                this._drone.MaxShield+=50;
                 this._drone._updatePoints--;
                 SetMenuEntryText();
             }

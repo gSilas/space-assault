@@ -16,7 +16,7 @@ namespace SpaceAssault.Entities
         protected float TurnSpeed;
         protected TimeSpan GetBetterwithTime;
         public int Health;
-        protected int Armor;
+  
         protected bool isDead;
         public AWeapon Gun;
 
@@ -31,7 +31,7 @@ namespace SpaceAssault.Entities
         {
             RotationMatrix = Matrix.Identity;
             Health = 100;
-            Armor = 100;
+            
             Position = SpawnPos;
         }
         public List<Bullet> GetBulletList()

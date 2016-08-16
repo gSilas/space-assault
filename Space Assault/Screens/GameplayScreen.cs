@@ -283,7 +283,8 @@ namespace SpaceAssault.Screens
 
                     if (Collider3D.IntersectionSphere(ast, _drone))
                     {
-                        _drone._health -= 5;
+                        _drone.getHit(5);
+
                         _removeAsteroid.Add(ast);
                         Global.HighScorePoints -= 50;
                         PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
@@ -339,7 +340,8 @@ namespace SpaceAssault.Screens
                     {
                         if (Collider3D.IntersectionSphere(bullet, _drone))
                         {
-                            _drone._health -= ship.Gun.makeDmg;
+                            //_drone.getHit(ship.Gun.makeDmg);
+                            _drone.getHit(ship.Gun.makeDmg);
                             _removeBullets.Add(bullet);
                         }
 
