@@ -17,6 +17,8 @@ namespace SpaceAssault
 
         public static SpriteBatch BackgroundBatch;
 
+        public static SpriteBatch UIBatch;
+
         public static ContentManager ContentManager;
 
         public static GraphicsDeviceManager GraphicsManager;

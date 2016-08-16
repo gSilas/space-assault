@@ -113,6 +113,7 @@
     <Compile Include="Utils\Background.cs" />
     <Compile Include="Utils\Camera.cs" />
     <Compile Include="Utils\FleetBuilder.cs" />
+    <Compile Include="Utils\Frame.cs" />
     <Compile Include="Utils\HighScoreList.cs" />
     <Compile Include="Utils\Label.cs" />
     <Compile Include="Utils\Mousehandler.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Utils\Particle\ParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\ExplosionParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\ExplosionSmokeParticleSystem.cs" />
+    <Compile Include="Utils\Particle\Settings\FireParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\ProjectileTrailParticleSystem.cs" />
     <Compile Include="Utils\Particle\ParticleVertex.cs" />
     <Compile Include="Utils\Particle\Projectile.cs" />
