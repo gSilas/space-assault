@@ -28,7 +28,7 @@ namespace SpaceAssault.Entities
 
         //shieldLogic
         public int MaxShield;
-        private int _shield;
+       public int Shield;
         private int _shieldpast;
         private TimeSpan _shieldrefreshdelay;
         private bool _wasDamaged=false;
@@ -61,7 +61,7 @@ namespace SpaceAssault.Entities
             _moveSpeedRight = -1.0f * _speedScaling;
             MaxShield = 100;
             _shieldpast = MaxShield;
-            _shield = MaxShield;
+            Shield = MaxShield;
 
             MaxHealth = 100;
             Health = MaxHealth;
@@ -80,7 +80,7 @@ namespace SpaceAssault.Entities
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
             Health = MaxHealth;
-            _shield = MaxShield;
+            Shield = MaxShield;
           
             
             
@@ -112,13 +112,13 @@ namespace SpaceAssault.Entities
             if (gameTime.TotalGameTime > (_shieldrefreshdelay.Add(TimeSpan.FromSeconds(3))))
             {
             
-                if (_shield == _shieldpast)
+                if (Shield == _shieldpast)
                     _wasDamaged = false;
-                _shieldpast = _shield;
+                _shieldpast = Shield;
                 _shieldrefreshdelay = gameTime.TotalGameTime;
             }
-            if (_wasDamaged == false&& _shield<MaxShield)
-                _shield += 1;
+            if (_wasDamaged == false&& Shield<MaxShield)
+                Shield += 1;
 
             if (Health <= 0) IsNotDead = false;
 
@@ -134,8 +134,8 @@ namespace SpaceAssault.Entities
         public void getHit(int howMuch)
         {
             _wasDamaged = true;
-            if (_shield >= 0)
-                _shield -= howMuch;
+            if (Shield >= 0)
+                Shield -= howMuch;
             else
             {
                 if (howMuch>Armor)

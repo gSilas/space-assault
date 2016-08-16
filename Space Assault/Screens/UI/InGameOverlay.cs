@@ -2,6 +2,7 @@
 using SpaceAssault.Utils;
 using System.Collections.Generic;
 using SpaceAssault.Entities;
+using SpaceAssault.Screens.UI;
 
 namespace SpaceAssault.Screens
 {
@@ -14,7 +15,7 @@ namespace SpaceAssault.Screens
         List<Label> Labels = new List<Label>();
         private Drone _drone;
         private Station _station;
-
+        List<Bar> Bars = new List<Bar>();
 
         //#################################
         // Constructor
@@ -36,8 +37,15 @@ namespace SpaceAssault.Screens
             Labels.Add(new Label("gamefont", "StationHealth: ", Global.GraphicsManager.PreferredBackBufferWidth - 200, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
             Labels.Add(new Label("gamefont", "Press B for Shop", Global.GraphicsManager.PreferredBackBufferWidth / 2, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
             Labels.Add(new Label("gamefont", "Upgrade available: ", Global.GraphicsManager.PreferredBackBufferWidth - 180, 50, Color.GreenYellow));
-        }
 
+            Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.PreferredBackBufferHeight - 80), new Point(300, 60)), Color.Red, _drone.MaxHealth));
+            Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.PreferredBackBufferHeight - 90), new Point(300, 60)), Color.Blue, _drone.MaxShield));
+
+            foreach (var bar in Bars)
+            {
+                bar.LoadContent();
+            }
+        }
         //#################################
         // Draw
         //#################################
@@ -54,7 +62,10 @@ namespace SpaceAssault.Screens
                 if ((Vector3.Distance(this._station.Position, this._drone.Position) - GameplayScreen._stationHeight) < 150)
                     Labels[3].Draw();
             }
-                
+
+            Bars[0].Draw(_drone.Health, _drone.MaxHealth);
+            Bars[1].Draw(_drone.Shield, _drone.MaxShield);
+
         }
 
     }

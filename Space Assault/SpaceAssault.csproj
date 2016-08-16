@@ -97,6 +97,7 @@
     <Compile Include="Screens\GameplayScreen.cs" />
     <Compile Include="Screens\HighscoreMenuScreen.cs" />
     <Compile Include="Screens\ShopScreen.cs" />
+    <Compile Include="Screens\UI\Bar.cs" />
     <Compile Include="Screens\UI\InGameOverlay.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
@@ -113,7 +114,7 @@
     <Compile Include="Utils\Background.cs" />
     <Compile Include="Utils\Camera.cs" />
     <Compile Include="Utils\FleetBuilder.cs" />
-    <Compile Include="Utils\Frame.cs" />
+    <Compile Include="Screens\UI\Frame.cs" />
     <Compile Include="Utils\HighScoreList.cs" />
     <Compile Include="Utils\Label.cs" />
     <Compile Include="Utils\Mousehandler.cs" />
