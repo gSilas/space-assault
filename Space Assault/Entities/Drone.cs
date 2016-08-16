@@ -22,12 +22,22 @@ namespace SpaceAssault.Entities
         private float _moveSpeedModifier;
         private float _moveSpeedModifierSideways;
         public int _health;
+
+        //shieldLogic
+        private int _maxShield;
+        private int _shield;
+        private int _shieldpast;
         private int _armor;
+        private TimeSpan _shieldrefreshdelay;
+        private bool _wasDamaged=false;
+
+
         public int _updatePoints;
         public int _totalUpdates;
         private bool _alternatingGunLogic = false;
         private bool _isNotDead;
 
+      
         public AWeapon Gun;
 
         //used for scaling all speed values beside turnSpeed;
@@ -43,12 +53,15 @@ namespace SpaceAssault.Entities
         {
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 10.0f;
-            _moveSpeedForward = 1.0f * _speedScaling;
+            _moveSpeedForward = 1.0f*_speedScaling;
             _moveSpeedBackward = -1.0f * _speedScaling;
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
+            _maxShield = 100;
+            _shieldpast = _maxShield;
+            _shield = _maxShield;
             _health = 100;
-            _armor = 100;
+            _armor = 1;
             _isNotDead = true;
             Gun = new RailGun();
             Gun.Initialize();
@@ -63,11 +76,13 @@ namespace SpaceAssault.Entities
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
             _health = 100;
-            _armor = 100;
+            _shield = 100;
+            _armor = 1;
             _isNotDead = true;
             _moveSpeedModifier = 0;
             _moveSpeedModifierSideways = 0;
             Position = _spawnPos;
+
         }
 
         public override void LoadContent()
@@ -86,9 +101,21 @@ namespace SpaceAssault.Entities
             {
                 this.HandleInput();
             }
-            //Console.WriteLine(Position);
+           
+            if (gameTime.TotalGameTime > (_shieldrefreshdelay.Add(TimeSpan.FromSeconds(3))))
+            {
+            
+                if (_shield == _shieldpast)
+                    _wasDamaged = false;
+                _shieldpast = _shield;
+                _shieldrefreshdelay = gameTime.TotalGameTime;
+            }
+            if (_wasDamaged == false&& _shield<_maxShield)
+                _shield += 1;
+
             if (_health <= 0) IsNotDead = false;
-            //TODO: health, armor update
+
+           
         }
 
         public bool IsNotDead
@@ -97,6 +124,17 @@ namespace SpaceAssault.Entities
             protected set { _isNotDead = value; }
         }
 
+        public void getHit(int howMuch)
+        {
+            _wasDamaged = true;
+            if (_shield >= 0)
+                _shield -= howMuch;
+            else
+            {
+                if (howMuch>_armor)
+                    _health -= (howMuch-_armor);
+            }
+        }
         private void HandleInput()
         {
             /// <summary>

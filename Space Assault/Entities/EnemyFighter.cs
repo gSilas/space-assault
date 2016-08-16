@@ -21,7 +21,7 @@ namespace SpaceAssault.Entities
             MoveSpeedForward = 1.2f;
             TurnSpeed = 5.0f;
             Health = 30;
-            Armor = 100;
+          
             Gun = new EnemyLaser();
             Gun.Initialize();
         }

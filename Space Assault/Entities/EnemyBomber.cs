@@ -27,7 +27,7 @@ namespace SpaceAssault.Entities
             //_moveSpeedBackward = -0.5f;
 
             Health = 40;
-            Armor = 100;
+           
             Gun = new PhotonBomb();
             Gun.Initialize();
         }
