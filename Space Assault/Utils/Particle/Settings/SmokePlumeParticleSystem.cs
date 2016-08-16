@@ -1,8 +1,14 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+
 
 namespace SpaceAssault.Utils.Particle.Settings
 {
+    /// <summary>
+    /// Custom particle system for creating a giant plume of long lasting smoke.
+    /// </summary>
     class SmokePlumeParticleSystem : ParticleSystem
     {
         public SmokePlumeParticleSystem()

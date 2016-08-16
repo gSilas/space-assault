@@ -1,9 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace SpaceAssault.Utils.Particle
 {
+    /// <summary>
+    /// Settings class describes all the tweakable options used
+    /// to control the appearance of a particle system.
+    /// </summary>
     public class ParticleSettings
     {
         // Name of the texture used by this particle system.

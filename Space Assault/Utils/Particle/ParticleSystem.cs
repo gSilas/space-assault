@@ -1,14 +1,23 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using System;
 
 namespace SpaceAssault.Utils.Particle
 {
+    /// <summary>
+    /// The main component in charge of displaying particles.
+    /// </summary>
     public abstract class ParticleSystem
     {
+
         // Settings class controls the appearance and animation of this particle system.
         ParticleSettings settings = new ParticleSettings();
+
+
+        // For loading the effect and particle texture.
+        ContentManager content;
+
 
         // Custom effect for drawing particles. This computes the particle
         // animation entirely in the vertex shader: no per-particle CPU work required!
@@ -53,9 +62,9 @@ namespace SpaceAssault.Utils.Particle
         static Random random = new Random();
 
 
-        //#################################
-        // Constructor
-        //#################################
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         protected ParticleSystem()
         {
             Initialize();
@@ -63,9 +72,9 @@ namespace SpaceAssault.Utils.Particle
         }
 
 
-        //#################################
-        // Initialize
-        //#################################
+        /// <summary>
+        /// Initializes the component.
+        /// </summary>
         public void Initialize()
         {
             InitializeSettings(settings);
@@ -75,24 +84,25 @@ namespace SpaceAssault.Utils.Particle
 
             for (int i = 0; i < settings.MaxParticles; i++)
             {
-                particles[i * 4 + 0].Corner = new Short2(-1, -1);
-                particles[i * 4 + 1].Corner = new Short2(1, -1);
-                particles[i * 4 + 2].Corner = new Short2(1, 1);
-                particles[i * 4 + 3].Corner = new Short2(-1, 1);
+                particles[i * 4 + 0].Corner = new Vector2(-1, -1);
+                particles[i * 4 + 1].Corner = new Vector2(1, -1);
+                particles[i * 4 + 2].Corner = new Vector2(1, 1);
+                particles[i * 4 + 3].Corner = new Vector2(-1, 1);
             }
         }
 
 
-        //#################################
-        // Setting (abstract)
-        //#################################
+        /// <summary>
+        /// Derived particle system classes should override this method
+        /// and use it to initalize their tweakable settings.
+        /// </summary>
         protected abstract void InitializeSettings(ParticleSettings settings);
 
 
-        //#################################
-        // LoadContent
-        //#################################
-        public void LoadContent()
+        /// <summary>
+        /// Loads graphics for the particle system.
+        /// </summary>
+        protected void LoadContent()
         {
             LoadParticleEffect();
 
@@ -115,17 +125,17 @@ namespace SpaceAssault.Utils.Particle
             }
 
             indexBuffer = new IndexBuffer(Global.GraphicsManager.GraphicsDevice, typeof(ushort), indices.Length, BufferUsage.WriteOnly);
-            indexBuffer.SetData(indices);
 
+            indexBuffer.SetData(indices);
         }
 
 
-        //#################################
-        // Helper for loading and initializing the particle effect.
-        //#################################
+        /// <summary>
+        /// Helper for loading and initializing the particle effect.
+        /// </summary>
         void LoadParticleEffect()
         {
-            Effect effect = Global.ContentManager.Load<Effect>("Effects/ParticleEffect");
+            Effect effect = content.Load<Effect>("ParticleEffect");
 
             // If we have several particle systems, the content manager will return
             // a single shared effect instance to them all. But we want to preconfigure
@@ -161,15 +171,15 @@ namespace SpaceAssault.Utils.Particle
                 new Vector2(settings.MinEndSize, settings.MaxEndSize));
 
             // Load the particle texture, and set it onto the effect.
-            Texture2D texture = Global.ContentManager.Load<Texture2D>("Images/"+settings.TextureName);
+            Texture2D texture = content.Load<Texture2D>(settings.TextureName);
 
             parameters["Texture"].SetValue(texture);
         }
 
 
-        //#################################
-        // Update
-        //#################################
+        /// <summary>
+        /// Updates the particle system.
+        /// </summary>
         public void Update(GameTime gameTime)
         {
             if (gameTime == null)
@@ -194,11 +204,11 @@ namespace SpaceAssault.Utils.Particle
         }
 
 
-        //#################################
-        // Helper for checking when active particles have reached the end of
-        // their life. It moves old particles from the active area of the queue
-        // to the retired section.
-        //#################################
+        /// <summary>
+        /// Helper for checking when active particles have reached the end of
+        /// their life. It moves old particles from the active area of the queue
+        /// to the retired section.
+        /// </summary>
         void RetireActiveParticles()
         {
             float particleDuration = (float)settings.Duration.TotalSeconds;
@@ -225,11 +235,11 @@ namespace SpaceAssault.Utils.Particle
         }
 
 
-        //#################################
-        // Helper for checking when retired particles have been kept around long
-        // enough that we can be sure the GPU is no longer using them. It moves
-        // old particles from the retired area of the queue to the free section.
-        //#################################
+        /// <summary>
+        /// Helper for checking when retired particles have been kept around long
+        /// enough that we can be sure the GPU is no longer using them. It moves
+        /// old particles from the retired area of the queue to the free section.
+        /// </summary>
         void FreeRetiredParticles()
         {
             while (firstRetiredParticle != firstActiveParticle)
@@ -255,11 +265,12 @@ namespace SpaceAssault.Utils.Particle
         }
 
 
-        //#################################
-        // Draw
-        //#################################
+        /// <summary>
+        /// Draws the particle system.
+        /// </summary>
         public void Draw(GameTime gameTime)
         {
+            GraphicsDevice device = Global.GraphicsManager.GraphicsDevice;
 
             // Restore the vertex buffer contents if the graphics device was lost.
             if (vertexBuffer.IsContentLost)
@@ -277,20 +288,20 @@ namespace SpaceAssault.Utils.Particle
             // If there are any active particles, draw them now!
             if (firstActiveParticle != firstFreeParticle)
             {
-                Global.GraphicsManager.GraphicsDevice.BlendState = settings.BlendState;
-                Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
+                device.BlendState = settings.BlendState;
+                device.DepthStencilState = DepthStencilState.DepthRead;
 
                 // Set an effect parameter describing the viewport size. This is
                 // needed to convert particle sizes into screen space point sizes.
-                effectViewportScaleParameter.SetValue(new Vector2(0.5f / Global.GraphicsManager.GraphicsDevice.Viewport.AspectRatio, -0.5f));
+                effectViewportScaleParameter.SetValue(new Vector2(0.5f / device.Viewport.AspectRatio, -0.5f));
 
                 // Set an effect parameter describing the current time. All the vertex
                 // shader particle animation is keyed off this value.
                 effectTimeParameter.SetValue(currentTime);
 
                 // Set the particle vertex and index buffer.
-                Global.GraphicsManager.GraphicsDevice.SetVertexBuffer(vertexBuffer);
-                Global.GraphicsManager.GraphicsDevice.Indices = indexBuffer;
+                device.SetVertexBuffer(vertexBuffer);
+                device.Indices = indexBuffer;
 
                 // Activate the particle effect.
                 foreach (EffectPass pass in particleEffect.CurrentTechnique.Passes)
@@ -301,7 +312,7 @@ namespace SpaceAssault.Utils.Particle
                     {
                         // If the active particles are all in one consecutive range,
                         // we can draw them all in a single call.
-                        Global.GraphicsManager.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
+                        device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
                                                      firstActiveParticle * 4, (firstFreeParticle - firstActiveParticle) * 4,
                                                      firstActiveParticle * 6, (firstFreeParticle - firstActiveParticle) * 2);
                     }
@@ -309,13 +320,13 @@ namespace SpaceAssault.Utils.Particle
                     {
                         // If the active particle range wraps past the end of the queue
                         // back to the start, we must split them over two draw calls.
-                        Global.GraphicsManager.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
+                        device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
                                                      firstActiveParticle * 4, (settings.MaxParticles - firstActiveParticle) * 4,
                                                      firstActiveParticle * 6, (settings.MaxParticles - firstActiveParticle) * 2);
 
                         if (firstFreeParticle > 0)
                         {
-                            Global.GraphicsManager.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
+                            device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
                                                          0, firstFreeParticle * 4,
                                                          0, firstFreeParticle * 2);
                         }
@@ -324,17 +335,17 @@ namespace SpaceAssault.Utils.Particle
 
                 // Reset some of the renderstates that we changed,
                 // so as not to mess up any other subsequent drawing.
-                Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+                device.DepthStencilState = DepthStencilState.Default;
             }
 
             drawCounter++;
         }
 
 
-        //#################################
-        // Helper for uploading new particles from our managed
-        // array to the GPU vertex buffer.
-        //#################################
+        /// <summary>
+        /// Helper for uploading new particles from our managed
+        /// array to the GPU vertex buffer.
+        /// </summary>
         void AddNewParticlesToVertexBuffer()
         {
             int stride = ParticleVertex.SizeInBytes;
@@ -369,10 +380,10 @@ namespace SpaceAssault.Utils.Particle
             firstNewParticle = firstFreeParticle;
         }
 
-        //#################################
-        // Sets the camera view and projection matrices
-        // that will be used to draw this particle system.
-        //#################################
+        /// <summary>
+        /// Sets the camera view and projection matrices
+        /// that will be used to draw this particle system.
+        /// </summary>
         public void SetCamera(Matrix view, Matrix projection)
         {
             effectViewParameter.SetValue(view);
@@ -380,9 +391,9 @@ namespace SpaceAssault.Utils.Particle
         }
 
 
-        //#################################
-        // Adds a new particle to the system.
-        //#################################
+        /// <summary>
+        /// Adds a new particle to the system.
+        /// </summary>
         public void AddParticle(Vector3 position, Vector3 velocity)
         {
             // Figure out where in the circular queue to allocate the new particle.

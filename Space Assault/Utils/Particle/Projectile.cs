@@ -1,10 +1,18 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace SpaceAssault.Utils.Particle
 {
+    /// <summary>
+    /// This class demonstrates how to combine several different particle systems
+    /// to build up a more sophisticated composite effect. It implements a rocket
+    /// projectile, which arcs up into the sky using a ParticleEmitter to leave a
+    /// steady stream of trail particles behind it. After a while it explodes,
+    /// creating a sudden burst of explosion and smoke particles.
+    /// </summary>
     class Projectile
     {
+        #region Constants
 
         const float trailParticlesPerSecond = 200;
         const int numExplosionParticles = 30;
@@ -14,6 +22,9 @@ namespace SpaceAssault.Utils.Particle
         const float verticalVelocityRange = 40;
         const float gravity = 15;
 
+        #endregion
+
+        #region Fields
 
         ParticleSystem explosionParticles;
         ParticleSystem explosionSmokeParticles;
@@ -24,6 +35,8 @@ namespace SpaceAssault.Utils.Particle
         float age;
 
         static Random random = new Random();
+
+        #endregion
 
 
         /// <summary>
@@ -37,7 +50,7 @@ namespace SpaceAssault.Utils.Particle
             this.explosionSmokeParticles = explosionSmokeParticles;
 
             // Start at the origin, firing in a random (but roughly upward) direction.
-            position = new Vector3(100, 0, 0);
+            position = Vector3.Zero;
 
             velocity.X = (float)(random.NextDouble() - 0.5) * sidewaysVelocityRange;
             velocity.Y = (float)(random.NextDouble() + 0.5) * verticalVelocityRange;
