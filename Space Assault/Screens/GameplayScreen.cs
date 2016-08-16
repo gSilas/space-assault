@@ -111,7 +111,7 @@ namespace SpaceAssault.Screens
             gameFont = Global.ContentManager.Load<SpriteFont>("Fonts/gamefont");
             _station.LoadContent();
             _asteroidField.LoadContent();
-            _ui.LoadContent(_droneFleet.GetActiveDrone());
+            _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Music/Explosion.wav", StreamMode.AutoDetect, true);
         }
