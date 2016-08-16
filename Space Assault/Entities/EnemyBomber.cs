@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities.Weapon;
@@ -27,7 +28,7 @@ namespace SpaceAssault.Entities
             //_moveSpeedBackward = -0.5f;
 
             Health = 40;
-           
+
             Gun = new PhotonBomb();
             Gun.Initialize();
         }
@@ -42,11 +43,10 @@ namespace SpaceAssault.Entities
 
         public override void Update(GameTime gameTime)
         {
-            Gun.Update(gameTime);
             if (Health <= 0) IsDead = true;
 
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            
+
             //besser mit Zeit
             if (gameTime.TotalGameTime > (GetBetterwithTime.Add(TimeSpan.FromSeconds(60))))
             {
@@ -59,14 +59,7 @@ namespace SpaceAssault.Entities
 
         }
 
-
-        public override void Shoot(Vector3 direction)
-        {
-           
-            Gun.Shoot(Position - RotationMatrix.Forward * 22.0f, RotationMatrix, 0.7f);
-        }
-
-        public override void Intelligence(Vector3 targedPosition)
+        public override void Intelligence(GameTime gameTime, Vector3 targedPosition, ref List<Bullet> bulletList)
         {
 
             double distanceToTarged = Math.Sqrt(Math.Pow(Position.X - targedPosition.X, 2) + Math.Pow(Position.Z - targedPosition.Z, 2));
@@ -77,7 +70,7 @@ namespace SpaceAssault.Entities
 
             if (distanceToStation < 200)
                 neuerAnflug = true;
-           
+
             if (distanceToTarged < 200)
                 FlyVector(-(Position - targedPosition));
 
@@ -87,6 +80,7 @@ namespace SpaceAssault.Entities
                 if (distanceToStation > 500)
                     neuerAnflug = false;
             }
+
             if (neuerAnflug == false)
                 if (distanceToTarged < 200)
                     FlyVector(-(Position - targedPosition));
@@ -94,16 +88,15 @@ namespace SpaceAssault.Entities
                 {
                     FlyVector(Position - new Vector3(0, 0, 0));
                 }
-            
 
 
-            if (distanceToStation < 400&&neuerAnflug==false)
-                {
-                    Shoot(targedPosition);
-                }
+            if (distanceToStation < 400 && neuerAnflug == false)
+            {
+                Gun.Shoot(gameTime, Position - RotationMatrix.Forward * 22.0f, RotationMatrix, 0.7f, ref bulletList);
             }
 
         }
 
     }
+}
 

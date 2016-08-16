@@ -115,6 +115,7 @@
     <Compile Include="Utils\AsteroidBuilder.cs" />
     <Compile Include="Utils\Background.cs" />
     <Compile Include="Utils\Camera.cs" />
+    <Compile Include="Utils\DroneBuilder.cs" />
     <Compile Include="Utils\FleetBuilder.cs" />
     <Compile Include="Screens\UI\Frame.cs" />
     <Compile Include="Utils\HighScoreList.cs" />

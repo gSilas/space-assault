@@ -34,13 +34,9 @@ namespace SpaceAssault.Entities
             
             Position = SpawnPos;
         }
-        public List<Bullet> GetBulletList()
-        {
-            return Gun.ListOfBullets;
-        }
+
         public override void Draw()
         {
-            Gun.Draw();
             if (Collider3D.BoundingFrustumIntersection(this))
             {
                 foreach (var mesh in Model.Meshes)
@@ -83,9 +79,7 @@ namespace SpaceAssault.Entities
 
 
         }
-        public abstract void Shoot(Vector3 direction);
-  
 
-        public abstract void Intelligence(Vector3 targedPosition);
+        public abstract void Intelligence(GameTime gameTime, Vector3 targedPosition, ref List<Bullet> bulletList);
     }
 }

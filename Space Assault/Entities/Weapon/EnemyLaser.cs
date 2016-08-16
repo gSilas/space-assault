@@ -15,8 +15,6 @@ namespace SpaceAssault.Entities.Weapon
 
         public override void Initialize()
         {
-            ListOfBullets = new List<Bullet>();
-            RemoveListOfBullets = new List<Bullet>();
             GlobalTimeSpan = TimeSpan.FromSeconds(0);
             LastShotTime = TimeSpan.FromSeconds(0);
             CoolDownTime = TimeSpan.FromMilliseconds(600d);
@@ -32,9 +30,9 @@ namespace SpaceAssault.Entities.Weapon
             BulletModel2 = Global.ContentManager.Load<Model>("Models/laser2");
         }
 
-        public override bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
+        public override bool Shoot(GameTime gameTime, Vector3 position, Matrix droneRotateMatrix, float travelspeed, ref List<Bullet> bulletList)
         {
-            if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
+            if (gameTime.TotalGameTime > LastShotTime.Add(CoolDownTime))
             {
                 //TODO: Shootsound pos should be that of the enemy spaceship shooting
                 var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
@@ -46,20 +44,19 @@ namespace SpaceAssault.Entities.Weapon
                 switch (ShopScreen._droneDamageLevel)
                 {
                     case 1:
-                        ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
+                        bulletList.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel, makeDmg, DmgStation));
                         break;
                     case 2:
-                        ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel2));
+                        bulletList.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel2, makeDmg, DmgStation));
                         break;
                     default:
                         break;
                 }
-                LastShotTime = GlobalTimeSpan;
+                LastShotTime = gameTime.TotalGameTime;
                 return true;
             }
             return false;
 
         }
-
     }
 }

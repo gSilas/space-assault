@@ -15,13 +15,11 @@ namespace SpaceAssault.Entities.Weapon
 
         public override void Initialize()
         {
-            ListOfBullets = new List<Bullet>();
-            RemoveListOfBullets = new List<Bullet>();
             GlobalTimeSpan = TimeSpan.FromSeconds(0);
             LastShotTime = TimeSpan.FromSeconds(0);
             CoolDownTime = TimeSpan.FromMilliseconds(200d);
-            makeDmg = 10;
             DmgStation = false;
+            makeDmg = 10;
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
             _shootSource = _engine.AddSoundSourceFromFile("Content/Media/Music/Laser_Shoot.wav", StreamMode.AutoDetect, true);
         }
@@ -32,28 +30,27 @@ namespace SpaceAssault.Entities.Weapon
             BulletModel2 = Global.ContentManager.Load<Model>("Models/laser2");        
         }
 
-        public override bool Shoot(Vector3 position, Matrix droneRotateMatrix, float travelspeed)
+        public override bool Shoot(GameTime gameTime, Vector3 position, Matrix droneRotateMatrix, float travelspeed, ref List<Bullet> bulletList)
         {
-            if (GlobalTimeSpan > LastShotTime.Add(CoolDownTime))
+            if (gameTime.TotalGameTime > LastShotTime.Add(CoolDownTime))
             {
                 var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
                 _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
                 var _shootSound = _engine.Play3D(_shootSource, curListenerPos.X, curListenerPos.Y+15f, curListenerPos.Z, false, true, true);
                 _shootSound.Volume = 0.5f;
                 _shootSound.Paused = false;
-
                 switch (ShopScreen._droneDamageLevel)
                 {
                     case 1:
-                        ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel));
+                        bulletList.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel, makeDmg, DmgStation));
                         break;
                     case 2:
-                        ListOfBullets.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel2));
+                        bulletList.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel2, makeDmg, DmgStation));
                         break;
                     default:
                         break;
                 }
-                LastShotTime = GlobalTimeSpan;
+                LastShotTime = gameTime.TotalGameTime;
                 return true;
             }
             return false;

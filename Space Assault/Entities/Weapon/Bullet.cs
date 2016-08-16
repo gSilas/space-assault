@@ -7,26 +7,30 @@ namespace SpaceAssault.Entities.Weapon
 {
     public class Bullet : AEntity
     {
+        protected int _damage;
+        protected bool _canDmgStation;
+
         private Vector3 _direction;
         private float _travelspeed;
-        public int Bulletlife;
+        public int _bulletlife;
 
-        public Bullet(Vector3 position, Matrix droneRotateMatrix, float travelspeed, Model model)
+        public Bullet(Vector3 position, Matrix droneRotateMatrix, float travelspeed, Model model, int damage, bool canDamageStation)
         {
             Position = position;
-            _direction = droneRotateMatrix.Forward;
             RotationMatrix = droneRotateMatrix;
-            _travelspeed = travelspeed;
             Model = model;
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            Bulletlife = 500;
+            _bulletlife = 600;
+            _direction = droneRotateMatrix.Forward;
+            _travelspeed = travelspeed;
+            _damage = damage;
+            _canDmgStation = canDamageStation;
         }
         public override void Update(GameTime gameTime)
         {
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Position -= _direction*_travelspeed;
-            Bulletlife--;
-           
+            _bulletlife--;         
         }
 
         public override void LoadContent()
@@ -37,6 +41,16 @@ namespace SpaceAssault.Entities.Weapon
         public override void Initialize()
         {
             throw new NotImplementedException();
+        }
+
+        public int makeDmg
+        {
+            get { return _damage; }
+        }
+
+        public bool CanDamageStation
+        {
+            get { return _canDmgStation; }
         }
     }
 }

@@ -23,15 +23,15 @@ namespace SpaceAssault.Screens
         public static int _droneArmorLevel = 1;
         public static int _droneShieldLevel = 1;
 
-        private Drone _drone;
+        private DroneBuilder _droneFleet;
 
         //#################################
         // Constructor
         //#################################
-        public ShopScreen(Drone _drone)
+        public ShopScreen(DroneBuilder droneFleet)
             : base("Shop")
         {
-            this._drone = _drone;
+            this._droneFleet = droneFleet;
 
             // Create our menu entries.
             damageMenuEntry = new MenuEntry(string.Empty);
@@ -83,43 +83,43 @@ namespace SpaceAssault.Screens
         // Event handler for when the Damage menu entry is selected.
         void damageMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._drone._updatePoints > 0)
+            if (this._droneFleet._updatePoints > 0)
             {
                 _droneDamageLevel++;
-                this._drone.Gun.makeDmg += 10;
-                this._drone._updatePoints--;
+                this._droneFleet._makeDmg += 10;
+                this._droneFleet._updatePoints--;
                 SetMenuEntryText();
             }
         }
         // Event handler for when the Health menu entry is selected.
         void healthMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._drone._updatePoints > 0)
+            if (this._droneFleet._updatePoints > 0)
             {
                 _droneHealthLevel++;
-                this._drone.MaxHealth += 100;
-                this._drone._updatePoints--;
+                this._droneFleet._maxHealth += 100;
+                this._droneFleet._updatePoints--;
                 SetMenuEntryText();
             }
         }
 
         void armorMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._drone._updatePoints > 0)
+            if (this._droneFleet._updatePoints > 0)
             {
                 _droneArmorLevel++;
-                this._drone.Armor+=1;
-                this._drone._updatePoints--;
+                this._droneFleet._armor+=1;
+                this._droneFleet._updatePoints--;
                 SetMenuEntryText();
             }
         }
         void shieldMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._drone._updatePoints > 0)
+            if (this._droneFleet._updatePoints > 0)
             {
                 _droneArmorLevel++;
-                this._drone.MaxShield+=50;
-                this._drone._updatePoints--;
+                this._droneFleet._maxShield+=50;
+                this._droneFleet._updatePoints--;
                 SetMenuEntryText();
             }
         }
@@ -129,7 +129,7 @@ namespace SpaceAssault.Screens
         //#################################
         public void Draw()
         {
-            Labels[0].Draw(this._drone._updatePoints);
+            Labels[0].Draw(this._droneFleet._updatePoints);
 
         }
 
