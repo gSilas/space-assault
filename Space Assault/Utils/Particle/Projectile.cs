@@ -12,8 +12,6 @@ namespace SpaceAssault.Utils.Particle
     /// </summary>
     class Projectile
     {
-        #region Constants
-
         const float trailParticlesPerSecond = 200;
         const int numExplosionParticles = 30;
         const int numExplosionSmokeParticles = 50;
@@ -21,10 +19,6 @@ namespace SpaceAssault.Utils.Particle
         const float sidewaysVelocityRange = 60;
         const float verticalVelocityRange = 40;
         const float gravity = 15;
-
-        #endregion
-
-        #region Fields
 
         ParticleSystem explosionParticles;
         ParticleSystem explosionSmokeParticles;
@@ -35,9 +29,6 @@ namespace SpaceAssault.Utils.Particle
         float age;
 
         static Random random = new Random();
-
-        #endregion
-
 
         /// <summary>
         /// Constructs a new projectile.

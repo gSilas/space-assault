@@ -8,7 +8,8 @@ using SpaceAssault.Entities.Weapon;
 using SpaceAssault.ScreenManagers;
 using SpaceAssault.Utils;
 using IrrKlang;
-
+using SpaceAssault.Utils.Particle;
+using SpaceAssault.Utils.Particle.Settings;
 
 namespace SpaceAssault.Screens
 {
@@ -41,6 +42,31 @@ namespace SpaceAssault.Screens
         private ISoundSource _explosionSource;
         private ISoundEngine _engine;
 
+        //Particle
+        ParticleSystem explosionParticles;
+        ParticleSystem explosionSmokeParticles;
+        ParticleSystem projectileTrailParticles;
+        ParticleSystem smokePlumeParticles;
+        ParticleSystem fireParticles;
+
+        // Switch between three different visual effects.
+        enum ParticleState
+        {
+            Explosions,
+            SmokePlume,
+            RingOfFire,
+        };
+
+        ParticleState currentState = ParticleState.SmokePlume;
+
+        // The explosions effect works by firing projectiles up into the
+        // air, so we need to keep track of all the active projectiles.
+        List<Projectile> projectiles = new List<Projectile>();
+        TimeSpan timeToNextProjectile = TimeSpan.Zero;
+
+        // Random number generator for the fire effect.
+        Random random = new Random();
+
         //#################################
         // Constructor
         //#################################
@@ -66,6 +92,12 @@ namespace SpaceAssault.Screens
 
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
+            // Contruct Particle
+            explosionParticles = new ExplosionParticleSystem();
+            explosionSmokeParticles = new ExplosionSmokeParticleSystem();
+            projectileTrailParticles = new ProjectileTrailParticleSystem();
+            smokePlumeParticles = new SmokePlumeParticleSystem();
+            fireParticles = new FireParticleSystem();
         }
 
 
@@ -116,12 +148,36 @@ namespace SpaceAssault.Screens
             if (IsActive)
             {
 
+
                 // calling update of objects where necessary
                 _station.Update(gameTime);
                 _drone.Update(gameTime);
                 _asteroidField.Update(gameTime, _drone.Position);
                 Global.Camera.updateCameraPositionTarget(_drone.Position + new Vector3(0, 250, 250), _drone.Position);
                 _fleet.Update(gameTime, _drone.Position);
+
+                // Particle
+                if (_station._health < 10000)
+                {
+                    switch (currentState)
+                    {
+                        case ParticleState.Explosions:
+                            UpdateExplosions(gameTime);
+                            break;
+
+                        case ParticleState.SmokePlume:
+                            UpdateSmokePlume();
+                            break;
+
+                        case ParticleState.RingOfFire:
+                            UpdateFire();
+                            break;
+                    }
+
+
+                    UpdateProjectiles(gameTime);
+                    smokePlumeParticles.Update(gameTime);
+                }
 
                 // if station dies go back to MainMenu
                 // TODO: change to EndScreen and HighScore list)
@@ -329,6 +385,20 @@ namespace SpaceAssault.Screens
             _ui.Draw();
             _frame.Draw();
 
+            // Particle
+            /*
+            explosionParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+            explosionSmokeParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+            projectileTrailParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+            fireParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+            */
+
+            if (_station._health < 10000)
+            {
+                smokePlumeParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+                smokePlumeParticles.Draw(gameTime);
+            }
+
             //if drone is dead fade to black
             if (_deadDroneAlpha > 0)
             {
@@ -355,6 +425,89 @@ namespace SpaceAssault.Screens
             var _explosionSound = _engine.Play3D(_explosionSource, pos.X, pos.Y, pos.Z, false, true, true);
             _explosionSound.Volume = 1f;
             _explosionSound.Paused = false;
+        }
+
+        //#################################
+        // Helper Update - Explosion
+        //#################################
+        void UpdateExplosions(GameTime gameTime)
+        {
+            timeToNextProjectile -= gameTime.ElapsedGameTime;
+
+            if (timeToNextProjectile <= TimeSpan.Zero)
+            {
+                // Create a new projectile once per second. The real work of moving
+                // and creating particles is handled inside the Projectile class.
+                projectiles.Add(new Projectile(explosionParticles,
+                                               explosionSmokeParticles,
+                                               projectileTrailParticles));
+
+                timeToNextProjectile += TimeSpan.FromSeconds(1);
+            }
+        }
+
+        //#################################
+        // Helper Update - Projectiles
+        //#################################
+        void UpdateProjectiles(GameTime gameTime)
+        {
+            int i = 0;
+
+            while (i < projectiles.Count)
+            {
+                if (!projectiles[i].Update(gameTime))
+                {
+                    // Remove projectiles at the end of their life.
+                    projectiles.RemoveAt(i);
+                }
+                else
+                {
+                    // Advance to the next projectile.
+                    i++;
+                }
+            }
+        }
+
+        //#################################
+        // Helper Update - Smoke
+        //#################################
+        void UpdateSmokePlume()
+        {
+            // This is trivial: we just create one new smoke particle per frame.
+            smokePlumeParticles.AddParticle(Vector3.Zero, Vector3.Zero);
+        }
+
+        //#################################
+        // Helper Update - Fire
+        //#################################
+        void UpdateFire()
+        {
+            const int fireParticlesPerFrame = 20;
+
+            // Create a number of fire particles, randomly positioned around a circle.
+            for (int i = 0; i < fireParticlesPerFrame; i++)
+            {
+                fireParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+            }
+
+            // Create one smoke particle per frmae, too.
+            smokePlumeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+        }
+
+        //#################################
+        // Helper RndPoint
+        //#################################
+        Vector3 RandomPointOnCircle()
+        {
+            const float radius = 30;
+            const float height = 40;
+
+            double angle = random.NextDouble() * Math.PI * 2;
+
+            float x = (float)Math.Cos(angle);
+            float y = (float)Math.Sin(angle);
+
+            return new Vector3(x * radius, y * radius + height, 0);
         }
 
     }

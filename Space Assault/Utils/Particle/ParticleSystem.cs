@@ -135,7 +135,7 @@ namespace SpaceAssault.Utils.Particle
         /// </summary>
         void LoadParticleEffect()
         {
-            Effect effect = content.Load<Effect>("ParticleEffect");
+            Effect effect = Global.ContentManager.Load<Effect>("Effects/ParticleEffect");
 
             // If we have several particle systems, the content manager will return
             // a single shared effect instance to them all. But we want to preconfigure
@@ -171,7 +171,7 @@ namespace SpaceAssault.Utils.Particle
                 new Vector2(settings.MinEndSize, settings.MaxEndSize));
 
             // Load the particle texture, and set it onto the effect.
-            Texture2D texture = content.Load<Texture2D>(settings.TextureName);
+            Texture2D texture = Global.ContentManager.Load<Texture2D>("Images/"+settings.TextureName);
 
             parameters["Texture"].SetValue(texture);
         }

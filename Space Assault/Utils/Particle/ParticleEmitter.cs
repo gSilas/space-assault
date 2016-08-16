@@ -26,15 +26,10 @@ namespace SpaceAssault.Utils.Particle
     /// </summary>
     public class ParticleEmitter
     {
-        #region Fields
-
         ParticleSystem particleSystem;
         float timeBetweenParticles;
         Vector3 previousPosition;
         float timeLeftOver;
-
-        #endregion
-
 
         /// <summary>
         /// Constructs a new particle emitter object.

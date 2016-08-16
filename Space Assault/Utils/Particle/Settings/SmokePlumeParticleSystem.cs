@@ -19,7 +19,7 @@ namespace SpaceAssault.Utils.Particle.Settings
         {
             settings.TextureName = "smoke";
 
-            settings.MaxParticles = 600;
+            settings.MaxParticles = 200;
 
             settings.Duration = TimeSpan.FromSeconds(10);
 
