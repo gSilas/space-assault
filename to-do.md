@@ -1,0 +1,38 @@
+Gameplay:
+	maprand d
+	ki logik
+	armor logik p
+	bounding spehre station malen
+	geld d
+	rakete für drone
+	
+
+Shop: 	armor
+	upgrades müssen sachen besser machen (permanent)
+	abwehrlaser für asteriodien	
+
+
+Sound: 	-verschiedene Explosionen für alle Objekte
+	-Musik
+	-Schusssounds
+	- UI sounds (Stimmen, klicken, piepen
+
+
+UI:	
+
+
+partikeldinge:
+	-Explosionen für alles
+	-Antriebe
+	-
+
+
+
+
+
+Modelle:
+	drone
+	bomber
+	Photonbombe
+	rakete
+	2 asterioden
