@@ -50,8 +50,8 @@ namespace SpaceAssault.Entities
             //besser mit Zeit
             if (gameTime.TotalGameTime > (GetBetterwithTime.Add(TimeSpan.FromSeconds(60))))
             {
-                Health = Health + 50;
-                Gun.makeDmg += 5;
+                Health = Health + 30;
+                Gun.makeDmg += 10;
                 GetBetterwithTime = gameTime.TotalGameTime;
                 //Console.WriteLine("UpDATED");
             }

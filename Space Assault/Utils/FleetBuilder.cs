@@ -16,6 +16,9 @@ namespace SpaceAssault.Utils
         private Random _rand;
         public String _whereTheyCome;
 
+        private TimeSpan _MOREShips; 
+        private int _maxShipCount=5;
+
         protected TimeSpan _globalTimeSpan;
 
         public FleetBuilder()
@@ -63,11 +66,19 @@ namespace SpaceAssault.Utils
                 _enemyShips.Remove(ship);
             }
 
+            if (gameTime.TotalGameTime > (_MOREShips.Add(TimeSpan.FromSeconds(10))))
+            {
+                _maxShipCount += 1;
+                _MOREShips = gameTime.TotalGameTime;
+                //Console.WriteLine(_maxFleetCount);
+            }
+    
             // adding fleets
             if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(2000))))
             {
+                Console.WriteLine(_enemyShips.Count+"<"+_maxShipCount);
                 //maximale Anzahl an Flotten
-                if(this._enemyShips.Count<6)
+                if (this._enemyShips.Count<_maxShipCount)
                     Formation(targetPosition);
                 _lastChunkTime = gameTime.TotalGameTime;
             }
