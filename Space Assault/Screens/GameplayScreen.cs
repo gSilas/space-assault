@@ -29,9 +29,6 @@ namespace SpaceAssault.Screens
         private AsteroidBuilder _asteroidField;
         private FleetBuilder _fleet;
         private DroneBuilder _droneFleet;
-        private List<Bullet> _removeBullets;
-        private List<Asteroid> _removeAsteroid;
-        private List<AEnemys> _removeAEnemys;
         private int _deathCounter = 0;
         public static int _stationHeight = 80;
     
@@ -88,11 +85,6 @@ namespace SpaceAssault.Screens
             _ui = new InGameOverlay(_station);
             _back = new Background();
             _frame = new Frame();
-
-            //remove lists for collisions etc 
-            _removeAsteroid = new List<Asteroid>();
-            _removeBullets = new List<Bullet>();
-            _removeAEnemys = new List<AEnemys>();
 
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
@@ -157,6 +149,10 @@ namespace SpaceAssault.Screens
                 Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + new Vector3(0, 250, 250), _droneFleet.GetActiveDrone().Position);
                 _fleet.Update(gameTime, _droneFleet.GetActiveDrone().Position);
 
+                //remove lists for collisions etc 
+                List<Asteroid>  _removeAsteroid = new List<Asteroid>();
+                List<Bullet>  _removeBullets = new List<Bullet>();
+
                 // Particle
                 if (_station._health < 10000)
                 {
@@ -209,20 +205,9 @@ namespace SpaceAssault.Screens
                 /// EVRYTHING AFTER THIS LINE IS COLLISION HANDLING
                 /// </summary>
 
-                /* bullet of drone with asteroids & enemy ships */
+                /* bullet of drone with enemy ships */
                 foreach (var bullet in _droneFleet._bulletList)
                 {
-                    foreach (var ast in _asteroidField._asteroidList)
-                    {
-                        if (Collider3D.IntersectionSphere(bullet, ast))
-                        {
-                            _removeAsteroid.Add(ast);
-                            _removeBullets.Add(bullet);
-                            Global.HighScorePoints += 50;
-                            PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
-                            break;
-                        }
-                    }
                     foreach (var ship in _fleet._enemyShips)
                     {
                         if (Collider3D.IntersectionSphere(bullet, ship))
@@ -237,7 +222,24 @@ namespace SpaceAssault.Screens
 
                 }
 
-                /* asteroids with drone & station & other asteroids & enemy ships*/
+                /* bullet of enemy ships with drone and station */
+                foreach (var bullet in _fleet._bulletList)
+                {
+                    if (Collider3D.IntersectionSphere(bullet, _droneFleet.GetActiveDrone()))
+                    {
+                        //_drone.getHit(ship.Gun.makeDmg);
+                        _droneFleet.GetActiveDrone().getHit(bullet.makeDmg);
+                        _removeBullets.Add(bullet);
+                    }
+
+                    if (bullet.CanDamageStation && Collider3D.IntersectionSphere(bullet, _station))
+                    {
+                        _station._health -= bullet.makeDmg;
+                        _removeBullets.Add(bullet);
+                    }
+                }
+
+                /* asteroids with drone(& its bullets) & station & other asteroids & enemy ships (& its bullets)*/
                 foreach (var ast in _asteroidField._asteroidList)
                 {
                     if (gameTime.TotalGameTime > (ast._originTime.Add(TimeSpan.FromMinutes(0.7d))))
@@ -289,38 +291,20 @@ namespace SpaceAssault.Screens
                             break;
                         }
                     }
-                }
 
-                /* enemy ships with drone and their bullets with drone & station */
-                foreach (var ship in _fleet._enemyShips)
-                {
-                    if (ship.IsDead == true)
+                    foreach (var bullet in _droneFleet._bulletList)
                     {
-                        _removeAEnemys.Add(ship);
-                        continue;
+                        if (Collider3D.IntersectionSphere(bullet, ast))
+                        {
+                            _removeAsteroid.Add(ast);
+                            _removeBullets.Add(bullet);
+                            Global.HighScorePoints += 50;
+                            PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
+                            break;
+                        }
                     }
                 }
 
-                foreach (var bullet in _fleet._bulletList)
-                {
-                    if (Collider3D.IntersectionSphere(bullet, _droneFleet.GetActiveDrone()))
-                    {
-                        //_drone.getHit(ship.Gun.makeDmg);
-                        _droneFleet.GetActiveDrone().getHit(bullet.makeDmg);
-                        _removeBullets.Add(bullet);
-                    }
-
-                    if (bullet.CanDamageStation && Collider3D.IntersectionSphere(bullet, _station))
-                    {
-                        _station._health -= bullet.makeDmg;
-                        _removeBullets.Add(bullet);
-                    }
-                }
-
-                foreach (var ship in _removeAEnemys)
-                {
-                    _fleet._enemyShips.Remove(ship);
-                }
                 foreach (var ast in _removeAsteroid)
                 {
                     _asteroidField._asteroidList.Remove(ast);
@@ -330,9 +314,6 @@ namespace SpaceAssault.Screens
                     _droneFleet._bulletList.Remove(bullet);
                     _fleet._bulletList.Remove(bullet);
                 }
-                _removeAsteroid.Clear();
-                _removeBullets.Clear();
-                _removeAEnemys.Clear();
             }
         }
 

@@ -11,7 +11,6 @@ namespace SpaceAssault.Utils
     {
         public List<AEnemys> _enemyShips;
         public List<Bullet> _bulletList;
-        private List<Bullet> _removeBulletList;
         private List<AEnemys> _addList;
         private TimeSpan _lastChunkTime;
         private Random _rand;
@@ -25,11 +24,13 @@ namespace SpaceAssault.Utils
             _addList = new List<AEnemys>();
             _bulletList = new List<Bullet>();
             _rand = new Random();
-            _removeBulletList = new List<Bullet>();
         }
 
         public void Update(GameTime gameTime, Vector3 targetPosition)
         {
+            List<Bullet> _removeBulletList = new List<Bullet>();
+            List<AEnemys> _removeAEnemys = new List<AEnemys>();
+
             // updating bullets
             _globalTimeSpan = gameTime.TotalGameTime;
             foreach (Bullet bullet in _bulletList)
@@ -44,15 +45,24 @@ namespace SpaceAssault.Utils
             {
                 _bulletList.Remove(bullet);
             }
-            _removeBulletList.Clear();
 
             // updating every ship
             foreach (var ship in _enemyShips)
             {
+                if (ship.IsDead == true)
+                {
+                    _removeAEnemys.Add(ship);
+                    continue;
+                }
                 ship.Intelligence(gameTime, targetPosition, ref _bulletList);
                 ship.Update(gameTime);
             }
-            
+
+            foreach (var ship in _removeAEnemys)
+            {
+                _enemyShips.Remove(ship);
+            }
+
             // adding fleets
             if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(2000))))
             {
