@@ -18,7 +18,6 @@ namespace SpaceAssault.Screens
         //#################################
         // Variables
         //#################################
-        SpriteFont gameFont;
 
         // Fade to black
         float _deadDroneAlpha;
@@ -33,11 +32,14 @@ namespace SpaceAssault.Screens
         private List<Bullet> _removeBullets;
         private List<Asteroid> _removeAsteroid;
         private List<AEnemys> _removeAEnemys;
-        private InGameOverlay _ui;
-        private Background _back;
         private int _deathCounter = 0;
         public static int _stationHeight = 80;
+    
+        //UI + Frame + Background
+        private InGameOverlay _ui;
         private Frame _frame;
+        private Background _back;
+
         // Sound
         private ISoundSource _explosionSource;
         private ISoundEngine _engine;
@@ -77,13 +79,16 @@ namespace SpaceAssault.Screens
 
             //actual gameplay objects
             _station = new Station(new Vector3(0, _stationHeight, 0), 0);
-            _back = new Background();
             _station.Initialize();
             _asteroidField = new AsteroidBuilder();
             _fleet = new FleetBuilder();
             _droneFleet = new DroneBuilder();
+
+            //UI + Frame + BG 
             _ui = new InGameOverlay(_station);
+            _back = new Background();
             _frame = new Frame();
+
             //remove lists for collisions etc 
             _removeAsteroid = new List<Asteroid>();
             _removeBullets = new List<Bullet>();
@@ -107,8 +112,6 @@ namespace SpaceAssault.Screens
         {
             _droneFleet.addDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), _droneFleet.GetActiveDrone().Position, Vector3.Up);
-
-            gameFont = Global.ContentManager.Load<SpriteFont>("Fonts/gamefont");
             _station.LoadContent();
             _asteroidField.LoadContent();
             _ui.LoadContent(_droneFleet);
@@ -373,7 +376,11 @@ namespace SpaceAssault.Screens
             _asteroidField.Draw();
             _fleet.Draw();
             _ui.Draw(_droneFleet);
-            _frame.Draw();
+            if(_station._health > 1000)
+            {
+                _frame.Draw(false);
+            }
+            else { _frame.Draw(true); }
 
             // Particle
             /*

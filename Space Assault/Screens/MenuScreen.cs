@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.ScreenManagers;
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Screens
 {
@@ -14,6 +15,8 @@ namespace SpaceAssault.Screens
         int selectedEntry = 0;
         string menuTitle;
 
+        //Frame
+        private Frame _frame;
 
         // Gets the list of menu entries, so derived classes can add
         // or change the menu contents.
@@ -157,7 +160,13 @@ namespace SpaceAssault.Screens
                 position.Y += menuEntries[i].GetHeight();
             }
         }
+        public override void LoadContent()
+        {
 
+
+            _frame = new Frame();
+            _frame.LoadContent();
+        }
 
         // Updates the menu.
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
@@ -210,6 +219,7 @@ namespace SpaceAssault.Screens
                                    titleOrigin, titleScale, SpriteEffects.None, 0);
 
             Global.SpriteBatch.End();
+            _frame.Draw(false);
         }
     }
 }

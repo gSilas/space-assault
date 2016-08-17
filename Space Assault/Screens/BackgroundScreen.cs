@@ -14,15 +14,22 @@ namespace SpaceAssault.Screens
     // of whatever transitions the screens on top of it may be doing.
     class BackgroundScreen : GameScreen
     {
-        Texture2D backgroundTexture;
+        //Station for BG
         private Station _station;
-        private Background _back;
+
+        //Sound
         private ISound _music;
         private ISoundEngine _engine;
         float posOnCircle = 0;
-        private Frame _frame;
+
+        //Dialogs
         private Dialog _welcomedialog;
         private Dialog _pilotdialog;
+
+        //Background
+        private Background _back;
+
+        //Random
         private Random _rand;
         private int _id;
         private int _id2;
@@ -46,6 +53,11 @@ namespace SpaceAssault.Screens
             _id = _rand.Next(10000, 99999);
             _id2 = _rand.Next(10000, 99999);
 
+            //Dialogs + Background + Frame
+            _welcomedialog = new Dialog(100, 600, 128, 832);
+            _pilotdialog = new Dialog(800, 50, 128, 320);
+            _pilotdialog.LoadContent();
+            _welcomedialog.LoadContent();
             //Camera
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 40, 150) * 1.7f, new Vector3(-100, 0, 0), Vector3.Up);
 
@@ -59,15 +71,6 @@ namespace SpaceAssault.Screens
             _music = _engine.Play3D("Content/Media/Music/SUBSET_-_05_-_Nazca.mp3", new Vector3D(0, 0, 0), true, false, StreamMode.AutoDetect, true);
             _music.Volume = 1.0f;
 
-            //Dialogs + Background + Frame
-            _welcomedialog = new Dialog(100, 600, 128, 832);
-            _pilotdialog = new Dialog(800, 50, 128, 320);
-            _pilotdialog.LoadContent();
-            _welcomedialog.LoadContent();
-
-            _frame = new Frame();
-            _frame.LoadContent();
-
             _back = new Background();
         }
 
@@ -75,8 +78,6 @@ namespace SpaceAssault.Screens
         // Unloads content for this screen.
         public override void UnloadContent()
         {
-            //Global.ContentManager.Unload();
-
             _engine.StopAllSounds();
             _engine.Dispose();
         }
@@ -102,13 +103,10 @@ namespace SpaceAssault.Screens
         // Draws the background screen.
         public override void Draw(GameTime gameTime)
         {
-            _station.Draw();
             _back.Draw(0, new Vector3(-9000, -8000, -5000));
+            _station.Draw();
             _welcomedialog.Draw("Welcome pilot! " + gameTime.TotalGameTime.TotalSeconds.ToString().Remove(5) + " seconds without accidents! :)");
-            _pilotdialog.Draw("Pilot ID:   "+ _id +  "\nStation ID: " + _id2);
-            _frame.Draw();
-            
-            
+            _pilotdialog.Draw("Pilot ID:   "+ _id +  "\nStation ID: " + _id2);         
         }
 
     }

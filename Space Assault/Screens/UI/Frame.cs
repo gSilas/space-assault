@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace SpaceAssault.Utils
 {
@@ -8,7 +9,11 @@ namespace SpaceAssault.Utils
         private Texture2D _frame;
         private Texture2D _edge;
         private Texture2D _screen;
+        private Texture2D _crack;
         private Point _size;
+        private Random _rand;
+        private int _x;
+        private int _y;
 
         public void LoadContent()
         {
@@ -16,11 +21,14 @@ namespace SpaceAssault.Utils
             _edge = Global.ContentManager.Load<Texture2D>("Images/UI/frame_edge");
             _frame = Global.ContentManager.Load<Texture2D>("Images/UI/frame_line");
             _screen = Global.ContentManager.Load<Texture2D>("Images/UI/frame_screenod");
-
+            _crack = Global.ContentManager.Load<Texture2D>("Images/UI/screen_crack");
+            _rand = new Random();
+            _x = _rand.Next(0, Global.GraphicsManager.GraphicsDevice.Viewport.Width - _crack.Width/2);
+            _y = _rand.Next(0, Global.GraphicsManager.GraphicsDevice.Viewport.Height - _crack.Height/2);
             _size = new Point(_edge.Width / 2, _edge.Height / 2);
         }
 
-        public void Draw()
+        public void Draw(bool crackedScreen)
         {
             Global.UIBatch.Begin();
 
@@ -50,6 +58,12 @@ namespace SpaceAssault.Utils
                 {
                     Global.UIBatch.Draw(_screen, new Rectangle(new Point(x, y),_size), null, new Color(1f,1f,1f,0.07f),MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
                 }
+            }
+
+            if (crackedScreen)
+            {
+
+                Global.UIBatch.Draw(_crack, new Rectangle(new Point(_x, _y), new Point(_crack.Width/2,_crack.Height/2)), null, Color.White, MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
             }
 
             Global.UIBatch.End();
