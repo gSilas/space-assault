@@ -187,10 +187,10 @@ namespace SpaceAssault.Screens
         // Draws the menu.
         public override void Draw(GameTime gameTime)
         {
+
             // make sure our entries are in the right place before we draw them
             UpdateMenuEntryLocations();
 
-            Global.SpriteBatch.Begin();
 
             // Draw each menu entry in turn.
             for (int i = 0; i < menuEntries.Count; i++)
@@ -214,11 +214,9 @@ namespace SpaceAssault.Screens
             float titleScale = 1.25f;
 
             titlePosition.Y -= transitionOffset * 100;
-
             Global.SpriteBatch.DrawString(Global.GameFont, menuTitle, titlePosition, titleColor, 0,
                                    titleOrigin, titleScale, SpriteEffects.None, 0);
 
-            Global.SpriteBatch.End();
             //_frame.Draw(false);
         }
     }

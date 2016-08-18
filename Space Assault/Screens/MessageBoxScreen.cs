@@ -96,15 +96,12 @@ namespace SpaceAssault.Screens
             // Fade the popup alpha during transitions.
             Color color = Color.White * TransitionAlpha;
 
-            Global.SpriteBatch.Begin();
-
             // Draw the background rectangle.
             Global.SpriteBatch.Draw(gradientTexture, backgroundRectangle, color);
 
             // Draw the message box text.
             Global.SpriteBatch.DrawString(Global.GameFont, message, textPosition, color);
 
-            Global.SpriteBatch.End();
         }
     }
 }

@@ -22,16 +22,12 @@ namespace SpaceAssault.Utils
 
         public void Draw()
         {
-            Global.SpriteBatch.Begin();
             Global.SpriteBatch.DrawString(_font, _label, _vector, _color);
-            Global.SpriteBatch.End();
         }
 
         public void Draw(int variable)
         {
-            Global.SpriteBatch.Begin();
             Global.SpriteBatch.DrawString(_font, _label + variable, _vector, _color);
-            Global.SpriteBatch.End();
         }
     }
 }

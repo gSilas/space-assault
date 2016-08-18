@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Screens;
 using SpaceAssault.ScreenManagers;
+
 
 namespace SpaceAssault
 {
@@ -15,8 +17,8 @@ namespace SpaceAssault
         {
             IsMouseVisible = false;
             Global.GraphicsManager = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
             Global.ContentManager = Content;
-            Global.ContentManager.RootDirectory = "Content";
 
             Global.GraphicsManager.PreferredBackBufferHeight = Global.PreferredBackBufferHeight;
             Global.GraphicsManager.PreferredBackBufferWidth = Global.PreferredBackBufferWidth;
@@ -24,10 +26,23 @@ namespace SpaceAssault
             screenManager = new ScreenManager(this);
 
             Components.Add(screenManager);
+        }
+
+
+        protected override void LoadContent()
+        {   
+            // Create a new SpriteBatch, which can be used to draw textures.
+            Global.SpriteBatch = new SpriteBatch(Global.GraphicsManager.GraphicsDevice);
+            Global.BackgroundBatch = new SpriteBatch(Global.GraphicsManager.GraphicsDevice);
+            Global.UIBatch = new SpriteBatch(Global.GraphicsManager.GraphicsDevice);
+
+            Global.GameFont = Global.ContentManager.Load<SpriteFont>("Fonts/menufont");
+            Global.DialogFont = Global.ContentManager.Load<SpriteFont>("Fonts/pc_senior/pcsenior");
 
             // Activate the first screens.
             screenManager.AddScreen(new BackgroundScreen());
             screenManager.AddScreen(new MainMenuScreen());
+            base.LoadContent();
         }
 
         //#################################

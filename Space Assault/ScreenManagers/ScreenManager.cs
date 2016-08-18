@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Microsoft.Xna.Framework.Content;
 
 namespace SpaceAssault.ScreenManagers
 {
@@ -34,13 +34,6 @@ namespace SpaceAssault.ScreenManagers
         // Load graphics content.
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            Global.SpriteBatch = new SpriteBatch(GraphicsDevice);
-            Global.BackgroundBatch = new SpriteBatch(GraphicsDevice);
-            Global.UIBatch = new SpriteBatch(GraphicsDevice);
-
-            Global.GameFont = Global.ContentManager.Load<SpriteFont>("Fonts/menufont");
-            Global.DialogFont = Global.ContentManager.Load<SpriteFont>("Fonts/pc_senior/pcsenior");
             _blankTexture = Global.ContentManager.Load<Texture2D>("Images/blank");
             _crosshair = Global.ContentManager.Load<Texture2D>("Images/Fadenkreuz_1");
 
@@ -114,6 +107,7 @@ namespace SpaceAssault.ScreenManagers
         // Tells each screen to draw itself.
         public override void Draw(GameTime gameTime)
         {
+            Global.SpriteBatch.Begin();
             foreach (GameScreen screen in _screens)
             {
                 if (screen.ScreenState == ScreenState.Hidden)
@@ -122,8 +116,6 @@ namespace SpaceAssault.ScreenManagers
             }
 
             //crosshair
-            Global.SpriteBatch.Begin();
-            //Global.SpriteBatch.DrawString(Global.Font, "X", Mouse.GetState().Position.ToVector2() + new Vector2(-6, -7), Color.LightGoldenrodYellow);
             Global.SpriteBatch.Draw(_crosshair, Mouse.GetState().Position.ToVector2() + new Vector2((_crosshair.Width + 1) / -2, _crosshair.Height / -2), Color.White);
 
             //FPS COUNTER
@@ -179,11 +171,10 @@ namespace SpaceAssault.ScreenManagers
         // screens in and out, and for darkening the background behind popups.
         public void FadeBackBufferToBlack(float alpha)
         {
-            Viewport viewport = GraphicsDevice.Viewport;
+            Viewport viewport = Global.GraphicsManager.GraphicsDevice.Viewport;
 
-            Global.SpriteBatch.Begin();
             Global.SpriteBatch.Draw(_blankTexture, new Rectangle(0, 0, viewport.Width, viewport.Height),Color.Black * alpha);
-            Global.SpriteBatch.End();
+
         }
     }
 }

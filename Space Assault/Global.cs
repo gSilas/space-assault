@@ -11,8 +11,6 @@ namespace SpaceAssault
     public static class Global
     {
         //core stuff
-        public static SpaceAssaultGame SpaceAssault;
-
         public static SpriteBatch SpriteBatch;
 
         public static SpriteBatch BackgroundBatch;

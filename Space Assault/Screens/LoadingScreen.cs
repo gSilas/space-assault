@@ -115,9 +115,7 @@ namespace SpaceAssault.Screens
                 Color color = Color.White * TransitionAlpha;
 
                 // Draw the text.
-                Global.SpriteBatch.Begin();
                 Global.SpriteBatch.DrawString(Global.GameFont, message, textPosition, color);
-                Global.SpriteBatch.End();
             }
         }
     }
