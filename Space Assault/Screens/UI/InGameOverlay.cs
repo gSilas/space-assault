@@ -45,9 +45,9 @@ namespace SpaceAssault.Screens
             Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.PreferredBackBufferHeight - 80), new Point(300, 60)), Color.Red, droneFleet.GetActiveDrone()._maxHealth));
             Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.PreferredBackBufferHeight - 90), new Point(300, 60)), Color.Blue, droneFleet.GetActiveDrone()._maxShield));
             Bars.Add(new Bar(new Rectangle(new Point(Global.GraphicsManager.PreferredBackBufferWidth-400, Global.GraphicsManager.PreferredBackBufferHeight - 750), new Point(300, 60)), Color.Green, 10000));
-            _upgradeDialog = new Dialog(Global.GraphicsManager.PreferredBackBufferWidth/2-150, Global.GraphicsManager.PreferredBackBufferHeight - 750, 60,350,8,false);
-            _upgradeVincinityDialog = new Dialog(Global.GraphicsManager.PreferredBackBufferWidth / 2 - 150, Global.GraphicsManager.PreferredBackBufferHeight - 680, 60, 350, 8, false);
-            _scoreDialog = new Dialog(50, Global.GraphicsManager.PreferredBackBufferHeight - 750, 60, 200, 8,false);
+            _upgradeDialog = new Dialog(Global.GraphicsManager.PreferredBackBufferWidth/2-150, Global.GraphicsManager.PreferredBackBufferHeight - 750, 48, 336, 8, false);
+            _upgradeVincinityDialog = new Dialog(Global.GraphicsManager.PreferredBackBufferWidth / 2 - 150, Global.GraphicsManager.PreferredBackBufferHeight - 680, 48, 336, 8, false);
+            _scoreDialog = new Dialog(50, Global.GraphicsManager.PreferredBackBufferHeight - 750, 48, 192, 8, false);
             _upgradeDialog.LoadContent();
             _scoreDialog.LoadContent();
             _upgradeVincinityDialog.LoadContent();
