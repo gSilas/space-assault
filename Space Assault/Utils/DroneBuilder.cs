@@ -10,7 +10,7 @@ namespace SpaceAssault.Utils
 
     class DroneBuilder
     {
-        private List<Drone> _droneShips;
+        public List<Drone> _droneShips;
 
         public List<Bullet> _bulletList;
         private List<Bullet> _removeBulletList;

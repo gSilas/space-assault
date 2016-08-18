@@ -26,6 +26,7 @@ namespace SpaceAssault.Entities
         public int _health;
         public int _armor;
         public int _makeDmg;
+        public new Vector3 Position;
 
         //shieldLogic
         public int _maxShield;

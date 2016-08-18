@@ -39,7 +39,7 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MaxStartSize = 50;
 
             settings.MinEndSize = 80;
-            settings.MaxEndSize = 100;
+            settings.MaxEndSize = 90;
 
             // Use additive blending.
             settings.BlendState = BlendState.Additive;
