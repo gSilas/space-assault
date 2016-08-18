@@ -56,7 +56,7 @@ namespace SpaceAssault.Utils
             {
                 for (int y = _size.X; y < Global.GraphicsManager.GraphicsDevice.Viewport.Height - _size.X; y += _size.X)
                 {
-                    Global.UIBatch.Draw(_screen, new Rectangle(new Point(x, y),_size), null, new Color(1f,1f,1f,0.07f),MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
+                    //Global.UIBatch.Draw(_screen, new Rectangle(new Point(x, y),_size), null, new Color(1f,1f,1f,0.07f),MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
                 }
             }
 

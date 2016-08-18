@@ -45,18 +45,21 @@ namespace SpaceAssault.Screens
         ParticleSystem explosionParticles;
         ParticleSystem explosionSmokeParticles;
         ParticleSystem projectileTrailParticles;
-        ParticleSystem smokePlumeParticles;
+        ParticleSystem SmokeParticles;
         ParticleSystem fireParticles;
+
+        Vector3 explosionPosition = Vector3.Zero;
+        double explosionTimeDelta = 0;
 
         // Switch between three different visual effects.
         enum ParticleState
         {
             Explosions,
-            SmokePlume,
+            Smoke,
             RingOfFire,
         };
 
-        ParticleState currentState = ParticleState.SmokePlume;
+        ParticleState currentState = ParticleState.Smoke;
 
         // The explosions effect works by firing projectiles up into the
         // air, so we need to keep track of all the active projectiles.
@@ -92,7 +95,7 @@ namespace SpaceAssault.Screens
             explosionParticles = new ExplosionParticleSystem();
             explosionSmokeParticles = new ExplosionSmokeParticleSystem();
             projectileTrailParticles = new ProjectileTrailParticleSystem();
-            smokePlumeParticles = new SmokePlumeParticleSystem();
+            SmokeParticles = new SmokeParticleSystem();
             fireParticles = new FireParticleSystem();
         }
 
@@ -130,7 +133,6 @@ namespace SpaceAssault.Screens
         {
             base.Update(gameTime, otherScreenHasFocus, false);
 
-
             // Gradually fade in or out depending on whether we are covered by the pause screen.
             if (coveredByOtherScreen)
                 _pauseAlpha = Math.Min(_pauseAlpha + 1f / 32, 1);
@@ -156,25 +158,13 @@ namespace SpaceAssault.Screens
                 // Particle
                 if (_station._health < 10000)
                 {
-                    switch (currentState)
-                    {
-                        case ParticleState.Explosions:
-                            UpdateExplosions(gameTime);
-                            break;
-
-                        case ParticleState.SmokePlume:
-                            UpdateSmokePlume();
-                            break;
-
-                        case ParticleState.RingOfFire:
-                            UpdateFire();
-                            break;
-                    }
-
-
-                    UpdateProjectiles(gameTime);
-                    smokePlumeParticles.Update(gameTime);
+                    UpdateSmoke();
+                    SmokeParticles.Update(gameTime);
                 }
+
+                UpdateProjectiles(gameTime);
+                explosionParticles.Update(gameTime);
+
 
                 // if station dies go back to MainMenu
                 // TODO: change to EndScreen and HighScore list)
@@ -215,7 +205,14 @@ namespace SpaceAssault.Screens
                             ship.Health -= _droneFleet.GetActiveDrone().Gun.makeDmg;
                             _removeBullets.Add(bullet);
                             Global.HighScorePoints += 20;
-                            PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
+
+                            if (ship.Health <= 0)
+                            {
+                                explosionPosition = ship.Position;
+                                explosionTimeDelta = gameTime.TotalGameTime.TotalSeconds;
+                                PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
+                            }
+
                             break;
                         }
                     }
@@ -296,6 +293,8 @@ namespace SpaceAssault.Screens
                     {
                         if (Collider3D.IntersectionSphere(bullet, ast))
                         {
+                            explosionPosition = ast.Position;
+                            explosionTimeDelta = gameTime.TotalGameTime.TotalSeconds;
                             _removeAsteroid.Add(ast);
                             _removeBullets.Add(bullet);
                             Global.HighScorePoints += 50;
@@ -303,12 +302,18 @@ namespace SpaceAssault.Screens
                             break;
                         }
                     }
+
+                    if (gameTime.TotalGameTime.TotalSeconds - explosionTimeDelta < 0.5)
+                    {
+                        UpdateExplosions(gameTime, explosionPosition, Vector3.Zero);
+                    }
                 }
 
                 foreach (var ast in _removeAsteroid)
                 {
                     _asteroidField._asteroidList.Remove(ast);
                 }
+
                 foreach (var bullet in _removeBullets)
                 {
                     _droneFleet._bulletList.Remove(bullet);
@@ -348,7 +353,7 @@ namespace SpaceAssault.Screens
         //#################################
         public override void Draw(GameTime gameTime)
         {
-            Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target, Color.DarkBlue, 0, 0);
+            Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0);
 
             // calling draw of objects where necessary
             _back.Draw(90, new Vector3(-5000, -2500, -5000));
@@ -373,9 +378,12 @@ namespace SpaceAssault.Screens
 
             if (_station._health < 10000)
             {
-                smokePlumeParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
-                smokePlumeParticles.Draw(gameTime);
+                SmokeParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+                SmokeParticles.Draw(gameTime);
             }
+
+            explosionParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+            explosionParticles.Draw(gameTime);
 
             //if drone is dead fade to black
             if (_deadDroneAlpha > 0)
@@ -408,7 +416,7 @@ namespace SpaceAssault.Screens
         //#################################
         // Helper Update - Explosion
         //#################################
-        void UpdateExplosions(GameTime gameTime)
+        void UpdateExplosions(GameTime gameTime, Vector3 position, Vector3 velocity)
         {
             timeToNextProjectile -= gameTime.ElapsedGameTime;
 
@@ -416,10 +424,10 @@ namespace SpaceAssault.Screens
             {
                 // Create a new projectile once per second. The real work of moving
                 // and creating particles is handled inside the Projectile class.
-                projectiles.Add(new Projectile(explosionParticles,
-                                               explosionSmokeParticles,
-                                               projectileTrailParticles));
+                //projectiles.Add(new Projectile(explosionParticles,explosionSmokeParticles,projectileTrailParticles));
+                explosionParticles.AddParticle(position, velocity);
 
+               
                 timeToNextProjectile += TimeSpan.FromSeconds(1);
             }
         }
@@ -449,10 +457,10 @@ namespace SpaceAssault.Screens
         //#################################
         // Helper Update - Smoke
         //#################################
-        void UpdateSmokePlume()
+        void UpdateSmoke()
         {
             // This is trivial: we just create one new smoke particle per frame.
-            smokePlumeParticles.AddParticle(Vector3.Zero, Vector3.Zero);
+            SmokeParticles.AddParticle(Vector3.Zero, Vector3.Zero);
         }
 
         //#################################
@@ -469,7 +477,7 @@ namespace SpaceAssault.Screens
             }
 
             // Create one smoke particle per frmae, too.
-            smokePlumeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+            SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
         }
 
         //#################################

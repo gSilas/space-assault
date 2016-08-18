@@ -38,9 +38,9 @@ namespace SpaceAssault.Screens
         // transition from the game back to the main menu screen.
         void ConfirmQuitMessageBoxAccepted(object sender, EventArgs e)
         {
-            //LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),new MainMenuScreen());
+            LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),new MainMenuScreen());
             //LoadingScreen.Load(ScreenManager, false, null, new MainMenuScreen());
-            ScreenManager.Game.Exit();
+            //ScreenManager.Game.Exit();
         }
 
     }

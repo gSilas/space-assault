@@ -9,9 +9,9 @@ namespace SpaceAssault.Utils.Particle.Settings
     /// <summary>
     /// Custom particle system for creating a giant plume of long lasting smoke.
     /// </summary>
-    class SmokePlumeParticleSystem : ParticleSystem
+    class SmokeParticleSystem : ParticleSystem
     {
-        public SmokePlumeParticleSystem()
+        public SmokeParticleSystem()
         { }
 
 

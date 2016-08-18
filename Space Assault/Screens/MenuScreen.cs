@@ -219,7 +219,7 @@ namespace SpaceAssault.Screens
                                    titleOrigin, titleScale, SpriteEffects.None, 0);
 
             Global.SpriteBatch.End();
-            _frame.Draw(false);
+            //_frame.Draw(false);
         }
     }
 }

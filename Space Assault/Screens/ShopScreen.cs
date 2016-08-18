@@ -130,7 +130,6 @@ namespace SpaceAssault.Screens
         public void Draw()
         {
             Labels[0].Draw(this._droneFleet._updatePoints);
-
         }
 
     }

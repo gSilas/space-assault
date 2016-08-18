@@ -130,7 +130,7 @@
     <Compile Include="Utils\Particle\Settings\ProjectileTrailParticleSystem.cs" />
     <Compile Include="Utils\Particle\ParticleVertex.cs" />
     <Compile Include="Utils\Particle\Projectile.cs" />
-    <Compile Include="Utils\Particle\Settings\SmokePlumeParticleSystem.cs" />
+    <Compile Include="Utils\Particle\Settings\SmokeParticleSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="irrKlang.NET4, Version=1.0.5235.17346, Culture=neutral, processorArchitecture=x86">

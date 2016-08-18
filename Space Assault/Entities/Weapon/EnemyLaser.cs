@@ -41,17 +41,7 @@ namespace SpaceAssault.Entities.Weapon
                 _shootSound.Volume = 0.5f;
                 _shootSound.Paused = false;
 
-                switch (ShopScreen._droneDamageLevel)
-                {
-                    case 1:
-                        bulletList.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel, makeDmg, DmgStation));
-                        break;
-                    case 2:
-                        bulletList.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel2, makeDmg, DmgStation));
-                        break;
-                    default:
-                        break;
-                }
+                bulletList.Add(new Bullet(position, droneRotateMatrix, travelspeed, BulletModel, makeDmg, DmgStation));
                 LastShotTime = gameTime.TotalGameTime;
                 return true;
             }
