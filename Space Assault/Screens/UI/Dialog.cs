@@ -39,6 +39,14 @@ namespace SpaceAssault.Screens.UI
         {
             Global.UIBatch.Begin();
 
+            for (int x = _x-10; x < _width + _x; x += _size.X)
+            {
+                for (int y = _y-10; y < _height + _y; y += _size.X)
+                {
+                    Global.UIBatch.Draw(_space, new Rectangle(new Point(x , y), _size), null, Color.DarkGray, MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
+                }
+            }
+
             Global.UIBatch.Draw(_edge, new Rectangle(_pos, _size), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
             Global.UIBatch.Draw(_edge, new Rectangle(new Point(_x + _width, _y),_size), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
             Global.UIBatch.Draw(_edge, new Rectangle(new Point(_x, _y + _height), _size), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);

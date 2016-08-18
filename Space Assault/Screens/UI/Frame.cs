@@ -20,7 +20,7 @@ namespace SpaceAssault.Utils
             //64x64 TILES
             _edge = Global.ContentManager.Load<Texture2D>("Images/UI/frame_edge");
             _frame = Global.ContentManager.Load<Texture2D>("Images/UI/frame_line");
-            _screen = Global.ContentManager.Load<Texture2D>("Images/UI/frame_screenod");
+            _screen = Global.ContentManager.Load<Texture2D>("Images/UI/frame_screenoe");
             _crack = Global.ContentManager.Load<Texture2D>("Images/UI/screen_crack");
             _rand = new Random();
             _x = _rand.Next(0, Global.GraphicsManager.GraphicsDevice.Viewport.Width - _crack.Width/2);
@@ -56,7 +56,7 @@ namespace SpaceAssault.Utils
             {
                 for (int y = _size.X; y < Global.GraphicsManager.GraphicsDevice.Viewport.Height - _size.X; y += _size.X)
                 {
-                    //Global.UIBatch.Draw(_screen, new Rectangle(new Point(x, y),_size), null, new Color(1f,1f,1f,0.07f),MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
+                    Global.UIBatch.Draw(_screen, new Rectangle(new Point(x, y),_size), null, new Color(1f,1f,1f,0.07f),MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
                 }
             }
 
