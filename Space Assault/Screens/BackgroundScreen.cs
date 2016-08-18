@@ -54,8 +54,8 @@ namespace SpaceAssault.Screens
             _id2 = _rand.Next(10000, 99999);
 
             //Dialogs + Background + Frame
-            _welcomedialog = new Dialog(100, 600, 128, 832);
-            _pilotdialog = new Dialog(800, 50, 128, 320);
+            _welcomedialog = new Dialog(100, 600, 128, 832, 4,true);
+            _pilotdialog = new Dialog(800, 50, 128, 320, 4,true);
             _pilotdialog.LoadContent();
             _welcomedialog.LoadContent();
             //Camera

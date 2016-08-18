@@ -16,14 +16,18 @@ namespace SpaceAssault.Screens.UI
         private int _height;
         private int _width;
         private Point _size;
+        private int _scale;
+        private bool _shadow;
 
-        public Dialog(int x, int y, int height, int width)
+        public Dialog(int x, int y, int height, int width,int scale,bool shadow)
         {
             _pos = new Point(x,y);
             _x = x;
             _y = y;
             _height = height;
             _width = width;
+            _scale = scale;
+            _shadow = shadow;
         }
 
         public void LoadContent()
@@ -32,19 +36,23 @@ namespace SpaceAssault.Screens.UI
             _edge = Global.ContentManager.Load<Texture2D>("Images/UI/dialog_edge");
             _frame = Global.ContentManager.Load<Texture2D>("Images/UI/dialog_frame");
             _frameButtons = Global.ContentManager.Load<Texture2D>("Images/UI/dialog_options");
-            _size = new Point(_frame.Width / 2, _frame.Height / 2);
+            _size = new Point(_frame.Width / _scale, _frame.Height / _scale);
         }
 
         public void Draw(string msg)
         {
             Global.UIBatch.Begin();
 
-            for (int x = _x-10; x < _width + _x; x += _size.X)
+            if (_shadow)
             {
-                for (int y = _y-10; y < _height + _y; y += _size.X)
+                for (int x = _x - 10; x < _width + _x; x += _size.X)
                 {
-                    Global.UIBatch.Draw(_space, new Rectangle(new Point(x , y), _size), null, Color.DarkGray, MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
+                    for (int y = _y - 10; y < _height + _y; y += _size.X)
+                    {
+                        Global.UIBatch.Draw(_space, new Rectangle(new Point(x, y), _size), null, Color.DarkGray, MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
+                    }
                 }
+
             }
 
             Global.UIBatch.Draw(_edge, new Rectangle(_pos, _size), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
