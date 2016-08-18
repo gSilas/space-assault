@@ -12,8 +12,7 @@ namespace SpaceAssault.Utils.Particle
     /// </summary>
     class Trail
     {
-        const float trailParticlesPerSecond = 100;
-        const float projectileLifespan = 1.5f;
+        const float trailParticlesPerSecond = 150;
 
         ParticleEmitter trailEmitter;
         Vector3 position = Vector3.Zero;

@@ -16,9 +16,9 @@ namespace SpaceAssault.Utils.Particle.Settings
         {
             settings.TextureName = "explosion";
 
-            settings.MaxParticles = 50;
+            settings.MaxParticles = 200;
 
-            settings.Duration = TimeSpan.FromSeconds(0.6);
+            settings.Duration = TimeSpan.FromSeconds(0.8);
             settings.DurationRandomness = 0;
 
             settings.MinHorizontalVelocity = 20;
@@ -29,8 +29,8 @@ namespace SpaceAssault.Utils.Particle.Settings
 
             settings.EndVelocity = 0;
 
-            settings.MinColor = Color.DarkGray;
-            settings.MaxColor = Color.Gray;
+            settings.MinColor = Color.White;
+            settings.MaxColor = Color.White;
 
             settings.MinRotateSpeed = -1;
             settings.MaxRotateSpeed = 1;

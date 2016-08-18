@@ -47,9 +47,11 @@ namespace SpaceAssault.Screens
         ParticleSystem projectileTrailParticles;
         ParticleSystem SmokeParticles;
         ParticleSystem fireParticles;
+        ParticleSystem TrailParticles;
 
         Vector3 explosionPosition = Vector3.Zero;
-        double explosionTimeDelta = 0;
+        double explosionEffectDelta = 0;
+        bool explosionTriggered = false;
 
         // Switch between three different visual effects.
         enum ParticleState
@@ -65,6 +67,9 @@ namespace SpaceAssault.Screens
         // air, so we need to keep track of all the active projectiles.
         List<Projectile> projectiles = new List<Projectile>();
         TimeSpan timeToNextProjectile = TimeSpan.Zero;
+
+        // Generate List for the Trail
+        List<Trail> trail = new List<Trail>();
 
         // Random number generator for the fire effect.
         Random random = new Random();
@@ -91,12 +96,14 @@ namespace SpaceAssault.Screens
 
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
-            // Contruct Particle
+            // Construct Particle
             explosionParticles = new ExplosionParticleSystem();
             explosionSmokeParticles = new ExplosionSmokeParticleSystem();
             projectileTrailParticles = new ProjectileTrailParticleSystem();
             SmokeParticles = new SmokeParticleSystem();
             fireParticles = new FireParticleSystem();
+            TrailParticles = new TrailParticleSystem();
+            trail.Add(new Trail(TrailParticles));
         }
 
 
@@ -209,7 +216,7 @@ namespace SpaceAssault.Screens
                             if (ship.Health <= 0)
                             {
                                 explosionPosition = ship.Position;
-                                explosionTimeDelta = gameTime.TotalGameTime.TotalSeconds;
+                                explosionTriggered = true;
                                 PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
                             }
 
@@ -256,6 +263,8 @@ namespace SpaceAssault.Screens
 
                     if (Collider3D.IntersectionSphere(_station, ast))
                     {
+                        explosionPosition = ast.Position;
+                        explosionTriggered = true;
                         ast.IsDead = true;
                         _removeAsteroid.Add(ast);
                         _station._health -= 10;
@@ -266,6 +275,8 @@ namespace SpaceAssault.Screens
                     {
                         if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
                         {
+                            explosionPosition = ast.Position;
+                            explosionTriggered = true;
                             ast.IsDead = true;
                             _removeAsteroid.Add(ast);
                             break;
@@ -294,7 +305,7 @@ namespace SpaceAssault.Screens
                         if (Collider3D.IntersectionSphere(bullet, ast))
                         {
                             explosionPosition = ast.Position;
-                            explosionTimeDelta = gameTime.TotalGameTime.TotalSeconds;
+                            explosionTriggered = true;
                             _removeAsteroid.Add(ast);
                             _removeBullets.Add(bullet);
                             Global.HighScorePoints += 50;
@@ -303,10 +314,19 @@ namespace SpaceAssault.Screens
                         }
                     }
 
-                    if (gameTime.TotalGameTime.TotalSeconds - explosionTimeDelta < 0.5)
-                    {
-                        UpdateExplosions(gameTime, explosionPosition, Vector3.Zero);
-                    }
+                        if (explosionTriggered)
+                        {
+                            explosionEffectDelta++;
+                            UpdateExplosions(gameTime, explosionPosition, Vector3.Zero);
+
+                            if (explosionEffectDelta > 3)
+                            {
+                                explosionTriggered = false;
+                                explosionEffectDelta = 0;
+                            }
+                        }
+
+
                 }
 
                 foreach (var ast in _removeAsteroid)
@@ -319,6 +339,13 @@ namespace SpaceAssault.Screens
                     _droneFleet._bulletList.Remove(bullet);
                     _fleet._bulletList.Remove(bullet);
                 }
+
+                foreach (var drone in _droneFleet._droneShips)
+                {
+                    UpdateTrail(gameTime, drone.Position);
+                    TrailParticles.Update(gameTime);
+                }
+
             }
         }
 
@@ -385,6 +412,9 @@ namespace SpaceAssault.Screens
             explosionParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
             explosionParticles.Draw(gameTime);
 
+            TrailParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+            TrailParticles.Draw(gameTime);
+
             //if drone is dead fade to black
             if (_deadDroneAlpha > 0)
             {
@@ -418,18 +448,9 @@ namespace SpaceAssault.Screens
         //#################################
         void UpdateExplosions(GameTime gameTime, Vector3 position, Vector3 velocity)
         {
-            timeToNextProjectile -= gameTime.ElapsedGameTime;
-
-            if (timeToNextProjectile <= TimeSpan.Zero)
-            {
-                // Create a new projectile once per second. The real work of moving
-                // and creating particles is handled inside the Projectile class.
-                //projectiles.Add(new Projectile(explosionParticles,explosionSmokeParticles,projectileTrailParticles));
-                explosionParticles.AddParticle(position, velocity);
-
-
-                timeToNextProjectile += TimeSpan.FromSeconds(1);
-            }
+            // Create a new projectile once per second
+            //projectiles.Add(new Projectile(explosionParticles,explosionSmokeParticles,projectileTrailParticles));
+            explosionParticles.AddParticle(position, velocity);
         }
 
         //#################################
@@ -451,6 +472,17 @@ namespace SpaceAssault.Screens
                     // Advance to the next projectile.
                     i++;
                 }
+            }
+        }
+
+        //#################################
+        // Helper Update - Projectiles
+        //#################################
+        void UpdateTrail(GameTime gameTime, Vector3 position)
+        {
+            for (int i = 0;  i < trail.Count; i++)
+            {
+                trail[i].Update(gameTime, position);
             }
         }
 
