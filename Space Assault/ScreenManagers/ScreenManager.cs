@@ -119,7 +119,10 @@ namespace SpaceAssault.ScreenManagers
             Global.SpriteBatch.Draw(_crosshair, Mouse.GetState().Position.ToVector2() + new Vector2((_crosshair.Width + 1) / -2, _crosshair.Height / -2), Color.White);
 
             //FPS COUNTER
-            Global.SpriteBatch.DrawString(Global.GameFont, (1.0f / gameTime.ElapsedGameTime.TotalSeconds).ToString("N0"), new Vector2(3, 3), Color.LightGreen);
+            if (Global.FrameCounterIsEnabled)
+            {
+                Global.SpriteBatch.DrawString(Global.GameFont, (1.0f / gameTime.ElapsedGameTime.TotalSeconds).ToString("N0"), new Vector2(3, 3), Color.LightGreen);
+            }
             Global.SpriteBatch.End();
             Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         }

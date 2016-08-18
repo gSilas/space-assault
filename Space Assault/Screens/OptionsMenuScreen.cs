@@ -7,10 +7,11 @@ namespace SpaceAssault.Screens
     // in various hopefully useful ways.
     class OptionsMenuScreen : MenuScreen
     {
-        MenuEntry enumMenuEntry;
-        MenuEntry languageMenuEntry;
+        //MenuEntry enumMenuEntry;
+        //MenuEntry languageMenuEntry;
+        //MenuEntry staticNumberMenuEntry;
         MenuEntry fullscreenMenuEntry;
-        MenuEntry staticNumberMenuEntry;
+        MenuEntry frameCounterMenuEntry;
 
         enum enumMenu
         {
@@ -19,36 +20,37 @@ namespace SpaceAssault.Screens
             enum3,
         }
 
-        static enumMenu currentEnum = enumMenu.enum1;
-        static string[] languages = { "English", "Deutsch" };
-        static int currentLanguage = 0;
-        static bool fullscreen = false;
-        static int num = 42;
+        //static enumMenu currentEnum = enumMenu.enum1;
+        //static string[] languages = { "English", "Deutsch" };
+        //static int currentLanguage = 0;
+        //static int num = 42;
 
         // Constructor.
         public OptionsMenuScreen() : base("Options")
         {
             // Create our menu entries.me
-            enumMenuEntry = new MenuEntry(string.Empty);
-            languageMenuEntry = new MenuEntry(string.Empty);
+            //enumMenuEntry = new MenuEntry(string.Empty);
+            //languageMenuEntry = new MenuEntry(string.Empty);
+            //staticNumberMenuEntry = new MenuEntry(string.Empty);
             fullscreenMenuEntry = new MenuEntry(string.Empty);
-            staticNumberMenuEntry = new MenuEntry(string.Empty);
-
+            frameCounterMenuEntry = new MenuEntry(string.Empty);
             SetMenuEntryText();
             MenuEntry back = new MenuEntry("Back");
 
             // Hook up menu event handlers.
-            enumMenuEntry.Selected += enumMenuEntrySelected;
-            languageMenuEntry.Selected += LanguageMenuEntrySelected;
+            //enumMenuEntry.Selected += enumMenuEntrySelected;
+            //languageMenuEntry.Selected += LanguageMenuEntrySelected;
+            //staticNumberMenuEntry.Selected += staticNumberMenuEntrySelected;
             fullscreenMenuEntry.Selected += fullscreenMenuEntrySelected;
-            staticNumberMenuEntry.Selected += staticNumberMenuEntrySelected;
+            frameCounterMenuEntry.Selected += frameCounterMenuEntrySelected;
             back.Selected += OnCancel;
 
             // Add entries to the menu.
             //MenuEntries.Add(enumMenuEntry);
             //MenuEntries.Add(languageMenuEntry);
-            MenuEntries.Add(fullscreenMenuEntry);
             //MenuEntries.Add(staticNumberMenuEntry);
+            MenuEntries.Add(fullscreenMenuEntry);
+            MenuEntries.Add(frameCounterMenuEntry);
             MenuEntries.Add(back);
         }
 
@@ -56,12 +58,27 @@ namespace SpaceAssault.Screens
         // Fills in the latest values for the options screen menu text.
         void SetMenuEntryText()
         {
-            enumMenuEntry.Text = "Preferred enum: " + currentEnum;
-            languageMenuEntry.Text = "Language: " + languages[currentLanguage];
-            fullscreenMenuEntry.Text = "Fullscreen: " + (fullscreen ? "on" : "off");
-            staticNumberMenuEntry.Text = "Number: " + num;
+            //enumMenuEntry.Text = "Preferred enum: " + currentEnum;
+            //languageMenuEntry.Text = "Language: " + languages[currentLanguage];
+            //staticNumberMenuEntry.Text = "Number: " + num;
+            fullscreenMenuEntry.Text = "Fullscreen: " + (Global.GraphicsManager.IsFullScreen ? "on" : "off");
+            frameCounterMenuEntry.Text = "FPS Counter: " + (Global.FrameCounterIsEnabled ? "on" : "off");
         }
 
+        // Event handler for when the Fullscreen menu entry is selected.
+        void fullscreenMenuEntrySelected(object sender, EventArgs e)
+        {
+            Global.GraphicsManager.ToggleFullScreen();
+            SetMenuEntryText();
+        }
+
+        void frameCounterMenuEntrySelected(object sender, EventArgs e)
+        {
+            Global.FrameCounterIsEnabled = !Global.FrameCounterIsEnabled;
+            SetMenuEntryText();
+        }
+
+        /*
         // Event handler for when the Enum menu entry is selected.
         void enumMenuEntrySelected(object sender, EventArgs e)
         {
@@ -81,21 +98,12 @@ namespace SpaceAssault.Screens
             SetMenuEntryText();
         }
 
-
-        // Event handler for when the Fullscreen menu entry is selected.
-        void fullscreenMenuEntrySelected(object sender, EventArgs e)
-        {
-            fullscreen = !fullscreen;
-            SetMenuEntryText();
-            Global.GraphicsManager.ToggleFullScreen();
-        }
-
-
         // Event handler for when the Number menu entry is selected.
         void staticNumberMenuEntrySelected(object sender, EventArgs e)
         {
             num++;
             SetMenuEntryText();
         }
+        */
     }
 }

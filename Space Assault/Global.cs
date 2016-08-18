@@ -35,5 +35,9 @@ namespace SpaceAssault
         //highscore points
         public static int HighScorePoints;
 
+        //OPTIONS 
+        // TODO: should be read from a settings file
+        public static bool FrameCounterIsEnabled = false;
+
     }
 }
