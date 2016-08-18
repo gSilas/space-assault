@@ -21,7 +21,7 @@ namespace SpaceAssault.Entities.Weapon
             DmgStation = false;
             makeDmg = 10;
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
-            _shootSource = _engine.AddSoundSourceFromFile("Content/Media/Music/Laser_Shoot.wav", StreamMode.AutoDetect, true);
+            _shootSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Laser_Shoot.wav", StreamMode.AutoDetect, true);
         }
         
         public override void LoadContent()

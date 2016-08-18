@@ -112,7 +112,7 @@ namespace SpaceAssault.Screens
             _asteroidField.LoadContent();
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
-            _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Music/Explosion.wav", StreamMode.AutoDetect, true);
+            _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
         }
 
         //#################################

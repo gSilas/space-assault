@@ -250,6 +250,11 @@ namespace SpaceAssault.Entities
                     _alternatingGunLogic = true;
                 }
             }
+
+            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+            {
+                Gun.Shoot(gameTime, Position - RotationMatrix.Forward * 11.0f, RotationMatrix, 4f, ref bulletList);
+            }
         }
 
         public override void Draw()

@@ -330,29 +330,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/fadenkreuz_1.png
 
-#begin Media/Music/SUBSET_-_05_-_Nazca.mp3
-/importer:Mp3Importer
-/processor:PassThroughProcessor
-/build:Media/Music/SUBSET_-_05_-_Nazca.mp3
-
-#begin Media/Music/Laser_Shoot_try.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Media/Music/Laser_Shoot_try.wav
-
-#begin Media/Music/explosion.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Media/Music/explosion.png
-
 #begin Effects/ParticleEffect.fx
 /importer:EffectImporter
 /processor:EffectProcessor
