@@ -87,7 +87,7 @@ namespace SpaceAssault.Utils
             // adding fleets
             if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(2000))))
             {
-                Console.WriteLine(_enemyShips.Count+"<"+_maxShipCount);
+                //Console.WriteLine(_enemyShips.Count+"<"+_maxShipCount);
                 //maximale Anzahl an Flotten
                 if (this._enemyShips.Count<_maxShipCount)
                     Formation(targetPosition);

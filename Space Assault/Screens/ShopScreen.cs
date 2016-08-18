@@ -117,8 +117,9 @@ namespace SpaceAssault.Screens
         {
             if (this._droneFleet._updatePoints > 0)
             {
-                _droneArmorLevel++;
+                _droneShieldLevel++;
                 this._droneFleet._maxShield+=50;
+                //Console.WriteLine(this._droneFleet._maxShield);
                 this._droneFleet._updatePoints--;
                 SetMenuEntryText();
             }
