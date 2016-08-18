@@ -47,7 +47,6 @@ namespace SpaceAssault.Screens
         ParticleSystem projectileTrailParticles;
         ParticleSystem SmokeParticles;
         ParticleSystem fireParticles;
-        ParticleSystem TrailParticles;
 
         Vector3 explosionPosition = Vector3.Zero;
         double explosionEffectDelta = 0;
@@ -67,9 +66,6 @@ namespace SpaceAssault.Screens
         // air, so we need to keep track of all the active projectiles.
         List<Projectile> projectiles = new List<Projectile>();
         TimeSpan timeToNextProjectile = TimeSpan.Zero;
-
-        // Generate List for the Trail
-        List<Trail> trail = new List<Trail>();
 
         // Random number generator for the fire effect.
         Random random = new Random();
@@ -102,8 +98,6 @@ namespace SpaceAssault.Screens
             projectileTrailParticles = new ProjectileTrailParticleSystem();
             SmokeParticles = new SmokeParticleSystem();
             fireParticles = new FireParticleSystem();
-            TrailParticles = new TrailParticleSystem();
-            trail.Add(new Trail(TrailParticles));
         }
 
 
@@ -340,12 +334,6 @@ namespace SpaceAssault.Screens
                     _fleet._bulletList.Remove(bullet);
                 }
 
-                foreach (var drone in _droneFleet._droneShips)
-                {
-                    UpdateTrail(gameTime, drone.Position);
-                    TrailParticles.Update(gameTime);
-                }
-
             }
         }
 
@@ -406,14 +394,11 @@ namespace SpaceAssault.Screens
             if (_station._health < 10000)
             {
                 SmokeParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
-                SmokeParticles.Draw(gameTime);
+                SmokeParticles.Draw();
             }
 
             explosionParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
-            explosionParticles.Draw(gameTime);
-
-            TrailParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
-            TrailParticles.Draw(gameTime);
+            explosionParticles.Draw();
 
             //if drone is dead fade to black
             if (_deadDroneAlpha > 0)
@@ -472,17 +457,6 @@ namespace SpaceAssault.Screens
                     // Advance to the next projectile.
                     i++;
                 }
-            }
-        }
-
-        //#################################
-        // Helper Update - Projectiles
-        //#################################
-        void UpdateTrail(GameTime gameTime, Vector3 position)
-        {
-            for (int i = 0;  i < trail.Count; i++)
-            {
-                trail[i].Update(gameTime, position);
             }
         }
 

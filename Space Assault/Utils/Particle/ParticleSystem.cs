@@ -268,7 +268,7 @@ namespace SpaceAssault.Utils.Particle
         /// <summary>
         /// Draws the particle system.
         /// </summary>
-        public void Draw(GameTime gameTime)
+        public void Draw()
         {
             GraphicsDevice device = Global.GraphicsManager.GraphicsDevice;
 

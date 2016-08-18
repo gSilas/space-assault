@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities;
 using SpaceAssault.Entities.Weapon;
+using SpaceAssault.Utils.Particle;
+using SpaceAssault.Utils.Particle.Settings;
 
 namespace SpaceAssault.Utils
 {
@@ -20,6 +22,7 @@ namespace SpaceAssault.Utils
         private int _maxShipCount=5;
 
         protected TimeSpan _globalTimeSpan;
+
 
         public FleetBuilder()
         {
@@ -57,6 +60,14 @@ namespace SpaceAssault.Utils
                     _removeAEnemys.Add(ship);
                     continue;
                 }
+
+                // Trail
+                for (int i = 0; i < ship.trail.Count; i++)
+                {
+                    ship.trail[i].Update(gameTime, ship.Position);
+                }
+                ship.TrailParticles.Update(gameTime);
+
                 ship.Intelligence(gameTime, targetPosition, ref _bulletList);
                 ship.Update(gameTime);
             }
@@ -85,6 +96,7 @@ namespace SpaceAssault.Utils
         }
         public void Draw()
         {
+
             foreach (Bullet bullet in _bulletList)
             {
                 bullet.Draw();
@@ -92,6 +104,8 @@ namespace SpaceAssault.Utils
 
             foreach (var ship in _enemyShips)
             {
+                ship.TrailParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+                ship.TrailParticles.Draw();
                 ship.Draw();
             }
         }

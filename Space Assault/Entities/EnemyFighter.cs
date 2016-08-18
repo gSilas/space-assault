@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities.Weapon;
 using SpaceAssault.Utils;
+using SpaceAssault.Utils.Particle;
+using SpaceAssault.Utils.Particle.Settings;
 
 namespace SpaceAssault.Entities
 {
@@ -14,6 +16,9 @@ namespace SpaceAssault.Entities
         {
             SpawnPos = position;
             Position = position;
+            trail = new List<Trail>();
+            TrailParticles = new TrailParticleSystem();
+            trail.Add(new Trail(TrailParticles));
         }
 
         public override void Initialize()

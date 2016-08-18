@@ -6,6 +6,7 @@ using SpaceAssault.Entities.Weapon;
 
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
+using SpaceAssault.Utils.Particle;
 
 namespace SpaceAssault.Entities
 {
@@ -19,6 +20,9 @@ namespace SpaceAssault.Entities
   
         protected bool isDead;
         public AWeapon Gun;
+
+        public ParticleSystem TrailParticles;
+        public List<Trail> trail;
 
 
         public bool IsDead

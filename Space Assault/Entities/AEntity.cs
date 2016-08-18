@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
+using SpaceAssault.Utils.Particle;
+using System.Collections.Generic;
 
 namespace SpaceAssault.Entities
 {
@@ -12,6 +14,9 @@ namespace SpaceAssault.Entities
         private Matrix _world;
         private float _scale = 1;
         private BoundingSphere[] _spheres;
+
+        public ParticleSystem TrailParticles;
+        public List<Trail> trail;
 
         public Model Model
         {

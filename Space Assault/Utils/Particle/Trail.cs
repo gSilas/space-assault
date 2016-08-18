@@ -10,7 +10,7 @@ namespace SpaceAssault.Utils.Particle
     /// steady stream of trail particles behind it. After a while it explodes,
     /// creating a sudden burst of explosion and smoke particles.
     /// </summary>
-    class Trail
+    public class Trail
     {
         const float trailParticlesPerSecond = 150;
 

@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Input;
 using SpaceAssault.Entities.Weapon;
 using System.Collections.Generic;
 using SpaceAssault.Utils;
+using SpaceAssault.Utils.Particle;
+using SpaceAssault.Utils.Particle.Settings;
 
 /// <summary>
 ///  Movement, Schießen, Health, Sterben, neu Spawnen.
@@ -52,6 +54,9 @@ namespace SpaceAssault.Entities
             _maxHealth = maxHealth;
             _armor = armor;
             _maxShield = maxShield;
+            trail = new List<Trail>();
+            TrailParticles = new TrailParticleSystem();
+            trail.Add(new Trail(TrailParticles));
 
         }
 

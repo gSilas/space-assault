@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities;
 using SpaceAssault.Entities.Weapon;
+using SpaceAssault.Utils.Particle;
+using SpaceAssault.Utils.Particle.Settings;
 
 namespace SpaceAssault.Utils
 {
@@ -55,6 +57,12 @@ namespace SpaceAssault.Utils
             foreach (var drone in _droneShips)
             {
                 drone.Update(gameTime);
+                for (int i = 0; i < drone.trail.Count; i++)
+                {
+                    drone.trail[i].Update(gameTime, drone.Position);
+                }
+
+                drone.TrailParticles.Update(gameTime);
             }
 
             if (GetActiveDrone().IsNotDead)
@@ -72,6 +80,8 @@ namespace SpaceAssault.Utils
 
             foreach (var ship in _droneShips)
             {
+                ship.TrailParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+                ship.TrailParticles.Draw();
                 ship.Draw();
             }
         }
