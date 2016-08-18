@@ -377,11 +377,6 @@ namespace SpaceAssault.Screens
             _asteroidField.Draw();
             _fleet.Draw();
             _ui.Draw(_droneFleet);
-            if (_station._health > 1000)
-            {
-                _frame.Draw(false);
-            }
-            else { _frame.Draw(true); }
 
             // Particle
             /*
@@ -414,6 +409,13 @@ namespace SpaceAssault.Screens
                 float alpha = MathHelper.Lerp(1f - TransitionAlpha, 1f, _pauseAlpha / 2);
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
+
+            //FRAME ALWAYS LAST
+            if (_station._health > 1000)
+            {
+                _frame.Draw(false);
+            }
+            else { _frame.Draw(true); }
         }
 
         //#################################
