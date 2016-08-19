@@ -58,7 +58,7 @@ namespace SpaceAssault.Entities
 
             if (distanceToTarged < 150)
             {
-                Gun.Shoot(gameTime, Weapon.BulletType.EnemyLazer, gunMakeDmg, Position, RotationMatrix, ref bulletList);
+                Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, gunMakeDmg, Position, RotationMatrix, ref bulletList);
             }
         }
 

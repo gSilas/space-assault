@@ -96,7 +96,7 @@ namespace SpaceAssault.Entities
 
             if (distanceToStation < 400 && neuerAnflug == false)
             {
-                Gun.Shoot(gameTime, Weapon.BulletType.PhotonBomb, gunMakeDmg, Position - RotationMatrix.Forward * 22.0f, RotationMatrix, ref bulletList);
+                Gun.Shoot(gameTime, Bullet.BulletType.PhotonBomb, gunMakeDmg, Position - RotationMatrix.Forward * 22.0f, RotationMatrix, ref bulletList);
             }
 
         }

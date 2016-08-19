@@ -141,7 +141,7 @@ namespace SpaceAssault.Entities
                     _health -= (howMuch - _armor);
             }
         }
-        public void HandleInput(GameTime gameTime, Weapon.BulletType curBullet, ref List<Bullet> bulletList)
+        public void HandleInput(GameTime gameTime, Bullet.BulletType curBullet, ref List<Bullet> bulletList)
         {
             /// <summary>
             /// handling rotation of the drone
@@ -256,7 +256,7 @@ namespace SpaceAssault.Entities
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
                 // TODO: New BulletType for Secondary Fire
-                GunSecondary.Shoot(gameTime, Weapon.BulletType.PhotonBomb, 100, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList);
+                GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList);
             }
         }
 

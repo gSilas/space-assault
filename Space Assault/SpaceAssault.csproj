@@ -82,6 +82,7 @@
     <Compile Include="Entities\Drone.cs" />
     <Compile Include="Entities\EnemyBomber.cs" />
     <Compile Include="Entities\EnemyFighter.cs" />
+    <Compile Include="Utils\ExplosionSpawner.cs" />
     <Compile Include="Entities\Station.cs" />
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Utils\Weapon.cs" />

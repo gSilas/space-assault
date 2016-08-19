@@ -28,6 +28,7 @@ namespace SpaceAssault.Screens
         private AsteroidBuilder _asteroidField;
         private FleetBuilder _fleet;
         private DroneBuilder _droneFleet;
+        private ExplosionSpawner _explosionSpawner;
         private int _deathCounter = 0;
         public static int _stationHeight = 80;
 
@@ -83,6 +84,7 @@ namespace SpaceAssault.Screens
             _asteroidField = new AsteroidBuilder();
             _fleet = new FleetBuilder();
             _droneFleet = new DroneBuilder();
+            _explosionSpawner = new ExplosionSpawner();
 
             //UI + Frame + BG 
             _ui = new InGameOverlay(_station);
@@ -150,6 +152,7 @@ namespace SpaceAssault.Screens
                 _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
                 Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + new Vector3(0, 250, 250), _droneFleet.GetActiveDrone().Position);
                 _fleet.Update(gameTime, _droneFleet.GetActiveDrone().Position);
+                _explosionSpawner.Update(gameTime);
 
                 //remove lists for collisions etc 
                 List<Asteroid> _removeAsteroid = new List<Asteroid>();
@@ -202,6 +205,10 @@ namespace SpaceAssault.Screens
                     {
                         if (Collider3D.IntersectionSphere(bullet, ship))
                         {
+                            if (bullet._bulletType == Bullet.BulletType.BigJoe)
+                            {
+                                _explosionSpawner.SpawnExplosion(bullet.Position, 80, 200);
+                            }
                             ship.Health -= bullet.makeDmg;
                             _removeBullets.Add(bullet);
                             Global.HighScorePoints += 20;
@@ -213,6 +220,35 @@ namespace SpaceAssault.Screens
                                 PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
                             }
 
+                            break;
+                        }
+                    }
+
+                }
+
+                /* explosions with asteroids, enemy ships */
+                foreach (var expl in _explosionSpawner._explList)
+                {
+                    foreach (var ship in _fleet._enemyShips)
+                    {
+                        if (Collider3D.IntersectionSphere(ship, expl))
+                        {
+                            ship.Health -= expl._makeDmg;
+                            Global.HighScorePoints += 20;
+                            PlayExplosionSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
+                            
+                        }
+                    }
+
+                    foreach (var ast in _asteroidField._asteroidList)
+                    {
+                        if (Collider3D.IntersectionSphere(expl, ast))
+                        {
+                            explosionPosition = ast.Position;
+                            explosionTriggered = true;
+                            ast.IsDead = true;
+                            _removeAsteroid.Add(ast);
+                            PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                             break;
                         }
                     }
@@ -239,9 +275,11 @@ namespace SpaceAssault.Screens
                 /* asteroids with drone(& its bullets) & station & other asteroids & enemy ships (& its bullets)*/
                 foreach (var ast in _asteroidField._asteroidList)
                 {
+                    if (ast.IsDead) continue;
                     if (gameTime.TotalGameTime > (ast._originTime.Add(TimeSpan.FromMinutes(0.7d))))
                     {
                         _removeAsteroid.Add(ast);
+                        continue;
                     }
 
                     if (Collider3D.IntersectionSphere(ast, _droneFleet.GetActiveDrone()))
@@ -303,21 +341,25 @@ namespace SpaceAssault.Screens
                             _removeBullets.Add(bullet);
                             Global.HighScorePoints += 50;
                             PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
+                            if (bullet._bulletType == Bullet.BulletType.BigJoe)
+                            {
+                                _explosionSpawner.SpawnExplosion(bullet.Position, 80, 200);
+                            }
                             break;
                         }
                     }
 
-                        if (explosionTriggered)
-                        {
-                            explosionEffectDelta++;
-                            UpdateExplosions(gameTime, explosionPosition, Vector3.Zero);
+                    if (explosionTriggered)
+                    {
+                        explosionEffectDelta++;
+                        UpdateExplosions(gameTime, explosionPosition, Vector3.Zero);
 
-                            if (explosionEffectDelta > 3)
-                            {
-                                explosionTriggered = false;
-                                explosionEffectDelta = 0;
-                            }
+                        if (explosionEffectDelta > 3)
+                        {
+                            explosionTriggered = false;
+                            explosionEffectDelta = 0;
                         }
+                    }
 
 
                 }

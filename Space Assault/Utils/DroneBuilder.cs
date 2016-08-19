@@ -20,7 +20,7 @@ namespace SpaceAssault.Utils
         public int _maxHealth;
         public int _armor;
         public int _maxShield;
-        private Weapon.BulletType curBullet;
+        private Bullet.BulletType curBullet;
 
         public DroneBuilder()
         {
@@ -31,7 +31,7 @@ namespace SpaceAssault.Utils
             _maxHealth = 100;
             _armor = 1;
             _maxShield = 100;
-            curBullet = Weapon.BulletType.YellowLazer;
+            curBullet = Bullet.BulletType.YellowLazer;
         }
 
         public void Update(GameTime gameTime)
@@ -43,7 +43,7 @@ namespace SpaceAssault.Utils
             GetActiveDrone()._maxShield = _maxShield;
             if(_makeDmg >= 30)
             {
-                curBullet = Weapon.BulletType.BlueLazer;
+                curBullet = Bullet.BulletType.BlueLazer;
             }
 
             // updating every bullet
