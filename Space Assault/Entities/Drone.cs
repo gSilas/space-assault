@@ -40,7 +40,8 @@ namespace SpaceAssault.Entities
         private bool _isNotDead;
 
 
-        public Weapon Gun;
+        public Weapon GunPrimary;
+        public Weapon GunSecondary;
 
         //used for scaling all speed values beside turnSpeed;
         private float _speedScaling = 2f;
@@ -72,12 +73,16 @@ namespace SpaceAssault.Entities
             _health = _maxHealth;
             _isNotDead = true;
 
-            Gun = new Weapon(200d);
-            Gun.Initialize();
+            GunPrimary = new Weapon(200d);
+            GunPrimary.Initialize();
+
+            GunSecondary = new Weapon(5000d);
+            GunSecondary.Initialize();
         }
 
         public void Reset()
         {
+            //TODO: remove reset and create no Drone object in DroneBuilder
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 10.0f;
             _moveSpeedForward = 1.0f * _speedScaling;
@@ -238,11 +243,11 @@ namespace SpaceAssault.Entities
             /// </summary>
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if (_alternatingGunLogic && Gun.Shoot(gameTime, curBullet, 10, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList))
+                if (_alternatingGunLogic && GunPrimary.Shoot(gameTime, curBullet, 10, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList))
                 {
                     _alternatingGunLogic = false;
                 }
-                else if (Gun.Shoot(gameTime, curBullet, 10, Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList))
+                else if (GunPrimary.Shoot(gameTime, curBullet, 10, Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList))
                 {
                     _alternatingGunLogic = true;
                 }
@@ -251,7 +256,7 @@ namespace SpaceAssault.Entities
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
                 // TODO: New BulletType for Secondary Fire
-                Gun.Shoot(gameTime, Weapon.BulletType.PhotonBomb, 10, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList);
+                GunSecondary.Shoot(gameTime, Weapon.BulletType.PhotonBomb, 100, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList);
             }
         }
 

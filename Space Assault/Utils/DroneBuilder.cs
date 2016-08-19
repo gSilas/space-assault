@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities;
 
 
@@ -22,6 +20,7 @@ namespace SpaceAssault.Utils
         public int _maxHealth;
         public int _armor;
         public int _maxShield;
+        private Weapon.BulletType curBullet;
 
         public DroneBuilder()
         {
@@ -32,10 +31,22 @@ namespace SpaceAssault.Utils
             _maxHealth = 100;
             _armor = 1;
             _maxShield = 100;
+            curBullet = Weapon.BulletType.YellowLazer;
         }
 
         public void Update(GameTime gameTime)
         {
+            // updating current drone according to shoplevels
+            GetActiveDrone()._makeDmg = _makeDmg;
+            GetActiveDrone()._maxHealth = _maxHealth;
+            GetActiveDrone()._armor = _armor;
+            GetActiveDrone()._maxShield = _maxShield;
+            if(_makeDmg >= 30)
+            {
+                curBullet = Weapon.BulletType.BlueLazer;
+            }
+
+            // updating every bullet
             foreach (Bullet bullet in _bulletList)
             {
                 bullet.Update(gameTime);
@@ -51,6 +62,7 @@ namespace SpaceAssault.Utils
             }
             _removeBulletList.Clear();
 
+            // updating all drones
             foreach (var drone in _droneShips)
             {
                 drone.Update(gameTime);
@@ -62,9 +74,10 @@ namespace SpaceAssault.Utils
                 drone.TrailParticles.Update(gameTime);
             }
 
+            // let active drone receive input
             if (GetActiveDrone().IsNotDead)
             {
-                GetActiveDrone().HandleInput(gameTime, Weapon.BulletType.YellowLazer, ref _bulletList);
+                GetActiveDrone().HandleInput(gameTime, curBullet, ref _bulletList);
             }
         }
 
