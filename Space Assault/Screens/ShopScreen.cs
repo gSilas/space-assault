@@ -67,6 +67,7 @@ namespace SpaceAssault.Screens
         {
             //UI
             Labels.Add(new Label("gamefont", "Points: ", 50, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
+            _frame.LoadContent();
         }
 
         //#################################

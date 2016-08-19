@@ -16,7 +16,7 @@ namespace SpaceAssault.Screens
         string menuTitle;
 
         //Frame
-        private Frame _frame;
+        protected Frame _frame;
 
         // Gets the list of menu entries, so derived classes can add
         // or change the menu contents.
@@ -29,7 +29,7 @@ namespace SpaceAssault.Screens
         public MenuScreen(string menuTitle)
         {
             this.menuTitle = menuTitle;
-
+            _frame = new Frame();
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
@@ -162,9 +162,6 @@ namespace SpaceAssault.Screens
         }
         public override void LoadContent()
         {
-
-
-            _frame = new Frame();
             _frame.LoadContent();
         }
 
@@ -217,7 +214,7 @@ namespace SpaceAssault.Screens
             Global.SpriteBatch.DrawString(Global.GameFont, menuTitle, titlePosition, titleColor, 0,
                                    titleOrigin, titleScale, SpriteEffects.None, 0);
 
-            //_frame.Draw(false);
+            _frame.Draw(false);
         }
     }
 }
