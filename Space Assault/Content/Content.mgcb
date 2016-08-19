@@ -172,10 +172,10 @@
 /processorParam:PremultiplyTextureAlpha=True
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
+/processorParam:RotationX=-90
+/processorParam:RotationY=-90
 /processorParam:RotationZ=0
-/processorParam:Scale=0.2
+/processorParam:Scale=3
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=DxtCompressed
 /build:Models/enemyship.FBX
@@ -210,10 +210,10 @@
 /processorParam:PremultiplyTextureAlpha=True
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=-90
-/processorParam:RotationY=-90
+/processorParam:RotationX=0
+/processorParam:RotationY=0
 /processorParam:RotationZ=0
-/processorParam:Scale=2
+/processorParam:Scale=0.2
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=DxtCompressed
 /build:Models/drone.fbx
