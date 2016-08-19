@@ -207,7 +207,9 @@ namespace SpaceAssault.Screens
                         {
                             if (bullet._bulletType == Bullet.BulletType.BigJoe)
                             {
-                                _explosionSpawner.SpawnExplosion(bullet.Position, 80, 200);
+                                float radius = 80;
+                                _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
+                                ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
                             }
                             ship.Health -= bullet.makeDmg;
                             _removeBullets.Add(bullet);
@@ -236,7 +238,7 @@ namespace SpaceAssault.Screens
                             ship.Health -= expl._makeDmg;
                             Global.HighScorePoints += 20;
                             PlayExplosionSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
-                            
+
                         }
                     }
 
@@ -343,7 +345,9 @@ namespace SpaceAssault.Screens
                             PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                             if (bullet._bulletType == Bullet.BulletType.BigJoe)
                             {
-                                _explosionSpawner.SpawnExplosion(bullet.Position, 80, 200);
+                                float radius = 80;
+                                _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
+                                ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
                             }
                             break;
                         }
@@ -479,6 +483,20 @@ namespace SpaceAssault.Screens
             // Create a new projectile once per second
             //projectiles.Add(new Projectile(explosionParticles,explosionSmokeParticles,projectileTrailParticles));
             explosionParticles.AddParticle(position, velocity);
+        }
+
+        void ExplosionCircle(Vector3 pos, Vector3 velocity, float radius)
+        {
+            float angle = 0.0f;
+            for (int i = 0; i <= radius; i += 25)
+            {
+                while (angle < 2 * 3.14f)
+                {
+                    explosionParticles.AddParticle(pos + new Vector3(i * (float)Math.Cos(angle), 0, i * (float)Math.Sin(angle)), velocity);
+                    angle += 0.2f;
+                }
+                angle = 0;
+            }           
         }
 
         //#################################
