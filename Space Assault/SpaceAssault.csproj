@@ -83,11 +83,8 @@
     <Compile Include="Entities\EnemyBomber.cs" />
     <Compile Include="Entities\EnemyFighter.cs" />
     <Compile Include="Entities\Station.cs" />
-    <Compile Include="Entities\Weapon\AWeapon.cs" />
-    <Compile Include="Entities\Weapon\Bullet.cs" />
-    <Compile Include="Entities\Weapon\EnemyLaser.cs" />
-    <Compile Include="Entities\Weapon\PhotonBomb.cs" />
-    <Compile Include="Entities\Weapon\Railgun.cs" />
+    <Compile Include="Entities\Bullet.cs" />
+    <Compile Include="Utils\Weapon.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ScreenManagers\GameScreen.cs" />
     <Compile Include="ScreenManagers\InputState.cs" />

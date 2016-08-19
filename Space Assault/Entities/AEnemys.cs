@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Microsoft.Xna.Framework;
-using SpaceAssault.Entities.Weapon;
-
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
-using SpaceAssault.Utils.Particle;
 
 namespace SpaceAssault.Entities
 {
@@ -19,11 +15,8 @@ namespace SpaceAssault.Entities
         public int Health;
   
         protected bool isDead;
-        public AWeapon Gun;
-
-        public ParticleSystem TrailParticles;
-        public List<Trail> trail;
-
+        public Weapon Gun;
+        public int gunMakeDmg = 0;
 
         public bool IsDead
         {
@@ -84,6 +77,6 @@ namespace SpaceAssault.Entities
 
         }
 
-        public abstract void Intelligence(GameTime gameTime, Vector3 targedPosition, ref List<Bullet> bulletList);
+        public abstract void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList);
     }
 }

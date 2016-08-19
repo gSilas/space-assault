@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceAssault.Entities.Weapon;
 using SpaceAssault.Utils;
 using SpaceAssault.Utils.Particle;
 using SpaceAssault.Utils.Particle.Settings;
@@ -34,8 +33,9 @@ namespace SpaceAssault.Entities
 
             Health = 40;
 
-            Gun = new PhotonBomb();
+            Gun = new Weapon(3000d);
             Gun.Initialize();
+            gunMakeDmg = 5;
         }
 
 
@@ -43,7 +43,6 @@ namespace SpaceAssault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/enemyship");
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            Gun.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
@@ -56,7 +55,7 @@ namespace SpaceAssault.Entities
             if (gameTime.TotalGameTime > (GetBetterwithTime.Add(TimeSpan.FromSeconds(60))))
             {
                 Health = Health + 30;
-                Gun.makeDmg += 10;
+                gunMakeDmg += 10;
                 GetBetterwithTime = gameTime.TotalGameTime;
                 //Console.WriteLine("UpDATED");
             }
@@ -97,7 +96,7 @@ namespace SpaceAssault.Entities
 
             if (distanceToStation < 400 && neuerAnflug == false)
             {
-                Gun.Shoot(gameTime, Position - RotationMatrix.Forward * 22.0f, RotationMatrix, 0.7f, ref bulletList);
+                Gun.Shoot(gameTime, Weapon.BulletType.PhotonBomb, gunMakeDmg, Position - RotationMatrix.Forward * 22.0f, RotationMatrix, ref bulletList);
             }
 
         }

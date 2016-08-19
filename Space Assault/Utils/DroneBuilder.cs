@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities;
-using SpaceAssault.Entities.Weapon;
-using SpaceAssault.Utils.Particle;
-using SpaceAssault.Utils.Particle.Settings;
+
 
 namespace SpaceAssault.Utils
 {
@@ -16,7 +14,6 @@ namespace SpaceAssault.Utils
 
         public List<Bullet> _bulletList;
         private List<Bullet> _removeBulletList;
-        protected TimeSpan _globalTimeSpan;
 
         public int _updatePoints;
         public int _totalUpdates;
@@ -42,7 +39,7 @@ namespace SpaceAssault.Utils
             foreach (Bullet bullet in _bulletList)
             {
                 bullet.Update(gameTime);
-                if (bullet._bulletlife < 0)
+                if (bullet._bulletLifeTime < 0)
                 {
                     _removeBulletList.Add(bullet);
                 }
@@ -67,7 +64,7 @@ namespace SpaceAssault.Utils
 
             if (GetActiveDrone().IsNotDead)
             {
-                GetActiveDrone().HandleInput(gameTime, ref _bulletList);
+                GetActiveDrone().HandleInput(gameTime, Weapon.BulletType.YellowLazer, ref _bulletList);
             }
         }
 

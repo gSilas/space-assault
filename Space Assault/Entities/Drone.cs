@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SpaceAssault.Entities.Weapon;
 using System.Collections.Generic;
 using SpaceAssault.Utils;
 using SpaceAssault.Utils.Particle;
@@ -41,7 +40,7 @@ namespace SpaceAssault.Entities
         private bool _isNotDead;
 
 
-        public AWeapon Gun;
+        public Weapon Gun;
 
         //used for scaling all speed values beside turnSpeed;
         private float _speedScaling = 2f;
@@ -73,9 +72,8 @@ namespace SpaceAssault.Entities
             _health = _maxHealth;
             _isNotDead = true;
 
-            Gun = new RailGun();
+            Gun = new Weapon(200d);
             Gun.Initialize();
-            Gun.makeDmg = _makeDmg;
         }
 
         public void Reset()
@@ -99,7 +97,6 @@ namespace SpaceAssault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            Gun.LoadContent();
             //RotationMatrix = Matrix.CreateRotationX();
         }
 
@@ -139,7 +136,7 @@ namespace SpaceAssault.Entities
                     _health -= (howMuch - _armor);
             }
         }
-        public void HandleInput(GameTime gameTime, ref List<Bullet> bulletList)
+        public void HandleInput(GameTime gameTime, Weapon.BulletType curBullet, ref List<Bullet> bulletList)
         {
             /// <summary>
             /// handling rotation of the drone
@@ -241,11 +238,11 @@ namespace SpaceAssault.Entities
             /// </summary>
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if (_alternatingGunLogic && Gun.Shoot(gameTime, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f, ref bulletList))
+                if (_alternatingGunLogic && Gun.Shoot(gameTime, curBullet, 10, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList))
                 {
                     _alternatingGunLogic = false;
                 }
-                else if (Gun.Shoot(gameTime, Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, 6f, ref bulletList))
+                else if (Gun.Shoot(gameTime, curBullet, 10, Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList))
                 {
                     _alternatingGunLogic = true;
                 }
@@ -253,7 +250,8 @@ namespace SpaceAssault.Entities
 
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
-                Gun.Shoot(gameTime, Position - RotationMatrix.Forward * 11.0f, RotationMatrix, 4f, ref bulletList);
+                // TODO: New BulletType for Secondary Fire
+                Gun.Shoot(gameTime, Weapon.BulletType.PhotonBomb, 10, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList);
             }
         }
 

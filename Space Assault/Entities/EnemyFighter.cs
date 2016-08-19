@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceAssault.Entities.Weapon;
 using SpaceAssault.Utils;
 using SpaceAssault.Utils.Particle;
 using SpaceAssault.Utils.Particle.Settings;
@@ -11,7 +10,7 @@ namespace SpaceAssault.Entities
 {
     class EnemyFighter : AEnemys
     {
-
+        
         public EnemyFighter(Vector3 position)
         {
             SpawnPos = position;
@@ -27,16 +26,16 @@ namespace SpaceAssault.Entities
             MoveSpeedForward = 1.2f;
             TurnSpeed = 5.0f;
             Health = 30;
-          
-            Gun = new EnemyLaser();
+
+            Gun = new Weapon(600d);
             Gun.Initialize();
+            gunMakeDmg = 10;
         }
 
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/enemyship2");
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            Gun.LoadContent();
         }
         public override void Update(GameTime gameTime)
         {
@@ -47,12 +46,9 @@ namespace SpaceAssault.Entities
             if (gameTime.TotalGameTime > (GetBetterwithTime.Add(TimeSpan.FromSeconds(60))))
             {
                 Health = Health + 30;
-                Gun.makeDmg += 5;
+                gunMakeDmg += 5;
                 GetBetterwithTime = gameTime.TotalGameTime;
-                //Console.WriteLine("UpDATED");
-                //Gun=new RailGun(); // why? 
             }
-            //TODO: health, armor update
         }
 
         public override void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList)
@@ -62,7 +58,7 @@ namespace SpaceAssault.Entities
 
             if (distanceToTarged < 150)
             {
-                Gun.Shoot(gameTime, Position, RotationMatrix, 3f, ref bulletList);
+                Gun.Shoot(gameTime, Weapon.BulletType.EnemyLazer, gunMakeDmg, Position, RotationMatrix, ref bulletList);
             }
         }
 

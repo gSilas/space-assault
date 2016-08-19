@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities;
-using SpaceAssault.Entities.Weapon;
-using SpaceAssault.Utils.Particle;
-using SpaceAssault.Utils.Particle.Settings;
 
 namespace SpaceAssault.Utils
 {
@@ -42,7 +38,7 @@ namespace SpaceAssault.Utils
             foreach (Bullet bullet in _bulletList)
             {
                 bullet.Update(gameTime);
-                if (bullet._bulletlife < 0)
+                if (bullet._bulletLifeTime < 0)
                 {
                     _removeBulletList.Add(bullet);
                 }

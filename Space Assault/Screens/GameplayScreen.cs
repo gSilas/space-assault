@@ -4,12 +4,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SpaceAssault.Entities;
-using SpaceAssault.Entities.Weapon;
 using SpaceAssault.ScreenManagers;
 using SpaceAssault.Utils;
-using IrrKlang;
 using SpaceAssault.Utils.Particle;
 using SpaceAssault.Utils.Particle.Settings;
+using IrrKlang;
 
 namespace SpaceAssault.Screens
 {
@@ -203,7 +202,7 @@ namespace SpaceAssault.Screens
                     {
                         if (Collider3D.IntersectionSphere(bullet, ship))
                         {
-                            ship.Health -= _droneFleet.GetActiveDrone().Gun.makeDmg;
+                            ship.Health -= bullet.makeDmg;
                             _removeBullets.Add(bullet);
                             Global.HighScorePoints += 20;
 
@@ -376,7 +375,6 @@ namespace SpaceAssault.Screens
             _droneFleet.Draw();
             _asteroidField.Draw();
             _fleet.Draw();
-            _ui.Draw(_droneFleet);
 
             // Particle
             /*
@@ -410,7 +408,8 @@ namespace SpaceAssault.Screens
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
 
-            //FRAME ALWAYS LAST
+            //FRAME & UI ALWAYS LAST
+            _ui.Draw(_droneFleet);
             if (_station._health > 1000)
             {
                 _frame.Draw(false);
