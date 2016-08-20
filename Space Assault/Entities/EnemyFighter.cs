@@ -23,8 +23,8 @@ namespace SpaceAssault.Entities
         public override void Initialize()
         {
             RotationMatrix = Matrix.Identity;
-            MoveSpeedForward = 1.2f;
-            TurnSpeed = 5.0f;
+            MoveSpeedForward = 0.2f;
+            TurnSpeed = 1f;
             Health = 30;
 
             Gun = new Weapon(600d);

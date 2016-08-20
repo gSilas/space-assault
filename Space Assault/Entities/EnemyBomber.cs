@@ -26,8 +26,8 @@ namespace SpaceAssault.Entities
         {
             RotationMatrix = Matrix.Identity;
 
-            MoveSpeedForward = 0.5f;
-            TurnSpeed = 5.0f;
+            MoveSpeedForward = 0.1f;
+            TurnSpeed = 0.4f;
 
             //_moveSpeedBackward = -0.5f;
 
