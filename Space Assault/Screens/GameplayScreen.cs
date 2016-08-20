@@ -275,7 +275,7 @@ namespace SpaceAssault.Screens
 
                     if (bullet.CanDamageStation && Collider3D.IntersectionSphere(bullet, _station))
                     {
-                        _station._health -= bullet.makeDmg;
+                        _station.getHit(bullet.makeDmg);
                         _removeBullets.Add(bullet);
                     }
                 }
@@ -306,7 +306,7 @@ namespace SpaceAssault.Screens
                         explosionTriggered = true;
                         ast.IsDead = true;
                         _removeAsteroid.Add(ast);
-                        _station._health -= 10;
+                        _station.getHit(10);
                         continue;
                     }
 
@@ -406,7 +406,7 @@ namespace SpaceAssault.Screens
             if (input.IsNewKeyPress(Keys.B))
             {
                 if ((Vector3.Distance(_station.Position, _droneFleet.GetActiveDrone().Position) - _stationHeight) < 150 && Global.HighScorePoints > 1000)
-                    ScreenManager.AddScreen(new ShopScreen(_droneFleet));
+                    ScreenManager.AddScreen(new ShopScreen(_droneFleet,_station));
             }
 
             //player hits ESC it pauses the game
