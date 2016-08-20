@@ -20,11 +20,16 @@ namespace SpaceAssault.Entities
         private TimeSpan _shieldrefreshdelay;
         private bool _wasDamaged = false;
 
+        public Weapon Gun;
+        public int makeDmg;
+
+
         public Station(Vector3 position, float angle)
         {
             _angle = angle;
             Position = position;
             Scale = 0.5f;
+            Gun= new Weapon(1000d);
         }
 
         public override void Initialize()
@@ -90,6 +95,12 @@ namespace SpaceAssault.Entities
             {
                 _health -= howMuch;
             }
+        }
+
+        public void selfDefense()
+        {
+            if (makeDmg != 0) { }
+               
         }
     }
 }

@@ -173,11 +173,11 @@ namespace SpaceAssault.Screens
         }
         void stationlaserhMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._droneFleet._updatePoints > 0)
+            if (this._droneFleet._updatePoints > 1)
             {
                 _StationLaserLevel++;
-                //this._station._health += 1000;       
-                this._droneFleet._updatePoints--;
+                this._station.makeDmg += 50;       
+                this._droneFleet._updatePoints-=2;
                 SetMenuEntryText();
             }
         }
