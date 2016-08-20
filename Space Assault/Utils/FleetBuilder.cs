@@ -7,7 +7,7 @@ namespace SpaceAssault.Utils
 {
     class FleetBuilder
     {
-        public List<AEnemys> _enemyShips;
+        public List<List<AEnemys>> EnemyShips;
         public List<Bullet> _bulletList;
         private List<AEnemys> _addList;
         private TimeSpan _lastChunkTime;
@@ -22,7 +22,7 @@ namespace SpaceAssault.Utils
 
         public FleetBuilder()
         {
-            _enemyShips = new List<AEnemys>();
+            EnemyShips = new List<List<AEnemys>>();
             _addList = new List<AEnemys>();
             _bulletList = new List<Bullet>();
             _rand = new Random();
@@ -32,6 +32,7 @@ namespace SpaceAssault.Utils
         {
             List<Bullet> _removeBulletList = new List<Bullet>();
             List<AEnemys> _removeAEnemys = new List<AEnemys>();
+            List<List<AEnemys>> _removeSquadrons = new List<List<AEnemys>>();
 
             // updating bullets
             _globalTimeSpan = gameTime.TotalGameTime;
@@ -49,28 +50,43 @@ namespace SpaceAssault.Utils
             }
 
             // updating every ship
-            foreach (var ship in _enemyShips)
+            foreach (var shipSquadron in EnemyShips)
             {
-                if (ship.IsDead == true)
+                foreach (var ship in shipSquadron)
                 {
-                    _removeAEnemys.Add(ship);
-                    continue;
+                    if (ship.IsDead == true)
+                    {
+                        _removeAEnemys.Add(ship);
+                        continue;
+                    }
+
+                    // Trail
+                    for (int i = 0; i < ship.trail.Count; i++)
+                    {
+                        ship.trail[i].Update(gameTime, ship.Position);
+                    }
+                    ship.TrailParticles.Update(gameTime);
+
+                    ship.Intelligence(gameTime, targetPosition, ref _bulletList);
+                    ship.Update(gameTime);
                 }
 
-                // Trail
-                for (int i = 0; i < ship.trail.Count; i++)
+                if(shipSquadron.Count == 0)
                 {
-                    ship.trail[i].Update(gameTime, ship.Position);
+                    _removeSquadrons.Add(shipSquadron);
                 }
-                ship.TrailParticles.Update(gameTime);
-
-                ship.Intelligence(gameTime, targetPosition, ref _bulletList);
-                ship.Update(gameTime);
             }
 
-            foreach (var ship in _removeAEnemys)
+            foreach (var shipSquadron in EnemyShips)
             {
-                _enemyShips.Remove(ship);
+                foreach (var ship in _removeAEnemys)
+                {
+                    shipSquadron.Remove(ship);
+                }
+            }
+            foreach (var squad in _removeSquadrons)
+            {
+                EnemyShips.Remove(squad);
             }
 
             if (gameTime.TotalGameTime > (_MOREShips.Add(TimeSpan.FromSeconds(10))))
@@ -85,7 +101,7 @@ namespace SpaceAssault.Utils
             {
                 //Console.WriteLine(_enemyShips.Count+"<"+_maxShipCount);
                 //maximale Anzahl an Flotten
-                if (this._enemyShips.Count<_maxShipCount)
+                if (this.EnemyShips.Count<_maxShipCount)
                     Formation(targetPosition);
                 _lastChunkTime = gameTime.TotalGameTime;
             }
@@ -98,11 +114,14 @@ namespace SpaceAssault.Utils
                 bullet.Draw();
             }
 
-            foreach (var ship in _enemyShips)
+            foreach (var shipSquadron in EnemyShips)
             {
-                ship.TrailParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
-                ship.TrailParticles.Draw();
-                ship.Draw();
+                foreach (var ship in shipSquadron)
+                {
+                    ship.TrailParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
+                    ship.TrailParticles.Draw();
+                    ship.Draw();
+                }
             }
         }
         //drone position damit alles außerhalb des Bilschirms spawned
@@ -165,19 +184,15 @@ namespace SpaceAssault.Utils
                 Console.WriteLine(_whereTheyCome);
 
                 int formationchoice = _rand.Next(1, 4);
-                //Console.WriteLine(formationchoice+"<<<<<<<<<<<<<<");
                 switch (formationchoice)
                 {
                     case 1:
-                        //Console.WriteLine("Case 11111111111111111111111");
                         BomberDouble(position);
                         break;
                     case 2:
-                        //Console.WriteLine("Case 222222222222222222222222");
                         Arrow(position);
                         break;
                     case 3:
-                        //Console.WriteLine("Case 333333333333333333333333");
                         FighterTriangle(position);
                         break;
                 }
@@ -207,8 +222,7 @@ namespace SpaceAssault.Utils
             ship3.LoadContent();
             _addList.Add(ship3);
 
-            _enemyShips.AddRange(_addList);
-            _addList.Clear();
+            EnemyShips.Add(_addList);
         }
         private void Arrow(Vector3 SpawnPosition)
         {
@@ -238,8 +252,7 @@ namespace SpaceAssault.Utils
             _addList.Add(ship4);
       
 
-            _enemyShips.AddRange(_addList);
-            _addList.Clear();
+            EnemyShips.Add(_addList);
         }
         private void BomberDouble(Vector3 SpawnPosition)
         {
@@ -258,8 +271,7 @@ namespace SpaceAssault.Utils
             _addList.Add(ship2);
 
 
-            _enemyShips.AddRange(_addList);
-            _addList.Clear();
+            EnemyShips.Add(_addList);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace SpaceAssault.Entities
 {
     class EnemyFighter : AEnemys
     {
-        
+
         public EnemyFighter(Vector3 position)
         {
             SpawnPos = position;

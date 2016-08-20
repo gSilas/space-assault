@@ -201,28 +201,31 @@ namespace SpaceAssault.Screens
                 /* bullet of drone with enemy ships */
                 foreach (var bullet in _droneFleet._bulletList)
                 {
-                    foreach (var ship in _fleet._enemyShips)
+                    foreach (var shipSquadron in _fleet.EnemyShips)
                     {
-                        if (Collider3D.IntersectionSphere(bullet, ship))
+                        foreach (var ship in shipSquadron)
                         {
-                            if (bullet._bulletType == Bullet.BulletType.BigJoe)
+                            if (Collider3D.IntersectionSphere(bullet, ship))
                             {
-                                float radius = 80;
-                                _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
-                                ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
-                            }
-                            ship.Health -= bullet.makeDmg;
-                            _removeBullets.Add(bullet);
-                            Global.HighScorePoints += 20;
+                                if (bullet._bulletType == Bullet.BulletType.BigJoe)
+                                {
+                                    float radius = 80;
+                                    _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
+                                    ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
+                                }
+                                ship.Health -= bullet.makeDmg;
+                                _removeBullets.Add(bullet);
+                                Global.HighScorePoints += 20;
 
-                            if (ship.Health <= 0)
-                            {
-                                explosionPosition = ship.Position;
-                                explosionTriggered = true;
-                                PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
-                            }
+                                if (ship.Health <= 0)
+                                {
+                                    explosionPosition = ship.Position;
+                                    explosionTriggered = true;
+                                    PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
+                                }
 
-                            break;
+                                break;
+                            }
                         }
                     }
 
@@ -231,16 +234,19 @@ namespace SpaceAssault.Screens
                 /* explosions with asteroids, enemy ships */
                 foreach (var expl in _explosionSpawner._explList)
                 {
-                    foreach (var ship in _fleet._enemyShips)
-                    {
-                        if (Collider3D.IntersectionSphere(ship, expl))
+                        foreach (var shipSquadron in _fleet.EnemyShips)
                         {
-                            ship.Health -= expl._makeDmg;
-                            Global.HighScorePoints += 20;
-                            PlayExplosionSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
+                            foreach (var ship in shipSquadron)
+                            {
+                                if (Collider3D.IntersectionSphere(ship, expl))
+                                {
+                                    ship.Health -= expl._makeDmg;
+                                    Global.HighScorePoints += 20;
+                                    PlayExplosionSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
 
+                                }
+                            }
                         }
-                    }
 
                     foreach (var ast in _asteroidField._asteroidList)
                     {
@@ -315,12 +321,15 @@ namespace SpaceAssault.Screens
                             break;
                         }
                     }
-                    foreach (var ship in _fleet._enemyShips)
+                    foreach (var shipSquadron in _fleet.EnemyShips)
                     {
-                        if (Collider3D.IntersectionSphere(ast, ship))
+                        foreach (var ship in shipSquadron)
                         {
-                            ship.Health -= 5;
-                            _removeAsteroid.Add(ast);
+                            if (Collider3D.IntersectionSphere(ast, ship))
+                            {
+                                ship.Health -= 5;
+                                _removeAsteroid.Add(ast);
+                            }
                         }
                     }
                     foreach (var bullet in _fleet._bulletList)
