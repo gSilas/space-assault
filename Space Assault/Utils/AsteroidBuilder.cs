@@ -44,17 +44,19 @@ namespace SpaceAssault.Utils
         {
             int zdist;
             int xoffset;
+            int yoffset;
             int movespeed;
             for (int i = 0; i < 15; i++)
             {
                 zdist = _rand.Next(-200,200);
                 xoffset = _rand.Next(-35, 35);
-                movespeed = _rand.Next(60, 100);
+                movespeed = _rand.Next(30, 100);
+                yoffset = _rand.Next(-100, 100);
 
                 Vector3 position = new Vector3();
-                position.X = targetPosition.X + 350 + xoffset;
+                position.X = targetPosition.X + 550 + xoffset;
                 position.Z = targetPosition.Z + zdist;
-                position.Y = 0f;
+                position.Y = yoffset;
 
                 Vector3 direction = new Vector3(targetPosition.X - 300 + xoffset, 0, targetPosition.Z + zdist) - position;
                 direction.Y = 0;
