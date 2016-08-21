@@ -59,7 +59,6 @@ namespace SpaceAssault.Entities
         public override void Update(GameTime gameTime)
         {
             //Spheres = Collider3D.UpdateBoundingSphere(this);
-            Console.WriteLine(_health);
             _angle += 0.005f;
             if (Position.Y < 1 && _up)
                 Position += new Vector3(0, 0.002f, 0);
