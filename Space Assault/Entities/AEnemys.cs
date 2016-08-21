@@ -54,7 +54,6 @@ namespace SpaceAssault.Entities
 
         public void FlyVector(Vector3 direction)
         {
-
             direction.Normalize();
             float vectorDirection;
             for (float i = 0.5f; i < TurnSpeed; i++)
@@ -73,8 +72,6 @@ namespace SpaceAssault.Entities
             }
 
             Position -= RotationMatrix.Forward * MoveSpeedForward;
-
-
         }
 
         public abstract void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList);

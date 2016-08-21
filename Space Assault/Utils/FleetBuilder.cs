@@ -10,13 +10,10 @@ namespace SpaceAssault.Utils
         public List<List<AEnemys>> EnemyShips;
         public List<Bullet> _bulletList;
         private List<AEnemys> _addList;
-        private TimeSpan _lastChunkTime;
+
         private Random _rand;
-        public String _whereTheyCome;
 
-        private TimeSpan _MOREShips; 
-        private int _maxShipCount=5;
-
+        private TimeSpan _lastChunkTime;
         protected TimeSpan _globalTimeSpan;
 
 
@@ -87,28 +84,18 @@ namespace SpaceAssault.Utils
             foreach (var squad in _removeSquadrons)
             {
                 EnemyShips.Remove(squad);
-            }
+            } 
 
-            if (gameTime.TotalGameTime > (_MOREShips.Add(TimeSpan.FromSeconds(10))))
-            {
-                _maxShipCount += 1;
-                _MOREShips = gameTime.TotalGameTime;
-                //Console.WriteLine(_maxFleetCount);
-            }
-    
             // adding fleets
-            if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(2000))))
+            if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromSeconds(Global.FleetSpawnTime))))
             {
-                //Console.WriteLine(_enemyShips.Count+"<"+_maxShipCount);
                 //maximale Anzahl an Flotten
-                if (this.EnemyShips.Count<_maxShipCount)
-                    Formation(targetPosition);
+                Formation(targetPosition);
                 _lastChunkTime = gameTime.TotalGameTime;
             }
         }
         public void Draw()
         {
-
             foreach (Bullet bullet in _bulletList)
             {
                 bullet.Draw();
@@ -131,58 +118,46 @@ namespace SpaceAssault.Utils
             int xoffset;
             for (int i = 0; i < 1; i++)
             {
-                int Corner = _rand.Next(1, 4);
                 Vector3 position = new Vector3();
-                //Corner = 3;
-                switch (Corner)
+                switch (_rand.Next(1, 4))
                 {
                     case 1:
                         //unten rechts
                         zdist = _rand.Next(0, 400);
                         xoffset = _rand.Next(-35, 35);
-
-
                         position.X = DronePosition.X + 350 + xoffset;
                         position.Z = DronePosition.Z + zdist;
                         position.Y = 0f;
-                        _whereTheyCome = "Neue Flotte von unten rechts";
+                        Console.WriteLine("Neue Flotte von unten rechts");
                         break;
                     case 2:
                         //oben rechts
                         zdist = _rand.Next(-400, 0);
                         xoffset = _rand.Next(-35, 35);
-
-
                         position.X = DronePosition.X + 350 + xoffset;
                         position.Z = DronePosition.Z + zdist;
                         position.Y = 0f;
-                        _whereTheyCome = "Neue Flotte von oben rechts";
+                        Console.WriteLine("Neue Flotte von oben rechts");
                         break;
                     case 3:
                         //unten links
                         zdist = _rand.Next(0, 400);
                         xoffset = _rand.Next(-35, 35);
-
-
                         position.X = DronePosition.X - 350 + xoffset;
                         position.Z = DronePosition.Z + zdist;
                         position.Y = 0f;
-                        _whereTheyCome = "Neue Flotte von unten links";
+                        Console.WriteLine("Neue Flotte von unten links");
                         break;
                     case 4:
                         //oben links
                         zdist = _rand.Next(-400, 0);
                         xoffset = _rand.Next(-35, 35);
-
-
                         position.X = DronePosition.X - 350 + xoffset;
                         position.Z = DronePosition.Z + zdist;
                         position.Y = 0f;
-                        _whereTheyCome = "Neue Flotte von oben links";
+                        Console.WriteLine("Neue Flotte von oben links");
                         break;
                 }
-                Console.WriteLine(_whereTheyCome);
-
                 int formationchoice = _rand.Next(1, 4);
                 switch (formationchoice)
                 {
@@ -217,7 +192,7 @@ namespace SpaceAssault.Utils
             ship2.Initialize();
             ship2.LoadContent();
             _addList.Add(ship2);
-            //Console.WriteLine("WRONG PLACE");
+
             ship3.Initialize();
             ship3.LoadContent();
             _addList.Add(ship3);
@@ -228,12 +203,12 @@ namespace SpaceAssault.Utils
         {
             int Rand = _rand.Next(40, 60);
             int zRand = _rand.Next(40, 60);
+
             EnemyBomber ship = new EnemyBomber(SpawnPosition + new Vector3(SpawnPosition.X + Rand, 0, SpawnPosition.Z + Rand));
             EnemyFighter ship2 = new EnemyFighter(SpawnPosition + new Vector3(SpawnPosition.X, 0, SpawnPosition.Z + Rand));
             EnemyFighter ship3 = new EnemyFighter(SpawnPosition + new Vector3(SpawnPosition.X + Rand, 0, SpawnPosition.Z));
             EnemyFighter ship4 = new EnemyFighter(SpawnPosition + new Vector3(SpawnPosition.X + Rand, 0, SpawnPosition.Z+2*Rand));
           
-            //EnemyFighter ship4 = new EnemyFighter(SpawnPosition+ new Vector3(0,0,0)); //funktioniert damit nicht  WAT
         
             ship.Initialize();
             ship.LoadContent();

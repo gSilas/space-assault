@@ -39,5 +39,10 @@ namespace SpaceAssault
         // TODO: should be read from a settings file
         public static bool FrameCounterIsEnabled = false;
 
+
+        //SETTINGS
+        public static int FleetSpawnTime = 5; // 1 Fleet/5 sec
+        public static int AsteroidSpawnTime = 2; // 1/2 AsteroidChunk/sec
+
     }
 }

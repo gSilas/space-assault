@@ -33,7 +33,7 @@ namespace SpaceAssault.Utils
             {
                 ast.Update(gameTime);
             }
-            if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromMilliseconds(1000))))
+            if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromSeconds(Global.AsteroidSpawnTime))))
             {
                 _lastChunkTime = gameTime.TotalGameTime;
                 Chunk(targetPosition);
