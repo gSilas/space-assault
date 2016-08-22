@@ -58,10 +58,6 @@ namespace SpaceAssault.Entities
             TrailParticles = new TrailParticleSystem();
             trail.Add(new Trail(TrailParticles));
 
-        }
-
-        public override void Initialize()
-        {
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 10.0f;
             _moveSpeedForward = 1.0f * _speedScaling;
@@ -74,10 +70,8 @@ namespace SpaceAssault.Entities
             _isNotDead = true;
 
             GunPrimary = new Weapon(200d);
-            GunPrimary.Initialize();
 
             GunSecondary = new Weapon(5000d);
-            GunSecondary.Initialize();
         }
 
         public void Reset()
@@ -102,6 +96,8 @@ namespace SpaceAssault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
             Spheres = Collider3D.UpdateBoundingSphere(this);
+            GunPrimary.LoadContent();
+            GunSecondary.LoadContent();
             //RotationMatrix = Matrix.CreateRotationX();
         }
 

@@ -26,6 +26,10 @@ namespace SpaceAssault
             screenManager = new ScreenManager(this);
 
             Components.Add(screenManager);
+
+            // Activate the first screens.
+            screenManager.AddScreen(new BackgroundScreen());
+            screenManager.AddScreen(new MainMenuScreen());
         }
 
 
@@ -38,10 +42,6 @@ namespace SpaceAssault
 
             Global.GameFont = Global.ContentManager.Load<SpriteFont>("Fonts/menufont");
             Global.DialogFont = Global.ContentManager.Load<SpriteFont>("Fonts/pc_senior/pcsenior");
-
-            // Activate the first screens.
-            screenManager.AddScreen(new BackgroundScreen());
-            screenManager.AddScreen(new MainMenuScreen());
             base.LoadContent();
         }
 

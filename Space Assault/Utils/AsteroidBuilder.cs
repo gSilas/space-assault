@@ -63,9 +63,8 @@ namespace SpaceAssault.Utils
                 direction.Normalize();
 
                 int angle = _rand.Next(-360, 360);
-                Asteroid ast = new Asteroid(position, angle, direction, (float)movespeed/100, _lastChunkTime);
-                ast.Initialize();
-                ast.LoadContent(_model);
+                Asteroid ast = new Asteroid(_model, position, angle, direction, (float)movespeed/100, _lastChunkTime);
+                ast.LoadContent();
                 _asteroidsToAdd.Add(ast);
             }
             _asteroidList.AddRange(_asteroidsToAdd);

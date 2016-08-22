@@ -58,8 +58,6 @@ namespace SpaceAssault.Entities
 
         public abstract void LoadContent();
 
-        public abstract void Initialize();
-
         public virtual void Draw()
         {
             if (Collider3D.BoundingFrustumIntersection(this))

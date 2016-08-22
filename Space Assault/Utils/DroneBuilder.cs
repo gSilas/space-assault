@@ -99,7 +99,6 @@ namespace SpaceAssault.Utils
         public void addDrone(Vector3 position)
         {
             var drone = new Drone(new Vector3(150, 0, 100), _makeDmg, _maxHealth, _armor, _maxShield);
-            drone.Initialize();
             drone.LoadContent();
 
             _droneShips.Add(drone);

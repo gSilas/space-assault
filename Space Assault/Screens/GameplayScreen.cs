@@ -80,7 +80,6 @@ namespace SpaceAssault.Screens
 
             //actual gameplay objects
             _station = new Station(new Vector3(0, _stationHeight, 0), 0);
-            _station.Initialize();
             _asteroidField = new AsteroidBuilder();
             _fleet = new FleetBuilder();
             _droneFleet = new DroneBuilder();

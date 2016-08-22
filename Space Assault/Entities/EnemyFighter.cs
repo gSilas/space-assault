@@ -18,17 +18,13 @@ namespace SpaceAssault.Entities
             trail = new List<Trail>();
             TrailParticles = new TrailParticleSystem();
             trail.Add(new Trail(TrailParticles));
-        }
 
-        public override void Initialize()
-        {
             RotationMatrix = Matrix.Identity;
             MoveSpeedForward = 0.2f;
             TurnSpeed = 1f;
             Health = 30;
 
             Gun = new Weapon(600d);
-            Gun.Initialize();
             gunMakeDmg = 10;
         }
 
@@ -36,6 +32,7 @@ namespace SpaceAssault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/enemyship2");
             Spheres = Collider3D.UpdateBoundingSphere(this);
+            Gun.LoadContent();
         }
         public override void Update(GameTime gameTime)
         {

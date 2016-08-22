@@ -13,8 +13,9 @@ namespace SpaceAssault.Entities
         public TimeSpan _originTime;
 
 
-        public Asteroid(Vector3 position, float angle, Vector3 direction, float movespeed, TimeSpan originTime)
+        public Asteroid(Model model, Vector3 position, float angle, Vector3 direction, float movespeed, TimeSpan originTime)
         {
+            Model = model;
             _angle = angle;
             Position = position;
             _direction = direction;
@@ -22,22 +23,11 @@ namespace SpaceAssault.Entities
             _originTime = originTime;
         }
 
-        public void LoadContent(Model model)
-        {
-            Model = model;
-            Spheres = Collider3D.UpdateBoundingSphere(this);
-        }
-
         public bool IsDead { get; set; } = false;
 
         public override void LoadContent()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Initialize()
-        {
-            _direction.Normalize();
+            Spheres = Collider3D.UpdateBoundingSphere(this);
         }
 
         public override void Update(GameTime gameTime)
@@ -50,7 +40,7 @@ namespace SpaceAssault.Entities
         
         public Asteroid Clone()
         {
-            return new Asteroid(Position,_angle,_direction,_speed, _originTime);
+            return new Asteroid(Model, Position, _angle,_direction,_speed, _originTime);
         }
     }
 }

@@ -58,11 +58,6 @@ namespace SpaceAssault.Entities
                 _lifeTime -= gameTime.ElapsedGameTime.Milliseconds;
             }
 
-            public override void Initialize()
-            {
-                throw new NotImplementedException();
-            }
-
             public override void LoadContent()
             {
                 throw new NotImplementedException();

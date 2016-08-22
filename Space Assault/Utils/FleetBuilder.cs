@@ -185,15 +185,12 @@ namespace SpaceAssault.Utils
             EnemyFighter ship2 = new EnemyFighter(SpawnPosition + new Vector3(SpawnPosition.X, 0, SpawnPosition.Z + Rand));
             EnemyFighter ship3 = new EnemyFighter(SpawnPosition + new Vector3(SpawnPosition.X+Rand, 0, SpawnPosition.Z));
 
-            ship.Initialize();
             ship.LoadContent();
             _addList.Add(ship);
             
-            ship2.Initialize();
             ship2.LoadContent();
             _addList.Add(ship2);
 
-            ship3.Initialize();
             ship3.LoadContent();
             _addList.Add(ship3);
 
@@ -209,20 +206,15 @@ namespace SpaceAssault.Utils
             EnemyFighter ship3 = new EnemyFighter(SpawnPosition + new Vector3(SpawnPosition.X + Rand, 0, SpawnPosition.Z));
             EnemyFighter ship4 = new EnemyFighter(SpawnPosition + new Vector3(SpawnPosition.X + Rand, 0, SpawnPosition.Z+2*Rand));
           
-        
-            ship.Initialize();
             ship.LoadContent();
             _addList.Add(ship);
 
-            ship2.Initialize();
             ship2.LoadContent();
             _addList.Add(ship2);
 
-            ship3.Initialize();
             ship3.LoadContent();
             _addList.Add(ship3);
 
-            ship4.Initialize();
             ship4.LoadContent();
             _addList.Add(ship4);
       
@@ -235,13 +227,10 @@ namespace SpaceAssault.Utils
             int zRand = _rand.Next(40, 60);
             EnemyBomber ship = new EnemyBomber(SpawnPosition + new Vector3(SpawnPosition.X + Rand, 0, SpawnPosition.Z + Rand));
             EnemyBomber ship2 = new EnemyBomber(SpawnPosition + new Vector3(SpawnPosition.X, 0, SpawnPosition.Z + Rand));
-            
-
-            ship.Initialize();
+            ;
             ship.LoadContent();
             _addList.Add(ship);
 
-            ship2.Initialize();
             ship2.LoadContent();
             _addList.Add(ship2);
 

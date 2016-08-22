@@ -29,17 +29,15 @@ namespace SpaceAssault.Entities
             _angle = angle;
             Position = position;
             Scale = 0.5f;
-            Gun= new Weapon(1000d);
-        }
+            Gun = new Weapon(1000d);
 
-        public override void Initialize()
-        {
             _up = true;
             _maxhealth = 10000;
             _health = _maxhealth;
             _maxShield = 5000;
             _shield = _maxShield;
         }
+
         public bool IsNotDead
         {
             get { return _isNotDead; }
@@ -50,7 +48,8 @@ namespace SpaceAssault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/station");
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            for(int i = 0; i < Spheres.Length; i++)
+            Gun.LoadContent();
+            for (int i = 0; i < Spheres.Length; i++)
             {
                 Spheres[i].Radius = Spheres[i].Radius * 0.75f;
             }
