@@ -49,7 +49,7 @@ namespace SpaceAssault.Utils
         {
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
-            ISoundSource lazer = _engine.AddSoundSourceFromFile("Content/Media/Effects/Laser_Shoot.wav", StreamMode.AutoDetect, true);
+            ISoundSource lazer = _engine.AddSoundSourceFromFile("Content/Media/Effects/Laser_Shoot_try.wav", StreamMode.AutoDetect, true);
 
             yellowLazer = new BulletMemory("Models/laser", lazer, 6f, false);
             blueLazer = new BulletMemory("Models/laser2", lazer, 6f, false);

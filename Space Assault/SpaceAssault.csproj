@@ -154,7 +154,9 @@
     <Content Include="Content\Media\Effects\Laser_Shoot.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Media\Effects\Laser_Shoot_try.wav" />
+    <Content Include="Content\Media\Effects\Laser_Shoot_try.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Media\Music\SUBSET_-_05_-_Nazca.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

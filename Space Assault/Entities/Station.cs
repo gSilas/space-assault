@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
+using System.Collections.Generic;
 
 namespace SpaceAssault.Entities
 {
@@ -21,7 +22,8 @@ namespace SpaceAssault.Entities
         private bool _wasDamaged = false;
 
         public Weapon Gun;
-        public int makeDmg;
+        public int makeDmg=10;
+        private List<Bullet> _bulletlist; 
 
 
         public Station(Vector3 position, float angle)
@@ -36,6 +38,7 @@ namespace SpaceAssault.Entities
             _health = _maxhealth;
             _maxShield = 5000;
             _shield = _maxShield;
+            _bulletlist = new List<Bullet>();
         }
 
         public bool IsNotDead
@@ -82,6 +85,10 @@ namespace SpaceAssault.Entities
             if (_wasDamaged == false && _shield < _maxShield)
                 _shield += 1;
 
+            if (makeDmg != 0)
+            {
+                Gun.Shoot(gameTime, Bullet.BulletType.BlueLazer, makeDmg, Position, RotationMatrix,ref _bulletlist);
+            }
             if (_health <= 0) IsNotDead = false;
         }
         public void getHit(int howMuch)
