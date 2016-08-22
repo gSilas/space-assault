@@ -563,11 +563,12 @@ namespace SpaceAssault.Screens
         // Helper Draw - Arrow
         //#################################
         void DrawDirectionArrow()
-        {
+        { 
             var vec = new Vector2();
             vec.X = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X;
             vec.Y = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y;
 
+            Global.UIBatch.Begin();
             if (!Collider3D.BoundingFrustumIntersection(_station))
             {
                 if (vec.X > Global.GraphicsManager.GraphicsDevice.Viewport.Width)
@@ -579,13 +580,13 @@ namespace SpaceAssault.Screens
                 else if (vec.Y < 0)
                     vec.Y = 0 + 50;
 
-                Global.SpriteBatch.DrawString(Global.GameFont, "Go Here for Station!", vec, Color.Red);
+                Global.UIBatch.DrawString(Global.GameFont, "Go Here for Station!", vec, Color.Red);
             }
             else
             {
-                Global.SpriteBatch.DrawString(Global.GameFont, "This is the Station and I draw in world Space!", vec, Color.Red);
+                Global.UIBatch.DrawString(Global.GameFont, "This is the Station and I draw in world Space!", vec, Color.Red);
             }
-    
+            Global.UIBatch.End();
         }
 
         //#################################
