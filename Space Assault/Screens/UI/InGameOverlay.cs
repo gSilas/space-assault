@@ -42,8 +42,8 @@ namespace SpaceAssault.Screens
             //Bars
             Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 80), new Point(300, 60)), Color.Red, droneFleet.GetActiveDrone()._maxHealth));
             Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 90), new Point(300, 60)), Color.Blue, droneFleet.GetActiveDrone()._maxShield));
-            Bars.Add(new Bar(new Rectangle(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width-400, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750), new Point(300, 60)), Color.Green, 10000));
-
+            Bars.Add(new Bar(new Rectangle(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width - 400, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750), new Point(300, 60)), Color.Green, _station._maxhealth));
+            Bars.Add(new Bar(new Rectangle(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width - 400, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 740), new Point(300, 60)), Color.DarkGreen,_station._maxShield));
             foreach (var bar in Bars)
             {
                 bar.LoadContent();
@@ -66,7 +66,8 @@ namespace SpaceAssault.Screens
 
             Bars[0].Draw(droneFleet.GetActiveDrone()._health, droneFleet.GetActiveDrone()._maxHealth);
             Bars[1].Draw(droneFleet.GetActiveDrone()._shield, droneFleet.GetActiveDrone()._maxShield);
-            Bars[2].Draw(_station._health, 10000);
+            Bars[2].Draw(_station._health, _station._maxhealth);
+            Bars[3].Draw(_station._shield,_station._maxShield);
 
             _scoreDialog.Draw("Score: " + Global.HighScorePoints.ToString());
 
