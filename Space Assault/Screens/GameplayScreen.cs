@@ -584,7 +584,7 @@ namespace SpaceAssault.Screens
             }
             else
             {
-                Global.UIBatch.DrawString(Global.GameFont, "This is the Station and I draw in world Space!", vec, Color.Red);
+                Global.UIBatch.DrawString(Global.GameFont, "This is the Station and I draw in world Space!\nIf you fly away from me I will show you the way back to me!", vec, Color.Red);
             }
             Global.UIBatch.End();
         }

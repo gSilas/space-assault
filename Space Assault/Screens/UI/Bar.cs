@@ -25,9 +25,9 @@ namespace SpaceAssault.Screens.UI
             _segmentCount = _max / (_rect.Size.X / _size.X);
         }
 
-        public void Draw(int currValue, int maxValue)
+        public void Draw(Point pos, int currValue, int maxValue)
         {
-            var location = _rect.Location;
+            _rect.Location = pos;
             var count = currValue / _segmentCount;
             var maxCount = maxValue / _segmentCount;
 
@@ -41,6 +41,28 @@ namespace SpaceAssault.Screens.UI
             for (int x = 0; x < count; x++)
             {
                 Global.UIBatch.Draw(_tex, new Rectangle(new Point(_rect.Location.X+ (_size.X* x),_rect.Location.Y),_size), _col);
+            }
+
+            Global.UIBatch.End();
+        }
+
+        public void Draw(int currValue, int maxValue)
+        {
+            var location = _rect.Location;
+            var count = currValue / _segmentCount;
+            var maxCount = maxValue / _segmentCount;
+
+            if (_max != maxValue)
+            {
+                _segmentCount = (maxValue / (_rect.Size.X / _size.X));
+                _max = maxValue;
+            }
+
+            Global.UIBatch.Begin();
+
+            for (int x = 0; x < count; x++)
+            {
+                Global.UIBatch.Draw(_tex, new Rectangle(new Point(_rect.Location.X + (_size.X * x), _rect.Location.Y), _size), _col);
             }
 
             Global.UIBatch.End();

@@ -66,8 +66,13 @@ namespace SpaceAssault.Screens
 
             Bars[0].Draw(droneFleet.GetActiveDrone()._health, droneFleet.GetActiveDrone()._maxHealth);
             Bars[1].Draw(droneFleet.GetActiveDrone()._shield, droneFleet.GetActiveDrone()._maxShield);
-            Bars[2].Draw(_station._health, _station._maxhealth);
-            Bars[3].Draw(_station._shield,_station._maxShield);
+
+            var vec = new Point();
+            vec.X = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X - 80;
+            vec.Y = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y - 90;
+            Bars[2].Draw(vec,_station._health, _station._maxhealth);
+            vec.Y = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y - 80;
+            Bars[3].Draw(vec,_station._shield,_station._maxShield);
 
             _scoreDialog.Draw("Score: " + Global.HighScorePoints.ToString());
 
