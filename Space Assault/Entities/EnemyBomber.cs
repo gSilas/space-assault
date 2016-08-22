@@ -59,10 +59,10 @@ namespace SpaceAssault.Entities
 
         }
 
-        public override void Intelligence(GameTime gameTime, Vector3 targedPosition, ref List<Bullet> bulletList)
+        public override void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList)
         {
 
-            double distanceToTarged = Math.Sqrt(Math.Pow(Position.X - targedPosition.X, 2) + Math.Pow(Position.Z - targedPosition.Z, 2));
+            double distanceToTarget = Math.Sqrt(Math.Pow(Position.X - targetPosition.X, 2) + Math.Pow(Position.Z - targetPosition.Z, 2));
             double distanceToStation = Math.Sqrt(Math.Pow(Position.X - 0, 2) + Math.Pow(Position.Z - 0, 2));
 
             //Console.WriteLine(distanceToStation);
@@ -71,8 +71,8 @@ namespace SpaceAssault.Entities
             if (distanceToStation < 200)
                 neuerAnflug = true;
 
-            if (distanceToTarged < 200)
-                FlyVector(-(Position - targedPosition));
+            if (distanceToTarget < 200)
+                FlyVector(-(Position - targetPosition));
 
             if (neuerAnflug == true)
             {
@@ -82,8 +82,8 @@ namespace SpaceAssault.Entities
             }
 
             if (neuerAnflug == false)
-                if (distanceToTarged < 200)
-                    FlyVector(-(Position - targedPosition));
+                if (distanceToTarget < 200)
+                    FlyVector(-(Position - targetPosition));
                 else
                 {
                     FlyVector(Position - new Vector3(0, 0, 0));
