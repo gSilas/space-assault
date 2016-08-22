@@ -44,9 +44,5 @@ namespace SpaceAssault
         //SETTINGS
         public static int FleetSpawnTime = 5; // 1 Fleet/5 sec
         public static int AsteroidSpawnTime = 2; // 1/2 AsteroidChunk/sec
-
-
-        //Text
-        public static SortedDictionary<int, string> ShopText = new SortedDictionary<int, string>();
     }
 }

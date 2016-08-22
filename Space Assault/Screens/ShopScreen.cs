@@ -38,7 +38,7 @@ namespace SpaceAssault.Screens
         private Station _station;
 
         private Dialog _itemDialog;
-
+        public SortedDictionary<int, string> ShopText = new SortedDictionary<int, string>();
         //#################################
         // Constructor
         //#################################
@@ -57,8 +57,8 @@ namespace SpaceAssault.Screens
             sHealthMenuEntry=new MenuEntry(string.Empty);
             sShieldMenuEntry=new MenuEntry(string.Empty);
             stationlaserMenuEntry=new MenuEntry(String.Empty);
-            
 
+            ShopText = new SortedDictionary<int, string>();
             SetMenuEntryText();
 
             MenuEntry back = new MenuEntry("Close Shop");
@@ -88,14 +88,14 @@ namespace SpaceAssault.Screens
 
             _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 672, 704, 8, false, false);
 
-            Global.ShopText.Add(0, "New Laser");
-            Global.ShopText.Add(1, "New Health");
-            Global.ShopText.Add(2, "New Armor");
-            Global.ShopText.Add(3, "New Shield");
-            Global.ShopText.Add(4, "New Station Health");
-            Global.ShopText.Add(5, "New Station Shield");
-            Global.ShopText.Add(6, "New Station Laser");
-            Global.ShopText.Add(7, "Go Back");
+            ShopText.Add(0, "New Laser\n" + _droneFleet._makeDmg.ToString() + " Damage");
+            ShopText.Add(1, "New Health\n" + _droneFleet._maxHealth.ToString() + " Health");
+            ShopText.Add(2, "New Armor\n" + _droneFleet._armor.ToString() + " Armor");
+            ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield");
+            ShopText.Add(4, "New Station Health\n" +_station._maxhealth.ToString() + " Health" );
+            ShopText.Add(5, "New Station Shield\n" + _station._maxShield.ToString() + " Shield");
+            ShopText.Add(6, "Station Laser\n");
+            ShopText.Add(7, "Close Shop");
         }
 
 
@@ -133,6 +133,8 @@ namespace SpaceAssault.Screens
                 this._droneFleet._makeDmg += 10;
                 this._droneFleet._updatePoints--;
                 SetMenuEntryText();
+                ShopText.Remove(0);
+                ShopText.Add(0, "New Laser\n" + _droneFleet._makeDmg.ToString() + " Damage");
             }
         }
         // Event handler for when the Health menu entry is selected.
@@ -144,6 +146,8 @@ namespace SpaceAssault.Screens
                 this._droneFleet._maxHealth += 100;
                 this._droneFleet._updatePoints--;
                 SetMenuEntryText();
+                ShopText.Remove(1);
+                ShopText.Add(1, "New Health\n" + _droneFleet._maxHealth.ToString() + " Health");
             }
         }
 
@@ -155,6 +159,8 @@ namespace SpaceAssault.Screens
                 this._droneFleet._armor+=1;
                 this._droneFleet._updatePoints--;
                 SetMenuEntryText();
+                ShopText.Remove(2);
+                ShopText.Add(2, "New Armor\n" + _droneFleet._armor.ToString() + " Armor");
             }
         }
         void shieldMenuEntrySelected(object sender, EventArgs e)
@@ -165,16 +171,8 @@ namespace SpaceAssault.Screens
                 this._droneFleet._maxShield+=50;   
                 this._droneFleet._updatePoints--;
                 SetMenuEntryText();
-            }
-        }
-        void sShieldMenuEntrySelected(object sender, EventArgs e)
-        {
-            if (this._droneFleet._updatePoints > 0)
-            {
-                _StationShieldLevel++;
-                this._station._maxShield += 500;
-                this._droneFleet._updatePoints--;
-                SetMenuEntryText();
+                ShopText.Remove(3);
+                ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield");
             }
         }
         void sHealthMenuEntrySelected(object sender, EventArgs e)
@@ -185,6 +183,20 @@ namespace SpaceAssault.Screens
                 this._station._health += 1000;
                 this._droneFleet._updatePoints--;
                 SetMenuEntryText();
+                ShopText.Remove(4);
+                ShopText.Add(4, "New Station Health\n" + _station._maxhealth.ToString() + " Health");
+            }
+        }
+        void sShieldMenuEntrySelected(object sender, EventArgs e)
+        {
+            if (this._droneFleet._updatePoints > 0)
+            {
+                _StationShieldLevel++;
+                this._station._maxShield += 500;
+                this._droneFleet._updatePoints--;
+                SetMenuEntryText();
+                ShopText.Remove(5);
+                ShopText.Add(5, "New Station Shield\n" + _station._maxShield.ToString() + " Shield");
             }
         }
         void stationlaserhMenuEntrySelected(object sender, EventArgs e)
@@ -195,6 +207,8 @@ namespace SpaceAssault.Screens
                 this._station.makeDmg += 50;       
                 this._droneFleet._updatePoints-=2;
                 SetMenuEntryText();
+                ShopText.Remove(6);
+                ShopText.Add(6, "Station Laser\n");
             }
         }
 
@@ -309,12 +323,11 @@ namespace SpaceAssault.Screens
             Labels[0].Draw(this._droneFleet._updatePoints);
 
             string entry;
-            Global.ShopText.TryGetValue(selectedEntry, out entry);
+            ShopText.TryGetValue(selectedEntry, out entry);
             _itemDialog.Draw(entry);
 
             _frame.Draw(false);
         }
-
     }
 }
 
