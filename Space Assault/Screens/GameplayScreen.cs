@@ -195,7 +195,6 @@ namespace SpaceAssault.Screens
                     _droneFleet.GetActiveDrone().Reset();
                     _deathCounter++;
                 }
-
                 /// <summary>
                 /// EVRYTHING AFTER THIS LINE IS COLLISION HANDLING
                 /// </summary>
@@ -465,6 +464,8 @@ namespace SpaceAssault.Screens
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
 
+            DrawDirectionArrow();
+
             //FRAME & UI ALWAYS LAST
             _ui.Draw(_droneFleet);
             if (_station._health > 1000)
@@ -556,6 +557,35 @@ namespace SpaceAssault.Screens
 
             // Create one smoke particle per frmae, too.
             SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+        }
+
+        //#################################
+        // Helper Draw - Arrow
+        //#################################
+        void DrawDirectionArrow()
+        {
+            var vec = new Vector2();
+            vec.X = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X;
+            vec.Y = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y;
+
+            if (!Collider3D.BoundingFrustumIntersection(_station))
+            {
+                if (vec.X > Global.GraphicsManager.GraphicsDevice.Viewport.Width)
+                    vec.X = Global.GraphicsManager.GraphicsDevice.Viewport.Width - 50;
+                else if (vec.X < 0)
+                    vec.X = 0 + 50;
+                if (vec.Y > Global.GraphicsManager.GraphicsDevice.Viewport.Height)
+                    vec.Y = Global.GraphicsManager.GraphicsDevice.Viewport.Height - 50;
+                else if (vec.Y < 0)
+                    vec.Y = 0 + 50;
+
+                Global.SpriteBatch.DrawString(Global.GameFont, "Go Here for Station!", vec, Color.Red);
+            }
+            else
+            {
+                Global.SpriteBatch.DrawString(Global.GameFont, "This is the Station and I draw in world Space!", vec, Color.Red);
+            }
+    
         }
 
         //#################################
