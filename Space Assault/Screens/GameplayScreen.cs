@@ -98,6 +98,9 @@ namespace SpaceAssault.Screens
             projectileTrailParticles = new ProjectileTrailParticleSystem();
             SmokeParticles = new SmokeParticleSystem();
             fireParticles = new FireParticleSystem();
+
+            //for testing
+            Global.HighScorePoints = 1000;
         }
 
 

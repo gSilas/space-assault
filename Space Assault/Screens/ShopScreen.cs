@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using SpaceAssault.Screens.UI;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.ScreenManagers;
 
 namespace SpaceAssault.Screens
 {
@@ -85,7 +86,16 @@ namespace SpaceAssault.Screens
             MenuEntries.Add(stationlaserMenuEntry);
             MenuEntries.Add(back);
 
-            _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 640, 448, 8, false, false);
+            _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 672, 704, 8, false, false);
+
+            Global.ShopText.Add(0, "New Laser");
+            Global.ShopText.Add(1, "New Health");
+            Global.ShopText.Add(2, "New Armor");
+            Global.ShopText.Add(3, "New Shield");
+            Global.ShopText.Add(4, "New Station Health");
+            Global.ShopText.Add(5, "New Station Shield");
+            Global.ShopText.Add(6, "New Station Laser");
+            Global.ShopText.Add(7, "Go Back");
         }
 
 
@@ -188,6 +198,77 @@ namespace SpaceAssault.Screens
             }
         }
 
+        public override void HandleInput(InputState input)
+        {
+
+            // mouse click on menu?
+            if (input.IsLeftMouseButtonNewPressed())
+            {
+                Vector2 cornerA;
+                Vector2 cornerD;
+                for (int i = 0; i < MenuEntries.Count; i++)
+                {
+                    //calculating 2 diagonal corners of current menuEntry (upper left, bottom right)
+                    cornerA = MenuEntries[i].Position;
+                    cornerA.Y -= MenuEntries[i].GetHeight() / 2f;
+
+                    cornerD = MenuEntries[i].Position;
+                    cornerD.Y += MenuEntries[i].GetHeight() / 2f;
+                    cornerD.X += MenuEntries[i].GetWidth();
+
+                    if (cornerA.X < input.MousePosition.X && cornerA.Y < input.MousePosition.Z)
+                    {
+                        if (cornerD.X > input.MousePosition.X && cornerD.Y > input.MousePosition.Z)
+                        {
+
+                            // menuEntry needs a double click
+                            /*
+                            if (selectedEntry == i)
+                            {
+                                OnSelectEntry(selectedEntry);
+                            }
+                            else selectedEntry = i;
+                            */
+
+                            // menuEntry needs one click
+                            selectedEntry = i;
+                            OnSelectEntry(selectedEntry);
+                        }
+                    }
+                    else continue;
+
+                }
+            }
+
+            // Move to the previous menu entry?
+            if (input.IsMenuUp())
+            {
+                selectedEntry--;
+
+                if (selectedEntry < 0)
+                    selectedEntry = MenuEntries.Count - 1;
+            }
+
+            // Move to the next menu entry?
+            if (input.IsMenuDown())
+            {
+                selectedEntry++;
+
+                if (selectedEntry >= MenuEntries.Count)
+                    selectedEntry = 0;
+            }
+
+            // Accept or cancel the menu.
+            if (input.IsMenuSelect())
+            {
+                OnSelectEntry(selectedEntry);
+            }
+            else if (input.IsMenuCancel())
+            {
+                OnCancel();
+            }
+        }
+
         //#################################
         // Draw
         //#################################
@@ -203,7 +284,6 @@ namespace SpaceAssault.Screens
                 MenuEntry menuEntry = MenuEntries[i];
 
                 bool isSelected = IsActive && (i == selectedEntry);
-
                 menuEntry.Draw(this, isSelected, gameTime);
             }
 
@@ -219,12 +299,18 @@ namespace SpaceAssault.Screens
             float titleScale = 1.25f;
 
             titlePosition.Y -= transitionOffset * 100;
-            Global.SpriteBatch.DrawString(Global.GameFont, menuTitle, titlePosition, titleColor, 0,
-                                   titleOrigin, titleScale, SpriteEffects.None, 0);
+
+
+            Global.SpriteBatch.DrawString(Global.GameFont, menuTitle, titlePosition, titleColor, 0,titleOrigin, titleScale, SpriteEffects.None, 0);
+
+            Global.SpriteBatch.End();
+            Global.SpriteBatch.Begin();
 
             Labels[0].Draw(this._droneFleet._updatePoints);
 
-            _itemDialog.Draw("");
+            string entry;
+            Global.ShopText.TryGetValue(selectedEntry, out entry);
+            _itemDialog.Draw(entry);
 
             _frame.Draw(false);
         }

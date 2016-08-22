@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
+using System.Collections.Generic;
 
 /// <summary>
 /// Everything in here has to have values assigned either in here or on it's first occurence
@@ -44,5 +45,8 @@ namespace SpaceAssault
         public static int FleetSpawnTime = 5; // 1 Fleet/5 sec
         public static int AsteroidSpawnTime = 2; // 1/2 AsteroidChunk/sec
 
+
+        //Text
+        public static SortedDictionary<int, string> ShopText = new SortedDictionary<int, string>();
     }
 }
