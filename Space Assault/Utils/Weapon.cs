@@ -72,7 +72,7 @@ namespace SpaceAssault.Utils
                 _shootSound.Paused = false;
 
                 // adding bullet to ref list
-                bulletList.Add(new Bullet(getBullet(bullet).model, getBullet(bullet).moveSpeed, getBullet(bullet).canDmgStation, damage, position, droneRotateMatrix));
+                bulletList.Add(new Bullet(bullet, getBullet(bullet).model, getBullet(bullet).moveSpeed, getBullet(bullet).canDmgStation, damage, position, droneRotateMatrix));
 
                 return true;
             }
