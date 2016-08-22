@@ -252,7 +252,7 @@ namespace SpaceAssault.Entities
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
                 // TODO: New BulletType for Secondary Fire
-                GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList);
+                GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList);
             }
         }
 

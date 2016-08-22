@@ -26,13 +26,14 @@ namespace SpaceAssault.Entities
             EnemyLazer
         }
 
-        public Bullet(Model model, float moveSpeed, bool canDamageStation, int damage, Vector3 position, Matrix droneRotateMatrix)
+        public Bullet(BulletType bulletType, Model model, float moveSpeed, bool canDamageStation, int damage, Vector3 position, Matrix droneRotateMatrix)
         {
             Model = model;
             Position = position;
             RotationMatrix = droneRotateMatrix;
             Spheres = Collider3D.UpdateBoundingSphere(this);
 
+            _bulletType = bulletType;
             _makeDmg = damage;
             _canDmgStation = canDamageStation;
             _bulletLifeTime = 25000;
