@@ -18,7 +18,7 @@ namespace SpaceAssault.Screens.UI
         private Point _size;
         private int _scale;
         private bool _shadow;
-        private float _alpha = 1;
+        private int _alpha = 255;
 
         public Dialog(int x, int y, int height, int width,int scale,bool shadow, bool transparent)
         {
@@ -30,7 +30,7 @@ namespace SpaceAssault.Screens.UI
             _scale = scale;
             _shadow = shadow;
             if (transparent)
-                _alpha = 0.5f;
+                _alpha = 100;
 
         }
 
@@ -59,22 +59,29 @@ namespace SpaceAssault.Screens.UI
 
             }
 
-            Global.UIBatch.Draw(_edge, new Rectangle(_pos, _size), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
-            Global.UIBatch.Draw(_edge, new Rectangle(new Point(_x + _width, _y),_size), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
-            Global.UIBatch.Draw(_edge, new Rectangle(new Point(_x, _y + _height), _size), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
-            Global.UIBatch.Draw(_edge, new Rectangle(new Point(_x + _width +_size.X, _y + _height +_size.X), _size), null, Color.White, MathHelper.ToRadians(180), Vector2.Zero, SpriteEffects.None, 0.0f);
+            Global.UIBatch.Draw(_edge, new Rectangle(_pos, _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+            Global.UIBatch.Draw(_edge, new Rectangle(new Point(_x + _width, _y),_size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
+            Global.UIBatch.Draw(_edge, new Rectangle(new Point(_x, _y + _height), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+            Global.UIBatch.Draw(_edge, new Rectangle(new Point(_x + _width +_size.X, _y + _height +_size.X), _size), null, new Color(255,255,255,_alpha), MathHelper.ToRadians(180), Vector2.Zero, SpriteEffects.None, 0.0f);
 
             for (int x = _x + _size.X; x < _width + _x; x += _size.X)
             {
-                Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, _y), _size), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
-                Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, _y + _height), _size), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+                if(x != (_width + _x - _size.X))
+                {
+                    Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, _y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+                }
+                else
+                {
+                    Global.UIBatch.Draw(_frameButtons, new Rectangle(new Point(_width + _x - _size.X, _y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+                }
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, _y + _height), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
             }
-            Global.UIBatch.Draw(_frameButtons, new Rectangle(new Point(_width + _x - _size.X, _y), _size), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+           
             
             for (int y = _y +_size.X; y < _height +_y; y += _size.X)
             {
-                Global.UIBatch.Draw(_frame, new Rectangle(new Point(_width + _x, y +_size.X ), _size), null, Color.White, MathHelper.ToRadians(-90), Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
-                Global.UIBatch.Draw(_frame, new Rectangle(new Point(_x + _size.X, y), _size), null, Color.White, MathHelper.ToRadians(90), Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(_width + _x, y +_size.X ), _size), null, new Color(255, 255, 255, _alpha), MathHelper.ToRadians(-90), Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(_x + _size.X, y), _size), null, new Color(255, 255, 255, _alpha), MathHelper.ToRadians(90), Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
             }
 
             
@@ -82,7 +89,7 @@ namespace SpaceAssault.Screens.UI
             {
                 for (int y = _y; y < _height +_y - _size.X; y += _size.X)
                 {
-                    Global.UIBatch.Draw(_space, new Rectangle(new Point(x + _size.X, y + _size.X), _size), null, Color.White, MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
+                    Global.UIBatch.Draw(_space, new Rectangle(new Point(x + _size.X, y + _size.X), _size), null, new Color(255, 255, 255, _alpha), MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
                 }
             }
 
