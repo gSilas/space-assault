@@ -1,14 +1,15 @@
 Gameplay:
-	maprand d
-	ki logik
+	maprand		-dust
 
 	bounding spehre station malen
-	geld d
+	geld
 	rakete für drone
-	highscore
+	highscore	-hm
 	wavespawning
 	großer asteroid gegner
 	Bossgegner
+	ki logik	-hm
+	formation	-hm
 	
 
 
@@ -26,9 +27,6 @@ Sound: 	-verschiedene Explosionen für alle Objekte
 
 partikeldinge:
 	-Explosionen für alles
-
-
-
 
 
 
