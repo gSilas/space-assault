@@ -20,8 +20,9 @@ namespace SpaceAssault.Entities
             trail.Add(new Trail(TrailParticles));
 
             RotationMatrix = Matrix.Identity;
-            MoveSpeedForward = 0.2f;
-            TurnSpeed = 1f;
+            MoveSpeedForward = 1.2f;
+            TurnSpeed = 5.0f;
+
             Health = 30;
 
             Gun = new Weapon(600d);
