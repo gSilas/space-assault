@@ -1,30 +1,32 @@
 Gameplay:
 	maprand d
 	ki logik
-	armor logik p
+
 	bounding spehre station malen
 	geld d
 	rakete für drone
+	highscore
+	wavespawning
+	großer asteroid gegner
+	Bossgegner
 	
 
-Shop: 	armor
-	upgrades müssen sachen besser machen (permanent)
+
+Shop: 	
 	abwehrlaser für asteriodien	
+	
 
 
 Sound: 	-verschiedene Explosionen für alle Objekte
 	-Musik
 	-Schusssounds
 	- UI sounds (Stimmen, klicken, piepen
-
-
-UI:	
+	
 
 
 partikeldinge:
 	-Explosionen für alles
-	-Antriebe
-	-
+
 
 
 
@@ -32,8 +34,8 @@ partikeldinge:
 
 Modelle:
 	drone
-	bomber
 	Photonbombe
 	rakete
+	BOSS
 	2 asterioden
 	http://imgur.com/a/nCzpN
