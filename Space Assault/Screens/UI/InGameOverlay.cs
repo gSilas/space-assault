@@ -43,7 +43,7 @@ namespace SpaceAssault.Screens
             Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 80), new Point(300, 60)), Color.Red, droneFleet.GetActiveDrone()._maxHealth));
             Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 90), new Point(300, 60)), Color.Blue, droneFleet.GetActiveDrone()._maxShield));
             Bars.Add(new Bar(new Rectangle(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width - 400, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750), new Point(300, 60)), Color.Green, _station._maxhealth));
-            Bars.Add(new Bar(new Rectangle(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width - 400, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 740), new Point(300, 60)), Color.DarkGreen,_station._maxShield));
+            Bars.Add(new Bar(new Rectangle(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width - 400, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 740), new Point(300, 60)), Color.White,_station._maxShield));
             foreach (var bar in Bars)
             {
                 bar.LoadContent();
