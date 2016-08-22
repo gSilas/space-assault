@@ -32,7 +32,6 @@ namespace SpaceAssault.Utils
             List<List<AEnemys>> _removeSquadrons = new List<List<AEnemys>>();
 
             // updating bullets
-            _globalTimeSpan = gameTime.TotalGameTime;
             foreach (Bullet bullet in _bulletList)
             {
                 bullet.Update(gameTime);

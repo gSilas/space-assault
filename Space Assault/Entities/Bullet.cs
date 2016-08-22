@@ -12,7 +12,7 @@ namespace SpaceAssault.Entities
 
         private Vector3 _moveDirection;
         private float _moveSpeed;
-        public float _bulletLifeTime;
+        public int _bulletLifeTime;
         protected int _makeDmg;
         protected bool _canDmgStation;
         public BulletType _bulletType;
@@ -35,7 +35,7 @@ namespace SpaceAssault.Entities
 
             _makeDmg = damage;
             _canDmgStation = canDamageStation;
-            _bulletLifeTime = (120f / moveSpeed) * 1000;
+            _bulletLifeTime = 25000;
             _moveDirection = droneRotateMatrix.Forward;
             _moveSpeed = moveSpeed;
         }
