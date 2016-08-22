@@ -85,7 +85,7 @@ namespace SpaceAssault.Screens
             MenuEntries.Add(stationlaserMenuEntry);
             MenuEntries.Add(back);
 
-            _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 640, 448, 8, false);
+            _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 640, 448, 8, false, false);
         }
 
 

@@ -50,9 +50,9 @@ namespace SpaceAssault.Screens
             }
 
             //Dialogs
-            _upgradeDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2-150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 336, 8, false);
-            _upgradeVincinityDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 702, 32, 336, 8, false);
-            _scoreDialog = new Dialog(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 192, 8, false);
+            _upgradeDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2-150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 336, 8, false, true);
+            _upgradeVincinityDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 702, 32, 336, 8, false, true);
+            _scoreDialog = new Dialog(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 192, 8, false, true);
             _upgradeDialog.LoadContent();
             _scoreDialog.LoadContent();
             _upgradeVincinityDialog.LoadContent();
