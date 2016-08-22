@@ -18,8 +18,9 @@ namespace SpaceAssault.Screens.UI
         private Point _size;
         private int _scale;
         private bool _shadow;
+        private float _alpha = 1;
 
-        public Dialog(int x, int y, int height, int width,int scale,bool shadow)
+        public Dialog(int x, int y, int height, int width,int scale,bool shadow, bool transparent)
         {
             _pos = new Point(x,y);
             _x = x;
@@ -28,6 +29,9 @@ namespace SpaceAssault.Screens.UI
             _width = width;
             _scale = scale;
             _shadow = shadow;
+            if (transparent)
+                _alpha = 0.5f;
+
         }
 
         public void LoadContent()

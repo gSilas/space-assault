@@ -12,8 +12,8 @@ namespace SpaceAssault.Screens
     abstract class MenuScreen : GameScreen
     {
         List<MenuEntry> menuEntries = new List<MenuEntry>();
-        int selectedEntry = 0;
-        string menuTitle;
+        protected int selectedEntry = 0;
+        protected string menuTitle;
 
         //Frame
         protected Frame _frame;
