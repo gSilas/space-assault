@@ -100,5 +100,121 @@ namespace SpaceAssault.Screens.UI
 
             Global.UIBatch.End();
         }
+
+        public void Draw(Point pos, string msg)
+        {
+            Global.UIBatch.Begin();
+
+            if (_shadow)
+            {
+                for (int x = pos.X - 10; x < _width + pos.X; x += _size.X)
+                {
+                    for (int y = pos.Y - 10; y < _height + pos.Y; y += _size.X)
+                    {
+                        Global.UIBatch.Draw(_space, new Rectangle(new Point(x, y), _size), null, Color.DarkGray, MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
+                    }
+                }
+
+            }
+
+            Global.UIBatch.Draw(_edge, new Rectangle(pos, _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+            Global.UIBatch.Draw(_edge, new Rectangle(new Point(pos.X + _width, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
+            Global.UIBatch.Draw(_edge, new Rectangle(new Point(pos.X, pos.Y + _height), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+            Global.UIBatch.Draw(_edge, new Rectangle(new Point(pos.X + _width + _size.X, pos.Y + _height + _size.X), _size), null, new Color(255, 255, 255, _alpha), MathHelper.ToRadians(180), Vector2.Zero, SpriteEffects.None, 0.0f);
+
+            for (int x = pos.X + _size.X; x < _width + pos.X; x += _size.X)
+            {
+                if (x != (_width + pos.X - _size.X))
+                {
+                    Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+                }
+                else
+                {
+                    Global.UIBatch.Draw(_frameButtons, new Rectangle(new Point(_width + pos.X - _size.X, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+                }
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, pos.Y + _height), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+            }
+
+
+            for (int y = pos.Y + _size.X; y < _height + pos.Y; y += _size.X)
+            {
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(_width + pos.X, y + _size.X), _size), null, new Color(255, 255, 255, _alpha), MathHelper.ToRadians(-90), Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(pos.X + _size.X, y), _size), null, new Color(255, 255, 255, _alpha), MathHelper.ToRadians(90), Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+            }
+
+
+            for (int x = pos.X; x < _width + pos.X - _size.X; x += _size.X)
+            {
+                for (int y = pos.Y; y < _height + pos.Y - _size.X; y += _size.X)
+                {
+                    Global.UIBatch.Draw(_space, new Rectangle(new Point(x + _size.X, y + _size.X), _size), null, new Color(255, 255, 255, _alpha), MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
+                }
+            }
+
+            if (msg != null)
+            {
+                Global.UIBatch.DrawString(Global.DialogFont, msg, pos.ToVector2() + new Vector2(_size.X, _height / 2), Color.White);
+            }
+
+            Global.UIBatch.End();
+        }
+
+        public void Draw(Point pos, string msg, Color msgColor)
+        {
+            Global.UIBatch.Begin();
+
+            if (_shadow)
+            {
+                for (int x = pos.X - 10; x < _width + pos.X; x += _size.X)
+                {
+                    for (int y = pos.Y - 10; y < _height + pos.Y; y += _size.X)
+                    {
+                        Global.UIBatch.Draw(_space, new Rectangle(new Point(x, y), _size), null, Color.DarkGray, MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
+                    }
+                }
+
+            }
+
+            Global.UIBatch.Draw(_edge, new Rectangle(pos, _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+            Global.UIBatch.Draw(_edge, new Rectangle(new Point(pos.X + _width, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
+            Global.UIBatch.Draw(_edge, new Rectangle(new Point(pos.X, pos.Y + _height), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+            Global.UIBatch.Draw(_edge, new Rectangle(new Point(pos.X + _width + _size.X, pos.Y + _height + _size.X), _size), null, new Color(255, 255, 255, _alpha), MathHelper.ToRadians(180), Vector2.Zero, SpriteEffects.None, 0.0f);
+
+            for (int x = pos.X + _size.X; x < _width + pos.X; x += _size.X)
+            {
+                if (x != (_width + pos.X - _size.X))
+                {
+                    Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+                }
+                else
+                {
+                    Global.UIBatch.Draw(_frameButtons, new Rectangle(new Point(_width + pos.X - _size.X, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+                }
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, pos.Y + _height), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+            }
+
+
+            for (int y = pos.Y + _size.X; y < _height + pos.Y; y += _size.X)
+            {
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(_width + pos.X, y + _size.X), _size), null, new Color(255, 255, 255, _alpha), MathHelper.ToRadians(-90), Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(pos.X + _size.X, y), _size), null, new Color(255, 255, 255, _alpha), MathHelper.ToRadians(90), Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+            }
+
+
+            for (int x = pos.X; x < _width + pos.X - _size.X; x += _size.X)
+            {
+                for (int y = pos.Y; y < _height + pos.Y - _size.X; y += _size.X)
+                {
+                    Global.UIBatch.Draw(_space, new Rectangle(new Point(x + _size.X, y + _size.X), _size), null, new Color(255, 255, 255, _alpha), MathHelper.ToRadians(0), Vector2.Zero, SpriteEffects.None, 0.0f);
+                }
+            }
+
+            if (msg != null)
+            {
+                Global.UIBatch.DrawString(Global.DialogFont, msg, pos.ToVector2() + new Vector2(_size.X, _height / 2), msgColor);
+            }
+
+            Global.UIBatch.End();
+        }
     }
 }

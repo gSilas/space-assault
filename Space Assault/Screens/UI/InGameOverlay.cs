@@ -89,7 +89,13 @@ namespace SpaceAssault.Screens
                 _upgradeDialog.Draw("Upgrade available: " + droneFleet._updatePoints.ToString());
 
                 if ((Vector3.Distance(this._station.Position, droneFleet.GetActiveDrone().Position) - GameplayScreen._stationHeight) < 150)
-                    _upgradeVincinityDialog.Draw("Press B for Shop!");
+                {
+                    var vec = new Point();
+                    vec.X = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X + 200;
+                    vec.Y = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y + 150;
+                    _upgradeVincinityDialog.Draw(vec, "Press B for Shop!", Color.Red);
+                }
+                    
             }         
         }
     }
