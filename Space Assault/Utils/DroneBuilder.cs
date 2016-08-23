@@ -13,8 +13,8 @@ namespace SpaceAssault.Utils
         public List<Bullet> _bulletList;
         private List<Bullet> _removeBulletList;
 
-        public int _updatePoints;
-        public int _totalUpdates;
+
+    
 
         public int _makeDmg;
         public int _maxHealth;

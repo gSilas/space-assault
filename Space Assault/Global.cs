@@ -35,6 +35,7 @@ namespace SpaceAssault
 
         //highscore points
         public static int HighScorePoints;
+        public static int Money = 100000;
 
         //OPTIONS 
         // TODO: should be read from a settings file

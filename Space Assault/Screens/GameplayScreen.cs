@@ -31,6 +31,7 @@ namespace SpaceAssault.Screens
         private ExplosionSpawner _explosionSpawner;
         private int _deathCounter = 0;
         public static int _stationHeight = 80;
+     
 
         //UI + Frame + Background
         private InGameOverlay _ui;
@@ -176,12 +177,7 @@ namespace SpaceAssault.Screens
                 if (_station._health <= 0)
                     LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen());
 
-                //upgrading the health of drone and _droneupdate is used by other object to make the game harder
-                if (Global.HighScorePoints > 1000 * (_droneFleet._totalUpdates + 1))
-                {
-                    _droneFleet._updatePoints++;
-                    _droneFleet._totalUpdates++;
-                }
+
 
                 // fading out/in when drone is dead & alive again
                 if (!_droneFleet.GetActiveDrone().IsNotDead)
@@ -406,7 +402,7 @@ namespace SpaceAssault.Screens
             // key for the ship etc.
             if (input.IsNewKeyPress(Keys.B))
             {
-                if ((Vector3.Distance(_station.Position, _droneFleet.GetActiveDrone().Position) - _stationHeight) < 150 && Global.HighScorePoints > 1000)
+                if ((Vector3.Distance(_station.Position, _droneFleet.GetActiveDrone().Position) - _stationHeight) < 150)
                     ScreenManager.AddScreen(new ShopScreen(_droneFleet,_station));
             }
 

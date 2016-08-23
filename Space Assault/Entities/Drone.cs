@@ -38,6 +38,7 @@ namespace SpaceAssault.Entities
 
         private bool _alternatingGunLogic = false;
         private bool _isNotDead;
+        public int Money;
 
 
         public Weapon GunPrimary;
@@ -103,7 +104,7 @@ namespace SpaceAssault.Entities
 
         public override void Update(GameTime gameTime)
         {
-            //Console.WriteLine("Test:"+MaxHealth+" "+Health+" "+Armor);
+            //Console.WriteLine(_maxHealth);
             Spheres = Collider3D.UpdateBoundingSphere(this);
 
             if (gameTime.TotalGameTime > (_shieldrefreshdelay.Add(TimeSpan.FromSeconds(3))))

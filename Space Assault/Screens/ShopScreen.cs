@@ -17,13 +17,20 @@ namespace SpaceAssault.Screens
         //#################################
         //Drone
         MenuEntry damageMenuEntry;
+        private int _priceDMG=1000;
         MenuEntry healthMenuEntry;
+        public static int _priceDroneHealth=500;
         MenuEntry armorMenuEntry;
+        private int _priceArmor=2000;
         MenuEntry shieldMenuEntry;
+        private int _priceDroneShield=500;
         //Station
         MenuEntry sShieldMenuEntry;
+        private int _priceStationShield=3000;
         MenuEntry sHealthMenuEntry;
+        private int _priceStationHealth = 5000;
         MenuEntry stationlaserMenuEntry;
+
 
         List<Label> Labels = new List<Label>();
         public static int _droneDamageLevel = 1;
@@ -32,7 +39,7 @@ namespace SpaceAssault.Screens
         public static int _droneShieldLevel = 1;
         public static int _StationHealthLevel = 1;
         public static int _StationShieldLevel = 1;
-        public static int _StationLaserLevel = 0;
+        public static bool _stationLaser = false;
 
         private DroneBuilder _droneFleet;
         private Station _station;
@@ -75,6 +82,15 @@ namespace SpaceAssault.Screens
 
             back.Selected += OnCancel;
 
+            /*/ADD Costs for Upgrades
+            _priceDMG = 1000;
+            _priceArmor = 2000;
+            //_priceDroneHealth = 500;
+            _priceDroneShield = 500;
+            _priceStationShield = 5000;
+            _priceStationHealth = 5000;
+            */
+
             // Add entries to the menu.
             MenuEntries.Add(damageMenuEntry);
             MenuEntries.Add(healthMenuEntry);
@@ -88,13 +104,13 @@ namespace SpaceAssault.Screens
 
             _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 672, 704, 8, false, false);
 
-            ShopText.Add(0, "New Laser\n" + _droneFleet._makeDmg.ToString() + " Damage");
-            ShopText.Add(1, "New Health\n" + _droneFleet._maxHealth.ToString() + " Health");
-            ShopText.Add(2, "New Armor\n" + _droneFleet._armor.ToString() + " Armor");
-            ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield");
-            ShopText.Add(4, "New Station Health\n" +_station._maxhealth.ToString() + " Health" );
-            ShopText.Add(5, "New Station Shield\n" + _station._maxShield.ToString() + " Shield");
-            ShopText.Add(6, "Station Laser\n");
+            ShopText.Add(0, "Your Base Damage is: " + _droneFleet._makeDmg.ToString()+"\n\nFor Every Upgrade your\nGundamage is increased by 10");
+            ShopText.Add(1, "Your Base Health is: " + _droneFleet._maxHealth.ToString() + " Health\n\nIf your Health goes down to 0,\nyour Drone will die.\nCare!!! There is no way to restore it,\nexcept getting a new Drone.\n\nFor every Upgrade the maximum Health\nincreases by 100.");
+            ShopText.Add(2, "New Armor\n" + _droneFleet._armor.ToString() + " Armor\n\nFor every Upgrade in Armor, \nthe incoming Damage is reduced by 1.");
+            ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield\n\nIf your Shield goes down to 0, \nyour Health will get Damage.\n\nAfter a short delay\nthe shield restores itself.\n\nFor every upgrade the maximum Shield\nincreases by 50. ");
+            ShopText.Add(4, "New Station Health\n" +_station._maxhealth.ToString() + " Health\n\nIf the Stationhealth goes down to 0,\nyour Game is Over.\nThe Station gets slowly repaired over time.\n\nFor every Upgrade the maximum Health\nincreases by 1000." );
+            ShopText.Add(5, "New Station Shield\n" + _station._maxShield.ToString() + " Shield\n\nIf the Stationshield goes down to 0,\nthe Station will get real Damage.\nThe Shield regenerates, \nif the Station doesnt get hit.\n\nFor every Upgrade the maximum Shield\nincreases by 500.");
+            ShopText.Add(6, "5000 Fragments\nUpgrade the Station,\nso it can destroy Astroids");
             ShopText.Add(7, "Close Shop");
         }
 
@@ -105,7 +121,7 @@ namespace SpaceAssault.Screens
         public override void LoadContent()
         {
             //UI
-            Labels.Add(new Label("gamefont", "Points: ", 50, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
+            Labels.Add(new Label("gamefont", "Fragments: ", 50, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
             _itemDialog.LoadContent();
             _frame.LoadContent();
         }
@@ -115,100 +131,123 @@ namespace SpaceAssault.Screens
         //#################################
         void SetMenuEntryText()
         {
-            damageMenuEntry.Text = "Damage Level: " + _droneDamageLevel;
-            healthMenuEntry.Text = "Health Level: " + _droneHealthLevel;
-            armorMenuEntry.Text = "Armor Level: " + _droneArmorLevel;
-            shieldMenuEntry.Text = "Shield Level: " + _droneShieldLevel;
-            sHealthMenuEntry.Text = "Station Health Level: " + _StationHealthLevel;
-            sShieldMenuEntry.Text = "Station Shield Level: " + _StationShieldLevel;
-            stationlaserMenuEntry.Text = "Station Laser Level: " + _StationLaserLevel;
+            damageMenuEntry.Text = "Damage Level: " + _droneDamageLevel +" for "+ _priceDMG+" Fragments";
+            healthMenuEntry.Text = "Health Level: " + _droneHealthLevel +" for "+_priceDroneHealth + " Fragments";
+            armorMenuEntry.Text = "Armor Level: " + _droneArmorLevel + " for " + _priceArmor + " Fragments";
+            shieldMenuEntry.Text = "Shield Level: " + _droneShieldLevel + " for " + _priceDroneShield + " Fragments";
+            sHealthMenuEntry.Text = "Station Health Level: " + _StationHealthLevel + " for " + _priceStationHealth + " Fragments";
+            sShieldMenuEntry.Text = "Station Shield Level: " + _StationShieldLevel + " for " + _priceStationShield + " Fragments";
+            stationlaserMenuEntry.Text = "Station Laser Online: " + _stationLaser;
         }
 
         // Event handler for when the Damage menu entry is selected.
         void damageMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._droneFleet._updatePoints > 0)
+            if (Global.Money > _priceDMG)
             {
                 _droneDamageLevel++;
+                Global.Money -= _priceDMG;
+                _priceDMG *= 2;
+
                 this._droneFleet._makeDmg += 10;
-                this._droneFleet._updatePoints--;
+                
                 SetMenuEntryText();
                 ShopText.Remove(0);
-                ShopText.Add(0, "New Laser\n" + _droneFleet._makeDmg.ToString() + " Damage");
+                ShopText.Add(0, "Your Laser does now " + _droneFleet._makeDmg.ToString() + " Damage\n\nFor Every Upgrade your\nGundamage is increased by 10");
+               
             }
         }
         // Event handler for when the Health menu entry is selected.
         void healthMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._droneFleet._updatePoints > 0)
+            if (Global.Money > _priceDroneHealth)
             {
                 _droneHealthLevel++;
+                Global.Money -= _priceDroneHealth;
+                _priceDroneHealth *=2;
+
                 this._droneFleet._maxHealth += 100;
-                this._droneFleet._updatePoints--;
+
                 SetMenuEntryText();
                 ShopText.Remove(1);
-                ShopText.Add(1, "New Health\n" + _droneFleet._maxHealth.ToString() + " Health");
+                ShopText.Add(1, "Your Drone has now:\n" + _droneFleet._maxHealth.ToString() + " maximum Health\n\nIf your Health goes down to 0,\nyour Drone will die.\nCare!!! There is no way to restore it,\nexcept getting a new Drone.\n\nFor every Upgrade the maximum Health\nincreases by 100.");
+                
             }
         }
 
         void armorMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._droneFleet._updatePoints > 0)
+            if (Global.Money > _priceArmor)
             {
                 _droneArmorLevel++;
+                 Global.Money -= _priceArmor;
+                _priceArmor *= 2;
+              
                 this._droneFleet._armor+=1;
-                this._droneFleet._updatePoints--;
+             
                 SetMenuEntryText();
                 ShopText.Remove(2);
-                ShopText.Add(2, "New Armor\n" + _droneFleet._armor.ToString() + " Armor");
+                ShopText.Add(2, "Your Drone has now:\n" + _droneFleet._armor.ToString() + " Armor\n\nFor every Upgrade in Armor, \nthe incoming Damage is reduced by 1.");
             }
         }
         void shieldMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._droneFleet._updatePoints > 0)
+            if (Global.Money > _priceDroneShield)
             {
                 _droneShieldLevel++;
+                Global.Money -= _priceDroneShield;
+                _priceDroneShield *= 2;
+      
                 this._droneFleet._maxShield+=50;   
-                this._droneFleet._updatePoints--;
+        
+           
                 SetMenuEntryText();
                 ShopText.Remove(3);
-                ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield");
+                ShopText.Add(3, "Your Drone has now:\n" + _droneFleet._maxShield.ToString() + " maximum Shield\n\nIf your Shield goes down to 0, \nyour Health will get Damage.\n\nAfter a short delay\nthe shield restores itself.\n\nFor every upgrade the maximum Shield\nincreases by 50. ");
             }
         }
         void sHealthMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._droneFleet._updatePoints > 0)
+            if (Global.Money > _priceStationHealth)
             {
                 _StationHealthLevel++;
+                Global.Money -= _priceStationHealth;
+                _priceStationHealth *= 2;
+             
                 this._station._health += 1000;
-                this._droneFleet._updatePoints--;
+             
                 SetMenuEntryText();
                 ShopText.Remove(4);
-                ShopText.Add(4, "New Station Health\n" + _station._maxhealth.ToString() + " Health");
+                ShopText.Add(4, "Your Station has now:\n" + _station._maxhealth.ToString() + " maximum Health\n\nIf the Stationhealth goes down to 0,\nyour Game is Over.\nThe Station gets slowly repaired over time.\n\nFor every Upgrade the maximum Health\nincreases by 1000.");
             }
         }
         void sShieldMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._droneFleet._updatePoints > 0)
+            if (Global.Money > _priceStationShield)
             {
                 _StationShieldLevel++;
+                Global.Money -= _priceStationShield;
+                _priceStationShield *= 2;
+           
                 this._station._maxShield += 500;
-                this._droneFleet._updatePoints--;
+    
                 SetMenuEntryText();
                 ShopText.Remove(5);
-                ShopText.Add(5, "New Station Shield\n" + _station._maxShield.ToString() + " Shield");
+                ShopText.Add(5, "Your Station has now:\n" + _station._maxShield.ToString() + " maximum Shield\n\nIf the Stationshield goes down to 0,\nthe Station will get real Damage.\nThe Shield regenerates, \nif the Station doesnt get hit.\n\nFor every Upgrade the maximum Shield\nincreases by 500.");
             }
         }
         void stationlaserhMenuEntrySelected(object sender, EventArgs e)
         {
-            if (this._droneFleet._updatePoints > 1)
+            if (Global.Money > 5000 && _stationLaser==false)
             {
-                _StationLaserLevel++;
-                this._station.makeDmg += 50;       
-                this._droneFleet._updatePoints-=2;
+                _stationLaser = true;
+                Global.Money -= 5000;
+
+                this._station.makeDmg += 5000;
+
                 SetMenuEntryText();
                 ShopText.Remove(6);
-                ShopText.Add(6, "Station Laser\n");
+                ShopText.Add(6, "The Stationlaser is now ONLINE\n");
             }
         }
 
@@ -320,7 +359,7 @@ namespace SpaceAssault.Screens
             Global.SpriteBatch.End();
             Global.SpriteBatch.Begin();
 
-            Labels[0].Draw(this._droneFleet._updatePoints);
+            Labels[0].Draw(Global.Money);
 
             string entry;
             ShopText.TryGetValue(selectedEntry, out entry);

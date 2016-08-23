@@ -20,6 +20,7 @@ namespace SpaceAssault.Screens
         private Dialog _upgradeDialog;
         private Dialog _upgradeVincinityDialog;
         private Dialog _scoreDialog;
+        private Dialog _moneyDialog;
 
         //#################################
         // Constructor
@@ -52,10 +53,14 @@ namespace SpaceAssault.Screens
             //Dialogs
             _upgradeDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2-150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 336, 8, false, true);
             _upgradeVincinityDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 702, 32, 336, 8, false, true);
-            _scoreDialog = new Dialog(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 192, 8, false, true);
+            _scoreDialog = new Dialog(1000, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 200, 8, false, true);
+            _moneyDialog = new Dialog(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 280, 8, false, false);
+
             _upgradeDialog.LoadContent();
             _scoreDialog.LoadContent();
+            _moneyDialog.LoadContent();
             _upgradeVincinityDialog.LoadContent();
+            
         }
         //#################################
         // Draw
@@ -83,8 +88,8 @@ namespace SpaceAssault.Screens
             }
                        
             _scoreDialog.Draw("Score: " + Global.HighScorePoints.ToString());
-
-            if (droneFleet._updatePoints > 0)
+            _moneyDialog.Draw("Fragments: "+Global.Money);
+            /*if (droneFleet._updatePoints > 0)
             {
                 _upgradeDialog.Draw("Upgrade available: " + droneFleet._updatePoints.ToString());
 
@@ -96,7 +101,8 @@ namespace SpaceAssault.Screens
                     _upgradeVincinityDialog.Draw(vec, "Press B for Shop!", Color.Red);
                 }
                     
-            }         
+            } 
+            */        
         }
     }
 }
