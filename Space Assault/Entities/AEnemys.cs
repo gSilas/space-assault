@@ -51,49 +51,43 @@ namespace SpaceAssault.Entities
             {
                 direction.Normalize();
                 float vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
-                if (vectorDirection > 0.1 || vectorDirection < -0.1)
+                for (int i = 1; i < (TurnSpeed / 0.2f); i++)
                 {
-                    for (int i = 1; i < (TurnSpeed/0.2f); i++)
+                    if (vectorDirection > 0.1)
                     {
-                        if (vectorDirection > 0.1)
-                        {
-                            //Console.WriteLine("turn left");
-                            RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.2f));
-                        }
-                        else if (vectorDirection < -0.1)
-                        {
-                            //Console.WriteLine("turn right");
-                            RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.2f));
-                        }
+                        //Console.WriteLine("turn left");
+                        RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.2f));
+                    }
+                    else if (vectorDirection < -0.1)
+                    {
+                        //Console.WriteLine("turn right");
+                        RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.2f));
                     }
                 }
-                else
-                    Position -= RotationMatrix.Forward * MoveSpeedForward;
             }
+            Position -= RotationMatrix.Forward * MoveSpeedForward;
         }
+
 
         public void FlyToDirection(Vector3 direction)
         {
             direction.Normalize();
             float vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
-            if (vectorDirection > 0.1 || vectorDirection < -0.1)
+
+            for (int i = 1; i < (TurnSpeed / 0.2f); i++)
             {
-                for (int i = 1; i < (TurnSpeed / 0.2f); i++)
+                if (vectorDirection > 0.1)
                 {
-                    if (vectorDirection > 0.1)
-                    {
-                        Console.WriteLine("turn left");
-                        RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.2f));
-                    }
-                    else if (vectorDirection < -0.1)
-                    {
-                        Console.WriteLine("turn right");
-                        RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.2f));
-                    }
+                    Console.WriteLine("turn left");
+                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.2f));
+                }
+                else if (vectorDirection < -0.1)
+                {
+                    Console.WriteLine("turn right");
+                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.2f));
                 }
             }
-            else
-                Position -= RotationMatrix.Forward * MoveSpeedForward;
+            Position -= RotationMatrix.Forward * MoveSpeedForward;
 
         }
 
