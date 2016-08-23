@@ -13,6 +13,7 @@ namespace SpaceAssault.Entities
         protected float TurnSpeed;
         protected TimeSpan GetBetterwithTime;
         public int Health;
+        public int KillMoney; //The Money the player gets if he kills the unit
 
         protected bool isDead;
         public Weapon Gun;

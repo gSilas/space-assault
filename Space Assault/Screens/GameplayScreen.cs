@@ -101,7 +101,7 @@ namespace SpaceAssault.Screens
             fireParticles = new FireParticleSystem();
 
             //for testing
-            Global.HighScorePoints = 1000;
+            //Global.HighScorePoints = 1000;
         }
 
 

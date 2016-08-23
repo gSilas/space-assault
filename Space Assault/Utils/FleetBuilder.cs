@@ -48,6 +48,7 @@ namespace SpaceAssault.Utils
                 {
                     if (ship.IsDead)
                     {
+                        Global.Money += ship.KillMoney;
                         _removeAEnemys.Add(ship);
                         continue;
                     }

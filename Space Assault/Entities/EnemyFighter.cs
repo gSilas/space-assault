@@ -23,6 +23,7 @@ namespace SpaceAssault.Entities
             MoveSpeedForward = 1.2f;
             TurnSpeed = 5.0f;
 
+            KillMoney = 50;
             Health = 30;
 
             Gun = new Weapon(600d);
@@ -43,6 +44,7 @@ namespace SpaceAssault.Entities
             //Werden Besser jede Minute
             if (gameTime.TotalGameTime > (GetBetterwithTime.Add(TimeSpan.FromSeconds(60))))
             {
+                KillMoney += 50;
                 Health = Health + 30;
                 gunMakeDmg += 5;
                 GetBetterwithTime = gameTime.TotalGameTime;

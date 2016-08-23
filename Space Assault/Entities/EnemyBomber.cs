@@ -27,7 +27,7 @@ namespace SpaceAssault.Entities
             TurnSpeed = 5.0f;
 
             //_moveSpeedBackward = -0.5f;
-
+            KillMoney = 100;
             Health = 40;
 
             Gun = new Weapon(3000d);
@@ -52,6 +52,7 @@ namespace SpaceAssault.Entities
             {
                 Health = Health + 30;
                 gunMakeDmg += 10;
+                KillMoney += 100;
                 GetBetterwithTime = gameTime.TotalGameTime;
                 //Console.WriteLine("UpDATED");
             }
