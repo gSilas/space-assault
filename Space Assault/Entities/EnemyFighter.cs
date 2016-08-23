@@ -51,10 +51,10 @@ namespace SpaceAssault.Entities
 
         public override void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList)
         {
-            double distanceToTarged = Math.Sqrt(Math.Pow(Position.X - targetPosition.X, 2) + Math.Pow(Position.Z - targetPosition.Z, 2));
-            FlyVector(Position - targetPosition);
+            double distanceToTarget = Math.Sqrt(Math.Pow(Position.X - targetPosition.X, 2) + Math.Pow(Position.Z - targetPosition.Z, 2));
+            FlyToPoint(targetPosition);
 
-            if (distanceToTarged < 150)
+            if (distanceToTarget < 150)
             {
                 Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, gunMakeDmg, Position, RotationMatrix, ref bulletList);
             }

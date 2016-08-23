@@ -61,35 +61,31 @@ namespace SpaceAssault.Entities
 
         public override void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList)
         {
-
-            double distanceToTarget = Math.Sqrt(Math.Pow(Position.X - targetPosition.X, 2) + Math.Pow(Position.Z - targetPosition.Z, 2));
-            double distanceToStation = Math.Sqrt(Math.Pow(Position.X - 0, 2) + Math.Pow(Position.Z - 0, 2));
-
-            //Console.WriteLine(distanceToStation);
-            //Console.WriteLine(neuerAnflug);
+            double distanceToTarget = (Position - targetPosition).Length();
+            double distanceToStation = Position.Length();
 
             if (distanceToStation < 200)
                 neuerAnflug = true;
 
+            //flying away from drone
             if (distanceToTarget < 200)
-                FlyVector(-(Position - targetPosition));
+                FlyToDirection(-(Position - targetPosition));
 
-            if (neuerAnflug == true)
+            if (neuerAnflug)
             {
-                FlyVector(-(Position - new Vector3(0, 0, 0)));
+                //flying away from station
+                FlyToDirection(-(Position - new Vector3(0, 0, 0)));
                 if (distanceToStation > 500)
                     neuerAnflug = false;
             }
-
-            if (neuerAnflug == false)
+            else
+            {   
+                //flying away from drone
                 if (distanceToTarget < 200)
-                    FlyVector(-(Position - targetPosition));
+                    FlyToDirection(-(Position - targetPosition));
                 else
-                {
-                    FlyVector(Position - new Vector3(0, 0, 0));
-                }
-
-
+                    FlyToPoint(new Vector3(0, 0, 0));
+            }
             if (distanceToStation < 400 && neuerAnflug == false)
             {
                 Gun.Shoot(gameTime, Bullet.BulletType.PhotonBomb, gunMakeDmg, Position - RotationMatrix.Forward * 22.0f, RotationMatrix, ref bulletList);
