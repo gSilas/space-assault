@@ -17,7 +17,6 @@ namespace SpaceAssault.Screens
         List<Label> Labels = new List<Label>();
         List<Bar> Bars = new List<Bar>();
         private UIItem _shields = new UIItem();
-        private Dialog _upgradeDialog;
         private Dialog _upgradeVincinityDialog;
         private Dialog _scoreDialog;
         private Dialog _moneyDialog;
@@ -50,13 +49,11 @@ namespace SpaceAssault.Screens
                 bar.LoadContent();
             }
 
-            //Dialogs
-            _upgradeDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2-150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 336, 8, false, true);
+            //Dialogs        
             _upgradeVincinityDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 702, 32, 336, 8, false, true);
-            _scoreDialog = new Dialog(1000, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 200, 8, false, true);
+            _scoreDialog = new Dialog(340, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 200, 8, false, true);
             _moneyDialog = new Dialog(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 280, 8, false, false);
 
-            _upgradeDialog.LoadContent();
             _scoreDialog.LoadContent();
             _moneyDialog.LoadContent();
             _upgradeVincinityDialog.LoadContent();
@@ -89,10 +86,9 @@ namespace SpaceAssault.Screens
                        
             _scoreDialog.Draw("Score: " + Global.HighScorePoints.ToString());
             _moneyDialog.Draw("Fragments: "+Global.Money);
-            /*if (droneFleet._updatePoints > 0)
-            {
-                _upgradeDialog.Draw("Upgrade available: " + droneFleet._updatePoints.ToString());
 
+            if (Global.Money > 0)
+            {
                 if ((Vector3.Distance(this._station.Position, droneFleet.GetActiveDrone().Position) - GameplayScreen._stationHeight) < 150)
                 {
                     var vec = new Point();
@@ -102,7 +98,7 @@ namespace SpaceAssault.Screens
                 }
                     
             } 
-            */        
+                    
         }
     }
 }
