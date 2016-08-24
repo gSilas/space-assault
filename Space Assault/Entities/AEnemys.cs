@@ -12,7 +12,7 @@ namespace SpaceAssault.Entities
         protected float MoveSpeedForward;
         protected float TurnSpeed;
         protected TimeSpan GetBetterwithTime;
-        private Vector3 _velocity;
+        public Vector3 _direction;
         public int Health;
         public int KillMoney; //The Money the player gets if he kills the unit
 
@@ -26,10 +26,10 @@ namespace SpaceAssault.Entities
             protected set { isDead = value; }
         }
 
-        public Vector3 Velocity
+        public Vector3 Direction
         {
-            get { return _velocity; }
-            set { _velocity = value; }
+            get { return _direction; }
+            set { _direction = value; }
         }
 
         public override void Draw()
@@ -57,19 +57,20 @@ namespace SpaceAssault.Entities
             Vector3 direction = Position - target;
             if (direction.Length() > 1f)
             {
-                direction.Normalize();
-                for (int i = 1; i < (TurnSpeed / 0.5f); i++)
-                {
-                    float vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
-                    if (Math.Abs(vectorDirection) >= 0.01)
-                        RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(Math.Sign(vectorDirection) * 0.5f));
-                }
+                RotateTowards(direction);
             }
             Position -= RotationMatrix.Forward * MoveSpeedForward;
         }
 
 
         public void FlyToDirection(Vector3 direction)
+        {
+            RotateTowards(direction);
+
+            Position -= RotationMatrix.Forward * MoveSpeedForward;
+        }
+
+        public void RotateTowards(Vector3 direction)
         {
             direction.Normalize();
 
@@ -79,9 +80,6 @@ namespace SpaceAssault.Entities
                 if (Math.Abs(vectorDirection) >= 0.01)
                     RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(Math.Sign(vectorDirection) * 0.5f));
             }
-
-            Position -= RotationMatrix.Forward * MoveSpeedForward;
-
         }
 
         public abstract void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList);

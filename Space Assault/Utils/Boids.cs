@@ -9,16 +9,31 @@ namespace SpaceAssault.Utils
     class Boids
     {
         public List<AEnemys> _ships;
+        public List<AEntity> _objectsToAvoid;
         public List<Bullet> _bullets;
         private Random _random;
-        InputState input;
+        InputState _input;
+        private int _proximityRadius;
+        private int _cohesionRadius;
+        private int _aligningRadius;
+        private int _avoidBoidsRadius;
+        private int _avoidObjRadius;
+        private float _maxSpeed;
 
         public Boids()
         {
             _ships = new List<AEnemys>();
+            _objectsToAvoid = new List<AEntity>();
             _bullets = new List<Bullet>();
             _random = new Random();
-            input = new InputState();
+            _input = new InputState();
+
+            _cohesionRadius = 300;
+            _aligningRadius = 120;
+            _avoidBoidsRadius = 30;
+            _avoidObjRadius = 40;
+            _proximityRadius = Math.Max(_cohesionRadius, _aligningRadius);
+            _maxSpeed = 1.2f;
         }
 
 
@@ -31,9 +46,7 @@ namespace SpaceAssault.Utils
             Vector3 direction = farWorldPoint - nearWorldPoint;
             float zFactor = -nearWorldPoint.Y / direction.Y;
             Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
-
-
-            if (input.IsLeftMouseButtonNewPressed())
+            if (_input.IsLeftMouseButtonNewPressed())
                 addBoid(zeroWorldPoint);
         }
 
@@ -48,22 +61,22 @@ namespace SpaceAssault.Utils
         public void addRandomBoids(int number)
         {
             List<AEnemys> ships = new List<AEnemys>();
-            double angle;           
-            for(int i = 0; i < number; i++)
+            double angle;
+            for (int i = 0; i < number; i++)
             {
                 angle = _random.NextDouble() * Math.PI * 2;
-                addBoid(new Vector3(Global.MapRadius * (float)Math.Cos(angle), 0, Global.MapRadius *  (float)Math.Sin(angle)));
+                addBoid(new Vector3(Global.MapRadius * (float)Math.Cos(angle), 0, Global.MapRadius * (float)Math.Sin(angle)));
             }
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, List<AEntity> objList)
         {
-            input.Update();
+            _input.Update();
             MouseAdd();
 
             List<Bullet> _removeBullets = new List<Bullet>();
             List<AEnemys> _removeShips = new List<AEnemys>();
-
+            _objectsToAvoid = objList;
             // applying boid logic to our ships
             moveAllBoidsToNewPositions();
 
@@ -127,82 +140,113 @@ namespace SpaceAssault.Utils
         /// </summary>
         private void moveAllBoidsToNewPositions()
         {
-            foreach (var ship1 in _ships)
+            foreach (var curShip in _ships)
             {
-                Vector3 v1, v2, v3, v4;
-                v1 = rule1(ship1);
-                v2 = rule2(ship1);
-                v3 = rule3(ship1);
-                v4 = goToPlace(ship1);
+                Vector3 cohesion = Vector3.Zero, aligning = Vector3.Zero, avoidB = Vector3.Zero, avoidO = Vector3.Zero, place = Vector3.Zero, noise = Vector3.Zero;
 
-                ship1.Velocity += v1 + v2 + v3 + v4;
-                ship1.Velocity /= ship1.Velocity.Length();
-                //ship.Position += ship.Velocity;
-                ship1.FlyToDirection(-ship1.Velocity);
+                cohesion = cohesionRule(curShip);
+                //aligning = aligningRule(curShip);
+                //avoidB = avoidBoidRule(curShip);
+                //avoidO = avoidObjRule(curShip);
+                //noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
+                //place = goToPlace(curShip);
+
+                curShip._direction += cohesion * 10 + aligning * 4 + avoidB * 15 + avoidO * 15 + noise + place;
+                curShip._direction.Normalize();
+
+                curShip.RotateTowards(curShip.Direction);
+                curShip.Position += curShip.Direction;
+
             }
         }
 
         // RULE1: Boids try to fly towards the centre of mass of neighbouring boids
-        private Vector3 rule1(AEnemys curShip)
+        private Vector3 cohesionRule(AEnemys curShip)
         {
             Vector3 pcj = Vector3.Zero;
-            foreach (var _ship in _ships)
+            int count = 0;
+            foreach (var otherShip in _ships)
             {
-                if(_ship != curShip)
+                if (otherShip != curShip && (otherShip.Position - curShip.Position).Length() < _cohesionRadius)
                 {
-                    pcj += _ship.Position;
+                    pcj += otherShip.Position;
+                    count++;
                 }
             }
 
-            pcj /= _ships.Count;
+            if(count > 0 ) pcj /= count;
+            pcj -= curShip.Position;
+            pcj.Normalize();
 
-            //richtungsvektor zur 'masse' durch 100 => 1% des richtungsvektors
-            return (pcj - curShip.Position) / 100;
+            //richtungsvektor zur 'masse'
+            return pcj;
         }
 
-        // RULE2: Boids try to keep a small distance away from other objects (including other boids)
-        private Vector3 rule2(AEnemys curShip)
+        // RULE2: Boids try to keep a small distance away from other boids
+        private Vector3 avoidBoidRule(AEnemys curShip)
         {
-            int distanceLimit = 40;
             Vector3 c = Vector3.Zero;
-            foreach (var _ship in _ships)
+            foreach (var otherShip in _ships)
             {
-                if (_ship != curShip)
+                float distance = (otherShip.Position - curShip.Position).Length();
+                if (otherShip != curShip && distance < _avoidBoidsRadius)
                 {
-                    if ((_ship.Position - curShip.Position).Length() < distanceLimit)
-                    {
-                        c -= (_ship.Position - curShip.Position);
-                    }
+                    Vector3 away = curShip.Position - otherShip.Position;
+                    away.Normalize();
+                    if (distance > 0) away /= distance;
+                    c += away;
                 }
             }
-
+            c.Normalize();
             return c;
         }
 
         // RULE3: Boids try to match velocity with near boids
-        private Vector3 rule3(AEnemys curShip)
+        private Vector3 aligningRule(AEnemys curShip)
         {
             Vector3 pvj = Vector3.Zero;
-
-            foreach (var _ship in _ships)
+            foreach (var otherShip in _ships)
             {
-                if (_ship != curShip)
+                float distance = (otherShip.Position - curShip.Position).Length();
+                if (otherShip != curShip && distance < _aligningRadius)
                 {
-                    pvj += _ship.Velocity;
+                    Vector3 copy = otherShip.Direction;
+                    copy.Normalize();
+                    if (distance > 0) copy /= distance;
+                    pvj += copy;
                 }
             }
+            pvj.Normalize();
+            //pvj /= count;
+            return pvj;
+        }
 
-            pvj /= _ships.Count;
 
-            // nur ein achtel anwenden
-            return (pvj - curShip.Position) / 8;
+        private Vector3 avoidObjRule(AEnemys curShip)
+        {
+            Vector3 c = Vector3.Zero;
+            int count = 0;
+            foreach (var obj in _objectsToAvoid)
+            {
+                float distance = (obj.Position - curShip.Position).Length();
+                if (distance < _avoidObjRadius)
+                {
+                    Vector3 away = curShip.Position - obj.Position;
+                    away.Normalize();
+                    if (distance > 0) away /= distance;
+                    c += away;
+                    count++;
+                }
+            }
+            c.Normalize();
+            return c;
         }
 
         private Vector3 goToPlace(AEnemys curShip)
         {
-            Vector3 place = new Vector3(0,0,0);
+            Vector3 place = Global.Camera.Target;
 
-            return (place - curShip.Position) / 100;
+            return (place - curShip.Position);
         }
     }
 }

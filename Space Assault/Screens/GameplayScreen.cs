@@ -119,7 +119,7 @@ namespace SpaceAssault.Screens
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
-            _boids.addRandomBoids(20);
+            _boids.addRandomBoids(2);
         }
 
         //#################################
@@ -147,8 +147,12 @@ namespace SpaceAssault.Screens
             else
                 _pauseAlpha = Math.Max(_pauseAlpha - 1f / 32, 0);
 
+            List<AEntity> avoidList = new List<AEntity>();
+            avoidList.AddRange(_asteroidField._asteroidList);
+            avoidList.AddRange(_droneFleet._droneShips);
+            avoidList.Add(_station);
             //boids
-            _boids.Update(gameTime);
+            _boids.Update(gameTime, avoidList);
 
             //everything in this scope here what happens when GameplayScreen is active
             if (IsActive)
