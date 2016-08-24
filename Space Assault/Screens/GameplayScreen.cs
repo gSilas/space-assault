@@ -26,7 +26,6 @@ namespace SpaceAssault.Screens
         // Gameplay
         private Station _station;
         private AsteroidBuilder _asteroidField;
-        private FleetBuilder _fleet;
         private DroneBuilder _droneFleet;
         private ExplosionSpawner _explosionSpawner;
         private Boids _boids;
@@ -83,7 +82,6 @@ namespace SpaceAssault.Screens
             //actual gameplay objects
             _station = new Station(new Vector3(0, _stationHeight, 0), 0);
             _asteroidField = new AsteroidBuilder();
-            _fleet = new FleetBuilder();
             _droneFleet = new DroneBuilder();
             _explosionSpawner = new ExplosionSpawner();
             _boids = new Boids();
@@ -161,7 +159,6 @@ namespace SpaceAssault.Screens
                 _droneFleet.Update(gameTime);
                 _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
                 Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + Global.CameraPosition, _droneFleet.GetActiveDrone().Position);
-                _fleet.Update(gameTime, _droneFleet.GetActiveDrone().Position);
                 _explosionSpawner.Update(gameTime);
 
                 // Particle
@@ -236,9 +233,6 @@ namespace SpaceAssault.Screens
             _station.Draw();
             _droneFleet.Draw();
             _asteroidField.Draw();
-            _fleet.Draw();
-
-            //boids
             _boids.Draw();
 
             // Particle
@@ -380,10 +374,8 @@ namespace SpaceAssault.Screens
             /* bullet of drone with enemy ships */
             foreach (var bullet in _droneFleet._bulletList)
             {
-                foreach (var shipSquadron in _fleet.EnemyShips)
+                foreach (var ship in _boids._ships)
                 {
-                    foreach (var ship in shipSquadron)
-                    {
                         if (Collider3D.IntersectionSphere(bullet, ship))
                         {
                             if (bullet._bulletType == Bullet.BulletType.BigJoe)
@@ -404,8 +396,7 @@ namespace SpaceAssault.Screens
                             }
 
                             break;
-                        }
-                    }
+                        }              
                 }
 
             }
@@ -413,10 +404,8 @@ namespace SpaceAssault.Screens
             /* explosions with asteroids, enemy ships */
             foreach (var expl in _explosionSpawner._explList)
             {
-                foreach (var shipSquadron in _fleet.EnemyShips)
+                foreach (var ship in _boids._ships)
                 {
-                    foreach (var ship in shipSquadron)
-                    {
                         if (Collider3D.IntersectionSphere(ship, expl))
                         {
                             ship.Health -= expl._makeDmg;
@@ -424,7 +413,6 @@ namespace SpaceAssault.Screens
                             PlayExplosionSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
 
                         }
-                    }
                 }
 
                 foreach (var ast in _asteroidField._asteroidList)
@@ -443,7 +431,7 @@ namespace SpaceAssault.Screens
             }
 
             /* bullet of enemy ships with drone and station */
-            foreach (var bullet in _fleet._bulletList)
+            foreach (var bullet in _boids._bullets)
             {
                 if (Collider3D.IntersectionSphere(bullet, _droneFleet.GetActiveDrone()))
                 {
@@ -500,18 +488,17 @@ namespace SpaceAssault.Screens
                         break;
                     }
                 }
-                foreach (var shipSquadron in _fleet.EnemyShips)
+                foreach (var ship in _boids._ships)
                 {
-                    foreach (var ship in shipSquadron)
-                    {
+
                         if (Collider3D.IntersectionSphere(ast, ship))
                         {
                             ship.Health -= 5;
                             _removeAsteroid.Add(ast);
                         }
-                    }
+                    
                 }
-                foreach (var bullet in _fleet._bulletList)
+                foreach (var bullet in _boids._bullets)
                 {
                     if (Collider3D.IntersectionSphere(bullet, ast))
                     {
@@ -564,7 +551,7 @@ namespace SpaceAssault.Screens
             foreach (var bullet in _removeBullets)
             {
                 _droneFleet._bulletList.Remove(bullet);
-                _fleet._bulletList.Remove(bullet);
+                _boids._bullets.Remove(bullet);
             }
 
         }

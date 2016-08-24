@@ -33,7 +33,7 @@ namespace SpaceAssault.Utils
 
             _cohesionRadius = 125;
             _aligningRadius = 85;
-            _avoidBoidsRadius = 40;
+            _avoidBoidsRadius = 30;
             _avoidObjRadius = 40;
             _proximityRadius = Math.Max(_cohesionRadius, _aligningRadius);
             _maxSpeed = 2f;
@@ -111,6 +111,15 @@ namespace SpaceAssault.Utils
                     continue;
                 }
 
+                Vector3 direction = Global.Camera.Target - ship.Position;
+                //shootlogic
+                float vectorDirection = ship.RotationMatrix.Forward.Z * direction.X - ship.RotationMatrix.Forward.X * direction.Z;
+                double distanceToTarget = Vector3.Distance(ship.Position, Global.Camera.Target);
+                if (Math.Abs(vectorDirection) <= 16 && distanceToTarget < 150)
+                {
+                    ship.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, ship.gunMakeDmg, ship.Position, ship.RotationMatrix, ref _bullets);
+                }
+
                 // Trail
                 foreach (Particle.Trail trail in ship.trail)
                 {
@@ -125,6 +134,7 @@ namespace SpaceAssault.Utils
             {
                 _ships.Remove(ship);
             }
+
         }
 
         public void Draw()
@@ -164,15 +174,14 @@ namespace SpaceAssault.Utils
                 avoidO = avoidObjRule(curShip);
                 avoidO.Y = 0;
                 noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
-                place = Vector3.Distance(curShip.Position, Global.Camera.Target) < 200 ? goToPlace(curShip, Global.Camera.Target) : goToPlace(curShip, Vector3.Zero);
+                place = Vector3.Distance(curShip.Position, Global.Camera.Target) < 275 ? goToPlace(curShip, Global.Camera.Target) : goToPlace(curShip, Vector3.Zero);
                 awayPlace = curShip.Position.Length() < 150 ? -goToPlace(curShip, Vector3.Zero) : Vector3.Zero;
 
-                curShip._direction += (cohesion / 100 + aligning + avoidB / 8 + avoidO + noise / 20 + place / 5 + awayPlace / 5) / 10;
+                curShip._direction += (cohesion / 100 + aligning + avoidB / 2 + avoidO + noise / 20 + place / 5 + awayPlace / 5) / 10;
                 if (curShip._direction.Length() > 1.5f)
                 {
                     curShip._direction.Normalize();
                     curShip._direction *= 1.5f;
-
                 }
                 curShip.RotateTowards(-curShip.Direction);
                 curShip.Position += curShip.Direction;
