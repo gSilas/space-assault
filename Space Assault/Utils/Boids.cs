@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using SpaceAssault.Entities;
 using SpaceAssault.ScreenManagers;
+using System.Diagnostics;
 
 namespace SpaceAssault.Utils
 {
@@ -19,6 +21,7 @@ namespace SpaceAssault.Utils
         private int _avoidBoidsRadius;
         private int _avoidObjRadius;
         private float _maxSpeed;
+        private bool workMouseAdd = false;
 
         public Boids()
         {
@@ -36,18 +39,22 @@ namespace SpaceAssault.Utils
             _maxSpeed = 2f;
         }
 
-
+        [Conditional("DEBUG")]
         public void MouseAdd()
         {
-            Vector3 nearScreenPoint = new Vector3(MouseHandler.Position, 0);
-            Vector3 farScreenPoint = new Vector3(MouseHandler.Position, 1);
-            Vector3 nearWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(nearScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
-            Vector3 farWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(farScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
-            Vector3 direction = farWorldPoint - nearWorldPoint;
-            float zFactor = -nearWorldPoint.Y / direction.Y;
-            Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
-            if (_input.IsLeftMouseButtonNewPressed())
-                addBoid(zeroWorldPoint);
+            if (_input.IsNewKeyPress(Keys.N)) workMouseAdd = !workMouseAdd;
+            if (workMouseAdd)
+            {
+                Vector3 nearScreenPoint = new Vector3(MouseHandler.Position, 0);
+                Vector3 farScreenPoint = new Vector3(MouseHandler.Position, 1);
+                Vector3 nearWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(nearScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
+                Vector3 farWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(farScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
+                Vector3 direction = farWorldPoint - nearWorldPoint;
+                float zFactor = -nearWorldPoint.Y / direction.Y;
+                Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
+                if (_input.IsLeftMouseButtonNewPressed())
+                    addBoid(zeroWorldPoint);
+            }
         }
 
         public void addBoid(Vector3 position)
@@ -161,7 +168,8 @@ namespace SpaceAssault.Utils
                 awayPlace = curShip.Position.Length() < 150 ? -goToPlace(curShip, Vector3.Zero) : Vector3.Zero;
 
                 curShip._direction += (cohesion / 100 + aligning + avoidB / 8 + avoidO + noise / 20 + place / 5 + awayPlace / 5) / 10;
-                if (curShip._direction.Length() > 1.5f) {
+                if (curShip._direction.Length() > 1.5f)
+                {
                     curShip._direction.Normalize();
                     curShip._direction *= 1.5f;
 
