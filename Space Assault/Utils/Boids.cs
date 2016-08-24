@@ -157,10 +157,10 @@ namespace SpaceAssault.Utils
                 avoidO = avoidObjRule(curShip);
                 avoidO.Y = 0;
                 noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
-                place = Vector3.Distance(curShip.Position, Global.Camera.Target) < 200 ? goToPlace(curShip, Global.Camera.Target) : goToPlace(curShip, Vector3.Zero);
-                awayPlace = curShip.Position.Length() < 150 ? -goToPlace(curShip, Vector3.Zero) : Vector3.Zero;
+                place = Vector3.Distance(curShip.Position, Global.Camera.Target) < 200 ? goToPlace(curShip, Global.Camera.Target) : Vector3.Zero;
+                awayPlace = curShip.Position.Length() < 100 ? -goToPlace(curShip, Vector3.Zero) : Vector3.Zero;
 
-                curShip._direction += (cohesion / 100 + aligning + avoidB / 8 + avoidO + noise / 20 + place / 5 + awayPlace / 5) / 10;
+                curShip._direction += (cohesion / 100 + aligning / 4 + avoidB + avoidO + noise / 20 + place / 5 + awayPlace / 5) / 5;
                 if (curShip._direction.Length() > 1.5f) {
                     curShip._direction.Normalize();
                     curShip._direction *= 1.5f;
