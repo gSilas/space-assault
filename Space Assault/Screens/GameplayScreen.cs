@@ -119,7 +119,7 @@ namespace SpaceAssault.Screens
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
-            _boids.addRandomBoids(50);
+            _boids.addRandomBoids(20);
         }
 
         //#################################

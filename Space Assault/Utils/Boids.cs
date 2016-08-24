@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using SpaceAssault.Entities;
+using SpaceAssault.ScreenManagers;
 
 namespace SpaceAssault.Utils
 {
@@ -10,14 +11,31 @@ namespace SpaceAssault.Utils
         public List<AEnemys> _ships;
         public List<Bullet> _bullets;
         private Random _random;
+        InputState input;
 
         public Boids()
         {
             _ships = new List<AEnemys>();
             _bullets = new List<Bullet>();
             _random = new Random();
+            input = new InputState();
         }
 
+
+        public void MouseAdd()
+        {
+            Vector3 nearScreenPoint = new Vector3(MouseHandler.Position, 0);
+            Vector3 farScreenPoint = new Vector3(MouseHandler.Position, 1);
+            Vector3 nearWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(nearScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
+            Vector3 farWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(farScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
+            Vector3 direction = farWorldPoint - nearWorldPoint;
+            float zFactor = -nearWorldPoint.Y / direction.Y;
+            Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
+
+
+            if (input.IsLeftMouseButtonNewPressed())
+                addBoid(zeroWorldPoint);
+        }
 
         public void addBoid(Vector3 position)
         {
@@ -40,6 +58,9 @@ namespace SpaceAssault.Utils
 
         public void Update(GameTime gameTime)
         {
+            input.Update();
+            MouseAdd();
+
             List<Bullet> _removeBullets = new List<Bullet>();
             List<AEnemys> _removeShips = new List<AEnemys>();
 
@@ -125,17 +146,15 @@ namespace SpaceAssault.Utils
         private Vector3 rule1(AEnemys curShip)
         {
             Vector3 pcj = Vector3.Zero;
-            int proximityShips = 0;
             foreach (var _ship in _ships)
             {
-                if(_ship != curShip && (_ship.Position-curShip.Position).Length() < 250)
+                if(_ship != curShip)
                 {
                     pcj += _ship.Position;
-                    proximityShips++;
                 }
             }
 
-            pcj /= proximityShips;
+            pcj /= _ships.Count;
 
             //richtungsvektor zur 'masse' durch 100 => 1% des richtungsvektors
             return (pcj - curShip.Position) / 100;
@@ -165,17 +184,15 @@ namespace SpaceAssault.Utils
         {
             Vector3 pvj = Vector3.Zero;
 
-            int proximityShips = 0;
             foreach (var _ship in _ships)
             {
-                if (_ship != curShip && (_ship.Position - curShip.Position).Length() < 250)
+                if (_ship != curShip)
                 {
                     pvj += _ship.Velocity;
-                    proximityShips++;
                 }
             }
 
-            pvj /= proximityShips;
+            pvj /= _ships.Count;
 
             // nur ein achtel anwenden
             return (pvj - curShip.Position) / 8;
@@ -183,7 +200,7 @@ namespace SpaceAssault.Utils
 
         private Vector3 goToPlace(AEnemys curShip)
         {
-            Vector3 place = new Vector3(400,0,400);
+            Vector3 place = new Vector3(0,0,0);
 
             return (place - curShip.Position) / 100;
         }
