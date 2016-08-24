@@ -52,6 +52,18 @@ namespace SpaceAssault.Utils
             return false;
         }
 
+        public static bool IntersectionSphere(AEntity e1, BoundingSphere e2)
+        {
+            for (var i = 0; i < e1.Spheres.Length; i++)
+            {
+                if (e1.Spheres[i].Intersects(e2))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static bool BoundingFrustumIntersection(AEntity e1)
         {
             //var tempCamera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), new Vector3(0, 0, 0), Vector3.Up);

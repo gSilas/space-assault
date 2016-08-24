@@ -60,7 +60,7 @@ namespace SpaceAssault.Entities
             trail.Add(new Trail(TrailParticles));
 
             RotationMatrix = Matrix.Identity;
-            _turnSpeed = 10.0f;
+            _turnSpeed = 6.0f;
             _moveSpeedForward = 1.0f * _speedScaling;
             _moveSpeedBackward = -1.0f * _speedScaling;
             _moveSpeedLeft = 1.0f * _speedScaling;
@@ -79,7 +79,7 @@ namespace SpaceAssault.Entities
         {
             //TODO: remove reset and create no Drone object in DroneBuilder
             RotationMatrix = Matrix.Identity;
-            _turnSpeed = 10.0f;
+            _turnSpeed = 6.0f;
             _moveSpeedForward = 1.0f * _speedScaling;
             _moveSpeedBackward = -1.0f * _speedScaling;
             _moveSpeedLeft = 1.0f * _speedScaling;
@@ -156,19 +156,11 @@ namespace SpaceAssault.Entities
             Vector3 screenDirection = this.Position - zeroWorldPoint;
             screenDirection.Normalize();
             float worldDirection;
-            for (float i = 0.5f; i < _turnSpeed; i++)
+            for (int i = 0; i < (_turnSpeed / 0.5f); i++)
             {
                 worldDirection = RotationMatrix.Forward.Z * screenDirection.X - RotationMatrix.Forward.X * screenDirection.Z;
-                if (worldDirection > 0.01)
-                {
-                    //turn left
-                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.5f));
-                }
-                else if (worldDirection < -0.01)
-                {
-                    //turn right
-                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
-                }
+                if (Math.Abs(worldDirection) > 0.01)
+                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(Math.Sign(worldDirection) * 0.5f));
             }
 
             /// <summary>

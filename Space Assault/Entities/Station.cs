@@ -87,7 +87,7 @@ namespace SpaceAssault.Entities
 
             if (makeDmg != 0)
             {
-                Gun.Shoot(gameTime, Bullet.BulletType.BlueLazer, makeDmg, Position, RotationMatrix,ref _bulletlist);
+                //Gun.Shoot(gameTime, Bullet.BulletType.BlueLazer, makeDmg, Position, RotationMatrix,ref _bulletlist);
             }
             if (_health <= 0) IsNotDead = false;
         }

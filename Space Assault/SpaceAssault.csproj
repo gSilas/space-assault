@@ -82,6 +82,7 @@
     <Compile Include="Entities\Drone.cs" />
     <Compile Include="Entities\EnemyBomber.cs" />
     <Compile Include="Entities\EnemyFighter.cs" />
+    <Compile Include="Utils\Boids.cs" />
     <Compile Include="Utils\ExplosionSpawner.cs" />
     <Compile Include="Entities\Station.cs" />
     <Compile Include="Entities\Bullet.cs" />
@@ -110,7 +111,7 @@
     <Compile Include="SpaceAssaultGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\3DCollider.cs" />
+    <Compile Include="Utils\Collider3D.cs" />
     <Compile Include="Utils\AsteroidBuilder.cs" />
     <Compile Include="Utils\Background.cs" />
     <Compile Include="Utils\Camera.cs" />

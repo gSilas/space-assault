@@ -29,6 +29,7 @@ namespace SpaceAssault.Screens
         private FleetBuilder _fleet;
         private DroneBuilder _droneFleet;
         private ExplosionSpawner _explosionSpawner;
+        private Boids _boids;
         private int _deathCounter = 0;
         public static int _stationHeight = 80;
      
@@ -85,6 +86,7 @@ namespace SpaceAssault.Screens
             _fleet = new FleetBuilder();
             _droneFleet = new DroneBuilder();
             _explosionSpawner = new ExplosionSpawner();
+            _boids = new Boids();
 
             //UI + Frame + BG 
             _ui = new InGameOverlay(_station);
@@ -117,6 +119,7 @@ namespace SpaceAssault.Screens
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
+            _boids.addRandomBoids(50);
         }
 
         //#################################
@@ -144,6 +147,9 @@ namespace SpaceAssault.Screens
             else
                 _pauseAlpha = Math.Max(_pauseAlpha - 1f / 32, 0);
 
+            //boids
+            _boids.Update(gameTime);
+
             //everything in this scope here what happens when GameplayScreen is active
             if (IsActive)
             {
@@ -153,7 +159,7 @@ namespace SpaceAssault.Screens
                 _station.Update(gameTime);
                 _droneFleet.Update(gameTime);
                 _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
-                Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + new Vector3(0, 250, 250), _droneFleet.GetActiveDrone().Position);
+                Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + new Vector3(0, 800, 1), _droneFleet.GetActiveDrone().Position);
                 _fleet.Update(gameTime, _droneFleet.GetActiveDrone().Position);
                 _explosionSpawner.Update(gameTime);
 
@@ -428,6 +434,9 @@ namespace SpaceAssault.Screens
             _asteroidField.Draw();
             _fleet.Draw();
 
+            //boids
+            _boids.Draw();
+
             // Particle
             /*
             explosionParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
@@ -498,7 +507,7 @@ namespace SpaceAssault.Screens
             float angle = 0.0f;
             for (int i = 0; i <= radius; i += 25)
             {
-                while (angle < 2 * 3.14f)
+                while (angle < 2 * Math.PI)
                 {
                     explosionParticles.AddParticle(pos + new Vector3(i * (float)Math.Cos(angle), 0, i * (float)Math.Sin(angle)), velocity);
                     angle += 0.2f;

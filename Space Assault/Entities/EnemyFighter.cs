@@ -21,7 +21,7 @@ namespace SpaceAssault.Entities
 
             RotationMatrix = Matrix.Identity;
             MoveSpeedForward = 1.2f;
-            TurnSpeed = 5.0f;
+            TurnSpeed = 20.0f;
 
             KillMoney = 50;
             Health = 30;

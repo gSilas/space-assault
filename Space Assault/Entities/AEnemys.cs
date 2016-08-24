@@ -12,6 +12,7 @@ namespace SpaceAssault.Entities
         protected float MoveSpeedForward;
         protected float TurnSpeed;
         protected TimeSpan GetBetterwithTime;
+        private Vector3 _velocity;
         public int Health;
         public int KillMoney; //The Money the player gets if he kills the unit
 
@@ -23,6 +24,12 @@ namespace SpaceAssault.Entities
         {
             get { return isDead; }
             protected set { isDead = value; }
+        }
+
+        public Vector3 Velocity
+        {
+            get { return _velocity; }
+            set { _velocity = value; }
         }
 
         public override void Draw()
@@ -51,19 +58,11 @@ namespace SpaceAssault.Entities
             if (direction.Length() > 1f)
             {
                 direction.Normalize();
-                float vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
-                for (int i = 1; i < (TurnSpeed / 0.2f); i++)
+                for (int i = 1; i < (TurnSpeed / 0.5f); i++)
                 {
-                    if (vectorDirection > 0.1)
-                    {
-                        //Console.WriteLine("turn left");
-                        RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.2f));
-                    }
-                    else if (vectorDirection < -0.1)
-                    {
-                        //Console.WriteLine("turn right");
-                        RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.2f));
-                    }
+                    float vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
+                    if (Math.Abs(vectorDirection) >= 0.01)
+                        RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(Math.Sign(vectorDirection) * 0.5f));
                 }
             }
             Position -= RotationMatrix.Forward * MoveSpeedForward;
@@ -73,25 +72,19 @@ namespace SpaceAssault.Entities
         public void FlyToDirection(Vector3 direction)
         {
             direction.Normalize();
-            float vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
 
-            for (int i = 1; i < (TurnSpeed / 0.2f); i++)
+            for (int i = 1; i < (TurnSpeed / 0.5f); i++)
             {
-                if (vectorDirection > 0.1)
-                {
-                    Console.WriteLine("turn left");
-                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.2f));
-                }
-                else if (vectorDirection < -0.1)
-                {
-                    Console.WriteLine("turn right");
-                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.2f));
-                }
+                float vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
+                if (Math.Abs(vectorDirection) >= 0.01)
+                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(Math.Sign(vectorDirection) * 0.5f));
             }
+
             Position -= RotationMatrix.Forward * MoveSpeedForward;
 
         }
 
         public abstract void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList);
+
     }
 }

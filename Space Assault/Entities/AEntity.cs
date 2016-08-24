@@ -45,7 +45,7 @@ namespace SpaceAssault.Entities
         public Vector3 Position
         {
             get { return _position; }
-            protected set { _position = value; }
+            set { _position = value; }
         }
 
         public Matrix RotationMatrix

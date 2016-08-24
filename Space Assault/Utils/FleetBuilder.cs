@@ -86,7 +86,7 @@ namespace SpaceAssault.Utils
             if (gameTime.TotalGameTime > (_lastChunkTime.Add(TimeSpan.FromSeconds(Global.FleetSpawnTime))))
             {
                 //maximale Anzahl an Flotten
-                Formation(targetPosition);
+                //Formation(targetPosition);
                 _lastChunkTime = gameTime.TotalGameTime;
             }
         }
