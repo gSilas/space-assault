@@ -150,7 +150,6 @@ namespace SpaceAssault.Screens
             List<AEntity> avoidList = new List<AEntity>();
             avoidList.AddRange(_asteroidField._asteroidList);
             avoidList.AddRange(_droneFleet._droneShips);
-            avoidList.Add(_station);
             //boids
             _boids.Update(gameTime, avoidList);
 
@@ -161,7 +160,7 @@ namespace SpaceAssault.Screens
                 _station.Update(gameTime);
                 _droneFleet.Update(gameTime);
                 _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
-                Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + new Vector3(0, 250, 250), _droneFleet.GetActiveDrone().Position);
+                Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + new Vector3(0, 350, 350), _droneFleet.GetActiveDrone().Position);
                 _fleet.Update(gameTime, _droneFleet.GetActiveDrone().Position);
                 _explosionSpawner.Update(gameTime);
 
