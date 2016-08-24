@@ -72,14 +72,13 @@ namespace SpaceAssault.Entities
 
         public void RotateTowards(Vector3 direction)
         {
-            direction.Normalize();
-
             for (int i = 1; i < (TurnSpeed / 0.5f); i++)
             {
                 float vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
-                if (Math.Abs(vectorDirection) >= 0.1)
+                if (Math.Abs(vectorDirection) >= 0.01)
                     RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(Math.Sign(vectorDirection) * 0.5f));
             }
+
         }
 
         public abstract void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList);

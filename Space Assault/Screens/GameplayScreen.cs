@@ -113,7 +113,7 @@ namespace SpaceAssault.Screens
         public override void LoadContent()
         {
             _droneFleet.addDrone(new Vector3(150, 0, 100));
-            Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, new Vector3(0, 250, 250), _droneFleet.GetActiveDrone().Position, Vector3.Up);
+            Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
             _station.LoadContent();
             _asteroidField.LoadContent();
             _ui.LoadContent(_droneFleet);
@@ -160,7 +160,7 @@ namespace SpaceAssault.Screens
                 _station.Update(gameTime);
                 _droneFleet.Update(gameTime);
                 _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
-                Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + new Vector3(0, 350, 350), _droneFleet.GetActiveDrone().Position);
+                Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + Global.CameraPosition, _droneFleet.GetActiveDrone().Position);
                 _fleet.Update(gameTime, _droneFleet.GetActiveDrone().Position);
                 _explosionSpawner.Update(gameTime);
 
