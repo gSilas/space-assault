@@ -153,8 +153,6 @@ namespace SpaceAssault.Screens
             //everything in this scope here what happens when GameplayScreen is active
             if (IsActive)
             {
-
-
                 // calling update of objects where necessary
                 _station.Update(gameTime);
                 _droneFleet.Update(gameTime);
@@ -162,10 +160,6 @@ namespace SpaceAssault.Screens
                 Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + new Vector3(0, 800, 1), _droneFleet.GetActiveDrone().Position);
                 _fleet.Update(gameTime, _droneFleet.GetActiveDrone().Position);
                 _explosionSpawner.Update(gameTime);
-
-                //remove lists for collisions etc 
-                List<Asteroid> _removeAsteroid = new List<Asteroid>();
-                List<Bullet> _removeBullets = new List<Bullet>();
 
                 // Particle
                 if (_station._health < 10000)
@@ -183,7 +177,7 @@ namespace SpaceAssault.Screens
                 if (_station._health <= 0)
                     LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen());
 
-
+                CollisionHandling(gameTime);
 
                 // fading out/in when drone is dead & alive again
                 if (!_droneFleet.GetActiveDrone().IsNotDead)
@@ -196,199 +190,6 @@ namespace SpaceAssault.Screens
                 {
                     _droneFleet.GetActiveDrone().Reset();
                     _deathCounter++;
-                }
-                /// <summary>
-                /// EVRYTHING AFTER THIS LINE IS COLLISION HANDLING
-                /// </summary>
-
-                /* bullet of drone with enemy ships */
-                foreach (var bullet in _droneFleet._bulletList)
-                {
-                    foreach (var shipSquadron in _fleet.EnemyShips)
-                    {
-                        foreach (var ship in shipSquadron)
-                        {
-                            if (Collider3D.IntersectionSphere(bullet, ship))
-                            {
-                                if (bullet._bulletType == Bullet.BulletType.BigJoe)
-                                {
-                                    float radius = 80;
-                                    _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
-                                    ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
-                                }
-                                ship.Health -= bullet.makeDmg;
-                                _removeBullets.Add(bullet);
-                                Global.HighScorePoints += 20;
-
-                                if (ship.Health <= 0)
-                                {
-                                    explosionPosition = ship.Position;
-                                    explosionTriggered = true;
-                                    PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
-                                }
-
-                                break;
-                            }
-                        }
-                    }
-
-                }
-
-                /* explosions with asteroids, enemy ships */
-                foreach (var expl in _explosionSpawner._explList)
-                {
-                        foreach (var shipSquadron in _fleet.EnemyShips)
-                        {
-                            foreach (var ship in shipSquadron)
-                            {
-                                if (Collider3D.IntersectionSphere(ship, expl))
-                                {
-                                    ship.Health -= expl._makeDmg;
-                                    Global.HighScorePoints += 20;
-                                    PlayExplosionSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
-
-                                }
-                            }
-                        }
-
-                    foreach (var ast in _asteroidField._asteroidList)
-                    {
-                        if (Collider3D.IntersectionSphere(expl, ast))
-                        {
-                            explosionPosition = ast.Position;
-                            explosionTriggered = true;
-                            ast.IsDead = true;
-                            _removeAsteroid.Add(ast);
-                            PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
-                            break;
-                        }
-                    }
-
-                }
-
-                /* bullet of enemy ships with drone and station */
-                foreach (var bullet in _fleet._bulletList)
-                {
-                    if (Collider3D.IntersectionSphere(bullet, _droneFleet.GetActiveDrone()))
-                    {
-                        //_drone.getHit(ship.Gun.makeDmg);
-                        _droneFleet.GetActiveDrone().getHit(bullet.makeDmg);
-                        _removeBullets.Add(bullet);
-                    }
-
-                    if (bullet.CanDamageStation && Collider3D.IntersectionSphere(bullet, _station))
-                    {
-                        _station.getHit(bullet.makeDmg);
-                        _removeBullets.Add(bullet);
-                    }
-                }
-
-                /* asteroids with drone(& its bullets) & station & other asteroids & enemy ships (& its bullets)*/
-                foreach (var ast in _asteroidField._asteroidList)
-                {
-                    if (ast.IsDead) continue;
-                    if (gameTime.TotalGameTime > (ast._originTime.Add(TimeSpan.FromMinutes(0.7d))))
-                    {
-                        _removeAsteroid.Add(ast);
-                        continue;
-                    }
-
-                    if (Collider3D.IntersectionSphere(ast, _droneFleet.GetActiveDrone()))
-                    {
-                        _droneFleet.GetActiveDrone().getHit(5);
-
-                        _removeAsteroid.Add(ast);
-                        Global.HighScorePoints -= 50;
-                        PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
-                        continue;
-                    }
-
-                    if (Collider3D.IntersectionSphere(_station, ast))
-                    {
-                        explosionPosition = ast.Position;
-                        explosionTriggered = true;
-                        ast.IsDead = true;
-                        _removeAsteroid.Add(ast);
-                        _station.getHit(10);
-                        continue;
-                    }
-
-                    foreach (var ast2 in _asteroidField._asteroidList)
-                    {
-                        if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
-                        {
-                            explosionPosition = ast.Position;
-                            explosionTriggered = true;
-                            ast.IsDead = true;
-                            _removeAsteroid.Add(ast);
-                            break;
-                        }
-                    }
-                    foreach (var shipSquadron in _fleet.EnemyShips)
-                    {
-                        foreach (var ship in shipSquadron)
-                        {
-                            if (Collider3D.IntersectionSphere(ast, ship))
-                            {
-                                ship.Health -= 5;
-                                _removeAsteroid.Add(ast);
-                            }
-                        }
-                    }
-                    foreach (var bullet in _fleet._bulletList)
-                    {
-                        if (Collider3D.IntersectionSphere(bullet, ast))
-                        {
-                            _removeAsteroid.Add(ast);
-                            _removeBullets.Add(bullet);
-                            break;
-                        }
-                    }
-
-                    foreach (var bullet in _droneFleet._bulletList)
-                    {
-                        if (Collider3D.IntersectionSphere(bullet, ast))
-                        {
-                            explosionPosition = ast.Position;
-                            explosionTriggered = true;
-                            _removeAsteroid.Add(ast);
-                            _removeBullets.Add(bullet);
-                            Global.HighScorePoints += 50;
-                            PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
-                            if (bullet._bulletType == Bullet.BulletType.BigJoe)
-                            {
-                                float radius = 80;
-                                _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
-                                ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
-                            }
-                            break;
-                        }
-                    }
-
-                    if (explosionTriggered)
-                    {
-                        explosionEffectDelta++;
-                        UpdateExplosions(gameTime, explosionPosition, Vector3.Zero);
-
-                        if (explosionEffectDelta > 3)
-                        {
-                            explosionTriggered = false;
-                            explosionEffectDelta = 0;
-                        }
-                    }
-
-
-                }
-
-                foreach (var ast in _removeAsteroid)
-                {
-                    _asteroidField._asteroidList.Remove(ast);
-                }
-
-                foreach (var bullet in _removeBullets)
-                {
-                    _droneFleet._bulletList.Remove(bullet);
-                    _fleet._bulletList.Remove(bullet);
                 }
 
             }
@@ -562,6 +363,207 @@ namespace SpaceAssault.Screens
 
             // Create one smoke particle per frmae, too.
             SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+        }
+
+        void CollisionHandling(GameTime gameTime)
+        {
+            /// <summary>
+            /// EVRYTHING AFTER THIS LINE IS COLLISION HANDLING
+            /// </summary>
+            //remove lists for collisions etc 
+            List<Asteroid> _removeAsteroid = new List<Asteroid>();
+            List<Bullet> _removeBullets = new List<Bullet>();
+
+            /* bullet of drone with enemy ships */
+            foreach (var bullet in _droneFleet._bulletList)
+            {
+                foreach (var shipSquadron in _fleet.EnemyShips)
+                {
+                    foreach (var ship in shipSquadron)
+                    {
+                        if (Collider3D.IntersectionSphere(bullet, ship))
+                        {
+                            if (bullet._bulletType == Bullet.BulletType.BigJoe)
+                            {
+                                float radius = 80;
+                                _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
+                                ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
+                            }
+                            ship.Health -= bullet.makeDmg;
+                            _removeBullets.Add(bullet);
+                            Global.HighScorePoints += 20;
+
+                            if (ship.Health <= 0)
+                            {
+                                explosionPosition = ship.Position;
+                                explosionTriggered = true;
+                                PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+            /* explosions with asteroids, enemy ships */
+            foreach (var expl in _explosionSpawner._explList)
+            {
+                foreach (var shipSquadron in _fleet.EnemyShips)
+                {
+                    foreach (var ship in shipSquadron)
+                    {
+                        if (Collider3D.IntersectionSphere(ship, expl))
+                        {
+                            ship.Health -= expl._makeDmg;
+                            Global.HighScorePoints += 20;
+                            PlayExplosionSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
+
+                        }
+                    }
+                }
+
+                foreach (var ast in _asteroidField._asteroidList)
+                {
+                    if (Collider3D.IntersectionSphere(expl, ast))
+                    {
+                        explosionPosition = ast.Position;
+                        explosionTriggered = true;
+                        ast.IsDead = true;
+                        _removeAsteroid.Add(ast);
+                        PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
+                        break;
+                    }
+                }
+
+            }
+
+            /* bullet of enemy ships with drone and station */
+            foreach (var bullet in _fleet._bulletList)
+            {
+                if (Collider3D.IntersectionSphere(bullet, _droneFleet.GetActiveDrone()))
+                {
+                    //_drone.getHit(ship.Gun.makeDmg);
+                    _droneFleet.GetActiveDrone().getHit(bullet.makeDmg);
+                    _removeBullets.Add(bullet);
+                }
+
+                if (bullet.CanDamageStation && Collider3D.IntersectionSphere(bullet, _station))
+                {
+                    _station.getHit(bullet.makeDmg);
+                    _removeBullets.Add(bullet);
+                }
+            }
+
+            /* asteroids with drone(& its bullets) & station & other asteroids & enemy ships (& its bullets)*/
+            foreach (var ast in _asteroidField._asteroidList)
+            {
+                if (ast.IsDead) continue;
+                if (gameTime.TotalGameTime > (ast._originTime.Add(TimeSpan.FromMinutes(0.7d))))
+                {
+                    _removeAsteroid.Add(ast);
+                    continue;
+                }
+
+                if (Collider3D.IntersectionSphere(ast, _droneFleet.GetActiveDrone()))
+                {
+                    _droneFleet.GetActiveDrone().getHit(5);
+
+                    _removeAsteroid.Add(ast);
+                    Global.HighScorePoints -= 50;
+                    PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
+                    continue;
+                }
+
+                if (Collider3D.IntersectionSphere(_station, ast))
+                {
+                    explosionPosition = ast.Position;
+                    explosionTriggered = true;
+                    ast.IsDead = true;
+                    _removeAsteroid.Add(ast);
+                    _station.getHit(10);
+                    continue;
+                }
+
+                foreach (var ast2 in _asteroidField._asteroidList)
+                {
+                    if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
+                    {
+                        explosionPosition = ast.Position;
+                        explosionTriggered = true;
+                        ast.IsDead = true;
+                        _removeAsteroid.Add(ast);
+                        break;
+                    }
+                }
+                foreach (var shipSquadron in _fleet.EnemyShips)
+                {
+                    foreach (var ship in shipSquadron)
+                    {
+                        if (Collider3D.IntersectionSphere(ast, ship))
+                        {
+                            ship.Health -= 5;
+                            _removeAsteroid.Add(ast);
+                        }
+                    }
+                }
+                foreach (var bullet in _fleet._bulletList)
+                {
+                    if (Collider3D.IntersectionSphere(bullet, ast))
+                    {
+                        _removeAsteroid.Add(ast);
+                        _removeBullets.Add(bullet);
+                        break;
+                    }
+                }
+
+                foreach (var bullet in _droneFleet._bulletList)
+                {
+                    if (Collider3D.IntersectionSphere(bullet, ast))
+                    {
+                        explosionPosition = ast.Position;
+                        explosionTriggered = true;
+                        _removeAsteroid.Add(ast);
+                        _removeBullets.Add(bullet);
+                        Global.HighScorePoints += 50;
+                        PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
+                        if (bullet._bulletType == Bullet.BulletType.BigJoe)
+                        {
+                            float radius = 80;
+                            _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
+                            ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
+                        }
+                        break;
+                    }
+                }
+
+                if (explosionTriggered)
+                {
+                    explosionEffectDelta++;
+                    UpdateExplosions(gameTime, explosionPosition, Vector3.Zero);
+
+                    if (explosionEffectDelta > 3)
+                    {
+                        explosionTriggered = false;
+                        explosionEffectDelta = 0;
+                    }
+                }
+
+
+            }
+
+            foreach (var ast in _removeAsteroid)
+            {
+                _asteroidField._asteroidList.Remove(ast);
+            }
+
+            foreach (var bullet in _removeBullets)
+            {
+                _droneFleet._bulletList.Remove(bullet);
+                _fleet._bulletList.Remove(bullet);
+            }
+
         }
 
         //#################################
