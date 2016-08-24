@@ -87,6 +87,7 @@
     <Compile Include="Entities\Station.cs" />
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Utils\Squadron.cs" />
+    <Compile Include="Utils\WaveBuilder.cs" />
     <Compile Include="Utils\Weapon.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ScreenManagers\GameScreen.cs" />
