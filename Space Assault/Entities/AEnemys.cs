@@ -77,7 +77,7 @@ namespace SpaceAssault.Entities
             for (int i = 1; i < (TurnSpeed / 0.5f); i++)
             {
                 float vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
-                if (Math.Abs(vectorDirection) >= 0.01)
+                if (Math.Abs(vectorDirection) >= 0.1)
                     RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(Math.Sign(vectorDirection) * 0.5f));
             }
         }

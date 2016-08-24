@@ -163,7 +163,7 @@ namespace SpaceAssault.Screens
                 _station.Update(gameTime);
                 _droneFleet.Update(gameTime);
                 _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
-                Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + new Vector3(0, 800, 1), _droneFleet.GetActiveDrone().Position);
+                Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + new Vector3(0, 250, 250), _droneFleet.GetActiveDrone().Position);
                 _fleet.Update(gameTime, _droneFleet.GetActiveDrone().Position);
                 _explosionSpawner.Update(gameTime);
 

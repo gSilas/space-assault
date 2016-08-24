@@ -28,10 +28,10 @@ namespace SpaceAssault.Utils
             _random = new Random();
             _input = new InputState();
 
-            _cohesionRadius = 300;
-            _aligningRadius = 120;
-            _avoidBoidsRadius = 30;
-            _avoidObjRadius = 40;
+            _cohesionRadius = 125;
+            _aligningRadius = 85;
+            _avoidBoidsRadius = 40;
+            _avoidObjRadius = 200;
             _proximityRadius = Math.Max(_cohesionRadius, _aligningRadius);
             _maxSpeed = 1.2f;
         }
@@ -145,18 +145,18 @@ namespace SpaceAssault.Utils
                 Vector3 cohesion = Vector3.Zero, aligning = Vector3.Zero, avoidB = Vector3.Zero, avoidO = Vector3.Zero, place = Vector3.Zero, noise = Vector3.Zero;
 
                 cohesion = cohesionRule(curShip);
-                //aligning = aligningRule(curShip);
-                //avoidB = avoidBoidRule(curShip);
-                //avoidO = avoidObjRule(curShip);
-                //noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
-                //place = goToPlace(curShip);
+                aligning = aligningRule(curShip);
+                avoidB = avoidBoidRule(curShip);
+                avoidO = avoidObjRule(curShip);
+                noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
+                place = goToPlace(curShip);
 
-                curShip._direction += cohesion * 10 + aligning * 4 + avoidB * 15 + avoidO * 15 + noise + place;
+                curShip._direction += cohesion / 100 + aligning / 8 + avoidB / 3 + avoidO / 4 + noise / 50 + place / 5;
                 curShip._direction.Normalize();
 
-                curShip.RotateTowards(curShip.Direction);
-                curShip.Position += curShip.Direction;
-
+                //curShip.RotateTowards(curShip.Direction);
+                //curShip.Position += curShip.Direction;
+                curShip.FlyToDirection(-curShip.Direction);
             }
         }
 
@@ -176,7 +176,6 @@ namespace SpaceAssault.Utils
 
             if(count > 0 ) pcj /= count;
             pcj -= curShip.Position;
-            pcj.Normalize();
 
             //richtungsvektor zur 'masse'
             return pcj;
@@ -191,13 +190,24 @@ namespace SpaceAssault.Utils
                 float distance = (otherShip.Position - curShip.Position).Length();
                 if (otherShip != curShip && distance < _avoidBoidsRadius)
                 {
-                    Vector3 away = curShip.Position - otherShip.Position;
-                    away.Normalize();
-                    if (distance > 0) away /= distance;
-                    c += away;
+                    c -= (otherShip.Position - curShip.Position);
                 }
             }
-            c.Normalize();
+            return c;
+        }
+
+        // RULE2.5: Boids try to keep a small distance away from other Objects
+        private Vector3 avoidObjRule(AEnemys curShip)
+        {
+            Vector3 c = Vector3.Zero;
+            foreach (var curObj in _objectsToAvoid)
+            {
+                float distance = (curObj.Position - curShip.Position).Length();
+                if (curObj != curShip && distance < _avoidBoidsRadius)
+                {
+                    c -= (curObj.Position - curShip.Position);
+                }
+            }
             return c;
         }
 
@@ -205,48 +215,26 @@ namespace SpaceAssault.Utils
         private Vector3 aligningRule(AEnemys curShip)
         {
             Vector3 pvj = Vector3.Zero;
+            int count = 0;
             foreach (var otherShip in _ships)
             {
                 float distance = (otherShip.Position - curShip.Position).Length();
                 if (otherShip != curShip && distance < _aligningRadius)
                 {
-                    Vector3 copy = otherShip.Direction;
-                    copy.Normalize();
-                    if (distance > 0) copy /= distance;
-                    pvj += copy;
-                }
-            }
-            pvj.Normalize();
-            //pvj /= count;
-            return pvj;
-        }
-
-
-        private Vector3 avoidObjRule(AEnemys curShip)
-        {
-            Vector3 c = Vector3.Zero;
-            int count = 0;
-            foreach (var obj in _objectsToAvoid)
-            {
-                float distance = (obj.Position - curShip.Position).Length();
-                if (distance < _avoidObjRadius)
-                {
-                    Vector3 away = curShip.Position - obj.Position;
-                    away.Normalize();
-                    if (distance > 0) away /= distance;
-                    c += away;
+                    pvj += otherShip.Direction;
                     count++;
                 }
             }
-            c.Normalize();
-            return c;
+            if (count > 0) pvj /= count;
+            return pvj - curShip.Direction;
         }
+
 
         private Vector3 goToPlace(AEnemys curShip)
         {
-            Vector3 place = Global.Camera.Target;
-
-            return (place - curShip.Position);
+            Vector3 placeDir = Global.Camera.Target - curShip.Position;
+            if (placeDir.Length() < 300) return placeDir;
+            else return new Vector3(300,0,0) - curShip.Position;
         }
     }
 }
