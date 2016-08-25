@@ -269,7 +269,7 @@ namespace SpaceAssault.Entities
                     {
                         effect.EnableDefaultLighting();
                         effect.PreferPerPixelLighting = true;
-                        effect.World = _rotationMatrixLaser * Matrix.CreateWorld(Position + new Vector3(0,8,0), Vector3.Forward, Vector3.Up);
+                        effect.World = _rotationMatrixLaser * Matrix.CreateWorld(Position + new Vector3(0,3,5), Vector3.Forward, Vector3.Up);
                         effect.View = Global.Camera.ViewMatrix;
                         effect.Projection = Global.Camera.ProjectionMatrix;
                     }

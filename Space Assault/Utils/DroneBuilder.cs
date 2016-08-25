@@ -67,8 +67,8 @@ namespace SpaceAssault.Utils
                 // Trail
                 for (int i = 0; i < drone.trail.Count; i++)
                 {
-                    drone.trail[i].Update(gameTime, drone.Position + new Vector3(7, 0, 0));
-                    drone.trail2[i].Update(gameTime, drone.Position - new Vector3(7,0,0));
+                    drone.trail[i].Update(gameTime, drone.Position + new Vector3(3,0,6));
+                    drone.trail2[i].Update(gameTime, drone.Position - new Vector3(3,0,-6));
                 }
 
                 drone.TrailParticles.Update(gameTime);

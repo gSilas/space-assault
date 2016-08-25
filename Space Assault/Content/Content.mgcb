@@ -507,9 +507,9 @@
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=False
 /processorParam:RotationX=-90
-/processorParam:RotationY=180
+/processorParam:RotationY=0
 /processorParam:RotationZ=0
-/processorParam:Scale=4
+/processorParam:Scale=6
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=DxtCompressed
 /build:Models\drone.FBX
@@ -565,8 +565,8 @@
 /processorParam:ResizeTexturesToPowerOfTwo=False
 /processorParam:RotationX=-90
 /processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
+/processorParam:RotationZ=180
+/processorParam:Scale=10
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=DxtCompressed
 /build:Models/drone_laser.fbx
