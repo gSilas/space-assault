@@ -17,6 +17,7 @@ namespace SpaceAssault.Entities
 
         public ParticleSystem TrailParticles;
         public List<Trail> trail;
+        public List<Trail> trail2;
 
         public Model Model
         {

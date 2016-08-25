@@ -13,9 +13,6 @@ namespace SpaceAssault.Utils
         public List<Bullet> _bulletList;
         private List<Bullet> _removeBulletList;
 
-
-    
-
         public int _makeDmg;
         public int _maxHealth;
         public int _armor;
@@ -66,9 +63,12 @@ namespace SpaceAssault.Utils
             foreach (var drone in _droneShips)
             {
                 drone.Update(gameTime);
+
+                // Trail
                 for (int i = 0; i < drone.trail.Count; i++)
                 {
-                    drone.trail[i].Update(gameTime, drone.Position);
+                    drone.trail[i].Update(gameTime, drone.Position + new Vector3(7, 0, 0));
+                    drone.trail2[i].Update(gameTime, drone.Position - new Vector3(7,0,0));
                 }
 
                 drone.TrailParticles.Update(gameTime);
@@ -90,7 +90,6 @@ namespace SpaceAssault.Utils
 
             foreach (var ship in _droneShips)
             {
-                ship.TrailParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
                 ship.TrailParticles.Draw();
                 ship.Draw();
             }

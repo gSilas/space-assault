@@ -146,7 +146,6 @@ namespace SpaceAssault.Utils
 
             foreach (var ship in _ships)
             {
-                ship.TrailParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
                 ship.TrailParticles.Draw();
                 ship.Draw();
             }

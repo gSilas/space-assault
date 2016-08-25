@@ -234,20 +234,11 @@ namespace SpaceAssault.Screens
             _asteroidField.Draw();
             _waveBuilder.Draw(gameTime);
             // Particle
-            /*
-            explosionParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
-            explosionSmokeParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
-            projectileTrailParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
-            fireParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
-            */
-
             if (_station._health < 10000)
             {
-                SmokeParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
                 SmokeParticles.Draw();
             }
 
-            explosionParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
             explosionParticles.Draw();
 
             //if drone is dead fade to black

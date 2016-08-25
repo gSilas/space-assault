@@ -22,6 +22,8 @@ namespace SpaceAssault.Entities
         private float _moveSpeedRight;
         private float _moveSpeedModifier;
         private float _moveSpeedModifierSideways;
+        private Model _modelLaser;
+        private Matrix _rotationMatrixLaser = Matrix.Identity;
 
         public int _maxHealth;
         public int _health;
@@ -56,8 +58,12 @@ namespace SpaceAssault.Entities
             _armor = armor;
             _maxShield = maxShield;
             trail = new List<Trail>();
-            TrailParticles = new TrailParticleSystem();
+            trail2 = new List<Trail>();
+
+            TrailParticles = new DroneTrail();
+
             trail.Add(new Trail(TrailParticles));
+            trail2.Add(new Trail(TrailParticles));
 
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 6.0f;
@@ -96,6 +102,7 @@ namespace SpaceAssault.Entities
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
+            _modelLaser = Global.ContentManager.Load<Model>("Models/drone_laser");
             Spheres = Collider3D.UpdateBoundingSphere(this);
             GunPrimary.LoadContent();
             GunSecondary.LoadContent();
@@ -104,7 +111,6 @@ namespace SpaceAssault.Entities
 
         public override void Update(GameTime gameTime)
         {
-            //Console.WriteLine(_maxHealth);
             Spheres = Collider3D.UpdateBoundingSphere(this);
 
             if (gameTime.TotalGameTime > (_shieldrefreshdelay.Add(TimeSpan.FromSeconds(3))))
@@ -140,11 +146,8 @@ namespace SpaceAssault.Entities
         }
         public void HandleInput(GameTime gameTime, Bullet.BulletType curBullet, ref List<Bullet> bulletList)
         {
-            /// <summary>
-            /// handling rotation of the drone
-            /// </summary>
-
-            //projection of mouse from screen unto the 2d plane in the game http://stackoverflow.com/questions/11503226/c-sharp-xna-mouse-position-projected-to-3d-plane
+            // handling rotation of the drone
+            // projection of mouse from screen unto the 2d plane in the game
             Vector3 nearScreenPoint = new Vector3(MouseHandler.Position, 0);
             Vector3 farScreenPoint = new Vector3(MouseHandler.Position, 1);
             Vector3 nearWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(nearScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
@@ -158,14 +161,12 @@ namespace SpaceAssault.Entities
             float worldDirection;
             for (int i = 0; i < (_turnSpeed / 0.5f); i++)
             {
-                worldDirection = RotationMatrix.Forward.Z * screenDirection.X - RotationMatrix.Forward.X * screenDirection.Z;
+                worldDirection = _rotationMatrixLaser.Forward.Z * screenDirection.X - _rotationMatrixLaser.Forward.X * screenDirection.Z;
                 if (Math.Abs(worldDirection) > 0.01)
-                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(Math.Sign(worldDirection) * 0.5f));
+                    _rotationMatrixLaser *= Matrix.CreateRotationY(MathHelper.ToRadians(Math.Sign(worldDirection) * 0.5f));
             }
 
-            /// <summary>
-            /// foward & backward movement
-            /// </summary>
+            // foward & backward movement
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 //forward
@@ -196,9 +197,7 @@ namespace SpaceAssault.Entities
             }
             Position -= new Vector3(0, 0, 1) * _moveSpeedModifier;
 
-            /// <summary>
-            /// left & right movement
-            /// </summary>
+            // left & right movement
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 //left
@@ -227,16 +226,14 @@ namespace SpaceAssault.Entities
             }
             Position -= new Vector3(1, 0, 0) * _moveSpeedModifierSideways;
 
-            /// <summary>
-            /// shooting the gun
-            /// </summary>
+            // shooting the gun
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if (_alternatingGunLogic && GunPrimary.Shoot(gameTime, curBullet, 10, Position - RotationMatrix.Left * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList))
+                if (_alternatingGunLogic && GunPrimary.Shoot(gameTime, curBullet, 10, Position - _rotationMatrixLaser.Left * 3.6f - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList))
                 {
                     _alternatingGunLogic = false;
                 }
-                else if (GunPrimary.Shoot(gameTime, curBullet, 10, Position - RotationMatrix.Right * 3.6f - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList))
+                else if (GunPrimary.Shoot(gameTime, curBullet, 10, Position - _rotationMatrixLaser.Right * 3.6f - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList))
                 {
                     _alternatingGunLogic = true;
                 }
@@ -245,7 +242,7 @@ namespace SpaceAssault.Entities
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
                 // TODO: New BulletType for Secondary Fire
-                GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - RotationMatrix.Forward * 11.0f, RotationMatrix, ref bulletList);
+                GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList);
             }
         }
 
@@ -260,6 +257,19 @@ namespace SpaceAssault.Entities
                         effect.EnableDefaultLighting();
                         effect.PreferPerPixelLighting = true;
                         effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
+                        effect.View = Global.Camera.ViewMatrix;
+                        effect.Projection = Global.Camera.ProjectionMatrix;
+                    }
+                    mesh.Draw();
+                }
+
+                foreach (var mesh in _modelLaser.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+                        effect.PreferPerPixelLighting = true;
+                        effect.World = _rotationMatrixLaser * Matrix.CreateWorld(Position + new Vector3(0,8,0), Vector3.Forward, Vector3.Up);
                         effect.View = Global.Camera.ViewMatrix;
                         effect.Projection = Global.Camera.ProjectionMatrix;
                     }

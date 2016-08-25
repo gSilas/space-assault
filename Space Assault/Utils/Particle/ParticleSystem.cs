@@ -264,13 +264,16 @@ namespace SpaceAssault.Utils.Particle
             }
         }
 
-
         /// <summary>
         /// Draws the particle system.
         /// </summary>
         public void Draw()
         {
+
             GraphicsDevice device = Global.GraphicsManager.GraphicsDevice;
+
+            effectViewParameter.SetValue(Global.Camera.ViewMatrix);
+            effectProjectionParameter.SetValue(Global.Camera.ProjectionMatrix);
 
             // Restore the vertex buffer contents if the graphics device was lost.
             if (vertexBuffer.IsContentLost)
@@ -308,6 +311,7 @@ namespace SpaceAssault.Utils.Particle
                 {
                     pass.Apply();
 
+                   
                     if (firstActiveParticle < firstFreeParticle)
                     {
                         // If the active particles are all in one consecutive range,
@@ -379,17 +383,6 @@ namespace SpaceAssault.Utils.Particle
             // Move the particles we just uploaded from the new to the active queue.
             firstNewParticle = firstFreeParticle;
         }
-
-        /// <summary>
-        /// Sets the camera view and projection matrices
-        /// that will be used to draw this particle system.
-        /// </summary>
-        public void SetCamera(Matrix view, Matrix projection)
-        {
-            effectViewParameter.SetValue(view);
-            effectProjectionParameter.SetValue(projection);
-        }
-
 
         /// <summary>
         /// Adds a new particle to the system.
