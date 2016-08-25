@@ -28,10 +28,10 @@ namespace SpaceAssault.Screens
         private AsteroidBuilder _asteroidField;
         private DroneBuilder _droneFleet;
         private ExplosionSpawner _explosionSpawner;
-        private Boids _boids;
         private int _deathCounter = 0;
         public static int _stationHeight = 80;
-     
+        private WaveBuilder _waveBuilder;
+
 
         //UI + Frame + Background
         private InGameOverlay _ui;
@@ -84,7 +84,8 @@ namespace SpaceAssault.Screens
             _asteroidField = new AsteroidBuilder();
             _droneFleet = new DroneBuilder();
             _explosionSpawner = new ExplosionSpawner();
-            _boids = new Boids();
+
+            _waveBuilder = new WaveBuilder(TimeSpan.FromSeconds(20d),2,3);
 
             //UI + Frame + BG 
             _ui = new InGameOverlay(_station);
@@ -116,8 +117,9 @@ namespace SpaceAssault.Screens
             _asteroidField.LoadContent();
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
+            _waveBuilder.LoadContent();
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
-            _boids.addRandomBoids(2);
+
         }
 
         //#################################
@@ -145,12 +147,9 @@ namespace SpaceAssault.Screens
             else
                 _pauseAlpha = Math.Max(_pauseAlpha - 1f / 32, 0);
 
-            List<AEntity> avoidList = new List<AEntity>();
-            avoidList.AddRange(_asteroidField._asteroidList);
-            avoidList.AddRange(_droneFleet._droneShips);
-            //boids
-            _boids.Update(gameTime, avoidList);
 
+            //boids
+            _waveBuilder.Update(gameTime, ref _asteroidField, ref _droneFleet);
             //everything in this scope here what happens when GameplayScreen is active
             if (IsActive)
             {
@@ -233,8 +232,7 @@ namespace SpaceAssault.Screens
             _station.Draw();
             _droneFleet.Draw();
             _asteroidField.Draw();
-            _boids.Draw();
-
+            _waveBuilder.Draw(gameTime);
             // Particle
             /*
             explosionParticles.SetCamera(Global.Camera.ViewMatrix, Global.Camera.ProjectionMatrix);
@@ -374,7 +372,7 @@ namespace SpaceAssault.Screens
             /* bullet of drone with enemy ships */
             foreach (var bullet in _droneFleet._bulletList)
             {
-                foreach (var ship in _boids._ships)
+                foreach (var ship in _waveBuilder.ShipList)
                 {
                         if (Collider3D.IntersectionSphere(bullet, ship))
                         {
@@ -404,7 +402,7 @@ namespace SpaceAssault.Screens
             /* explosions with asteroids, enemy ships */
             foreach (var expl in _explosionSpawner._explList)
             {
-                foreach (var ship in _boids._ships)
+                foreach (var ship in _waveBuilder.ShipList)
                 {
                         if (Collider3D.IntersectionSphere(ship, expl))
                         {
@@ -431,7 +429,7 @@ namespace SpaceAssault.Screens
             }
 
             /* bullet of enemy ships with drone and station */
-            foreach (var bullet in _boids._bullets)
+            foreach (var bullet in _waveBuilder.BulletList)
             {
                 if (Collider3D.IntersectionSphere(bullet, _droneFleet.GetActiveDrone()))
                 {
@@ -488,7 +486,7 @@ namespace SpaceAssault.Screens
                         break;
                     }
                 }
-                foreach (var ship in _boids._ships)
+                foreach (var ship in _waveBuilder.ShipList)
                 {
 
                         if (Collider3D.IntersectionSphere(ast, ship))
@@ -498,7 +496,7 @@ namespace SpaceAssault.Screens
                         }
                     
                 }
-                foreach (var bullet in _boids._bullets)
+                foreach (var bullet in _waveBuilder.BulletList)
                 {
                     if (Collider3D.IntersectionSphere(bullet, ast))
                     {
@@ -551,7 +549,7 @@ namespace SpaceAssault.Screens
             foreach (var bullet in _removeBullets)
             {
                 _droneFleet._bulletList.Remove(bullet);
-                _boids._bullets.Remove(bullet);
+                _waveBuilder.BulletList.Remove(bullet);
             }
 
         }
