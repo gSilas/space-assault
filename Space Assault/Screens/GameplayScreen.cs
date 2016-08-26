@@ -231,6 +231,7 @@ namespace SpaceAssault.Screens
             _droneFleet.Draw();
             _asteroidField.Draw();
             _waveBuilder.Draw(gameTime);
+
             // Particle
             if (_station._health < 10000)
             {

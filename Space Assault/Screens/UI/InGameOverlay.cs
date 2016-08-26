@@ -50,9 +50,9 @@ namespace SpaceAssault.Screens
             }
 
             //Dialogs        
-            _upgradeVincinityDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 702, 32, 336, 8, false, true);
+            _upgradeVincinityDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 168, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 82, 32, 336, 8, false, true);
             _scoreDialog = new Dialog(340, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 200, 8, false, true);
-            _moneyDialog = new Dialog(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 280, 8, false, false);
+            _moneyDialog = new Dialog(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 280, 8, false, true);
 
             _scoreDialog.LoadContent();
             _moneyDialog.LoadContent();
@@ -94,7 +94,7 @@ namespace SpaceAssault.Screens
                     var vec = new Point();
                     vec.X = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X + 200;
                     vec.Y = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y + 150;
-                    _upgradeVincinityDialog.Draw(vec, "Press B for Shop!", Color.Red);
+                    _upgradeVincinityDialog.Draw("Press B for Shop!");
                 }
                     
             } 

@@ -27,7 +27,7 @@ namespace SpaceAssault.Utils
         }
         public void LoadContent()
         {
-            _dialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width-450, Global.GraphicsManager.GraphicsDevice.Viewport.Height-400,128,384, 8, false, false);
+            _dialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width-450, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 178, 128,384, 8, false, true);
             _currentWave.LoadContent(_enemyCount);
             _dialog.LoadContent();
         }

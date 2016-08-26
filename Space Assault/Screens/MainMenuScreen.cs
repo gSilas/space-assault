@@ -1,7 +1,4 @@
 using System;
-/// <summary>
-/// with help from https://roecode.wordpress.com/2008/01/28/xna-framework-gameengine-development-part-7-screenmanagergamecomponent/
-/// </summary>
 namespace SpaceAssault.Screens
 {
     // The main menu screen is the first thing displayed when the game starts up.
