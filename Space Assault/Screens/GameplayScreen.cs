@@ -47,7 +47,7 @@ namespace SpaceAssault.Screens
         ParticleSystem explosionSmokeParticles;
         ParticleSystem projectileTrailParticles;
         ParticleSystem SmokeParticles;
-        ParticleSystem fireParticles;
+        ParticleSystem borderParticles;
 
         Vector3 explosionPosition = Vector3.Zero;
         double explosionEffectDelta = 0;
@@ -99,7 +99,7 @@ namespace SpaceAssault.Screens
             //explosionSmokeParticles = new ExplosionSmokeParticleSystem();
             //projectileTrailParticles = new ProjectileTrailParticleSystem();
             //SmokeParticles = new SmokeParticleSystem();
-            fireParticles = new FireParticleSystem();
+            borderParticles = new BorderParticleSystem();
         }
 
 
@@ -160,7 +160,7 @@ namespace SpaceAssault.Screens
             //UpdateSmoke(gameTime);
             //UpdateProjectiles(gameTime);
             explosionParticles.Update(gameTime);
-            UpdateFire();
+            UpdateBorder(gameTime);
 
 
             // if station dies go back to MainMenu
@@ -221,7 +221,7 @@ namespace SpaceAssault.Screens
 
             // calling draw of objects where necessary
             _back.Draw(90, new Vector3(-5000, -2500, -5000));
-            //_station.Draw();
+            _station.Draw();
             _droneFleet.Draw();
             _asteroidField.Draw();
             _waveBuilder.Draw(gameTime);
@@ -229,7 +229,7 @@ namespace SpaceAssault.Screens
             // Particle
             //SmokeParticles.Draw();
             explosionParticles.Draw();
-            fireParticles.Draw();
+            borderParticles.Draw();
 
             //if drone is dead fade to black
             if (_deadDroneAlpha > 0)
@@ -500,17 +500,14 @@ namespace SpaceAssault.Screens
         //#################################
         // Helper RndPoint
         //#################################
-        Vector3 RandomPointOnCircle()
+        Vector3 RandomPointOnCircle(float radius, float height)
         {
-            const float radius = 30;
-            const float height = 40;
-
             double angle = random.NextDouble() * Math.PI * 2;
 
             float x = (float)Math.Cos(angle);
             float y = (float)Math.Sin(angle);
 
-            return new Vector3(x * radius, y * radius + height, 0);
+            return new Vector3(x * radius, 0, y * radius + height);
         }
 
         //#################################
@@ -575,18 +572,19 @@ namespace SpaceAssault.Screens
         //#################################
         // Helper Update - Fire
         //#################################
-        void UpdateFire()
+        void UpdateBorder(GameTime gameTime)
         {
-            const int fireParticlesPerFrame = 20;
+            const int borderParticlesPerFrame = 20;
 
             // Create a number of fire particles, randomly positioned around a circle.
-            for (int i = 0; i < fireParticlesPerFrame; i++)
+            for (int i = 0; i < borderParticlesPerFrame; i++)
             {
-                fireParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+                borderParticles.AddParticle(RandomPointOnCircle(Global.MapRadius, 40), Vector3.Zero);
             }
-
             // Create one smoke particle per frmae, too.
             //SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+
+            borderParticles.Update(gameTime);
         }
 
     }

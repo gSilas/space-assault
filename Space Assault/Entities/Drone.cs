@@ -74,7 +74,7 @@ namespace SpaceAssault.Entities
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
             _tiltZ = 0;
-            _tiltZMax = 0.70f;
+            _tiltZMax = 6.2f;
             _shieldpast = _maxShield;
             _shield = _maxShield;
             _health = _maxHealth;
@@ -193,7 +193,6 @@ namespace SpaceAssault.Entities
             }
 
 
-
             // foward & backward movement
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
@@ -227,6 +226,22 @@ namespace SpaceAssault.Entities
             Position -= new Vector3(0, 0, 1) * _moveSpeedModifier;
 
             // left & right movement
+            if (Keyboard.GetState().IsKeyUp(Keys.D) & Keyboard.GetState().IsKeyUp(Keys.A))
+            {
+                if (_tiltZ == _tiltZMax || _tiltZ == -_tiltZMax)
+                {
+                    _tiltZ = 0;
+                }
+                else
+                {
+                    if (_tiltZ < 0)
+                        _tiltZ += 0.1f;
+                    else if (_tiltZ > 0)
+                        _tiltZ -= 0.1f;
+                }
+            }
+
+
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 //left
@@ -235,7 +250,7 @@ namespace SpaceAssault.Entities
 
                 if (_tiltZ < _tiltZMax)
                 {
-                    _tiltZ += 0.05f;
+                    _tiltZ += 0.2f;
                                   }
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.D))
@@ -246,7 +261,7 @@ namespace SpaceAssault.Entities
 
                 if (_tiltZ > -_tiltZMax)
                 {
-                    _tiltZ -= 0.05f;
+                    _tiltZ -= 0.2f;
                 }
             }
             else if (_moveSpeedModifierSideways > 0.02f)
@@ -282,14 +297,6 @@ namespace SpaceAssault.Entities
             {
                 // TODO: New BulletType for Secondary Fire
                 GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList);
-            }
-
-            if (Keyboard.GetState().IsKeyUp(Keys.D) & Keyboard.GetState().IsKeyUp(Keys.A))
-            {
-                if (_tiltZ < 0)
-                    _tiltZ += 0.05f;
-                else if (_tiltZ > 0)
-                    _tiltZ -= 0.05f;
             }
 
             //RotationMatrix = Matrix.CreateRotationZ(_tiltZ);
