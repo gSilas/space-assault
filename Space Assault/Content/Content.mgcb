@@ -496,7 +496,7 @@
 /processorParam:ResizeTexturesToPowerOfTwo=False
 /processorParam:RotationX=-90
 /processorParam:RotationY=0
-/processorParam:RotationZ=0
+/processorParam:RotationZ=180
 /processorParam:Scale=6
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=DxtCompressed

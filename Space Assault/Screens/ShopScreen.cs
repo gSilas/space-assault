@@ -327,38 +327,7 @@ namespace SpaceAssault.Screens
         //#################################
         public override void Draw(GameTime gameTime)
         {
-
-            // make sure our entries are in the right place before we draw them
-            UpdateMenuEntryLocations();
-
-            // Draw each menu entry in turn.
-            for (int i = 0; i < MenuEntries.Count; i++)
-            {
-                MenuEntry menuEntry = MenuEntries[i];
-
-                bool isSelected = IsActive && (i == selectedEntry);
-                menuEntry.Draw(this, isSelected, gameTime);
-            }
-
-            // Make the menu slide into place during transitions, using a
-            // power curve to make things look more interesting (this makes
-            // the movement slow down as it nears the end).
-            float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
-
-            // Draw the menu title on the screen
-            Vector2 titlePosition = new Vector2(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2, 80);
-            Vector2 titleOrigin = Global.GameFont.MeasureString(menuTitle) / 2;
-            Color titleColor = new Color(192, 192, 192) * TransitionAlpha;
-            float titleScale = 1.25f;
-
-            titlePosition.Y -= transitionOffset * 100;
-
-
-            Global.SpriteBatch.DrawString(Global.GameFont, menuTitle, titlePosition, titleColor, 0,titleOrigin, titleScale, SpriteEffects.None, 0);
-
-            Global.SpriteBatch.End();
-            Global.SpriteBatch.Begin();
-
+            drawMenuEntries(gameTime);
             Labels[0].Draw(Global.Money);
 
             string entry;
