@@ -80,7 +80,7 @@ namespace SpaceAssault.Utils
             for (int i = 0; i < number; i++)
             {
                 angle = _random.NextDouble() * Math.PI * 2;
-                addBoid(new Vector3(Global.SpawnMapRadius * (float)Math.Cos(angle), 0, Global.SpawnMapRadius * (float)Math.Sin(angle)));
+                addBoid(new Vector3(Global.MapRadius * (float)Math.Cos(angle), 0, Global.MapRadius * (float)Math.Sin(angle)));
             }
         }
 
