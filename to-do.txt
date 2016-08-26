@@ -1,4 +1,4 @@
-﻿Gameplay:
+Gameplay:
 	maprand 	-	dustin
 
 	ki logik bomber	-	hans	
