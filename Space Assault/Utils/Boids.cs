@@ -36,7 +36,7 @@ namespace SpaceAssault.Utils
             _avoidBoidsRadius = 30;
             _avoidObjRadius = 40;
             _proximityRadius = Math.Max(_cohesionRadius, _aligningRadius);
-            _maxSpeed = 2f;
+            _maxSpeed = 1.5f;
         }
 
         [Conditional("DEBUG")]
@@ -176,12 +176,15 @@ namespace SpaceAssault.Utils
                 place = Vector3.Distance(curShip.Position, Global.Camera.Target) < 275 ? goToPlace(curShip, Global.Camera.Target) : goToPlace(curShip, Vector3.Zero);
                 awayPlace = curShip.Position.Length() < 150 ? -goToPlace(curShip, Vector3.Zero) : Vector3.Zero;
 
-                curShip._direction += (cohesion / 100 + aligning + avoidB / 2 + avoidO + noise / 20 + place / 5 + awayPlace / 5) / 10;
-                if (curShip._direction.Length() > 1.5f)
+                curShip._direction += (cohesion / 100 + aligning + avoidB / 10 + avoidO + noise / 20 + place / 5 + awayPlace / 5) / 10;
+
+                if (curShip._direction.Length() > _maxSpeed)
                 {
                     curShip._direction.Normalize();
-                    curShip._direction *= 1.5f;
+                    curShip._direction *= _maxSpeed;
                 }
+
+
                 curShip.RotateTowards(-curShip.Direction);
                 curShip.Position += curShip.Direction;
                 //curShip.FlyToDirection(-curShip._direction);
