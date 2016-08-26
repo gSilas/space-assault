@@ -100,9 +100,6 @@ namespace SpaceAssault.Screens
             projectileTrailParticles = new ProjectileTrailParticleSystem();
             SmokeParticles = new SmokeParticleSystem();
             fireParticles = new FireParticleSystem();
-
-            //for testing
-            //Global.HighScorePoints = 1000;
         }
 
 
@@ -150,6 +147,7 @@ namespace SpaceAssault.Screens
 
             //boids
             _waveBuilder.Update(gameTime, ref _asteroidField, ref _droneFleet);
+
             //everything in this scope here what happens when GameplayScreen is active
             if (IsActive)
             {
@@ -280,82 +278,10 @@ namespace SpaceAssault.Screens
         }
 
         //#################################
-        // Helper Update - Explosion
+        // Collision
         //#################################
-        void UpdateExplosions(GameTime gameTime, Vector3 position, Vector3 velocity)
-        {
-            // Create a new projectile once per second
-            //projectiles.Add(new Projectile(explosionParticles,explosionSmokeParticles,projectileTrailParticles));
-            explosionParticles.AddParticle(position, velocity);
-        }
-
-        void ExplosionCircle(Vector3 pos, Vector3 velocity, float radius)
-        {
-            float angle = 0.0f;
-            for (int i = 0; i <= radius; i += 25)
-            {
-                while (angle < 2 * Math.PI)
-                {
-                    explosionParticles.AddParticle(pos + new Vector3(i * (float)Math.Cos(angle), 0, i * (float)Math.Sin(angle)), velocity);
-                    angle += 0.2f;
-                }
-                angle = 0;
-            }           
-        }
-
-        //#################################
-        // Helper Update - Projectiles
-        //#################################
-        void UpdateProjectiles(GameTime gameTime)
-        {
-            int i = 0;
-
-            while (i < projectiles.Count)
-            {
-                if (!projectiles[i].Update(gameTime))
-                {
-                    // Remove projectiles at the end of their life.
-                    projectiles.RemoveAt(i);
-                }
-                else
-                {
-                    // Advance to the next projectile.
-                    i++;
-                }
-            }
-        }
-
-        //#################################
-        // Helper Update - Smoke
-        //#################################
-        void UpdateSmoke()
-        {
-            // This is trivial: we just create one new smoke particle per frame.
-            SmokeParticles.AddParticle(Vector3.Zero, Vector3.Zero);
-        }
-
-        //#################################
-        // Helper Update - Fire
-        //#################################
-        void UpdateFire()
-        {
-            const int fireParticlesPerFrame = 20;
-
-            // Create a number of fire particles, randomly positioned around a circle.
-            for (int i = 0; i < fireParticlesPerFrame; i++)
-            {
-                fireParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
-            }
-
-            // Create one smoke particle per frmae, too.
-            SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
-        }
-
         void CollisionHandling(GameTime gameTime)
         {
-            /// <summary>
-            /// EVRYTHING AFTER THIS LINE IS COLLISION HANDLING
-            /// </summary>
             //remove lists for collisions etc 
             List<Asteroid> _removeAsteroid = new List<Asteroid>();
             List<Bullet> _removeBullets = new List<Bullet>();
@@ -545,6 +471,10 @@ namespace SpaceAssault.Screens
 
         }
 
+        //###################################################################################################
+        // Helper
+        //###################################################################################################
+
         //#################################
         // Helper Draw - Arrow
         //#################################
@@ -589,6 +519,78 @@ namespace SpaceAssault.Screens
             float y = (float)Math.Sin(angle);
 
             return new Vector3(x * radius, y * radius + height, 0);
+        }
+
+        //#################################
+        // Helper Update - Explosion
+        //#################################
+        void UpdateExplosions(GameTime gameTime, Vector3 position, Vector3 velocity)
+        {
+            // Create a new projectile once per second
+            //projectiles.Add(new Projectile(explosionParticles,explosionSmokeParticles,projectileTrailParticles));
+            explosionParticles.AddParticle(position, velocity);
+        }
+
+        void ExplosionCircle(Vector3 pos, Vector3 velocity, float radius)
+        {
+            float angle = 0.0f;
+            for (int i = 0; i <= radius; i += 25)
+            {
+                while (angle < 2 * Math.PI)
+                {
+                    explosionParticles.AddParticle(pos + new Vector3(i * (float)Math.Cos(angle), 0, i * (float)Math.Sin(angle)), velocity);
+                    angle += 0.2f;
+                }
+                angle = 0;
+            }
+        }
+
+        //#################################
+        // Helper Update - Projectiles
+        //#################################
+        void UpdateProjectiles(GameTime gameTime)
+        {
+            int i = 0;
+
+            while (i < projectiles.Count)
+            {
+                if (!projectiles[i].Update(gameTime))
+                {
+                    // Remove projectiles at the end of their life.
+                    projectiles.RemoveAt(i);
+                }
+                else
+                {
+                    // Advance to the next projectile.
+                    i++;
+                }
+            }
+        }
+
+        //#################################
+        // Helper Update - Smoke
+        //#################################
+        void UpdateSmoke()
+        {
+            // This is trivial: we just create one new smoke particle per frame.
+            SmokeParticles.AddParticle(Vector3.Zero, Vector3.Zero);
+        }
+
+        //#################################
+        // Helper Update - Fire
+        //#################################
+        void UpdateFire()
+        {
+            const int fireParticlesPerFrame = 20;
+
+            // Create a number of fire particles, randomly positioned around a circle.
+            for (int i = 0; i < fireParticlesPerFrame; i++)
+            {
+                fireParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+            }
+
+            // Create one smoke particle per frmae, too.
+            SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
         }
 
     }

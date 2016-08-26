@@ -22,6 +22,8 @@ namespace SpaceAssault.Entities
         private float _moveSpeedRight;
         private float _moveSpeedModifier;
         private float _moveSpeedModifierSideways;
+        private float _tiltZ;
+        private float _tiltZMax;
         private Model _modelLaser;
         private Matrix _rotationMatrixLaser = Matrix.Identity;
 
@@ -71,6 +73,8 @@ namespace SpaceAssault.Entities
             _moveSpeedBackward = -1.0f * _speedScaling;
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
+            _tiltZ = 0;
+            _tiltZMax = 0.70f;
             _shieldpast = _maxShield;
             _shield = _maxShield;
             _health = _maxHealth;
@@ -90,6 +94,7 @@ namespace SpaceAssault.Entities
             _moveSpeedBackward = -1.0f * _speedScaling;
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
+
             _health = _maxHealth;
             _shield = _maxShield;
 
@@ -156,6 +161,7 @@ namespace SpaceAssault.Entities
             float zFactor = -nearWorldPoint.Y / direction.Y;
             Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
 
+            // Laser - Mouse control
             Vector3 screenDirection = this.Position - zeroWorldPoint;
             screenDirection.Normalize();
             float worldDirection;
@@ -166,13 +172,36 @@ namespace SpaceAssault.Entities
                     _rotationMatrixLaser *= Matrix.CreateRotationY(MathHelper.ToRadians(Math.Sign(worldDirection) * 0.5f));
             }
 
+            // Drone - Mouse control
+            Vector3 direction2 = new Vector3(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, 0, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f) - new Vector3(Mouse.GetState().Position.X, 0, Mouse.GetState().Position.Y);
+            direction.Normalize();
+            float vectorDirection;
+
+            for (float i = 0.5f; i < _turnSpeed; i++)
+            {
+                vectorDirection = RotationMatrix.Forward.Z * direction2.X - RotationMatrix.Forward.X * direction2.Z;
+                if (vectorDirection > 0.01)
+                {
+                    //turn left
+                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(0.5f));
+                }
+                else if (vectorDirection < -0.01)
+                {
+                    //turn right
+                    RotationMatrix *= Matrix.CreateRotationY(MathHelper.ToRadians(-0.5f));
+                }
+            }
+
+
+
             // foward & backward movement
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 //forward
                 if (_moveSpeedModifier < _moveSpeedForward) _moveSpeedModifier += 0.04f;
                 else _moveSpeedModifier = _moveSpeedForward;
-                //Position -= new Vector3(0, 0, 1) * _moveSpeedModifier;
+                Position -= new Vector3(0, 0, 1) * _moveSpeedModifier;
+
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
@@ -203,12 +232,22 @@ namespace SpaceAssault.Entities
                 //left
                 if (_moveSpeedModifierSideways < _moveSpeedLeft) _moveSpeedModifierSideways += 0.04f;
                 else _moveSpeedModifierSideways = _moveSpeedLeft;
+
+                if (_tiltZ < _tiltZMax)
+                {
+                    _tiltZ += 0.05f;
+                                  }
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 //right
                 if (_moveSpeedModifierSideways > _moveSpeedRight) _moveSpeedModifierSideways -= 0.04f;
                 else _moveSpeedModifierSideways = _moveSpeedRight;
+
+                if (_tiltZ > -_tiltZMax)
+                {
+                    _tiltZ -= 0.05f;
+                }
             }
             else if (_moveSpeedModifierSideways > 0.02f)
             {
@@ -244,6 +283,17 @@ namespace SpaceAssault.Entities
                 // TODO: New BulletType for Secondary Fire
                 GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList);
             }
+
+            if (Keyboard.GetState().IsKeyUp(Keys.D) & Keyboard.GetState().IsKeyUp(Keys.A))
+            {
+                if (_tiltZ < 0)
+                    _tiltZ += 0.05f;
+                else if (_tiltZ > 0)
+                    _tiltZ -= 0.05f;
+            }
+
+            RotationMatrix = Matrix.CreateRotationZ(_tiltZ);
+            //Position -= RotationMatrix.Forward * _moveSpeedModifier;
         }
 
         public override void Draw()
@@ -278,5 +328,7 @@ namespace SpaceAssault.Entities
             }
 
         }
+
+
     }
 }
