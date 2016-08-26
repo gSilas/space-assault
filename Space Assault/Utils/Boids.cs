@@ -20,6 +20,10 @@ namespace SpaceAssault.Utils
         private int _aligningRadius;
         private int _avoidBoidsRadius;
         private int _avoidObjRadius;
+        private int _flyToDroneRadius;
+        private int _flyToStationRadius;
+        private int _avoidDroneRadius;
+        private int _avoidStationRadius;
         private float _maxSpeed;
         private bool workMouseAdd = false;
 
@@ -36,6 +40,10 @@ namespace SpaceAssault.Utils
             _avoidBoidsRadius = 30;
             _avoidObjRadius = 40;
             _proximityRadius = Math.Max(_cohesionRadius, _aligningRadius);
+            _flyToDroneRadius = 280;
+            _flyToStationRadius = (int)(_flyToDroneRadius * 1.2f);
+            _avoidDroneRadius = (int)(_flyToDroneRadius * 0.6f);
+            _avoidStationRadius = 150;
             _maxSpeed = 1.5f;
         }
 
@@ -72,7 +80,7 @@ namespace SpaceAssault.Utils
             for (int i = 0; i < number; i++)
             {
                 angle = _random.NextDouble() * Math.PI * 2;
-                addBoid(new Vector3(Global.MapRadius * (float)Math.Cos(angle), 0, Global.MapRadius * (float)Math.Sin(angle)));
+                addBoid(new Vector3(Global.SpawnMapRadius * (float)Math.Cos(angle), 0, Global.SpawnMapRadius * (float)Math.Sin(angle)));
             }
         }
 
@@ -115,7 +123,7 @@ namespace SpaceAssault.Utils
                 //shootlogic
                 float vectorDirection = ship.RotationMatrix.Forward.Z * direction.X - ship.RotationMatrix.Forward.X * direction.Z;
                 double distanceToTarget = Vector3.Distance(ship.Position, Global.Camera.Target);
-                if (Math.Abs(vectorDirection) <= 16 && distanceToTarget < 150)
+                if (Math.Abs(vectorDirection) <= 10 && distanceToTarget < 150)
                 {
                     ship.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, ship.gunMakeDmg, ship.Position, ship.RotationMatrix, ref _bullets);
                 }
@@ -163,20 +171,21 @@ namespace SpaceAssault.Utils
                     aligning = Vector3.Zero,
                     avoidB = Vector3.Zero,
                     avoidO = Vector3.Zero,
-                    place = Vector3.Zero,
+                    flyToDrone = Vector3.Zero,
                     noise = Vector3.Zero,
-                    awayPlace = Vector3.Zero;
+                    flyToStation = Vector3.Zero;
 
                 cohesion = cohesionRule(curShip);
                 aligning = aligningRule(curShip);
                 avoidB = avoidBoidRule(curShip);
                 avoidO = avoidObjRule(curShip);
-                avoidO.Y = 0;
                 noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
-                place = Vector3.Distance(curShip.Position, Global.Camera.Target) < 275 ? goToPlace(curShip, Global.Camera.Target) : goToPlace(curShip, Vector3.Zero);
-                awayPlace = curShip.Position.Length() < 150 ? -goToPlace(curShip, Vector3.Zero) : Vector3.Zero;
+                flyToDrone = droneRule(curShip);
+                flyToStation = stationRule(curShip);
 
-                curShip._direction += (cohesion / 100 + aligning + avoidB / 10 + avoidO + noise / 20 + place / 5 + awayPlace / 5) / 10;
+                curShip._direction += (cohesion / 100 + aligning + avoidB / 3 + avoidO + noise / 20 + flyToDrone / 5 + flyToStation / 2) / 10;
+
+                //curShip._direction.Y = 0;
 
                 if (curShip._direction.Length() > _maxSpeed)
                 {
@@ -189,6 +198,51 @@ namespace SpaceAssault.Utils
                 curShip.Position += curShip.Direction;
                 //curShip.FlyToDirection(-curShip._direction);
             }
+        }
+
+        private Vector3 stationRule(AEnemys curShip)
+        {
+            if (curShip.Position.Length() < _avoidStationRadius)
+            {
+                return -goToPlace(curShip, Vector3.Zero);
+            }
+            else if (curShip.Position.Length() > _flyToStationRadius)
+            {
+                return goToPlace(curShip, Vector3.Zero);
+            }
+
+            return Vector3.Zero;
+        }
+
+        private Vector3 droneRule(AEnemys curShip)
+        {
+
+            if (curShip.flyingAwayFromDrone)
+            {
+                if (Vector3.Distance(curShip.Position, Global.Camera.Target) < _avoidDroneRadius)
+                    return -goToPlace(curShip, Global.Camera.Target);
+                else
+                {
+                    curShip.flyingAwayFromDrone = !curShip.flyingAwayFromDrone;
+                }
+            }
+            else
+            {
+                if (Vector3.Distance(curShip.Position, Global.Camera.Target) < _flyToDroneRadius)
+                {
+                    if (Vector3.Distance(curShip.Position, Global.Camera.Target) < (_avoidObjRadius + 1))
+                    {
+                        curShip.flyingAwayFromDrone = !curShip.flyingAwayFromDrone;
+                        return -goToPlace(curShip, Global.Camera.Target);
+                    }
+                }
+                else
+                {
+                    return Vector3.Zero;
+                }
+            }
+
+            return goToPlace(curShip, Global.Camera.Target);
         }
 
         // RULE1: Boids try to fly towards the centre of mass of neighbouring boids
@@ -218,8 +272,8 @@ namespace SpaceAssault.Utils
             Vector3 c = Vector3.Zero;
             foreach (var otherShip in _ships)
             {
-                float distance = Vector3.Distance(otherShip.Position, curShip.Position);
-                if (otherShip != curShip && distance < _avoidBoidsRadius)
+                float distanceDiff = Vector3.Distance(otherShip.Position, curShip.Position) - _avoidBoidsRadius;
+                if (otherShip != curShip && distanceDiff < 0)
                 {
                     c -= (otherShip.Position - curShip.Position);
                 }

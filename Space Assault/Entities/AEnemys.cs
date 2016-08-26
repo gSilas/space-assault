@@ -15,7 +15,8 @@ namespace SpaceAssault.Entities
         public Vector3 _direction;
         public int Health;
         public int KillMoney; //The Money the player gets if he kills the unit
-
+        public bool flyingAwayFromDrone;
+        public bool flyingAwayFromStation;
         protected bool isDead;
         public Weapon Gun;
         public int gunMakeDmg = 0;
