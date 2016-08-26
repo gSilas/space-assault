@@ -47,7 +47,7 @@ namespace SpaceAssault.Screens
         ParticleSystem explosionSmokeParticles;
         ParticleSystem projectileTrailParticles;
         ParticleSystem SmokeParticles;
-        ParticleSystem fireParticles;
+        ParticleSystem borderParticles;
 
         Vector3 explosionPosition = Vector3.Zero;
         double explosionEffectDelta = 0;
@@ -86,7 +86,7 @@ namespace SpaceAssault.Screens
             _explosionSpawner = new ExplosionSpawner();
 
             _waveBuilder = new WaveBuilder(TimeSpan.FromSeconds(20d),2,3);
-
+            Global.Money = 100000;
             //UI + Frame + BG 
             _ui = new InGameOverlay(_station);
             _back = new Background();
@@ -99,7 +99,7 @@ namespace SpaceAssault.Screens
             //explosionSmokeParticles = new ExplosionSmokeParticleSystem();
             //projectileTrailParticles = new ProjectileTrailParticleSystem();
             //SmokeParticles = new SmokeParticleSystem();
-            //fireParticles = new FireParticleSystem();
+            borderParticles = new BorderParticleSystem();
         }
 
 
@@ -148,43 +148,42 @@ namespace SpaceAssault.Screens
             //boids
             _waveBuilder.Update(gameTime, ref _asteroidField, ref _droneFleet);
 
-            //everything in this scope here what happens when GameplayScreen is active
-            if (IsActive)
+
+            // calling update of objects where necessary
+            _station.Update(gameTime);
+            _droneFleet.Update(gameTime);
+            _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
+            Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + Global.CameraPosition, _droneFleet.GetActiveDrone().Position);
+            _explosionSpawner.Update(gameTime);
+
+            // Particles
+            //UpdateSmoke(gameTime);
+            //UpdateProjectiles(gameTime);
+            explosionParticles.Update(gameTime);
+            UpdateBorder(gameTime);
+
+
+            // if station dies go back to MainMenu
+            // TODO: change to EndScreen and HighScore list)
+            if (_station._health <= 0)
+                LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen());
+
+            CollisionHandling(gameTime);
+
+            // fading out/in when drone is dead & alive again
+            if (!_droneFleet.GetActiveDrone().IsNotDead)
+                _deadDroneAlpha = Math.Min(_deadDroneAlpha + 1f / 32, 1);
+            else
+                _deadDroneAlpha = Math.Max(_deadDroneAlpha - 1f / 32, 0);
+
+            // if fading out is max, respawn
+            if (_actualDeadDroneAlpha >= 1f)
             {
-                // calling update of objects where necessary
-                _station.Update(gameTime);
-                _droneFleet.Update(gameTime);
-                _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
-                Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + Global.CameraPosition, _droneFleet.GetActiveDrone().Position);
-                _explosionSpawner.Update(gameTime);
-
-                // Particles
-                //UpdateSmoke(gameTime);
-                //UpdateProjectiles(gameTime);
-                explosionParticles.Update(gameTime);
-
-
-                // if station dies go back to MainMenu
-                // TODO: change to EndScreen and HighScore list)
-                if (_station._health <= 0)
-                    LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen());
-
-                CollisionHandling(gameTime);
-
-                // fading out/in when drone is dead & alive again
-                if (!_droneFleet.GetActiveDrone().IsNotDead)
-                    _deadDroneAlpha = Math.Min(_deadDroneAlpha + 1f / 32, 1);
-                else
-                    _deadDroneAlpha = Math.Max(_deadDroneAlpha - 1f / 32, 0);
-
-                // if fading out is max, respawn
-                if (_actualDeadDroneAlpha >= 1f)
-                {
-                    _droneFleet.GetActiveDrone().Reset();
-                    _deathCounter++;
-                }
-
+                _droneFleet.GetActiveDrone().Reset();
+                _deathCounter++;
             }
+
+            
         }
 
         //#################################
@@ -230,6 +229,7 @@ namespace SpaceAssault.Screens
             // Particle
             //SmokeParticles.Draw();
             explosionParticles.Draw();
+            borderParticles.Draw();
 
             //if drone is dead fade to black
             if (_deadDroneAlpha > 0)
@@ -500,17 +500,14 @@ namespace SpaceAssault.Screens
         //#################################
         // Helper RndPoint
         //#################################
-        Vector3 RandomPointOnCircle()
+        Vector3 RandomPointOnCircle(float radius, float height)
         {
-            const float radius = 30;
-            const float height = 40;
-
             double angle = random.NextDouble() * Math.PI * 2;
 
             float x = (float)Math.Cos(angle);
             float y = (float)Math.Sin(angle);
 
-            return new Vector3(x * radius, y * radius + height, 0);
+            return new Vector3(x * radius, 0, y * radius + height);
         }
 
         //#################################
@@ -575,18 +572,19 @@ namespace SpaceAssault.Screens
         //#################################
         // Helper Update - Fire
         //#################################
-        void UpdateFire()
+        void UpdateBorder(GameTime gameTime)
         {
-            const int fireParticlesPerFrame = 20;
+            const int borderParticlesPerFrame = 20;
 
             // Create a number of fire particles, randomly positioned around a circle.
-            for (int i = 0; i < fireParticlesPerFrame; i++)
+            for (int i = 0; i < borderParticlesPerFrame; i++)
             {
-                fireParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+                borderParticles.AddParticle(RandomPointOnCircle(Global.MapRadius, 40), Vector3.Zero);
             }
-
             // Create one smoke particle per frmae, too.
-            SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+            //SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+
+            borderParticles.Update(gameTime);
         }
 
     }

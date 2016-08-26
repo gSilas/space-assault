@@ -17,11 +17,11 @@ namespace SpaceAssault.Utils
         private bool _timeSet;
         private Dialog _dialog;
 
-        public WaveBuilder(TimeSpan timeBetweenWaves, int EnemyCount, int increment)
+        public WaveBuilder(TimeSpan timeBetweenWaves, int enemyCount, int increment)
         {
             _currentWave = new Wave();
             _waveCount++;
-            _enemyCount = EnemyCount;
+            _enemyCount = enemyCount;
             _increment = increment;
             _timeBetweenWaves = timeBetweenWaves;
         }

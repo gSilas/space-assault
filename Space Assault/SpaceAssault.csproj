@@ -128,7 +128,7 @@
     <Compile Include="Utils\Particle\ParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\ExplosionParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\ExplosionSmokeParticleSystem.cs" />
-    <Compile Include="Utils\Particle\Settings\FireParticleSystem.cs" />
+    <Compile Include="Utils\Particle\Settings\BorderParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\ProjectileTrailParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\TrailParticleSystem.cs" />
     <Compile Include="Utils\Particle\ParticleVertex.cs" />

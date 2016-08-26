@@ -7,27 +7,27 @@ namespace SpaceAssault.Utils.Particle.Settings
     /// <summary>
     /// Custom particle system for creating a flame effect.
     /// </summary>
-    class FireParticleSystem : ParticleSystem
+    class BorderParticleSystem : ParticleSystem
     {
-        public FireParticleSystem()
+        public BorderParticleSystem()
         { }
 
 
         protected override void InitializeSettings(ParticleSettings settings)
         {
-            settings.TextureName = "fire";
+            settings.TextureName = "engineBlue";
 
-            settings.MaxParticles = 2400;
+            settings.MaxParticles = 2000;
 
             settings.Duration = TimeSpan.FromSeconds(2);
 
             settings.DurationRandomness = 1;
 
             settings.MinHorizontalVelocity = 0;
-            settings.MaxHorizontalVelocity = 15;
+            settings.MaxHorizontalVelocity = 1;
 
-            settings.MinVerticalVelocity = -10;
-            settings.MaxVerticalVelocity = 10;
+            settings.MinVerticalVelocity = -1;
+            settings.MaxVerticalVelocity = 1;
 
             // Set gravity upside down, so the flames will 'fall' upward.
             settings.Gravity = new Vector3(0, 15, 0);
@@ -35,11 +35,11 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinColor = new Color(255, 255, 255, 10);
             settings.MaxColor = new Color(255, 255, 255, 40);
 
-            settings.MinStartSize = 5;
-            settings.MaxStartSize = 10;
+            settings.MinStartSize = 30;
+            settings.MaxStartSize = 30;
 
             settings.MinEndSize = 10;
-            settings.MaxEndSize = 40;
+            settings.MaxEndSize = 10;
 
             // Use additive blending.
             settings.BlendState = BlendState.Additive;
