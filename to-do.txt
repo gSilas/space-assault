@@ -1,31 +1,37 @@
-﻿Gameplay:
-	maprand d
-	ki logik
+Gameplay:
+	maprand 	-	dustin
 
-	bounding spehre station malen
-	geld d
+	ki logik bomber	-	hans	
+	
+		bounding spehre station malen
 	rakete für drone
 	highscore
-	wavespawning
-	großer asteroid gegner
+	wavespawning	-	daniel
+	
+		großer asteroid gegner
 	Bossgegner
+	
+	Rauschschreen außerhalb der Spielwelt ( wird stärker wenn man sich von der Station entfernt)
+	
+	Tutorial
 	
 
 
+
 Shop: 	
-	abwehrlaser für asteriodien	
+		abwehrlaser für asteriodien	
 	
 
 
 Sound: 	-verschiedene Explosionen für alle Objekte
 	-Musik
 	-Schusssounds
-	- UI sounds (Stimmen, klicken, piepen
+	- UI sounds (Stimmen, klicken, piepen) -philipp
 	
 
 
 partikeldinge:
-	-Explosionen für alles
+	-Explosionen für alles (farbe)
 
 
 
@@ -38,4 +44,3 @@ Modelle:
 	rakete
 	BOSS
 	2 asterioden
-	http://imgur.com/a/nCzpN
