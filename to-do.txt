@@ -1,41 +1,29 @@
 Gameplay:
-	maprand 	-	dustin
-
-	ki logik bomber	-	hans	
-	
-		bounding spehre station malen
+	maprand 		#dustin
+	ki logik bomber		#hans		
+	bounding spehre station malen
 	rakete für drone
-	highscore
-	wavespawning	-	daniel
-	
-		großer asteroid gegner
+	highscore		#hans
+	wavespawning		#daniel	
+		* großer asteroid Gegner
 	Bossgegner
-	
-	Rauschschreen außerhalb der Spielwelt ( wird stärker wenn man sich von der Station entfernt)
-	
+	Rauschschreen außerhalb der Spielwelt ( wird stärker wenn man sich von der Station entfernt)	#dustin	
 	Tutorial
 	
 
-
-
 Shop: 	
-		abwehrlaser für asteriodien	
+	abwehrlaser für asteriodien	
 	
 
-
-Sound: 	-verschiedene Explosionen für alle Objekte
-	-Musik
-	-Schusssounds
-	- UI sounds (Stimmen, klicken, piepen) -philipp
+Sound: 	
+	verschiedene Explosionen für alle Objekte
+	Musik
+	Schusssounds
+	UI sounds (Stimmen, klicken, piepen)	#philipp
 	
-
 
 partikeldinge:
-	-Explosionen für alles (farbe)
-
-
-
-
+	Explosionen für alles (farbe)
 
 
 Modelle:
