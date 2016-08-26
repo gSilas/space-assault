@@ -200,7 +200,7 @@ namespace SpaceAssault.Entities
                 //forward
                 if (_moveSpeedModifier < _moveSpeedForward) _moveSpeedModifier += 0.04f;
                 else _moveSpeedModifier = _moveSpeedForward;
-                Position -= new Vector3(0, 0, 1) * _moveSpeedModifier;
+                //Position -= new Vector3(0, 0, 1) * _moveSpeedModifier;
 
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.S))
@@ -292,7 +292,7 @@ namespace SpaceAssault.Entities
                     _tiltZ -= 0.05f;
             }
 
-            RotationMatrix = Matrix.CreateRotationZ(_tiltZ);
+            //RotationMatrix = Matrix.CreateRotationZ(_tiltZ);
             //Position -= RotationMatrix.Forward * _moveSpeedModifier;
         }
 
