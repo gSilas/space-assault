@@ -357,8 +357,7 @@ namespace SpaceAssault.Screens
             /* asteroids with drone(& its bullets) & station & other asteroids & enemy ships (& its bullets)*/
             foreach (var ast in _asteroidField._asteroidList)
             {
-                if (ast.IsDead) continue;
-                if (gameTime.TotalGameTime > (ast._originTime.Add(TimeSpan.FromMinutes(0.7d))))
+                if (Vector3.Distance(ast.Position,_station.Position) > Global.DespawnRadius)
                 {
                     _removeAsteroid.Add(ast);
                     continue;
@@ -387,12 +386,9 @@ namespace SpaceAssault.Screens
                 foreach (var ast2 in _asteroidField._asteroidList)
                 {
                     if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
-                    {
-                        explosionPosition = ast.Position;
-                        explosionTriggered = true;
-                        ast.IsDead = true;
-                        _removeAsteroid.Add(ast);
-                        break;
+                    {                   
+                            ast.NegateDirection();
+                            ast.Position += ast.Direction * (2*((float) random.NextDouble())*ast.MaxRadius() + ast.MaxRadius());
                     }
                 }
                 foreach (var ship in _waveBuilder.ShipList)

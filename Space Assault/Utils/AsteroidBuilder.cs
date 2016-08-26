@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities;
@@ -42,10 +41,12 @@ namespace SpaceAssault.Utils
 
         private void Chunk(Vector3 targetPosition)
         {
+
+            int movespeed;
+            /*
             int zdist;
             int xoffset;
             int yoffset;
-            int movespeed;
             for (int i = 0; i < 15; i++)
             {
                 zdist = _rand.Next(-200,200);
@@ -63,6 +64,24 @@ namespace SpaceAssault.Utils
 
                 int angle = _rand.Next(-360, 360);
                 Asteroid ast = new Asteroid(_model, position, angle, direction, (float)movespeed/100, _lastChunkTime);
+                ast.LoadContent();
+                _asteroidsToAdd.Add(ast);
+            }
+            */
+            double angle;
+            int size = _rand.Next(0, 11);
+            int noise;
+            int astAngle;
+            for (int i = 0; i < size; i++)
+            {
+                movespeed = _rand.Next(10, 100);
+                astAngle = _rand.Next(-360, 360);
+                noise = _rand.Next(0, 90);
+                angle = _rand.NextDouble() * Math.PI * 2;
+                Vector3 position = new Vector3(Global.MapRadius * (float)Math.Cos(angle), 0, Global.MapRadius * (float)Math.Sin(angle));
+                Vector3 direction = new Vector3(Global.MapRadius * (float)Math.Cos(angle + 180d), 0, Global.MapRadius * (float)Math.Sin(angle + 180d)) - position;
+                direction.Normalize();
+                Asteroid ast = new Asteroid(_model, position, astAngle, direction, (float)movespeed / 100);
                 ast.LoadContent();
                 _asteroidsToAdd.Add(ast);
             }

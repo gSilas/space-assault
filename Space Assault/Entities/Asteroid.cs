@@ -10,17 +10,16 @@ namespace SpaceAssault.Entities
         private float _angle;
         private Vector3 _direction;
         private float _speed;
-        public TimeSpan _originTime;
+        private float _standardSpeed;
 
-
-        public Asteroid(Model model, Vector3 position, float angle, Vector3 direction, float movespeed, TimeSpan originTime)
+        public Asteroid(Model model, Vector3 position, float angle, Vector3 direction, float movespeed)
         {
             Model = model;
             _angle = angle;
             Position = position;
             _direction = direction;
             _speed = movespeed;
-            _originTime = originTime;
+            _standardSpeed = movespeed;
         }
 
         public bool IsDead { get; set; } = false;
@@ -35,12 +34,34 @@ namespace SpaceAssault.Entities
             _angle += 0.005f;
             RotationMatrix = Matrix.CreateRotationY(_angle);
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            Position += _direction * _speed;             
+            for (int i = 0; i < Spheres.Length; i++)
+            {
+                    Spheres[i].Radius = Spheres[i].Radius * 0.8f;
+            }
+            Position += _direction * _speed;
         }
-        
-        public Asteroid Clone()
+        public Vector3 Direction
         {
-            return new Asteroid(Model, Position, _angle,_direction,_speed, _originTime);
+            get { return _direction; }
+            set { _direction = value; }
+        }
+        public float Speed
+        {
+            get { return _speed; }
+            set { _speed = value; }
+        }
+        public void NegateDirection()
+        {
+            _direction *= -1;
+        }
+        public float MaxRadius()
+        {
+            float max = 0f;
+            for (int i = 0; i < Spheres.Length; i++)
+            {
+                max = Math.Max(max, Spheres[i].Radius);
+            }
+            return max;
         }
     }
 }
