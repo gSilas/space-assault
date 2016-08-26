@@ -18,9 +18,7 @@ namespace SpaceAssault.Utils.Particle
         Vector3 position = Vector3.Zero;
 
 
-        /// <summary>
-        /// Constructs a new projectile.
-        /// </summary>
+        // Constructs a new Trail
         public Trail(ParticleSystem TrailParticles)
         {
             // Use the particle emitter helper to output our trail particles.
@@ -29,9 +27,7 @@ namespace SpaceAssault.Utils.Particle
         }
 
 
-        /// <summary>
-        /// Updates the projectile.
-        /// </summary>
+        // Updates the Trail
         public void Update(GameTime gameTime, Vector3 position)
         {
             // Update the particle emitter, which will create our particle trail.
