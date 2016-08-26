@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.Screens;
 using SpaceAssault.Utils;
 using System.Collections.Generic;
 
@@ -35,7 +36,7 @@ namespace SpaceAssault
 
         //highscore points
         public static int HighScorePoints;
-        public static int Money = 100000;
+        public static int Money;
 
         //OPTIONS 
         // TODO: should be read from a settings file

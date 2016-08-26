@@ -86,7 +86,7 @@ namespace SpaceAssault.Screens
             _explosionSpawner = new ExplosionSpawner();
 
             _waveBuilder = new WaveBuilder(TimeSpan.FromSeconds(20d),2,3);
-
+            Global.Money = 100000;
             //UI + Frame + BG 
             _ui = new InGameOverlay(_station);
             _back = new Background();
