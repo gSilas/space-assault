@@ -41,9 +41,9 @@ namespace SpaceAssault.Utils
             _avoidObjRadius = 40;
             _proximityRadius = Math.Max(_cohesionRadius, _aligningRadius);
             _flyToDroneRadius = 280;
-            _flyToStationRadius = (int)(_flyToDroneRadius * 1.2f);
-            _avoidDroneRadius = (int)(_flyToDroneRadius * 0.6f);
-            _avoidStationRadius = 150;
+            _flyToStationRadius = (int)(_flyToDroneRadius * 1.3f);
+            _avoidDroneRadius = (int)(_flyToDroneRadius * 0.4f);
+            _avoidStationRadius = 50;
             _maxSpeed = 1.5f;
         }
 
@@ -173,17 +173,17 @@ namespace SpaceAssault.Utils
                     avoidO = Vector3.Zero,
                     flyToDrone = Vector3.Zero,
                     noise = Vector3.Zero,
-                    flyToStation = Vector3.Zero;
+                    avoidS = Vector3.Zero;
 
                 cohesion = cohesionRule(curShip);
                 aligning = aligningRule(curShip);
                 avoidB = avoidBoidRule(curShip);
                 avoidO = avoidObjRule(curShip);
                 noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
-                flyToDrone = droneRule(curShip);
-                flyToStation = stationRule(curShip);
+                flyToDrone = droneStationRule(curShip);
+                avoidS = avoidStationRule(curShip);
 
-                curShip._direction += (cohesion / 100 + aligning + avoidB / 3 + avoidO + noise / 20 + flyToDrone / 5 + flyToStation / 2) / 10;
+                curShip._direction += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS ) / 30;
 
                 //curShip._direction.Y = 0;
 
@@ -198,51 +198,6 @@ namespace SpaceAssault.Utils
                 curShip.Position += curShip.Direction;
                 //curShip.FlyToDirection(-curShip._direction);
             }
-        }
-
-        private Vector3 stationRule(AEnemys curShip)
-        {
-            if (curShip.Position.Length() < _avoidStationRadius)
-            {
-                return -goToPlace(curShip, Vector3.Zero);
-            }
-            else if (curShip.Position.Length() > _flyToStationRadius)
-            {
-                return goToPlace(curShip, Vector3.Zero);
-            }
-
-            return Vector3.Zero;
-        }
-
-        private Vector3 droneRule(AEnemys curShip)
-        {
-
-            if (curShip.flyingAwayFromDrone)
-            {
-                if (Vector3.Distance(curShip.Position, Global.Camera.Target) < _avoidDroneRadius)
-                    return -goToPlace(curShip, Global.Camera.Target);
-                else
-                {
-                    curShip.flyingAwayFromDrone = !curShip.flyingAwayFromDrone;
-                }
-            }
-            else
-            {
-                if (Vector3.Distance(curShip.Position, Global.Camera.Target) < _flyToDroneRadius)
-                {
-                    if (Vector3.Distance(curShip.Position, Global.Camera.Target) < (_avoidObjRadius + 1))
-                    {
-                        curShip.flyingAwayFromDrone = !curShip.flyingAwayFromDrone;
-                        return -goToPlace(curShip, Global.Camera.Target);
-                    }
-                }
-                else
-                {
-                    return Vector3.Zero;
-                }
-            }
-
-            return goToPlace(curShip, Global.Camera.Target);
         }
 
         // RULE1: Boids try to fly towards the centre of mass of neighbouring boids
@@ -314,11 +269,55 @@ namespace SpaceAssault.Utils
             return pvj - curShip.Direction;
         }
 
-
         private Vector3 goToPlace(AEnemys curShip, Vector3 place)
         {
             Vector3 placeDir = place - curShip.Position;
             return placeDir;
+        }
+
+        private Vector3 avoidStationRule(AEnemys curShip)
+        {
+            if (curShip.Position.Length() < _avoidStationRadius)
+            {
+                return -goToPlace(curShip, Vector3.Zero);
+            }
+
+            return Vector3.Zero;
+        }
+
+        private Vector3 droneStationRule(AEnemys curShip)
+        {
+            float distanceToDrone = Vector3.Distance(curShip.Position, Global.Camera.Target);
+            if (curShip.flyingAwayFromDrone)
+            {
+                if (distanceToDrone < _avoidDroneRadius)
+                    return -goToPlace(curShip, Global.Camera.Target) / distanceToDrone;
+                else
+                {
+                    curShip.flyingAwayFromDrone = !curShip.flyingAwayFromDrone;
+                }
+            }
+            else
+            {
+                if (distanceToDrone < _flyToDroneRadius)
+                {
+                    if (distanceToDrone < _avoidObjRadius)
+                    {
+                        curShip.flyingAwayFromDrone = !curShip.flyingAwayFromDrone;
+                        return -goToPlace(curShip, Global.Camera.Target) / distanceToDrone;
+                    }
+                    else
+                    {
+                        return goToPlace(curShip, Global.Camera.Target);
+                    }
+                }
+                else if (curShip.Position.Length() > _flyToStationRadius)
+                {
+                    return goToPlace(curShip, Vector3.Zero);
+                }
+            }
+
+            return Vector3.Zero;
         }
     }
 }
