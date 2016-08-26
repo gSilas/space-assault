@@ -96,10 +96,10 @@ namespace SpaceAssault.Screens
 
             // Construct Particle
             explosionParticles = new ExplosionParticleSystem();
-            explosionSmokeParticles = new ExplosionSmokeParticleSystem();
-            projectileTrailParticles = new ProjectileTrailParticleSystem();
-            SmokeParticles = new SmokeParticleSystem();
-            fireParticles = new FireParticleSystem();
+            //explosionSmokeParticles = new ExplosionSmokeParticleSystem();
+            //projectileTrailParticles = new ProjectileTrailParticleSystem();
+            //SmokeParticles = new SmokeParticleSystem();
+            //fireParticles = new FireParticleSystem();
         }
 
 
@@ -158,14 +158,9 @@ namespace SpaceAssault.Screens
                 Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + Global.CameraPosition, _droneFleet.GetActiveDrone().Position);
                 _explosionSpawner.Update(gameTime);
 
-                // Particle
-                if (_station._health < 10000)
-                {
-                    UpdateSmoke();
-                    SmokeParticles.Update(gameTime);
-                }
-
-                UpdateProjectiles(gameTime);
+                // Particles
+                //UpdateSmoke(gameTime);
+                //UpdateProjectiles(gameTime);
                 explosionParticles.Update(gameTime);
 
 
@@ -233,11 +228,7 @@ namespace SpaceAssault.Screens
             _waveBuilder.Draw(gameTime);
 
             // Particle
-            if (_station._health < 10000)
-            {
-                SmokeParticles.Draw();
-            }
-
+            //SmokeParticles.Draw();
             explosionParticles.Draw();
 
             //if drone is dead fade to black
@@ -532,6 +523,9 @@ namespace SpaceAssault.Screens
             explosionParticles.AddParticle(position, velocity);
         }
 
+        //#################################
+        // Helper ExplosionCircle
+        //#################################
         void ExplosionCircle(Vector3 pos, Vector3 velocity, float radius)
         {
             float angle = 0.0f;
@@ -571,10 +565,11 @@ namespace SpaceAssault.Screens
         //#################################
         // Helper Update - Smoke
         //#################################
-        void UpdateSmoke()
+        void UpdateSmoke(GameTime gameTime)
         {
             // This is trivial: we just create one new smoke particle per frame.
             SmokeParticles.AddParticle(Vector3.Zero, Vector3.Zero);
+            SmokeParticles.Update(gameTime);
         }
 
         //#################################
