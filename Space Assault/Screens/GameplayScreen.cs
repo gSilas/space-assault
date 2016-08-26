@@ -99,7 +99,7 @@ namespace SpaceAssault.Screens
             //explosionSmokeParticles = new ExplosionSmokeParticleSystem();
             //projectileTrailParticles = new ProjectileTrailParticleSystem();
             //SmokeParticles = new SmokeParticleSystem();
-            //fireParticles = new FireParticleSystem();
+            fireParticles = new FireParticleSystem();
         }
 
 
@@ -148,43 +148,42 @@ namespace SpaceAssault.Screens
             //boids
             _waveBuilder.Update(gameTime, ref _asteroidField, ref _droneFleet);
 
-            //everything in this scope here what happens when GameplayScreen is active
-            if (IsActive)
+
+            // calling update of objects where necessary
+            _station.Update(gameTime);
+            _droneFleet.Update(gameTime);
+            _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
+            Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + Global.CameraPosition, _droneFleet.GetActiveDrone().Position);
+            _explosionSpawner.Update(gameTime);
+
+            // Particles
+            //UpdateSmoke(gameTime);
+            //UpdateProjectiles(gameTime);
+            explosionParticles.Update(gameTime);
+            UpdateFire();
+
+
+            // if station dies go back to MainMenu
+            // TODO: change to EndScreen and HighScore list)
+            if (_station._health <= 0)
+                LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen());
+
+            CollisionHandling(gameTime);
+
+            // fading out/in when drone is dead & alive again
+            if (!_droneFleet.GetActiveDrone().IsNotDead)
+                _deadDroneAlpha = Math.Min(_deadDroneAlpha + 1f / 32, 1);
+            else
+                _deadDroneAlpha = Math.Max(_deadDroneAlpha - 1f / 32, 0);
+
+            // if fading out is max, respawn
+            if (_actualDeadDroneAlpha >= 1f)
             {
-                // calling update of objects where necessary
-                _station.Update(gameTime);
-                _droneFleet.Update(gameTime);
-                _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
-                Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + Global.CameraPosition, _droneFleet.GetActiveDrone().Position);
-                _explosionSpawner.Update(gameTime);
-
-                // Particles
-                //UpdateSmoke(gameTime);
-                //UpdateProjectiles(gameTime);
-                explosionParticles.Update(gameTime);
-
-
-                // if station dies go back to MainMenu
-                // TODO: change to EndScreen and HighScore list)
-                if (_station._health <= 0)
-                    LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen());
-
-                CollisionHandling(gameTime);
-
-                // fading out/in when drone is dead & alive again
-                if (!_droneFleet.GetActiveDrone().IsNotDead)
-                    _deadDroneAlpha = Math.Min(_deadDroneAlpha + 1f / 32, 1);
-                else
-                    _deadDroneAlpha = Math.Max(_deadDroneAlpha - 1f / 32, 0);
-
-                // if fading out is max, respawn
-                if (_actualDeadDroneAlpha >= 1f)
-                {
-                    _droneFleet.GetActiveDrone().Reset();
-                    _deathCounter++;
-                }
-
+                _droneFleet.GetActiveDrone().Reset();
+                _deathCounter++;
             }
+
+            
         }
 
         //#################################
@@ -222,7 +221,7 @@ namespace SpaceAssault.Screens
 
             // calling draw of objects where necessary
             _back.Draw(90, new Vector3(-5000, -2500, -5000));
-            _station.Draw();
+            //_station.Draw();
             _droneFleet.Draw();
             _asteroidField.Draw();
             _waveBuilder.Draw(gameTime);
@@ -230,6 +229,7 @@ namespace SpaceAssault.Screens
             // Particle
             //SmokeParticles.Draw();
             explosionParticles.Draw();
+            fireParticles.Draw();
 
             //if drone is dead fade to black
             if (_deadDroneAlpha > 0)
@@ -586,7 +586,7 @@ namespace SpaceAssault.Screens
             }
 
             // Create one smoke particle per frmae, too.
-            SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+            //SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
         }
 
     }
