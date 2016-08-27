@@ -78,8 +78,8 @@ namespace SpaceAssault.Utils
                 astAngle = _rand.Next(-360, 360);
                 noise = _rand.Next(0, 90);
                 angle = _rand.NextDouble() * Math.PI * 2;
-                Vector3 position = new Vector3(Global.MapRadius * (float)Math.Cos(angle), 0, Global.MapRadius * (float)Math.Sin(angle));
-                Vector3 direction = new Vector3(Global.MapRadius * (float)Math.Cos(angle + 180d), 0, Global.MapRadius * (float)Math.Sin(angle + 180d)) - position;
+                Vector3 position = new Vector3(Global.MapSpawnRadius * (float)Math.Cos(angle), 0, Global.MapSpawnRadius * (float)Math.Sin(angle));
+                Vector3 direction = new Vector3(Global.MapSpawnRadius * (float)Math.Cos(angle + 180d), 0, Global.MapSpawnRadius * (float)Math.Sin(angle + 180d)) - position;
                 direction.Normalize();
                 Asteroid ast = new Asteroid(_model, position, astAngle, direction, (float)movespeed / 100);
                 ast.LoadContent();

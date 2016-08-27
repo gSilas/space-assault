@@ -9,7 +9,7 @@ namespace SpaceAssault.Entities
     public abstract class AEnemys : AEntity
     {
         protected Vector3 SpawnPos;
-        protected float MoveSpeedForward;
+        public float MoveSpeedForward;
         protected float TurnSpeed;
         protected TimeSpan GetBetterwithTime;
         public Vector3 _direction;

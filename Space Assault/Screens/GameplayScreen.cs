@@ -357,7 +357,7 @@ namespace SpaceAssault.Screens
             /* asteroids with drone(& its bullets) & station & other asteroids & enemy ships (& its bullets)*/
             foreach (var ast in _asteroidField._asteroidList)
             {
-                if (Vector3.Distance(ast.Position,_station.Position) > Global.DespawnRadius)
+                if (Vector3.Distance(ast.Position,_station.Position) > Global.MapDespawnRadius)
                 {
                     _removeAsteroid.Add(ast);
                     continue;
@@ -575,7 +575,7 @@ namespace SpaceAssault.Screens
             // Create a number of fire particles, randomly positioned around a circle.
             for (int i = 0; i < borderParticlesPerFrame; i++)
             {
-                borderParticles.AddParticle(RandomPointOnCircle(Global.MapRadius, 40), Vector3.Zero);
+                borderParticles.AddParticle(RandomPointOnCircle(Global.MapSpawnRadius, 40), Vector3.Zero);
             }
             // Create one smoke particle per frmae, too.
             //SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);

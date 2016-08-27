@@ -60,12 +60,12 @@ namespace SpaceAssault.Utils
         {
             _currentWave.Draw();
 
-            if (_currentWave.ShipList.Count <= 0 && gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)).Subtract(TimeSpan.FromSeconds(5d)))
+            if (_currentWave.ShipList.Count <= 0)
             {
-                _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n"+(_enemyCount +_increment).ToString() + " ships incoming!\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
-            }
-            else{
-                _dialog.Draw("Wave " + _waveCount + " ended!\n" + "You destroyed " + _enemyCount.ToString() + " ships!\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
+                if(gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)).Subtract(TimeSpan.FromSeconds(5d)))
+                    _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n"+(_enemyCount +_increment).ToString() + " ships incoming!\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
+                else
+                    _dialog.Draw("Wave " + _waveCount + " ended!\n" + "You destroyed " + _enemyCount.ToString() + " ships!\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");               
             }
         }
     }
@@ -79,7 +79,9 @@ namespace SpaceAssault.Utils
         }
         public void LoadContent(int count)
         {
-            _boids.addRandomBoids(count, Boids.EnemyType.Fighter);
+            int bCount = (int)(count * 0.8f);
+            _boids.addRandomBoids(count-bCount, Boids.EnemyType.Fighter);
+            _boids.addRandomBoids(bCount, Boids.EnemyType.Bomber);
         }
         public List<AEnemys> ShipList { get { return _boids._ships; } }
         public List<Bullet> BulletList { get { return _boids._bullets; } }
