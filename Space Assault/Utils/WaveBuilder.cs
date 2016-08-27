@@ -79,7 +79,7 @@ namespace SpaceAssault.Utils
         }
         public void LoadContent(int count)
         {
-            _boids.addRandomBoids(count);
+            _boids.addRandomBoids(count, Boids.EnemyType.Fighter);
         }
         public List<AEnemys> ShipList { get { return _boids._ships; } }
         public List<Bullet> BulletList { get { return _boids._bullets; } }

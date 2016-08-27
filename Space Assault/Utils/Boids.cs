@@ -27,6 +27,12 @@ namespace SpaceAssault.Utils
         private float _maxSpeed;
         private bool workMouseAdd = false;
 
+        public enum EnemyType
+        {
+            Fighter,
+            Bomber
+        }
+
         public Boids()
         {
             _ships = new List<AEnemys>();
@@ -62,28 +68,42 @@ namespace SpaceAssault.Utils
                 Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
                 zeroWorldPoint.Y = 0;
                 if (_input.IsLeftMouseButtonNewPressed())
-                    addBoid(zeroWorldPoint);
+                    addBoid(zeroWorldPoint, EnemyType.Fighter);
             }
         }
 
-        public void addBoid(Vector3 position)
+        public void addBoid(Vector3 position, EnemyType type)
         {
-            AEnemys ship = new EnemyFighter(position);
+            AEnemys ship;
+            switch (type)
+            {
+                case EnemyType.Fighter:
+                    ship = new EnemyFighter(position);
+                    break;
+                case EnemyType.Bomber:
+                    ship = new EnemyBomber(position);
+                    break;
+                default:
+                    ship = new EnemyFighter(position);
+                    break;
+            }
+
             ship.LoadContent();
             _ships.Add(ship);
         }
 
         // adds a number of random boids at the map corner (which is a circle), for radius see Global.cs
-        public void addRandomBoids(int number)
+        public void addRandomBoids(int number, EnemyType type)
         {
             List<AEnemys> ships = new List<AEnemys>();
             double angle;
             for (int i = 0; i < number; i++)
             {
                 angle = _random.NextDouble() * Math.PI * 2;
-                addBoid(new Vector3(Global.MapRadius * (float)Math.Cos(angle), 0, Global.MapRadius * (float)Math.Sin(angle)));
+                addBoid(new Vector3(Global.MapRadius * (float)Math.Cos(angle), 0, Global.MapRadius * (float)Math.Sin(angle)), type);
             }
         }
+
 
         public void Update(GameTime gameTime, List<AEntity> objList)
         {
@@ -120,8 +140,8 @@ namespace SpaceAssault.Utils
                     continue;
                 }
 
-                Vector3 direction = Global.Camera.Target - ship.Position;
                 //shootlogic
+                Vector3 direction = Global.Camera.Target - ship.Position;
                 float vectorDirection = ship.RotationMatrix.Forward.Z * direction.X - ship.RotationMatrix.Forward.X * direction.Z;
                 double distanceToTarget = Vector3.Distance(ship.Position, Global.Camera.Target);
                 if (Math.Abs(vectorDirection) <= 10 && distanceToTarget < 150)
