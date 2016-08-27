@@ -160,6 +160,7 @@ namespace SpaceAssault.Entities
             Vector3 direction = farWorldPoint - nearWorldPoint;
             float zFactor = -nearWorldPoint.Y / direction.Y;
             Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
+            zeroWorldPoint.Y = 0;
 
             // Laser - Mouse control
             Vector3 screenDirection = this.Position - zeroWorldPoint;

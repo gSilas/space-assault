@@ -60,6 +60,7 @@ namespace SpaceAssault.Utils
                 Vector3 direction = farWorldPoint - nearWorldPoint;
                 float zFactor = -nearWorldPoint.Y / direction.Y;
                 Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
+                zeroWorldPoint.Y = 0;
                 if (_input.IsLeftMouseButtonNewPressed())
                     addBoid(zeroWorldPoint);
             }
@@ -183,9 +184,37 @@ namespace SpaceAssault.Utils
                 flyToDrone = droneStationRule(curShip);
                 avoidS = avoidStationRule(curShip);
 
-                curShip._direction += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS ) / 30;
+                /* //testing if any variables have not Y = 0
+                List<Vector3> test = new List<Vector3>();
 
-                //curShip._direction.Y = 0;
+                test.Add(cohesion); //0 x
+                test.Add(aligning); //1 x
+                test.Add(avoidB); //2
+                test.Add(avoidO); //3 x
+                test.Add(noise); //4
+                test.Add(flyToDrone); //5 x
+                test.Add(avoidS); //6
+
+                bool newD = true;
+                for (int i = 0; i < test.Count; i++)
+                {
+                    if (test[i].Y != 0f)
+                    {
+                        if (newD)
+                        {
+                            Console.Write("++++ New Drone:  ");
+                            newD = false;
+                        }
+                        Console.Write(i + " | ");
+                    }
+                }
+                if (!newD) Console.WriteLine("");
+                */
+
+                Vector3 lastDirection = curShip._direction;
+                curShip._direction += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS) / 30;
+
+                curShip._direction.Y = 0;
 
                 if (curShip._direction.Length() > _maxSpeed)
                 {
@@ -194,7 +223,7 @@ namespace SpaceAssault.Utils
                 }
 
 
-                curShip.RotateTowards(-curShip.Direction);
+                curShip.RotateTowards(-(curShip.Direction + lastDirection * 30));
                 curShip.Position += curShip.Direction;
                 //curShip.FlyToDirection(-curShip._direction);
             }

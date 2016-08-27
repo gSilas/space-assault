@@ -9,6 +9,7 @@ namespace SpaceAssault.Utils
     class WaveBuilder
     {
         private Wave _currentWave;
+        private Wave _lastWave;
         private TimeSpan _timeBetweenWaves;
         private TimeSpan _timeOfEmptyness;
         private int _enemyCount;
@@ -35,7 +36,9 @@ namespace SpaceAssault.Utils
         public List<Bullet> BulletList { get { return _currentWave.BulletList; } }
         public void Update(GameTime gameTime, ref AsteroidBuilder asteroidField, ref DroneBuilder droneFleet)
         {
-            if(_currentWave.ShipList.Count <= 0)
+            _currentWave.Update(gameTime, ref asteroidField, ref droneFleet);
+
+            if (_currentWave.ShipList.Count <= 0)
             {
                 if (!_timeSet)
                 {
@@ -51,18 +54,13 @@ namespace SpaceAssault.Utils
                     _timeSet = false;
                 }
             }
-            else
-            {
-                _currentWave.Update(gameTime, ref asteroidField, ref droneFleet);
-            }
         }
+
         public void Draw(GameTime gameTime)
         {
-            if (_currentWave.ShipList.Count > 0)
-            {
-                _currentWave.Draw();
-            }
-            else if (gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)).Subtract(TimeSpan.FromSeconds(5d)))
+            _currentWave.Draw();
+
+            if (_currentWave.ShipList.Count <= 0 && gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)).Subtract(TimeSpan.FromSeconds(5d)))
             {
                 _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n"+(_enemyCount +_increment).ToString() + " ships incoming!\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
             }
