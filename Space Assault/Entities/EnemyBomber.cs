@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IrrKlang;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
@@ -39,7 +40,7 @@ namespace SpaceAssault.Entities
             Model = Global.ContentManager.Load<Model>("Models/enemy_bomber");
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.LoadContent();
-        }
+}
 
         public override void Update(GameTime gameTime)
         {
@@ -93,6 +94,7 @@ namespace SpaceAssault.Entities
             }
 
         }
+
 
     }
 }

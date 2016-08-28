@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
+using IrrKlang;
 
 namespace SpaceAssault.Entities
 {
@@ -20,6 +21,9 @@ namespace SpaceAssault.Entities
         protected bool isDead;
         public Weapon Gun;
         public int gunMakeDmg = 0;
+
+
+
 
         public bool IsDead
         {
@@ -82,6 +86,13 @@ namespace SpaceAssault.Entities
 
         }
 
+
+
+        public void getHit(int HowMuchDMG)
+        {
+            Health -= HowMuchDMG;
+
+        }
         public abstract void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList);
 
     }

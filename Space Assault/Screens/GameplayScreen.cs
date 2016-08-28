@@ -291,7 +291,7 @@ namespace SpaceAssault.Screens
                                 _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
                                 ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
                             }
-                            ship.Health -= bullet.makeDmg;
+                            ship.getHit(bullet.makeDmg);
                             _removeBullets.Add(bullet);
                             Global.HighScorePoints += 20;
 
@@ -315,7 +315,7 @@ namespace SpaceAssault.Screens
                 {
                         if (Collider3D.IntersectionSphere(ship, expl))
                         {
-                            ship.Health -= expl._makeDmg;
+                            ship.getHit(expl._makeDmg);
                             Global.HighScorePoints += 20;
                             PlayExplosionSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
 

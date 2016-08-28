@@ -5,11 +5,13 @@ using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
 using SpaceAssault.Utils.Particle;
 using SpaceAssault.Utils.Particle.Settings;
+using IrrKlang;
 
 namespace SpaceAssault.Entities
 {
     class EnemyFighter : AEnemys
     {
+
 
         public EnemyFighter(Vector3 position)
         {
@@ -28,6 +30,8 @@ namespace SpaceAssault.Entities
 
             Gun = new Weapon(600d);
             gunMakeDmg = 10;
+            
+
         }
 
         public override void LoadContent()
@@ -35,11 +39,21 @@ namespace SpaceAssault.Entities
             Model = Global.ContentManager.Load<Model>("Models/enemyship2");
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.LoadContent();
+
+            
+
+
         }
         public override void Update(GameTime gameTime)
         {
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            if (Health <= 0) IsDead = true;
+          
+
+            if (Health <= 0)
+            {
+                IsDead = true;
+          
+            }
 
             //Werden Besser jede Minute
             if (gameTime.TotalGameTime > (GetBetterwithTime.Add(TimeSpan.FromSeconds(60))))
@@ -49,6 +63,7 @@ namespace SpaceAssault.Entities
                 gunMakeDmg += 5;
                 GetBetterwithTime = gameTime.TotalGameTime;
             }
+
         }
 
         public override void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList)
@@ -61,6 +76,7 @@ namespace SpaceAssault.Entities
                 Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, gunMakeDmg, Position, RotationMatrix, ref bulletList);
             }
         }
+
 
     }
 }

@@ -50,12 +50,13 @@ namespace SpaceAssault.Utils
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
             ISoundSource lazer = _engine.AddSoundSourceFromFile("Content/Media/Effects/Laser_Shoot_try.wav", StreamMode.AutoDetect, true);
-
+            ISoundSource lazer2= _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/Laser_Shoot3.wav", StreamMode.AutoDetect, true);
+            ISoundSource lazer3= _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/Laser_Shoot5.wav", StreamMode.AutoDetect, true);
             yellowLazer = new BulletMemory("Models/laser", lazer, 6f, false);
-            blueLazer = new BulletMemory("Models/laser2", lazer, 6f, false);
+            blueLazer = new BulletMemory("Models/laser2", lazer2, 6f, false);
             photonBomb = new BulletMemory("Models/bullet", lazer, 0.7f, true);
             bigJoe = new BulletMemory("Models/bullet", lazer, 2f, false);
-            enemyLazer = new BulletMemory("Models/laser", lazer, 6f, false);
+            enemyLazer = new BulletMemory("Models/laser", lazer3, 6f, false);
         }
 
         public bool Shoot(GameTime gameTime, Bullet.BulletType bullet, int damage, Vector3 position, Matrix droneRotateMatrix, ref List<Bullet> bulletList)
