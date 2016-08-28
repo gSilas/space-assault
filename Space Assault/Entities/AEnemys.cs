@@ -22,8 +22,10 @@ namespace SpaceAssault.Entities
         public Weapon Gun;
         public int gunMakeDmg = 0;
 
-
-
+        protected ISoundEngine Engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);  
+        protected ISoundSource FlySound;
+        protected ISoundSource HitSound;
+        protected bool FreshSpawn;
 
         public bool IsDead
         {
@@ -91,6 +93,13 @@ namespace SpaceAssault.Entities
         public void getHit(int HowMuchDMG)
         {
             Health -= HowMuchDMG;
+            //playing the sound
+            Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
+            Engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
+            ISound Hit = Engine.Play3D(HitSound, curListenerPos.X, curListenerPos.Y + 15f, curListenerPos.Z, false, true, false);
+            Hit.Volume = 1f;
+            Hit.Paused = false;
+            
 
         }
         public abstract void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList);

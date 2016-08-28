@@ -40,6 +40,9 @@ namespace SpaceAssault.Screens
 
         // Sound
         private ISoundSource _explosionSource;
+        private ISoundSource _explosionSource1;
+        private ISoundSource _explosionSource2;
+        private ISoundSource _explosionSource3;
         private ISoundEngine _engine;
 
         //Particle
@@ -116,6 +119,9 @@ namespace SpaceAssault.Screens
             _frame.LoadContent();
             _waveBuilder.LoadContent();
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
+            _explosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion1.wav", StreamMode.AutoDetect, true);
+            _explosionSource2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion2.wav", StreamMode.AutoDetect, true);
+            _explosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion3.wav", StreamMode.AutoDetect, true);
 
         }
 
@@ -264,9 +270,31 @@ namespace SpaceAssault.Screens
         {
             var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
             _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
-            var _explosionSound = _engine.Play3D(_explosionSource, pos.X, pos.Y, pos.Z, false, true, true);
-            _explosionSound.Volume = 1f;
-            _explosionSound.Paused = false;
+            Random _rand = new Random(); ;
+            switch (_rand.Next(0, 3))
+            {
+                case 0:
+                    var _explosionSound = _engine.Play3D(_explosionSource, pos.X, pos.Y, pos.Z, false, true, true);
+                    _explosionSound.Volume = 5f;
+                    _explosionSound.Paused = false;
+                    break;
+                case 1:
+                    var _explosionSound1 = _engine.Play3D(_explosionSource1, pos.X, pos.Y, pos.Z, false, true, true);
+                    _explosionSound1.Volume = 5f;
+                    _explosionSound1.Paused = false;
+                    break;
+                case 2:
+                    var _explosionSound2 = _engine.Play3D(_explosionSource2, pos.X, pos.Y, pos.Z, false, true, true);
+                    _explosionSound2.Volume = 5f;
+                    _explosionSound2.Paused = false;
+                    break;
+                case 3:
+                    var _explosionSound3 = _engine.Play3D(_explosionSource3, pos.X, pos.Y, pos.Z, false, true, true);
+                    _explosionSound3.Volume = 5f;
+                    _explosionSound3.Paused = false;
+                    break;
+            }
+
         }
 
         //#################################
