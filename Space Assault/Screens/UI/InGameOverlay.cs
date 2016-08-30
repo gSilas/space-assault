@@ -3,6 +3,7 @@ using SpaceAssault.Utils;
 using System.Collections.Generic;
 using SpaceAssault.Entities;
 using SpaceAssault.Screens.UI;
+using System;
 
 namespace SpaceAssault.Screens
 {
@@ -20,6 +21,7 @@ namespace SpaceAssault.Screens
         private Dialog _upgradeVincinityDialog;
         private Dialog _scoreDialog;
         private Dialog _moneyDialog;
+        private Dialog _alertDialog;
 
         //#################################
         // Constructor
@@ -53,8 +55,10 @@ namespace SpaceAssault.Screens
             _upgradeVincinityDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 168, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 82, 32, 336, 8, false, true);
             _scoreDialog = new Dialog(340, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 200, 8, false, true);
             _moneyDialog = new Dialog(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 32, 280, 8, false, true);
+            _alertDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width /2 - 160, Global.GraphicsManager.GraphicsDevice.Viewport.Height /2 -16, 32, 320, 8, false, true);
 
             _scoreDialog.LoadContent();
+            _alertDialog.LoadContent();
             _moneyDialog.LoadContent();
             _upgradeVincinityDialog.LoadContent();
             
@@ -86,6 +90,13 @@ namespace SpaceAssault.Screens
                        
             _scoreDialog.Draw("Score: " + Global.HighScorePoints.ToString());
             _moneyDialog.Draw("Fragments: "+Global.Money);
+
+
+            float _distance = Vector2.Distance(new Vector2(droneFleet.GetActiveDrone().Position.X, droneFleet.GetActiveDrone().Position.Z), Vector2.Zero);
+            if (_distance > Global.MapSpawnRadius && _distance < Global.MapSpawnRadius + 80)
+                _alertDialog.Draw("ALERT! OUT OF RANGE", Color.OrangeRed);
+            else if (_distance > Global.MapSpawnRadius + 80)
+                _alertDialog.Draw("ALERT! SHIP FAILURE", Color.Red);
 
             if (Global.Money > 0)
             {

@@ -31,6 +31,7 @@ namespace SpaceAssault.Entities
         public int _health;
         public int _armor;
         public int _makeDmg;
+        public int _maxRange;
 
         //shieldLogic
         public int _maxShield;
@@ -79,6 +80,7 @@ namespace SpaceAssault.Entities
             _shield = _maxShield;
             _health = _maxHealth;
             _isNotDead = true;
+            _maxRange = Global.MapSpawnRadius + 200;
 
             GunPrimary = new Weapon(200d);
 
@@ -129,7 +131,7 @@ namespace SpaceAssault.Entities
             if (_wasDamaged == false && _shield < _maxShield)
                 _shield += 1;
 
-            if (_health <= 0 || Position.X > Global.MapSpawnRadius +200 || Position.Z > Global.MapSpawnRadius + 200) IsNotDead = false;
+            if (_health <= 0 || Vector2.Distance(new Vector2(Position.X, Position.Z), Vector2.Zero) > _maxRange) IsNotDead = false;
         }
 
         public bool IsNotDead
