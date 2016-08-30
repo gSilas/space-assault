@@ -129,7 +129,7 @@ namespace SpaceAssault.Entities
             if (_wasDamaged == false && _shield < _maxShield)
                 _shield += 1;
 
-            if (_health <= 0) IsNotDead = false;
+            if (_health <= 0 || Position.X > Global.MapSpawnRadius +200 || Position.Z > Global.MapSpawnRadius + 200) IsNotDead = false;
         }
 
         public bool IsNotDead

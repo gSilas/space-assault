@@ -176,6 +176,7 @@ namespace SpaceAssault.Screens
 
             CollisionHandling(gameTime);
 
+
             // fading out/in when drone is dead & alive again
             if (!_droneFleet.GetActiveDrone().IsNotDead)
                 _deadDroneAlpha = Math.Min(_deadDroneAlpha + 1f / 32, 1);
@@ -598,7 +599,7 @@ namespace SpaceAssault.Screens
         //#################################
         void UpdateBorder(GameTime gameTime)
         {
-            const int borderParticlesPerFrame = 20;
+            const int borderParticlesPerFrame = 100;
 
             // Create a number of fire particles, randomly positioned around a circle.
             for (int i = 0; i < borderParticlesPerFrame; i++)
