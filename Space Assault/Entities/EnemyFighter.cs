@@ -67,16 +67,6 @@ namespace SpaceAssault.Entities
                 IsDead = true;
            
             }
-
-            //Werden Besser jede Minute
-            if (gameTime.TotalGameTime > (GetBetterwithTime.Add(TimeSpan.FromSeconds(60))))
-            {
-                KillMoney += 50;
-                Health = Health + 30;
-                gunMakeDmg += 5;
-                GetBetterwithTime = gameTime.TotalGameTime;
-            }
-
         }
 
         public override void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList)

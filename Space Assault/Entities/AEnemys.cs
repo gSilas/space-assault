@@ -12,7 +12,6 @@ namespace SpaceAssault.Entities
         protected Vector3 SpawnPos;
         public float MoveSpeedForward;
         protected float TurnSpeed;
-        protected TimeSpan GetBetterwithTime;
         public Vector3 _direction;
         public int Health;
         public int KillMoney; //The Money the player gets if he kills the unit

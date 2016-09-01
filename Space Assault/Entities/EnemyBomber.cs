@@ -50,16 +50,6 @@ namespace SpaceAssault.Entities
             if (Health <= 0) IsDead = true;
 
             Spheres = Collider3D.UpdateBoundingSphere(this);
-
-            //besser mit Zeit
-            if (gameTime.TotalGameTime > (GetBetterwithTime.Add(TimeSpan.FromSeconds(60))))
-            {
-                Health = Health + 30;
-                gunMakeDmg += 10;
-                KillMoney += 100;
-                GetBetterwithTime = gameTime.TotalGameTime;
-                //Console.WriteLine("UpDATED");
-            }
             //TODO: health, armor update
 
         }
