@@ -9,6 +9,7 @@ using SpaceAssault.Utils;
 using SpaceAssault.Utils.Particle;
 using SpaceAssault.Utils.Particle.Settings;
 using IrrKlang;
+using SpaceAssault.Screens.UI;
 
 namespace SpaceAssault.Screens
 {
@@ -37,6 +38,7 @@ namespace SpaceAssault.Screens
         private InGameOverlay _ui;
         private Frame _frame;
         private Background _back;
+        private UIItem _stationSymbol;
 
         // Sound
         private ISoundSource _explosionSource;
@@ -111,6 +113,8 @@ namespace SpaceAssault.Screens
         //#################################
         public override void LoadContent()
         {
+            _stationSymbol = new UIItem();
+            _stationSymbol.LoadContent("Images/station_icon");
             _droneFleet.addDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
             _station.LoadContent();
@@ -497,29 +501,15 @@ namespace SpaceAssault.Screens
         //#################################
         void DrawDirectionArrow()
         { 
-            var vec = new Vector2();
-            vec.X = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X;
-            vec.Y = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y;
-
-            Global.UIBatch.Begin();
-            if (!Collider3D.BoundingFrustumIntersection(_station))
+            if (Vector3.Distance(_droneFleet.GetActiveDrone().Position,_station.Position)>300)
             {
-                if (vec.X > Global.GraphicsManager.GraphicsDevice.Viewport.Width)
-                    vec.X = Global.GraphicsManager.GraphicsDevice.Viewport.Width - 50;
-                else if (vec.X < 0)
-                    vec.X = 0 + 50;
-                if (vec.Y > Global.GraphicsManager.GraphicsDevice.Viewport.Height)
-                    vec.Y = Global.GraphicsManager.GraphicsDevice.Viewport.Height - 50;
-                else if (vec.Y < 0)
-                    vec.Y = 0 + 50;
-
-                Global.UIBatch.DrawString(Global.GameFont, "Go Here for Station!", vec, Color.Red);
+                var vec3 = _station.Position - _droneFleet.GetActiveDrone().Position;
+                vec3.Normalize();
+                var vec = new Vector2();
+                vec.X = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position + vec3 * 100, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X;
+                vec.Y = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position + vec3 * 100, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y;
+                _stationSymbol.Draw(vec.ToPoint(), 1, Color.White); 
             }
-            else
-            {
-                Global.UIBatch.DrawString(Global.GameFont, "This is the Station and I draw in world Space!\nIf you fly away from me I will show you the way back to me!", vec, Color.Red);
-            }
-            Global.UIBatch.End();
         }
 
         //#################################
