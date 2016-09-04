@@ -30,6 +30,7 @@ namespace SpaceAssault.Utils
         public enum EnemyType
         {
             Fighter,
+            Fighter2,
             Bomber
         }
 
@@ -78,6 +79,9 @@ namespace SpaceAssault.Utils
             {
                 case EnemyType.Fighter:
                     ship = new EnemyFighter(position);
+                    break;
+                case EnemyType.Fighter2:
+                    ship = new EnemyFighter2(position);
                     break;
                 case EnemyType.Bomber:
                     ship = new EnemyBomber(position);
@@ -222,6 +226,13 @@ namespace SpaceAssault.Utils
                 }
 
                 if (curShip.GetType() == typeof(EnemyFighter))
+                {
+                    _maxSpeed = curShip.MoveSpeedForward;
+                    cohesion = cohesionRule(curShip);
+                    flyToDrone = droneStationRuleFighter(curShip);
+                    avoidS = avoidStationRule(curShip);
+                }
+                if (curShip.GetType() == typeof(EnemyFighter2))
                 {
                     _maxSpeed = curShip.MoveSpeedForward;
                     cohesion = cohesionRule(curShip);

@@ -84,12 +84,24 @@ namespace SpaceAssault.Utils
         }
         public void LoadContent(int count,ref int[] fighterStats,ref int[] bomberStats)
         {
-            int bCount = (int)(count * 0.8f);
-            _boids.addRandomBoids(count-bCount, Boids.EnemyType.Fighter);
+            int bCount = (int)(count * 0.25f);
+            int f2count = (int)(count * 0.25f);
+            _boids.addRandomBoids(count - bCount - f2count, Boids.EnemyType.Fighter);
+            _boids.addRandomBoids(f2count, Boids.EnemyType.Fighter2);
             _boids.addRandomBoids(bCount, Boids.EnemyType.Bomber);
+
             foreach (var ship in ShipList)
             {
                 if(ship.GetType() == typeof(EnemyFighter))
+                {
+                    ship.Health = fighterStats[0] + 5;
+                    ship.gunMakeDmg = fighterStats[1] + 10;
+                    ship.KillMoney = fighterStats[2] + 5;
+                    fighterStats[0] = ship.Health;
+                    fighterStats[1] = ship.gunMakeDmg;
+                    fighterStats[2] = ship.KillMoney;
+                }
+                else if (ship.GetType() == typeof(EnemyFighter2))
                 {
                     ship.Health = fighterStats[0] + 5;
                     ship.gunMakeDmg = fighterStats[1] + 10;

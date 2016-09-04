@@ -73,7 +73,7 @@ namespace SpaceAssault.Screens
             Bars[0].Draw(droneFleet.GetActiveDrone()._health, droneFleet.GetActiveDrone()._maxHealth);
             Bars[1].Draw(droneFleet.GetActiveDrone()._shield, droneFleet.GetActiveDrone()._maxShield);
 
-            if ((Vector3.Distance(this._station.Position, droneFleet.GetActiveDrone().Position) -GameplayScreen._stationHeight) < 300)
+            if (Vector3.Distance(this._station.Position, droneFleet.GetActiveDrone().Position) < 300)
             {
                 var vec = new Point();
                 vec.X = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X - 80;
