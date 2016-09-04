@@ -49,6 +49,7 @@ namespace SpaceAssault.Screens
 
         //Particle
         ParticleSystem explosionParticles;
+        ParticleSystem dustParticles;
         ParticleSystem explosionSmokeParticles;
         ParticleSystem projectileTrailParticles;
         ParticleSystem SmokeParticles;
@@ -105,6 +106,7 @@ namespace SpaceAssault.Screens
             //projectileTrailParticles = new ProjectileTrailParticleSystem();
             //SmokeParticles = new SmokeParticleSystem();
             borderParticles = new BorderParticleSystem();
+            dustParticles = new DustParticleSystem();
         }
 
 
@@ -169,6 +171,7 @@ namespace SpaceAssault.Screens
             // Particles
             //UpdateSmoke(gameTime);
             //UpdateProjectiles(gameTime);
+            dustParticles.Update(gameTime);
             explosionParticles.Update(gameTime);
             UpdateBorder(gameTime);
 
@@ -239,9 +242,9 @@ namespace SpaceAssault.Screens
 
             // Particle
             //SmokeParticles.Draw();
+            dustParticles.Draw();
             explosionParticles.Draw();
             borderParticles.Draw();
-
             //if drone is dead fade to black
             if (_deadDroneAlpha > 0)
             {
@@ -399,7 +402,7 @@ namespace SpaceAssault.Screens
                 if (Collider3D.IntersectionSphere(ast, _droneFleet.GetActiveDrone()))
                 {
                     _droneFleet.GetActiveDrone().getHit(5);
-
+                    dustParticles.AddParticle(ast.Position, Vector3.Zero);
                     _removeAsteroid.Add(ast);
                     Global.HighScorePoints -= 50;
                     PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
@@ -421,6 +424,7 @@ namespace SpaceAssault.Screens
                     if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
                     {                   
                             ast.NegateDirection();
+                            dustParticles.AddParticle(ast.Position, Vector3.Zero);
                             ast.Position += ast.Direction * (2*((float) random.NextDouble())*ast.MaxRadius() + ast.MaxRadius());
                     }
                 }
@@ -430,6 +434,7 @@ namespace SpaceAssault.Screens
                         if (Collider3D.IntersectionSphere(ast, ship))
                         {
                             ship.Health -= 5;
+                            dustParticles.AddParticle(ship.Position, Vector3.Zero);
                             _removeAsteroid.Add(ast);
                         }
                     
