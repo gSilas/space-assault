@@ -4,7 +4,6 @@ using SpaceAssault.Utils;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using SpaceAssault.Screens.UI;
-using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.ScreenManagers;
 
 namespace SpaceAssault.Screens
