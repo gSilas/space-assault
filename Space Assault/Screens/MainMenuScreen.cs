@@ -14,15 +14,18 @@ namespace SpaceAssault.Screens
             MenuEntry optionsMenuEntry = new MenuEntry("Station Configuration");
             MenuEntry creditsMenuEntry = new MenuEntry("Honorable Mentions");
             MenuEntry exitMenuEntry = new MenuEntry("Quit Dronecontrol");
+            MenuEntry tutorialMenuEntry = new MenuEntry("Tutorial");
 
             // Hook up menu event handlers.
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
             highscoreMenuEntry.Selected += HighscoreMenuEntrySelected;
             optionsMenuEntry.Selected += OptionsMenuEntrySelected;
             creditsMenuEntry.Selected += CreditsMenuEntrySelected;
+            tutorialMenuEntry.Selected += TutorialMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
+            MenuEntries.Add(tutorialMenuEntry);
             MenuEntries.Add(playGameMenuEntry);
             MenuEntries.Add(highscoreMenuEntry);
             MenuEntries.Add(optionsMenuEntry);
@@ -65,6 +68,11 @@ namespace SpaceAssault.Screens
             confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
 
             ScreenManager.AddScreen(confirmExitMessageBox);
+        }
+
+        void TutorialMenuEntrySelected(object sender, EventArgs e)
+        {
+            LoadingScreen.Load(ScreenManager, true, new TutorialScreen());
         }
 
         // Event handler for when the user selects ok on the "are you sure
