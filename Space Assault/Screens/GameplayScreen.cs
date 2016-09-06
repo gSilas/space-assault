@@ -221,6 +221,7 @@ namespace SpaceAssault.Screens
             //player hits ESC it pauses the game
             if (input.IsPauseGame())
             {
+
                 ScreenManager.AddScreen(new PauseMenuScreen());
             }
         }

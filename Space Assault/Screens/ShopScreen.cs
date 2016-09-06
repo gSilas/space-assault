@@ -2,6 +2,7 @@
 using SpaceAssault.Entities;
 using SpaceAssault.Utils;
 using System.Collections.Generic;
+using IrrKlang;
 using Microsoft.Xna.Framework;
 using SpaceAssault.Screens.UI;
 using SpaceAssault.ScreenManagers;
@@ -45,6 +46,9 @@ namespace SpaceAssault.Screens
 
         private Dialog _itemDialog;
         public SortedDictionary<int, string> ShopText = new SortedDictionary<int, string>();
+
+        private ISound _accept;
+        private ISound _denie;
         //#################################
         // Constructor
         //#################################
@@ -123,6 +127,13 @@ namespace SpaceAssault.Screens
             Labels.Add(new Label("gamefont", "Fragments: ", 50, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
             _itemDialog.LoadContent();
             _frame.LoadContent();
+
+            //Sound
+            SoundEngine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+
+            MenuAcceptSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/Blip_Select.wav", StreamMode.AutoDetect, true);
+            MenuDenieSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointDenie.wav", StreamMode.AutoDetect, true);
+
         }
 
         //#################################
@@ -142,6 +153,8 @@ namespace SpaceAssault.Screens
         // Event handler for when the Damage menu entry is selected.
         void damageMenuEntrySelected(object sender, EventArgs e)
         {
+
+
             if (Global.Money > _priceDMG)
             {
                 _droneDamageLevel++;
@@ -149,11 +162,30 @@ namespace SpaceAssault.Screens
                 _priceDMG *= 2;
 
                 this._droneFleet._makeDmg += 10;
-                
+
                 SetMenuEntryText();
                 ShopText.Remove(0);
-                ShopText.Add(0, "Your Laser does now " + _droneFleet._makeDmg.ToString() + " Damage\n\nFor Every Upgrade your\nGundamage is increased by 10");
+                ShopText.Add(0,
+                    "Your Laser does now " + _droneFleet._makeDmg.ToString() +
+                    " Damage\n\nFor Every Upgrade your\nGundamage is increased by 10");
+                
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+
+                _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                _accept.Volume = 1f;
+                _accept.Paused = false;
+
+            }
+            else
+            {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                
+                _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
+                _denie.Volume = 1f;
+                _denie.Paused = false;
+
             }
         }
         // Event handler for when the Health menu entry is selected.
@@ -170,7 +202,22 @@ namespace SpaceAssault.Screens
                 SetMenuEntryText();
                 ShopText.Remove(1);
                 ShopText.Add(1, "Your Drone has now:\n" + _droneFleet._maxHealth.ToString() + " maximum Health\n\nIf your Health goes down to 0,\nyour Drone will die.\nCare!!! There is no way to restore it,\nexcept getting a new Drone.\n\nFor every Upgrade the maximum Health\nincreases by 100.");
-                
+
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+
+                _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                _accept.Volume = 1f;
+                _accept.Paused = false;
+            }
+            else
+            {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+              
+                _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
+                _denie.Volume = 1f;
+                _denie.Paused = false;
             }
         }
 
@@ -187,6 +234,22 @@ namespace SpaceAssault.Screens
                 SetMenuEntryText();
                 ShopText.Remove(2);
                 ShopText.Add(2, "Your Drone has now:\n" + _droneFleet._armor.ToString() + " Armor\n\nFor every Upgrade in Armor, \nthe incoming Damage is reduced by 1.");
+                
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+
+                _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                _accept.Volume = 1f;
+                _accept.Paused = false;
+            }
+            else
+            {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+         
+                _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
+                _denie.Volume = 1f;
+                _denie.Paused = false;
             }
         }
         void shieldMenuEntrySelected(object sender, EventArgs e)
@@ -203,6 +266,22 @@ namespace SpaceAssault.Screens
                 SetMenuEntryText();
                 ShopText.Remove(3);
                 ShopText.Add(3, "Your Drone has now:\n" + _droneFleet._maxShield.ToString() + " maximum Shield\n\nIf your Shield goes down to 0, \nyour Health will get Damage.\n\nAfter a short delay\nthe shield restores itself.\n\nFor every upgrade the maximum Shield\nincreases by 50. ");
+
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+
+                _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                _accept.Volume = 1f;
+                _accept.Paused = false;
+            }
+            else
+            {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+   
+                _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
+                _denie.Volume = 1f;
+                _denie.Paused = false;
             }
         }
         void sHealthMenuEntrySelected(object sender, EventArgs e)
@@ -218,6 +297,22 @@ namespace SpaceAssault.Screens
                 SetMenuEntryText();
                 ShopText.Remove(4);
                 ShopText.Add(4, "Your Station has now:\n" + _station._maxhealth.ToString() + " maximum Health\n\nIf the Stationhealth goes down to 0,\nyour Game is Over.\nThe Station gets slowly repaired over time.\n\nFor every Upgrade the maximum Health\nincreases by 1000.");
+
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+
+                _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                _accept.Volume = 1f;
+                _accept.Paused = false;
+            }
+            else
+            {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+    
+                _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
+                _denie.Volume = 1f;
+                _denie.Paused = false;
             }
         }
         void sShieldMenuEntrySelected(object sender, EventArgs e)
@@ -233,6 +328,22 @@ namespace SpaceAssault.Screens
                 SetMenuEntryText();
                 ShopText.Remove(5);
                 ShopText.Add(5, "Your Station has now:\n" + _station._maxShield.ToString() + " maximum Shield\n\nIf the Stationshield goes down to 0,\nthe Station will get real Damage.\nThe Shield regenerates, \nif the Station doesnt get hit.\n\nFor every Upgrade the maximum Shield\nincreases by 500.");
+
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+
+                _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                _accept.Volume = 1f;
+                _accept.Paused = false;
+            }
+            else
+            {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+   
+                _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
+                _denie.Volume = 1f;
+                _denie.Paused = false;
             }
         }
         void stationlaserhMenuEntrySelected(object sender, EventArgs e)
@@ -247,6 +358,22 @@ namespace SpaceAssault.Screens
                 SetMenuEntryText();
                 ShopText.Remove(6);
                 ShopText.Add(6, "The Stationlaser is now ONLINE\n");
+
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+
+                _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                _accept.Volume = 1f;
+                _accept.Paused = false;
+            }
+            else
+            {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+          
+                _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
+                _denie.Volume = 1f;
+                _denie.Paused = false;
             }
         }
 
