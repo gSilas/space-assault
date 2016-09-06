@@ -90,7 +90,7 @@ namespace SpaceAssault.Screens
             _station = new Station(new Vector3(0, _stationHeight, 0), 0);
             _droneFleet = new DroneBuilder();
             movementAllowed = false;
-            Global.Money = 100000;
+            Global.Money = 1000;
             //UI + Frame + BG 
             _ui = new InGameOverlay(_station);
             _back = new Background();
@@ -404,7 +404,7 @@ namespace SpaceAssault.Screens
                     _droneFleet.GetActiveDrone().getHit(5);
                     dustParticles.AddParticle(ast.Position, Vector3.Zero);
                     _removeAsteroid.Add(ast);
-                    Global.HighScorePoints -= 50;
+                    
                     PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                     continue;
                 }
@@ -436,7 +436,7 @@ namespace SpaceAssault.Screens
                         explosionTriggered = true;
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
-                        Global.HighScorePoints += 50;
+                       
                         PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                         if (bullet._bulletType == Bullet.BulletType.BigJoe)
                         {
