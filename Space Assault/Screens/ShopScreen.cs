@@ -133,6 +133,7 @@ namespace SpaceAssault.Screens
 
             MenuAcceptSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/Blip_Select.wav", StreamMode.AutoDetect, true);
             MenuDenieSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointDenie.wav", StreamMode.AutoDetect, true);
+            GoBack = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/GoBack2.wav", StreamMode.AutoDetect, true);
 
         }
 

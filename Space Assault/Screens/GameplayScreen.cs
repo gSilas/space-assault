@@ -45,6 +45,7 @@ namespace SpaceAssault.Screens
         private ISoundSource _explosionSource1;
         private ISoundSource _explosionSource2;
         private ISoundSource _explosionSource3;
+        private ISoundSource _openShop;
         private ISoundEngine _engine;
 
         //Particle
@@ -98,7 +99,7 @@ namespace SpaceAssault.Screens
             _back = new Background();
             _frame = new Frame();
 
-            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+           _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
             // Construct Particle
             explosionParticles = new ExplosionParticleSystem();
@@ -124,6 +125,9 @@ namespace SpaceAssault.Screens
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             _waveBuilder.LoadContent();
+
+            //Sounds
+            _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OpenShop.wav", StreamMode.AutoDetect, true);
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
             _explosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion1.wav", StreamMode.AutoDetect, true);
             _explosionSource2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion2.wav", StreamMode.AutoDetect, true);
@@ -215,13 +219,27 @@ namespace SpaceAssault.Screens
             if (input.IsNewKeyPress(Keys.B))
             {
                 if ((Vector3.Distance(_station.Position, _droneFleet.GetActiveDrone().Position) - _stationHeight) < 150)
-                    ScreenManager.AddScreen(new ShopScreen(_droneFleet,_station));
+                {
+                    //playing the sound
+                    _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                    ISound Open;
+                    Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
+                    Open.Volume = 1f;
+                    Open.Paused = false;
+                    ScreenManager.AddScreen(new ShopScreen(_droneFleet, _station));
+                }
+                  
             }
 
             //player hits ESC it pauses the game
             if (input.IsPauseGame())
             {
-
+                //playing the sound
+                _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                ISound Open;
+                Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
+                Open.Volume = 1f;
+                Open.Paused = false;
                 ScreenManager.AddScreen(new PauseMenuScreen());
             }
         }

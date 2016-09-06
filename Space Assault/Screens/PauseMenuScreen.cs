@@ -1,4 +1,5 @@
 using System;
+using IrrKlang;
 
 namespace SpaceAssault.Screens
 {
@@ -10,6 +11,8 @@ namespace SpaceAssault.Screens
         public PauseMenuScreen()
             : base("Interrupted")
         {
+
+
             // Create our menu entries.
             MenuEntry resumeGameMenuEntry = new MenuEntry("Resume Mission");
             MenuEntry quitGameMenuEntry = new MenuEntry("Quit Station");
@@ -30,6 +33,12 @@ namespace SpaceAssault.Screens
             MessageBoxScreen confirmQuitMessageBox = new MessageBoxScreen(message);
             confirmQuitMessageBox.Accepted += ConfirmQuitMessageBoxAccepted;
             ScreenManager.AddScreen(confirmQuitMessageBox);
+            //playing the sound
+            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+            ISound Accept;
+            Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
+            Accept.Volume = 1f;
+            Accept.Paused = false;
         }
 
 
@@ -38,9 +47,16 @@ namespace SpaceAssault.Screens
         // transition from the game back to the main menu screen.
         void ConfirmQuitMessageBoxAccepted(object sender, EventArgs e)
         {
+
             LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),new MainMenuScreen());
             //LoadingScreen.Load(ScreenManager, false, null, new MainMenuScreen());
             //ScreenManager.Game.Exit();
+            //playing the sound
+            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+            ISound Accept;
+            Accept = SoundEngine.Play3D(GoBack, 0, 0 + 15f, 0, false, true, false);
+            Accept.Volume = 1f;
+            Accept.Paused = false;
         }
 
     }

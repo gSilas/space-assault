@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IrrKlang;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -43,6 +44,10 @@ namespace SpaceAssault.Screens
         string tutorialMessage;
         int nextIndex = 1;
         public SortedDictionary<int, string> TutorialText = new SortedDictionary<int, string>();
+
+        //SOunds
+        private ISoundSource _openShop;
+        private ISoundEngine _engine;
 
         // Switch between three different visual effects.
         enum ParticleState
@@ -111,7 +116,13 @@ namespace SpaceAssault.Screens
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             tutorialDialog.LoadContent();
-            
+
+            //Sounds 
+            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+
+            _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OpenShop.wav", StreamMode.AutoDetect, true);
+
+
         }
 
         //#################################
@@ -178,23 +189,55 @@ namespace SpaceAssault.Screens
             if (input.IsNewKeyPress(Keys.B))
             {
                 if ((Vector3.Distance(_station.Position, _droneFleet.GetActiveDrone().Position) - _stationHeight) < 150)
+                {
+                    //playing the sound
+                    _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                    ISound Open;
+                    Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
+                    Open.Volume = 1f;
+                    Open.Paused = false;
+
                     ScreenManager.AddScreen(new ShopScreen(_droneFleet, _station));
+                }
+          
+
             }
             if (input.IsNewKeyPress(Keys.Space) && (nextIndex+1) < TutorialText.Count && (nextIndex+1) > 0)
             {
                 nextIndex++;
                 TutorialText.TryGetValue(nextIndex, out tutorialMessage);
+                
+                //playing the sound
+                _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                ISound Open;
+                Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
+                Open.Volume = 1f;
+                Open.Paused = false;
+
                 if (nextIndex == TutorialText.Count - 1)
                     movementAllowed = true;
             }
             if (input.IsNewKeyPress(Keys.Back) && nextIndex < TutorialText.Count && (nextIndex-1) >= 0)
             {
+                //playing the sound
+                _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                ISound Open;
+                Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
+                Open.Volume = 1f;
+                Open.Paused = false;
+
                 nextIndex--;
                 TutorialText.TryGetValue(nextIndex, out tutorialMessage);
             }
             //player hits ESC it pauses the game
             if (input.IsPauseGame())
             {
+                //playing the sound
+                _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                ISound Open;
+                Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
+                Open.Volume = 1f;
+                Open.Paused = false;
                 ScreenManager.AddScreen(new PauseMenuScreen());
             }
         }

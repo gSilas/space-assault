@@ -16,6 +16,9 @@ namespace SpaceAssault.Screens
         protected ISoundEngine SoundEngine;
         protected ISoundSource MenuAcceptSound;
         protected ISoundSource MenuDenieSound;
+        protected ISoundSource OkClick;
+        protected ISoundSource GoBack;
+        protected ISoundSource OpenMenu;
 
         List<MenuEntry> menuEntries = new List<MenuEntry>();
         protected int selectedEntry = 0;
@@ -88,6 +91,13 @@ namespace SpaceAssault.Screens
             // Move to the previous menu entry?
             if (input.IsMenuUp())
             {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                ISound Accept;
+                Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                Accept.Volume = 0.5f;
+                Accept.Paused = false;
+
                 selectedEntry--;
 
                 if (selectedEntry < 0)
@@ -97,6 +107,13 @@ namespace SpaceAssault.Screens
             // Move to the next menu entry?
             if (input.IsMenuDown())
             {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                ISound Accept;
+                Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                Accept.Volume = 0.5f;
+                Accept.Paused = false;
+
                 selectedEntry++;
 
                 if (selectedEntry >= menuEntries.Count)
@@ -125,12 +142,26 @@ namespace SpaceAssault.Screens
         // Notifies derived classes that the menu has been cancelled.
         protected virtual void OnCancel()
         {
+            //playing the sound
+            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+            ISound Denie;
+            Denie = SoundEngine.Play3D(GoBack, 0, 0 + 15f, 0, false, true, false);
+            Denie.Volume = 0.5f;
+            Denie.Paused = false;
+
             ExitScreen();
         }
 
         // Helper overload makes it easy to use OnCancel as a MenuEntry event handler.
         protected virtual void OnCancel(object sender, EventArgs e)
         {
+            //playing the sound
+            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+            ISound Denie;
+            Denie = SoundEngine.Play3D(GoBack, 0, 0 + 15f, 0, false, true, false);
+            Denie.Volume = 0.5f;
+            Denie.Paused = false;
+
             OnCancel();
         }
 
@@ -172,6 +203,9 @@ namespace SpaceAssault.Screens
 
             MenuAcceptSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointAccept.wav", StreamMode.AutoDetect, true);
             MenuDenieSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointDenie.wav", StreamMode.AutoDetect, true);
+            OkClick = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/OkClick.wav", StreamMode.AutoDetect,true);
+            GoBack = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/GoBack2.wav", StreamMode.AutoDetect, true);
+            OpenMenu = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/OpenShop.wav", StreamMode.AutoDetect, true);
 
             _frame.LoadContent();
         }

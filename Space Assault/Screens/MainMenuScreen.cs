@@ -41,7 +41,7 @@ namespace SpaceAssault.Screens
             //playing the sound
             SoundEngine.SetListenerPosition(new Vector3D(0,0,0), new Vector3D(0, 0, 1));
             ISound Accept;
-            Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+            Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
             Accept.Volume = 1f;
             Accept.Paused = false;
 
@@ -54,7 +54,7 @@ namespace SpaceAssault.Screens
             //playing the sound
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
-            Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+            Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
             Accept.Volume = 1f;
             Accept.Paused = false;
 
@@ -67,7 +67,7 @@ namespace SpaceAssault.Screens
             //playing the sound
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
-            Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+            Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
             Accept.Volume = 1f;
             Accept.Paused = false;
 
@@ -80,7 +80,7 @@ namespace SpaceAssault.Screens
             //playing the sound
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
-            Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+            Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
             Accept.Volume = 1f;
             Accept.Paused = false;
 
@@ -91,6 +91,13 @@ namespace SpaceAssault.Screens
         // When the user cancels the main menu, ask if they want to exit the sample.
         protected override void OnCancel(object sender, EventArgs e)
         {
+            //playing the sound
+            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+            ISound Accept;
+            Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
+            Accept.Volume = 0.5f;
+            Accept.Paused = false;
+
             const string message = "Are you sure you want to exit?";
 
             MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
@@ -105,7 +112,7 @@ namespace SpaceAssault.Screens
             //playing the sound
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
-            Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+            Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
             Accept.Volume = 0.5f;
             Accept.Paused = false;
 
@@ -119,7 +126,7 @@ namespace SpaceAssault.Screens
             //playing the sound
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Denie;
-            Denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
+            Denie = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
             Denie.Volume = 0.5f;
             Denie.Paused = false;
             ScreenManager.Game.Exit();
