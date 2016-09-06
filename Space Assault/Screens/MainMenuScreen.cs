@@ -1,4 +1,6 @@
 using System;
+using IrrKlang;
+
 namespace SpaceAssault.Screens
 {
     // The main menu screen is the first thing displayed when the game starts up.
@@ -36,24 +38,52 @@ namespace SpaceAssault.Screens
         // Event handler for when the Play Game menu entry is selected.
         void PlayGameMenuEntrySelected(object sender, EventArgs e)
         {
+            //playing the sound
+            SoundEngine.SetListenerPosition(new Vector3D(0,0,0), new Vector3D(0, 0, 1));
+            ISound Accept;
+            Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+            Accept.Volume = 1f;
+            Accept.Paused = false;
+
             LoadingScreen.Load(ScreenManager, true, new GameplayScreen());
         }
 
         // Event handler for when the Options menu entry is selected.
         void OptionsMenuEntrySelected(object sender, EventArgs e)
         {
+            //playing the sound
+            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+            ISound Accept;
+            Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+            Accept.Volume = 1f;
+            Accept.Paused = false;
+
             ScreenManager.AddScreen(new OptionsMenuScreen());
         }
 
         // Event handler for when the Highscore menu entry is selected.
         void HighscoreMenuEntrySelected(object sender, EventArgs e)
         {
+            //playing the sound
+            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+            ISound Accept;
+            Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+            Accept.Volume = 1f;
+            Accept.Paused = false;
+
             ScreenManager.AddScreen(new HighscoreMenuScreen());
         }
 
         // Event handler for when the Credits menu entry is selected.
         void CreditsMenuEntrySelected(object sender, EventArgs e)
         {
+            //playing the sound
+            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+            ISound Accept;
+            Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+            Accept.Volume = 1f;
+            Accept.Paused = false;
+
             ScreenManager.AddScreen(new CreditsMenuScreen());
         }
 
@@ -72,6 +102,13 @@ namespace SpaceAssault.Screens
 
         void TutorialMenuEntrySelected(object sender, EventArgs e)
         {
+            //playing the sound
+            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+            ISound Accept;
+            Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+            Accept.Volume = 0.5f;
+            Accept.Paused = false;
+
             LoadingScreen.Load(ScreenManager, true, new TutorialScreen());
         }
 
@@ -79,6 +116,12 @@ namespace SpaceAssault.Screens
         // you want to exit" message box.
         void ConfirmExitMessageBoxAccepted(object sender, EventArgs e)
         {
+            //playing the sound
+            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+            ISound Denie;
+            Denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
+            Denie.Volume = 0.5f;
+            Denie.Paused = false;
             ScreenManager.Game.Exit();
         }
     }
