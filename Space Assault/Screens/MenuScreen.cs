@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using IrrKlang;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.ScreenManagers;
@@ -9,8 +10,13 @@ namespace SpaceAssault.Screens
 {
     // Base class for screens that contain a menu of options. The user can
     // move up and down to select an entry, or cancel to back out of the screen.
+
     abstract class MenuScreen : GameScreen
     {
+        protected ISoundEngine SoundEngine;
+        protected ISoundSource MenuAcceptSound;
+        protected ISoundSource MenuDenieSound;
+
         List<MenuEntry> menuEntries = new List<MenuEntry>();
         protected int selectedEntry = 0;
         protected string menuTitle;
@@ -162,6 +168,11 @@ namespace SpaceAssault.Screens
         }
         public override void LoadContent()
         {
+            SoundEngine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+
+            MenuAcceptSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointAccept.wav", StreamMode.AutoDetect, true);
+            MenuDenieSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointDenie.wav", StreamMode.AutoDetect, true);
+
             _frame.LoadContent();
         }
 
