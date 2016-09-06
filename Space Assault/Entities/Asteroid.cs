@@ -11,8 +11,8 @@ namespace SpaceAssault.Entities
         private Vector3 _direction;
         private float _speed;
         private float _standardSpeed;
-
-        public Asteroid(Model model, Vector3 position, float angle, Vector3 direction, float movespeed)
+        public bool IsShiny;
+        public Asteroid(Model model, Vector3 position, float angle, Vector3 direction, float movespeed, bool shiny)
         {
             Model = model;
             _angle = angle;
@@ -20,6 +20,7 @@ namespace SpaceAssault.Entities
             _direction = direction;
             _speed = movespeed;
             _standardSpeed = movespeed;
+            IsShiny = shiny;
         }
 
         public bool IsDead { get; set; } = false;

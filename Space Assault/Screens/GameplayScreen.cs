@@ -91,8 +91,8 @@ namespace SpaceAssault.Screens
             _droneFleet = new DroneBuilder();
             _explosionSpawner = new ExplosionSpawner();
 
-            _waveBuilder = new WaveBuilder(TimeSpan.FromSeconds(20d),2,3);
-            Global.Money = 100000;
+            _waveBuilder = new WaveBuilder(TimeSpan.FromSeconds(15d),2,2);
+            Global.Money = 0;
             //UI + Frame + BG 
             _ui = new InGameOverlay(_station);
             _back = new Background();
@@ -464,6 +464,10 @@ namespace SpaceAssault.Screens
                             float radius = 80;
                             _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
                             ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
+                        }
+                        if (ast.IsShiny)
+                        {
+                            Global.Money += 200;
                         }
                         break;
                     }
