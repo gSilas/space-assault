@@ -17,18 +17,18 @@ namespace SpaceAssault.Screens
         //#################################
         //Drone
         MenuEntry damageMenuEntry;
-        private int _priceDMG=1000;
+        private int _priceDMG=500;
         MenuEntry healthMenuEntry;
         public static int _priceDroneHealth=500;
         MenuEntry armorMenuEntry;
-        private int _priceArmor=2000;
+        private int _priceArmor=1000;
         MenuEntry shieldMenuEntry;
         private int _priceDroneShield=500;
         //Station
         MenuEntry sShieldMenuEntry;
-        private int _priceStationShield=3000;
+        private int _priceStationShield=2000;
         MenuEntry sHealthMenuEntry;
-        private int _priceStationHealth = 5000;
+        private int _priceStationHealth = 2000;
         MenuEntry stationlaserMenuEntry;
 
 
