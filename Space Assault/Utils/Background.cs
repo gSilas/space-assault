@@ -11,8 +11,6 @@ namespace SpaceAssault.Utils
         private Random _rand;
         private BasicEffect _basicEffect;
         private Texture2D _tex;
-        private RasterizerState _rast;
-        private bool _setworld;
 
         public Background()
         {
@@ -20,13 +18,13 @@ namespace SpaceAssault.Utils
             _rand = new Random();
             _tileList = new List<Tile>();
             _tex = Global.ContentManager.Load<Texture2D>("Images/star");
-            _setworld = false;
+
             //50*50 Tiles with 1 Star / Tile
             //StarPosition inbetween x = 1000 y = 1000
 
-            for (int x = 0; x < 15000; x += 500)
+            for (int x = 0; x < 30000; x += 500)
             {
-                for (int y = 0; y < 15000; y += 500)
+                for (int y = 0; y < 30000; y += 500)
                 {
                     Vector2 pos = new Vector2(x + _rand.Next(0, 501), y + _rand.Next(0, 501));                 
                     float scale = (float)_rand.NextDouble();
@@ -38,15 +36,13 @@ namespace SpaceAssault.Utils
 
         public void Draw(float angle,Vector3 pos)
         {
-            if (!_setworld)
-            {
+
                 _basicEffect.World = Matrix.CreateRotationX(MathHelper.ToRadians(angle)) * Matrix.CreateWorld(pos, Vector3.Forward, Vector3.Up);
                 _basicEffect.View = Global.Camera.ViewMatrix;
                 _basicEffect.Projection = Global.Camera.ProjectionMatrix;
                 _basicEffect.DiffuseColor = Color.LightYellow.ToVector3();
                 _basicEffect.TextureEnabled = true;
-                _setworld = true;
-            }
+
             Global.BackgroundBatch.Begin(SpriteSortMode.Deferred, null, null, DepthStencilState.Default, RasterizerState.CullNone, _basicEffect);
             foreach (var tile in _tileList)
             {                             

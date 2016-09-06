@@ -253,7 +253,7 @@ namespace SpaceAssault.Screens
             Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0);
 
             // calling draw of objects where necessary
-            _back.Draw(90, new Vector3(-5000, -2500, -5000));
+            _back.Draw(90, new Vector3(-15000, -2000, -15000));
             _station.Draw();
             _droneFleet.Draw();
             _asteroidField.Draw();
