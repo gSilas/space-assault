@@ -45,7 +45,9 @@ namespace SpaceAssault.Screens
         private ISoundSource _explosionSource1;
         private ISoundSource _explosionSource2;
         private ISoundSource _explosionSource3;
+
         private ISoundEngine _engine;
+        private ISoundSource _openShop;
 
         Point dialogPos;
         bool movementAllowed;
@@ -114,8 +116,7 @@ namespace SpaceAssault.Screens
             TutorialText.Add(12, "I also heard of incoming\nasteroids. The comets\nwith the blue trail\noffer a nice income.");
             TutorialText.Add(13, "Press [X] to start your\n mission!");
             TutorialText.TryGetValue(0, out tutorialMessage);
-            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
-        }
+             }
 
 
         //#################################
@@ -131,11 +132,18 @@ namespace SpaceAssault.Screens
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             tutorialDialog.LoadContent();
+
+            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
             _explosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion1.wav", StreamMode.AutoDetect, true);
             _explosionSource2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion2.wav", StreamMode.AutoDetect, true);
             _explosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion3.wav", StreamMode.AutoDetect, true);
+
+            _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/OkClick.wav", StreamMode.AutoDetect, true);
+
             _asteroidField.LoadContent();
+
         }
 
         //#################################
@@ -209,10 +217,26 @@ namespace SpaceAssault.Screens
             if (input.IsNewKeyPress(Keys.B))
             {
                 if ((Vector3.Distance(_station.Position, _droneFleet.GetActiveDrone().Position) - _stationHeight) < 150)
+                {
+                    //playing the sound
+                    _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                    ISound Open;
+                    Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
+                    //Open.Volume = 1f;
+                    //Open.Paused = false;
                     ScreenManager.AddScreen(new ShopScreen(_droneFleet, _station));
+                }
+   
             }
             if (input.IsNewKeyPress(Keys.Space) && (nextIndex+1) < TutorialText.Count && (nextIndex+1) > 0)
             {
+                //playing the sound
+                _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                ISound Open;
+                Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
+                //Open.Volume = 1f;
+                //Open.Paused = false;
+
                 nextIndex++;
                 TutorialText.TryGetValue(nextIndex, out tutorialMessage);
                 if (nextIndex == TutorialText.Count - 1)
@@ -220,6 +244,13 @@ namespace SpaceAssault.Screens
             }
             if (input.IsNewKeyPress(Keys.Back) && nextIndex < TutorialText.Count && (nextIndex-1) >= 0)
             {
+                //playing the sound
+                _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                ISound Open;
+                Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
+                //Open.Volume = 1f;
+                //Open.Paused = false;
+
                 nextIndex--;
                 TutorialText.TryGetValue(nextIndex, out tutorialMessage);
             }
