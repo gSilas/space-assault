@@ -95,7 +95,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                 ISound Accept;
                 Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
-                Accept.Volume = 0.5f;
+                Accept.Volume = Global.SpeakerVolume/10;
                 Accept.Paused = false;
 
                 selectedEntry--;
@@ -111,7 +111,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                 ISound Accept;
                 Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
-                Accept.Volume = 0.5f;
+                Accept.Volume = Global.SpeakerVolume/10;
                 Accept.Paused = false;
 
                 selectedEntry++;
@@ -146,7 +146,7 @@ namespace SpaceAssault.Screens
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Denie;
             Denie = SoundEngine.Play3D(GoBack, 0, 0 + 15f, 0, false, true, false);
-            Denie.Volume = 0.5f;
+            Denie.Volume = Global.SpeakerVolume/10;
             Denie.Paused = false;
 
             ExitScreen();
@@ -159,7 +159,7 @@ namespace SpaceAssault.Screens
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Denie;
             Denie = SoundEngine.Play3D(GoBack, 0, 0 + 15f, 0, false, true, false);
-            Denie.Volume = 0.5f;
+            Denie.Volume = Global.SpeakerVolume/10;
             Denie.Paused = false;
 
             OnCancel();

@@ -12,6 +12,7 @@ namespace SpaceAssault.Screens
         //MenuEntry staticNumberMenuEntry;
         MenuEntry fullscreenMenuEntry;
         MenuEntry frameCounterMenuEntry;
+        MenuEntry speakerVolumeMenuEntry;
 
         enum enumMenu
         {
@@ -34,6 +35,7 @@ namespace SpaceAssault.Screens
             //staticNumberMenuEntry = new MenuEntry(string.Empty);
             fullscreenMenuEntry = new MenuEntry(string.Empty);
             frameCounterMenuEntry = new MenuEntry(string.Empty);
+            speakerVolumeMenuEntry = new MenuEntry(string.Empty);
             SetMenuEntryText();
             MenuEntry back = new MenuEntry("Back");
 
@@ -43,6 +45,7 @@ namespace SpaceAssault.Screens
             //staticNumberMenuEntry.Selected += staticNumberMenuEntrySelected;
             fullscreenMenuEntry.Selected += fullscreenMenuEntrySelected;
             frameCounterMenuEntry.Selected += frameCounterMenuEntrySelected;
+            speakerVolumeMenuEntry.Selected += speakerVolumeMenuEntrySelected;
             back.Selected += OnCancel;
 
             // Add entries to the menu.
@@ -51,6 +54,7 @@ namespace SpaceAssault.Screens
             //MenuEntries.Add(staticNumberMenuEntry);
             MenuEntries.Add(fullscreenMenuEntry);
             MenuEntries.Add(frameCounterMenuEntry);
+            MenuEntries.Add(speakerVolumeMenuEntry);
             MenuEntries.Add(back);
         }
 
@@ -63,6 +67,7 @@ namespace SpaceAssault.Screens
             //staticNumberMenuEntry.Text = "Number: " + num;
             fullscreenMenuEntry.Text = "Fullscreen: " + (Global.GraphicsManager.IsFullScreen ? "on" : "off");
             frameCounterMenuEntry.Text = "FPS Counter: " + (Global.FrameCounterIsEnabled ? "on" : "off");
+            speakerVolumeMenuEntry.Text = "Volume: " + (Global.SpeakerVolume);
         }
 
         // Event handler for when the Fullscreen menu entry is selected.
@@ -75,6 +80,18 @@ namespace SpaceAssault.Screens
         void frameCounterMenuEntrySelected(object sender, EventArgs e)
         {
             Global.FrameCounterIsEnabled = !Global.FrameCounterIsEnabled;
+            SetMenuEntryText();
+        }
+
+        void speakerVolumeMenuEntrySelected(object sender, EventArgs e)
+        {
+            if (Global.SpeakerVolume == 10)
+            {
+                Global.SpeakerVolume = 0;
+            }
+            else
+                Global.SpeakerVolume += 1;
+
             SetMenuEntryText();
         }
 
