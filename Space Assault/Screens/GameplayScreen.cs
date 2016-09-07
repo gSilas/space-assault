@@ -85,6 +85,8 @@ namespace SpaceAssault.Screens
             _ui = new InGameOverlay(_station);
             _back = new Background();
             _frame = new Frame();
+            Global.HighScorePoints = 0;
+            Global.Money = 0;
 
            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
