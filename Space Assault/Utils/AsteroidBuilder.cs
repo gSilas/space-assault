@@ -112,8 +112,8 @@ namespace SpaceAssault.Utils
         {
             foreach (var ast in _asteroidList)
             {
-                ast.Draw();
                 shinyParticles.Draw();
+                ast.Draw();
             }
         }
     }

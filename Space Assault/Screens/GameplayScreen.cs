@@ -604,7 +604,7 @@ namespace SpaceAssault.Screens
             // Create a number of border particles, randomly positioned around a circle.
             for (int i = 0; i < borderParticlesPerFrame; i++)
             {
-                borderParticles.AddParticle(RandomPointOnCircle(Global.MapSpawnRadius), Vector3.Zero);
+                borderParticles.AddParticle(RandomPointOnCircle(Global.MapRingRadius), Vector3.Zero);
             }
             borderParticles.Update(gameTime);
         }
