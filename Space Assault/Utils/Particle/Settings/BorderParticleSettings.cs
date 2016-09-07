@@ -7,9 +7,9 @@ namespace SpaceAssault.Utils.Particle.Settings
     /// <summary>
     /// Custom particle system for creating a flame effect.
     /// </summary>
-    class BorderParticleSystem : ParticleSystem
+    class BorderParticleSettings : ParticleSystem
     {
-        public BorderParticleSystem()
+        public BorderParticleSettings()
         { }
 
 

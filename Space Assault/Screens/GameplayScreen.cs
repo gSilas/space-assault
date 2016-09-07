@@ -33,6 +33,8 @@ namespace SpaceAssault.Screens
         public static int _stationHeight = 80;
         private WaveBuilder _waveBuilder;
 
+        private float _duration = 10;
+
 
         //UI + Frame + Background
         private InGameOverlay _ui;
@@ -49,33 +51,18 @@ namespace SpaceAssault.Screens
         private ISoundEngine _engine;
 
         //Particle
-        ParticleSystem explosionParticles;
-        ParticleSystem dustParticles;
-        ParticleSystem explosionSmokeParticles;
-        ParticleSystem projectileTrailParticles;
-        ParticleSystem SmokeParticles;
         ParticleSystem borderParticles;
+        ParticleSystem dustParticles;
 
-        Vector3 explosionPosition = Vector3.Zero;
-        double explosionEffectDelta = 0;
-        bool explosionTriggered = false;
+        List<ExplosionSystem> explosionList = new List<ExplosionSystem>();
+        List<int> explosionRemoveList = new List<int>();
 
-        // Switch between three different visual effects.
-        enum ParticleState
-        {
-            Explosions,
-            Smoke,
-            RingOfFire,
-        };
 
-        ParticleState currentState = ParticleState.Smoke;
-
-        // The explosions effect works by firing projectiles up into the
-        // air, so we need to keep track of all the active projectiles.
+        // Keep track of all the active projectiles
         List<Projectile> projectiles = new List<Projectile>();
         TimeSpan timeToNextProjectile = TimeSpan.Zero;
 
-        // Random number generator for the fire effect.
+        // Random number generator
         Random random = new Random();
 
         //#################################
@@ -101,12 +88,11 @@ namespace SpaceAssault.Screens
 
            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
-            // Construct Particle
-            explosionParticles = new ExplosionParticleSystem();
+            // Construct Particles
+            borderParticles = new BorderParticleSettings();
             //explosionSmokeParticles = new ExplosionSmokeParticleSystem();
             //projectileTrailParticles = new ProjectileTrailParticleSystem();
             //SmokeParticles = new SmokeParticleSystem();
-            borderParticles = new BorderParticleSystem();
             dustParticles = new DustParticleSystem();
         }
 
@@ -173,11 +159,23 @@ namespace SpaceAssault.Screens
             _explosionSpawner.Update(gameTime);
 
             // Particles
-            //UpdateSmoke(gameTime);
-            //UpdateProjectiles(gameTime);
             dustParticles.Update(gameTime);
-            explosionParticles.Update(gameTime);
             UpdateBorder(gameTime);
+
+            foreach (ExplosionSystem explosion in explosionList)
+            {
+                explosion.Update(gameTime);
+
+                if (explosion._state == 2)
+                    explosionRemoveList.Add(explosionList.IndexOf(explosion));
+            }
+
+            foreach (int value in explosionRemoveList)
+            {
+                explosionList.RemoveAt(value);
+            }
+            explosionRemoveList.Clear();
+
 
 
             // if station dies go back to MainMenu
@@ -260,10 +258,15 @@ namespace SpaceAssault.Screens
             _waveBuilder.Draw(gameTime);
 
             // Particle
-            //SmokeParticles.Draw();
             dustParticles.Draw();
-            explosionParticles.Draw();
             borderParticles.Draw();
+
+            foreach (ExplosionSystem explosion in explosionList)
+            {
+                explosion.Draw();
+            }
+
+
             //if drone is dead fade to black
             if (_deadDroneAlpha > 0)
             {
@@ -344,7 +347,7 @@ namespace SpaceAssault.Screens
                             {
                                 float radius = 80;
                                 _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
-                                ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
+                                //ExplosionField(bullet.Position, new Vector3(0, 0, 0), radius, shipExplosionParticles);
                             }
                             ship.getHit(bullet.makeDmg);
                             _removeBullets.Add(bullet);
@@ -352,11 +355,9 @@ namespace SpaceAssault.Screens
 
                             if (ship.Health <= 0)
                             {
-                                explosionPosition = ship.Position;
-                                explosionTriggered = true;
+                                explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), new CircleExplosionSettings(), ship.Position, _duration, 50));
                                 PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
                             }
-
                             break;
                         }              
                 }
@@ -381,8 +382,7 @@ namespace SpaceAssault.Screens
                 {
                     if (Collider3D.IntersectionSphere(expl, ast))
                     {
-                        explosionPosition = ast.Position;
-                        explosionTriggered = true;
+                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
                         ast.IsDead = true;
                         _removeAsteroid.Add(ast);
                         PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
@@ -430,8 +430,7 @@ namespace SpaceAssault.Screens
 
                 if (Collider3D.IntersectionSphere(_station, ast))
                 {
-                    explosionPosition = ast.Position;
-                    explosionTriggered = true;
+                    explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
                     ast.IsDead = true;
                     _removeAsteroid.Add(ast);
                     _station.getHit(10);
@@ -472,35 +471,23 @@ namespace SpaceAssault.Screens
                 {
                     if (Collider3D.IntersectionSphere(bullet, ast))
                     {
-                        explosionPosition = ast.Position;
-                        explosionTriggered = true;
+                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
                         Global.HighScorePoints += 50;
                         PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
+
                         if (bullet._bulletType == Bullet.BulletType.BigJoe)
                         {
                             float radius = 80;
                             _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
-                            ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
+                            //ExplosionField(bullet.Position, new Vector3(0, 0, 0), radius, asteroidExplosionParticles);
                         }
                         if (ast.IsShiny)
                         {
                             Global.Money += 200;
                         }
                         break;
-                    }
-                }
-
-                if (explosionTriggered)
-                {
-                    explosionEffectDelta++;
-                    UpdateExplosions(gameTime, explosionPosition, Vector3.Zero);
-
-                    if (explosionEffectDelta > 3)
-                    {
-                        explosionTriggered = false;
-                        explosionEffectDelta = 0;
                     }
                 }
 
@@ -543,37 +530,28 @@ namespace SpaceAssault.Screens
         //#################################
         // Helper RndPoint
         //#################################
-        Vector3 RandomPointOnCircle(float radius, float height)
+        Vector3 RandomPointOnCircle(float radius)
         {
             double angle = random.NextDouble() * Math.PI * 2;
 
             float x = (float)Math.Cos(angle);
             float y = (float)Math.Sin(angle);
 
-            return new Vector3(x * radius, 0, y * radius + height);
+            return new Vector3(x * radius, 0, y * radius);
         }
 
-        //#################################
-        // Helper Update - Explosion
-        //#################################
-        void UpdateExplosions(GameTime gameTime, Vector3 position, Vector3 velocity)
-        {
-            // Create a new projectile once per second
-            //projectiles.Add(new Projectile(explosionParticles,explosionSmokeParticles,projectileTrailParticles));
-            explosionParticles.AddParticle(position, velocity);
-        }
 
         //#################################
-        // Helper ExplosionCircle
+        // Helper ExplosionField
         //#################################
-        void ExplosionCircle(Vector3 pos, Vector3 velocity, float radius)
+        void ExplosionField(Vector3 pos, Vector3 velocity, float radius, ParticleSystem system)
         {
             float angle = 0.0f;
             for (int i = 0; i <= radius; i += 25)
             {
                 while (angle < 2 * Math.PI)
                 {
-                    explosionParticles.AddParticle(pos + new Vector3(i * (float)Math.Cos(angle), 0, i * (float)Math.Sin(angle)), velocity);
+                    system.AddParticle(pos + new Vector3(i * (float)Math.Cos(angle), 0, i * (float)Math.Sin(angle)), velocity);
                     angle += 0.2f;
                 }
                 angle = 0;
@@ -605,28 +583,27 @@ namespace SpaceAssault.Screens
         //#################################
         // Helper Update - Smoke
         //#################################
+        /**
         void UpdateSmoke(GameTime gameTime)
         {
             // This is trivial: we just create one new smoke particle per frame.
             SmokeParticles.AddParticle(Vector3.Zero, Vector3.Zero);
             SmokeParticles.Update(gameTime);
         }
+         **/
 
         //#################################
-        // Helper Update - Fire
+        // Helper Update - Border
         //#################################
         void UpdateBorder(GameTime gameTime)
         {
             const int borderParticlesPerFrame = 100;
 
-            // Create a number of fire particles, randomly positioned around a circle.
+            // Create a number of border particles, randomly positioned around a circle.
             for (int i = 0; i < borderParticlesPerFrame; i++)
             {
-                borderParticles.AddParticle(RandomPointOnCircle(Global.MapSpawnRadius, 40), Vector3.Zero);
+                borderParticles.AddParticle(RandomPointOnCircle(Global.MapSpawnRadius), Vector3.Zero);
             }
-            // Create one smoke particle per frmae, too.
-            //SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
-
             borderParticles.Update(gameTime);
         }
 
