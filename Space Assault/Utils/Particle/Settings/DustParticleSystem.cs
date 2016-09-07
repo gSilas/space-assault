@@ -14,7 +14,7 @@ namespace SpaceAssault.Utils.Particle.Settings
 
         protected override void InitializeSettings(ParticleSettings settings)
         {
-            settings.TextureName = "engineBlue";
+            settings.TextureName = "dust";
 
             settings.MaxParticles = 50;
 
