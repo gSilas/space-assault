@@ -93,9 +93,9 @@ namespace SpaceAssault.Screens
 
 
             float _distance = Vector2.Distance(new Vector2(droneFleet.GetActiveDrone().Position.X, droneFleet.GetActiveDrone().Position.Z), Vector2.Zero);
-            if (_distance > Global.MapSpawnRadius && _distance < Global.MapSpawnRadius + 80)
+            if (_distance > Global.MapRingRadius && _distance < Global.MapRingRadius + 80)
                 _alertDialog.Draw("ALERT! OUT OF RANGE", Color.OrangeRed);
-            else if (_distance > Global.MapSpawnRadius + 80)
+            else if (_distance > Global.MapRingRadius + 80)
                 _alertDialog.Draw("ALERT! SHIP FAILURE", Color.Red);
 
             if (Global.Money > 0)

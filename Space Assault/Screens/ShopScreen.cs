@@ -477,7 +477,7 @@ namespace SpaceAssault.Screens
             ShopText.TryGetValue(selectedEntry, out entry);
             _itemDialog.Draw(entry);
 
-            _frame.Draw(false);
+            _frame.Draw();
         }
     }
 }

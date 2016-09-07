@@ -8,7 +8,6 @@ namespace SpaceAssault.Screens.UI
     {
         private Texture2D _frame;
         private Texture2D _edge;
-        private Texture2D _frameButtons;
         private Texture2D _space;
         private Point _pos;
         private int _x;
@@ -39,7 +38,6 @@ namespace SpaceAssault.Screens.UI
             _space = Global.ContentManager.Load<Texture2D>("Images/UI/dialog_space");
             _edge = Global.ContentManager.Load<Texture2D>("Images/UI/dialog_edge");
             _frame = Global.ContentManager.Load<Texture2D>("Images/UI/dialog_frame");
-            _frameButtons = Global.ContentManager.Load<Texture2D>("Images/UI/dialog_options");
             _size = new Point(_frame.Width / _scale, _frame.Height / _scale);
         }
 
@@ -66,14 +64,7 @@ namespace SpaceAssault.Screens.UI
 
             for (int x = _x + _size.X; x < _width + _x; x += _size.X)
             {
-                if(x != (_width + _x - _size.X))
-                {
-                    Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, _y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
-                }
-                else
-                {
-                    Global.UIBatch.Draw(_frameButtons, new Rectangle(new Point(_width + _x - _size.X, _y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
-                }
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, _y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
                 Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, _y + _height), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
             }
            
@@ -124,14 +115,7 @@ namespace SpaceAssault.Screens.UI
 
             for (int x = _x + _size.X; x < _width + _x; x += _size.X)
             {
-                if (x != (_width + _x - _size.X))
-                {
-                    Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, _y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
-                }
-                else
-                {
-                    Global.UIBatch.Draw(_frameButtons, new Rectangle(new Point(_width + _x - _size.X, _y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
-                }
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, _y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
                 Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, _y + _height), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
             }
 
@@ -182,14 +166,7 @@ namespace SpaceAssault.Screens.UI
 
             for (int x = pos.X + _size.X; x < _width + pos.X; x += _size.X)
             {
-                if (x != (_width + pos.X - _size.X))
-                {
-                    Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
-                }
-                else
-                {
-                    Global.UIBatch.Draw(_frameButtons, new Rectangle(new Point(_width + pos.X - _size.X, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
-                }
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
                 Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, pos.Y + _height), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
             }
 
@@ -240,14 +217,7 @@ namespace SpaceAssault.Screens.UI
 
             for (int x = pos.X + _size.X; x < _width + pos.X; x += _size.X)
             {
-                if (x != (_width + pos.X - _size.X))
-                {
-                    Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
-                }
-                else
-                {
-                    Global.UIBatch.Draw(_frameButtons, new Rectangle(new Point(_width + pos.X - _size.X, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
-                }
+                Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, pos.Y), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
                 Global.UIBatch.Draw(_frame, new Rectangle(new Point(x, pos.Y + _height), _size), null, new Color(255, 255, 255, _alpha), 0.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
             }
 

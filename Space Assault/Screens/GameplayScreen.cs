@@ -288,11 +288,7 @@ namespace SpaceAssault.Screens
 
             //FRAME & UI ALWAYS LAST
             _ui.Draw(_droneFleet);
-            if (_station._health > 1000)
-            {
-                _frame.Draw(false);
-            }
-            else { _frame.Draw(true); }
+            _frame.Draw();
         }
 
         //#################################

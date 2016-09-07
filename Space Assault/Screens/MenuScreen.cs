@@ -266,7 +266,7 @@ namespace SpaceAssault.Screens
         public override void Draw(GameTime gameTime)
         {
             drawMenuEntries(gameTime);
-            _frame.Draw(false);
+            _frame.Draw();
         }
     }
 }
