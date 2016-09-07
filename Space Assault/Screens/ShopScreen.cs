@@ -49,6 +49,7 @@ namespace SpaceAssault.Screens
 
         private ISound _accept;
         private ISound _denie;
+        private ISound _UpAndDown;
         //#################################
         // Constructor
         //#################################
@@ -133,6 +134,7 @@ namespace SpaceAssault.Screens
 
             MenuAcceptSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/Blip_Select.wav", StreamMode.AutoDetect, true);
             MenuDenieSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointDenie.wav", StreamMode.AutoDetect, true);
+            OkClick = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointAccept.wav", StreamMode.AutoDetect, true);
             GoBack = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/GoBack2.wav", StreamMode.AutoDetect, true);
 
         }
@@ -423,6 +425,13 @@ namespace SpaceAssault.Screens
             // Move to the previous menu entry?
             if (input.IsMenuUp())
             {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+
+                _UpAndDown = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
+                _UpAndDown.Volume = 0.5f;
+                _UpAndDown.Paused = false;
+
                 selectedEntry--;
 
                 if (selectedEntry < 0)
@@ -432,6 +441,13 @@ namespace SpaceAssault.Screens
             // Move to the next menu entry?
             if (input.IsMenuDown())
             {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+               
+                _UpAndDown = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
+                _UpAndDown.Volume = 0.5f;
+                _UpAndDown.Paused = false;
+
                 selectedEntry++;
 
                 if (selectedEntry >= MenuEntries.Count)
