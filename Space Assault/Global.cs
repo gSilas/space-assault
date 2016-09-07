@@ -47,8 +47,8 @@ namespace SpaceAssault
         //SETTINGS
         public static int FleetSpawnTime = 5; // 1 Fleet/5 sec
         public static int AsteroidSpawnTime = 2; // 1/2 AsteroidChunk/sec
-        public static int MapRingRadius = 700;
-        public static int MapSpawnRadius = MapRingRadius + 500;
+        public static int MapRingRadius = 800;
+        public static int MapSpawnRadius = MapRingRadius + 300;
         public static int MapDespawnRadius = MapSpawnRadius + 500;
         public static Vector3 CameraPosition = new Vector3(0,350,350);
 

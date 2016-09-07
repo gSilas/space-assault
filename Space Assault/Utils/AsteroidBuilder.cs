@@ -28,6 +28,35 @@ namespace SpaceAssault.Utils
         public void LoadContent()
         {
            _model = Global.ContentManager.Load<Model>("Models/asteroid2");
+            int movespeed;
+            double angle;
+            int noise;
+            int astAngle;
+            int shinyness;
+            for (int i = 0; i < 40; i++)
+            {
+                movespeed = _rand.Next(10, 100);
+                astAngle = _rand.Next(-360, 360);
+                noise = _rand.Next(0, 90);
+                shinyness = _rand.Next(0, 14);
+                angle = _rand.NextDouble() * Math.PI * 2;
+                Vector3 position = new Vector3(Global.MapRingRadius * (float)Math.Cos(angle), 0, Global.MapSpawnRadius * (float)Math.Sin(angle));
+                Vector3 direction = new Vector3(Global.MapRingRadius * (float)Math.Cos(angle + 180d), 0, Global.MapSpawnRadius * (float)Math.Sin(angle + 180d)) - position;
+                direction.Normalize();
+                Asteroid ast;
+                if (shinyness == 10)
+                {
+                    ast = new Asteroid(_model, position, astAngle, direction, (float)movespeed / 100, true);
+                }
+                else
+                {
+                    ast = new Asteroid(_model, position, astAngle, direction, (float)movespeed / 100, false);
+                }
+                ast.LoadContent();
+                _asteroidsToAdd.Add(ast);
+            }
+            _asteroidList.AddRange(_asteroidsToAdd);
+            _asteroidsToAdd.Clear();
         }
 
         public void Update(GameTime gameTime, Vector3 targetPosition)
@@ -78,7 +107,7 @@ namespace SpaceAssault.Utils
             }
             */
             double angle;
-            int size = _rand.Next(0, 11);
+            int size = _rand.Next(0, 21);
             int noise;
             int astAngle;
             int shinyness;
