@@ -566,3 +566,9 @@
 /processorParam:TextureFormat=Color
 /build:Images/dust2.png
 
+#begin Fonts\raider_crusader\raidercrusader.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts\raider_crusader\raidercrusader.spritefont
+
