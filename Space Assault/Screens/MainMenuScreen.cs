@@ -71,7 +71,7 @@ namespace SpaceAssault.Screens
             Accept.Volume = 1f;
             Accept.Paused = false;
 
-            ScreenManager.AddScreen(new HighscoreMenuScreen());
+            ScreenManager.AddScreen(new HighscoreMenuScreen(true));
         }
 
         // Event handler for when the Credits menu entry is selected.
