@@ -140,7 +140,7 @@ namespace SpaceAssault.Screens
             _explosionSource2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion2.wav", StreamMode.AutoDetect, true);
             _explosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion3.wav", StreamMode.AutoDetect, true);
 
-            _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/OkClick.wav", StreamMode.AutoDetect, true);
+            _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OkClick.wav", StreamMode.AutoDetect, true);
 
             _asteroidField.LoadContent();
 
@@ -222,8 +222,8 @@ namespace SpaceAssault.Screens
                     _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                     ISound Open;
                     Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
-                    //Open.Volume = 1f;
-                    //Open.Paused = false;
+                    Open.Volume = 1f;
+                    Open.Paused = false;
                     ScreenManager.AddScreen(new ShopScreen(_droneFleet, _station));
                 }
    
@@ -234,8 +234,8 @@ namespace SpaceAssault.Screens
                 _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                 ISound Open;
                 Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
-                //Open.Volume = 1f;
-                //Open.Paused = false;
+                Open.Volume = 1f;
+                Open.Paused = false;
 
                 nextIndex++;
                 TutorialText.TryGetValue(nextIndex, out tutorialMessage);
@@ -248,8 +248,8 @@ namespace SpaceAssault.Screens
                 _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                 ISound Open;
                 Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
-                //Open.Volume = 1f;
-                //Open.Paused = false;
+                Open.Volume = 1f;
+                Open.Paused = false;
 
                 nextIndex--;
                 TutorialText.TryGetValue(nextIndex, out tutorialMessage);
