@@ -79,7 +79,7 @@ namespace SpaceAssault.Entities
             _shield = _maxShield;
             _health = _maxHealth;
             _isNotDead = true;
-            _maxRange = Global.MapSpawnRadius + 200;
+            _maxRange = Global.MapRingRadius + 200;
 
             GunPrimary = new Weapon(200d);
 
