@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using System;
 
 namespace SpaceAssault.Screens
@@ -13,13 +14,9 @@ namespace SpaceAssault.Screens
         MenuEntry fullscreenMenuEntry;
         MenuEntry frameCounterMenuEntry;
         MenuEntry speakerVolumeMenuEntry;
-
-        enum enumMenu
-        {
-            enum1,
-            enum2,
-            enum3,
-        }
+        MenuEntry uiColorRMenuEntry;
+        MenuEntry uiColorGMenuEntry;
+        MenuEntry uiColorBMenuEntry;
 
         //static enumMenu currentEnum = enumMenu.enum1;
         //static string[] languages = { "English", "Deutsch" };
@@ -36,6 +33,9 @@ namespace SpaceAssault.Screens
             fullscreenMenuEntry = new MenuEntry(string.Empty);
             frameCounterMenuEntry = new MenuEntry(string.Empty);
             speakerVolumeMenuEntry = new MenuEntry(string.Empty);
+            uiColorRMenuEntry = new MenuEntry(string.Empty);
+            uiColorGMenuEntry = new MenuEntry(string.Empty);
+            uiColorBMenuEntry = new MenuEntry(string.Empty);
             SetMenuEntryText();
             MenuEntry back = new MenuEntry("Back");
 
@@ -46,8 +46,13 @@ namespace SpaceAssault.Screens
             fullscreenMenuEntry.Selected += fullscreenMenuEntrySelected;
             frameCounterMenuEntry.Selected += frameCounterMenuEntrySelected;
             speakerVolumeMenuEntry.Selected += speakerVolumeMenuEntrySelected;
+            uiColorRMenuEntry.Selected += uiColorRMenuEntrySelected;
+            uiColorGMenuEntry.Selected += uiColorGMenuEntrySelected;
+            uiColorBMenuEntry.Selected += uiColorBMenuEntrySelected;
             back.Selected += OnCancel;
-
+            uiColorRMenuEntry.IsIncreasingSelect = true;
+            uiColorGMenuEntry.IsIncreasingSelect = true;
+            uiColorBMenuEntry.IsIncreasingSelect = true;
             // Add entries to the menu.
             //MenuEntries.Add(enumMenuEntry);
             //MenuEntries.Add(languageMenuEntry);
@@ -55,6 +60,9 @@ namespace SpaceAssault.Screens
             MenuEntries.Add(fullscreenMenuEntry);
             MenuEntries.Add(frameCounterMenuEntry);
             MenuEntries.Add(speakerVolumeMenuEntry);
+            MenuEntries.Add(uiColorRMenuEntry);
+            MenuEntries.Add(uiColorGMenuEntry);
+            MenuEntries.Add(uiColorBMenuEntry);
             MenuEntries.Add(back);
         }
 
@@ -68,6 +76,9 @@ namespace SpaceAssault.Screens
             fullscreenMenuEntry.Text = "Fullscreen: " + (Global.GraphicsManager.IsFullScreen ? "on" : "off");
             frameCounterMenuEntry.Text = "FPS Counter: " + (Global.FrameCounterIsEnabled ? "on" : "off");
             speakerVolumeMenuEntry.Text = "Volume: " + (Global.SpeakerVolume);
+            uiColorRMenuEntry.Text = "Color R: " + (Global.UIColor.R);
+            uiColorGMenuEntry.Text = "Color G: " + (Global.UIColor.G);
+            uiColorBMenuEntry.Text = "Color B: " + (Global.UIColor.B);
         }
 
         // Event handler for when the Fullscreen menu entry is selected.
@@ -92,6 +103,21 @@ namespace SpaceAssault.Screens
             else
                 Global.SpeakerVolume += 1;
 
+            SetMenuEntryText();
+        }
+        void uiColorRMenuEntrySelected(object sender, EventArgs e)
+        {
+            Global.UIColor.R+=1;
+            SetMenuEntryText();
+        }
+        void uiColorGMenuEntrySelected(object sender, EventArgs e)
+        {
+            Global.UIColor.G+=1;
+            SetMenuEntryText();
+        }
+        void uiColorBMenuEntrySelected(object sender, EventArgs e)
+        {
+            Global.UIColor.B+=1;
             SetMenuEntryText();
         }
 

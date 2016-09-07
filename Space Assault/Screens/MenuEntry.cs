@@ -22,6 +22,7 @@ namespace SpaceAssault.Screens
         // each frame in Update.
         Vector2 position;
 
+        public bool IsIncreasingSelect = false;
 
         // Gets or sets the text of this menu entry.
         public string Text

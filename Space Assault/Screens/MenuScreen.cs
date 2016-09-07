@@ -125,6 +125,10 @@ namespace SpaceAssault.Screens
             {
                 OnSelectEntry(selectedEntry);
             }
+            if (menuEntries[selectedEntry].IsIncreasingSelect && input.IsMenuIncreasingSelect())
+            {
+                OnSelectEntry(selectedEntry);
+            }
             else if (input.IsMenuCancel())
             {
                 OnCancel();

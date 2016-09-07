@@ -17,6 +17,7 @@ namespace SpaceAssault.Screens.UI
         private Point _size;
         private int _scale;
         private bool _shadow;
+        private bool _transparent;
         private Color _uiColor;
 
         public Dialog(int x, int y, int height, int width,int scale,bool shadow, bool transparent)
@@ -28,10 +29,8 @@ namespace SpaceAssault.Screens.UI
             _width = width;
             _scale = scale;
             _shadow = shadow;
+            _transparent = transparent;
             _uiColor = Global.UIColor;
-            if (transparent)
-                _uiColor.A = 100;
-
         }
 
         public void LoadContent()
@@ -45,7 +44,9 @@ namespace SpaceAssault.Screens.UI
         public void Draw(string msg)
         {
             Global.UIBatch.Begin();
-
+            _uiColor = Global.UIColor;
+            if (_transparent)
+                _uiColor.A = 100;
             if (_shadow)
             {
                 for (int x = _x - 10; x < _width + _x; x += _size.X)
@@ -96,7 +97,9 @@ namespace SpaceAssault.Screens.UI
         public void Draw(string msg, Color msgColor)
         {
             Global.UIBatch.Begin();
-
+            _uiColor = Global.UIColor;
+            if (_transparent)
+                _uiColor.A = 100;
             if (_shadow)
             {
                 for (int x = _x - 10; x < _width + _x; x += _size.X)
@@ -147,7 +150,9 @@ namespace SpaceAssault.Screens.UI
         public void Draw(Point pos, string msg)
         {
             Global.UIBatch.Begin();
-
+            _uiColor = Global.UIColor;
+            if (_transparent)
+                _uiColor.A = 100;
             if (_shadow)
             {
                 for (int x = pos.X - 10; x < _width + pos.X; x += _size.X)
@@ -198,7 +203,9 @@ namespace SpaceAssault.Screens.UI
         public void Draw(Point pos, string msg, Color msgColor)
         {
             Global.UIBatch.Begin();
-
+            _uiColor = Global.UIColor;
+            if (_transparent)
+                _uiColor.A = 100;
             if (_shadow)
             {
                 for (int x = pos.X - 10; x < _width + pos.X; x += _size.X)

@@ -30,7 +30,6 @@ namespace SpaceAssault.ScreenManagers
                         LastKeyboardState.IsKeyUp(key));
         }
 
-
         // Checks for a "menu select" input action.
         public bool IsMenuSelect()
         {
@@ -38,6 +37,11 @@ namespace SpaceAssault.ScreenManagers
                    IsNewKeyPress(Keys.Enter);
         }
 
+        public bool IsMenuIncreasingSelect()
+        {
+            return CurrentKeyboardState.IsKeyDown(Keys.Space) ||
+                   CurrentKeyboardState.IsKeyDown(Keys.Enter);
+        }
 
         // Checks for a "menu cancel" input action.
         public bool IsMenuCancel()

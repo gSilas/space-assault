@@ -52,6 +52,6 @@ namespace SpaceAssault
         public static int MapDespawnRadius = MapSpawnRadius + 500;
         public static Vector3 CameraPosition = new Vector3(0,350,350);
 
-        public static Color UIColor = Color.IndianRed;
+        public static Color UIColor = new Color(0,0,0,255);
     }
 }
