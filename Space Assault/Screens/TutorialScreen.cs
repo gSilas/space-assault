@@ -114,7 +114,7 @@ namespace SpaceAssault.Screens
             TutorialText.Add(10, "Left Mouse Button\n-> Shoots your Laser\nRight Mouse Button\n-> Shoots your Torpedo\n");
             TutorialText.Add(11, "I'll now give you your\ncontrols back! But stay\nin radio range.");
             TutorialText.Add(12, "I also heard of incoming\nasteroids. The comets\nwith the blue trail\noffer a nice income.");
-            TutorialText.Add(13, "Press [X] to start your\n mission!");
+            TutorialText.Add(13, "Press [X] to start your\nmission!");
             TutorialText.TryGetValue(0, out tutorialMessage);
              }
 
