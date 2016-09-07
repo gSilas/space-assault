@@ -222,7 +222,7 @@ namespace SpaceAssault.Screens
                     _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                     ISound Open;
                     Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
-                    Open.Volume = 1f;
+                    Open.Volume = Global.SpeakerVolume/10;
                     Open.Paused = false;
                     ScreenManager.AddScreen(new ShopScreen(_droneFleet, _station));
                 }
@@ -236,7 +236,7 @@ namespace SpaceAssault.Screens
                 _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                 ISound Open;
                 Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
-                Open.Volume = 1f;
+                Open.Volume = Global.SpeakerVolume / 10;
                 Open.Paused = false;
                 ScreenManager.AddScreen(new PauseMenuScreen());
             }
@@ -305,22 +305,22 @@ namespace SpaceAssault.Screens
             {
                 case 0:
                     var _explosionSound = _engine.Play3D(_explosionSource, pos.X, pos.Y, pos.Z, false, true, true);
-                    _explosionSound.Volume = 5f;
+                    _explosionSound.Volume = Global.SpeakerVolume / 10;
                     _explosionSound.Paused = false;
                     break;
                 case 1:
                     var _explosionSound1 = _engine.Play3D(_explosionSource1, pos.X, pos.Y, pos.Z, false, true, true);
-                    _explosionSound1.Volume = 5f;
+                    _explosionSound1.Volume = Global.SpeakerVolume / 10;
                     _explosionSound1.Paused = false;
                     break;
                 case 2:
                     var _explosionSound2 = _engine.Play3D(_explosionSource2, pos.X, pos.Y, pos.Z, false, true, true);
-                    _explosionSound2.Volume = 5f;
+                    _explosionSound2.Volume = Global.SpeakerVolume / 10;
                     _explosionSound2.Paused = false;
                     break;
                 case 3:
                     var _explosionSound3 = _engine.Play3D(_explosionSource3, pos.X, pos.Y, pos.Z, false, true, true);
-                    _explosionSound3.Volume = 5f;
+                    _explosionSound3.Volume = Global.SpeakerVolume / 10;
                     _explosionSound3.Paused = false;
                     break;
             }

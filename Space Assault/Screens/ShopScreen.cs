@@ -176,7 +176,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
 
                 _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
-                _accept.Volume = 1f;
+                _accept.Volume = Global.SpeakerVolume / 10;
                 _accept.Paused = false;
 
             }
@@ -186,7 +186,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                
                 _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
-                _denie.Volume = 1f;
+                _denie.Volume = Global.SpeakerVolume / 10;
                 _denie.Paused = false;
 
             }
@@ -210,7 +210,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
 
                 _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
-                _accept.Volume = 1f;
+                _accept.Volume = Global.SpeakerVolume / 10;
                 _accept.Paused = false;
             }
             else
@@ -219,7 +219,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
               
                 _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
-                _denie.Volume = 1f;
+                _denie.Volume = Global.SpeakerVolume / 10;
                 _denie.Paused = false;
             }
         }
@@ -242,7 +242,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
 
                 _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
-                _accept.Volume = 1f;
+                _accept.Volume = Global.SpeakerVolume / 10;
                 _accept.Paused = false;
             }
             else
@@ -251,7 +251,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
          
                 _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
-                _denie.Volume = 1f;
+                _denie.Volume = Global.SpeakerVolume / 10;
                 _denie.Paused = false;
             }
         }
@@ -274,7 +274,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
 
                 _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
-                _accept.Volume = 1f;
+                _accept.Volume = Global.SpeakerVolume / 10;
                 _accept.Paused = false;
             }
             else
@@ -283,7 +283,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
    
                 _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
-                _denie.Volume = 1f;
+                _denie.Volume = Global.SpeakerVolume / 10;
                 _denie.Paused = false;
             }
         }
@@ -305,7 +305,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
 
                 _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
-                _accept.Volume = 1f;
+                _accept.Volume = Global.SpeakerVolume / 10;
                 _accept.Paused = false;
             }
             else
@@ -314,7 +314,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
     
                 _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
-                _denie.Volume = 1f;
+                _denie.Volume = Global.SpeakerVolume / 10;
                 _denie.Paused = false;
             }
         }
@@ -336,7 +336,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
 
                 _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
-                _accept.Volume = 1f;
+                _accept.Volume = Global.SpeakerVolume / 10;
                 _accept.Paused = false;
             }
             else
@@ -345,7 +345,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
    
                 _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
-                _denie.Volume = 1f;
+                _denie.Volume = Global.SpeakerVolume / 10;
                 _denie.Paused = false;
             }
         }
@@ -366,7 +366,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
 
                 _accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
-                _accept.Volume = 1f;
+                _accept.Volume = Global.SpeakerVolume / 10;
                 _accept.Paused = false;
             }
             else
@@ -375,7 +375,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
           
                 _denie = SoundEngine.Play3D(MenuDenieSound, 0, 0 + 15f, 0, false, true, false);
-                _denie.Volume = 1f;
+                _denie.Volume = Global.SpeakerVolume / 10;
                 _denie.Paused = false;
             }
         }
@@ -429,7 +429,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
 
                 _UpAndDown = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
-                _UpAndDown.Volume = 0.5f;
+                _UpAndDown.Volume = Global.SpeakerVolume / 10;
                 _UpAndDown.Paused = false;
 
                 selectedEntry--;
@@ -445,7 +445,7 @@ namespace SpaceAssault.Screens
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                
                 _UpAndDown = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
-                _UpAndDown.Volume = 0.5f;
+                _UpAndDown.Volume = Global.SpeakerVolume / 10;
                 _UpAndDown.Paused = false;
 
                 selectedEntry++;
