@@ -9,7 +9,6 @@ namespace SpaceAssault.Screens
         MenuEntry back;
         bool _enter;
 
-        private Vector2 _fieldPos;
         private string _entryString;
         private int _elapsedTimeMilliseconds;
 
@@ -25,7 +24,6 @@ namespace SpaceAssault.Screens
             // Add entries to the menu.
             MenuEntries.Add(back);
 
-            _fieldPos = new Vector2(100, Global.PreferredBackBufferHeight - 100);
             _entryString = "";
             _enter = enter;
         }
@@ -106,7 +104,7 @@ namespace SpaceAssault.Screens
 
                 if (_enter)
                 {
-                    Global.SpriteBatch.DrawString(Global.GameFont, _entryString, _fieldPos + new Vector2(20, 20), Color.Black);
+                    Global.SpriteBatch.DrawString(Global.GameFont, _entryString, new Vector2(spawnPointX, spawnPointY + 11 * zeilenAbstand), Color.White);
                 }
             }
         }
