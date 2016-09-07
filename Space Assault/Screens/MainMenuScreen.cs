@@ -42,7 +42,7 @@ namespace SpaceAssault.Screens
             SoundEngine.SetListenerPosition(new Vector3D(0,0,0), new Vector3D(0, 0, 1));
             ISound Accept;
             Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
-            Accept.Volume = 1f;
+            Accept.Volume = Global.SpeakerVolume / 10;
             Accept.Paused = false;
 
             LoadingScreen.Load(ScreenManager, true, new GameplayScreen());
@@ -55,7 +55,7 @@ namespace SpaceAssault.Screens
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
             Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
-            Accept.Volume = 1f;
+            Accept.Volume = Global.SpeakerVolume / 10;
             Accept.Paused = false;
 
             ScreenManager.AddScreen(new OptionsMenuScreen());
@@ -68,7 +68,7 @@ namespace SpaceAssault.Screens
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
             Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
-            Accept.Volume = 1f;
+            Accept.Volume = Global.SpeakerVolume / 10;
             Accept.Paused = false;
 
             ScreenManager.AddScreen(new HighscoreMenuScreen(true));
@@ -81,7 +81,7 @@ namespace SpaceAssault.Screens
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
             Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
-            Accept.Volume = 1f;
+            Accept.Volume = Global.SpeakerVolume / 10;
             Accept.Paused = false;
 
             ScreenManager.AddScreen(new CreditsMenuScreen());
@@ -95,7 +95,7 @@ namespace SpaceAssault.Screens
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
             Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
-            Accept.Volume = 0.5f;
+            Accept.Volume = Global.SpeakerVolume / 10;
             Accept.Paused = false;
 
             const string message = "Are you sure you want to exit?";
@@ -113,7 +113,7 @@ namespace SpaceAssault.Screens
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
             Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
-            Accept.Volume = 0.5f;
+            Accept.Volume = Global.SpeakerVolume / 10;
             Accept.Paused = false;
 
             LoadingScreen.Load(ScreenManager, true, new TutorialScreen());
@@ -127,7 +127,7 @@ namespace SpaceAssault.Screens
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Denie;
             Denie = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
-            Denie.Volume = 0.5f;
+            Denie.Volume = Global.SpeakerVolume / 10;
             Denie.Paused = false;
             ScreenManager.Game.Exit();
         }

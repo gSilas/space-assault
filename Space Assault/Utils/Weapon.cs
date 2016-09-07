@@ -69,7 +69,7 @@ namespace SpaceAssault.Utils
                 Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
                 _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
                 ISound _shootSound = _engine.Play3D(getBullet(bullet).soundSource, curListenerPos.X, curListenerPos.Y + 15f, curListenerPos.Z, false, true, true);
-                _shootSound.Volume = 0.5f;
+                _shootSound.Volume = Global.SpeakerVolume / 10;
                 _shootSound.Paused = false;
 
                 // adding bullet to ref list

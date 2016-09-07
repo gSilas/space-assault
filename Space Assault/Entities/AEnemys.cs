@@ -96,7 +96,7 @@ namespace SpaceAssault.Entities
             Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
             Engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
             ISound Hit = Engine.Play3D(HitSound, curListenerPos.X, curListenerPos.Y + 15f, curListenerPos.Z, false, true, false);
-            Hit.Volume = 1f;
+            Hit.Volume = Global.SpeakerVolume / 10;
             Hit.Paused = false;
             
 
