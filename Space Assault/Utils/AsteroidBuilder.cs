@@ -40,8 +40,8 @@ namespace SpaceAssault.Utils
                 noise = _rand.Next(0, 90);
                 shinyness = _rand.Next(0, 14);
                 angle = _rand.NextDouble() * Math.PI * 2;
-                Vector3 position = new Vector3(Global.MapRingRadius * (float)Math.Cos(angle), 0, Global.MapSpawnRadius * (float)Math.Sin(angle));
-                Vector3 direction = new Vector3(Global.MapRingRadius * (float)Math.Cos(angle + 180d), 0, Global.MapSpawnRadius * (float)Math.Sin(angle + 180d)) - position;
+                Vector3 position = new Vector3((Global.MapRingRadius - 200 )* (float)Math.Cos(angle), 0, Global.MapSpawnRadius * (float)Math.Sin(angle));
+                Vector3 direction = new Vector3((Global.MapRingRadius - 200 )* (float)Math.Cos(angle + 180d), 0, Global.MapSpawnRadius * (float)Math.Sin(angle + 180d)) - position;
                 direction.Normalize();
                 Asteroid ast;
                 if (shinyness == 10)
