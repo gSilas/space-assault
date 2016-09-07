@@ -264,7 +264,7 @@ namespace SpaceAssault.Utils
 
             if (distanceToStation < 200)
                 curShip.flyingAwayFromStation = true;
-            else if (distanceToStation > Global.MapSpawnRadius)
+            else if (distanceToStation > Global.MapRingRadius)
                 curShip.flyingAwayFromStation = false;
 
             //flying away from drone
