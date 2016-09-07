@@ -40,7 +40,8 @@ namespace SpaceAssault
             Global.BackgroundBatch = new SpriteBatch(Global.GraphicsManager.GraphicsDevice);
             Global.UIBatch = new SpriteBatch(Global.GraphicsManager.GraphicsDevice);
 
-            Global.GameFont = Global.ContentManager.Load<SpriteFont>("Fonts/menufont");
+            //Global.GameFont = Global.ContentManager.Load<SpriteFont>("Fonts/menufont");
+            Global.GameFont = Global.ContentManager.Load<SpriteFont>("Fonts/pc_senior/pcsenior");
             Global.DialogFont = Global.ContentManager.Load<SpriteFont>("Fonts/pc_senior/pcsenior");
             base.LoadContent();
         }
