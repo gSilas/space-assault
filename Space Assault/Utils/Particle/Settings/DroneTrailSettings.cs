@@ -1,22 +1,25 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+
 using System;
+using Microsoft.Xna.Framework;
 
 namespace SpaceAssault.Utils.Particle.Settings
 {
-    class ShinyParticleSettings : ParticleSystem
+    /// <summary>
+    /// Custom particle system for leaving smoke trails behind the rocket projectiles.
+    /// </summary>
+    class DroneTrailSettings : ParticleSystem
     {
-   
-        public ShinyParticleSettings()
+        public DroneTrailSettings()
         { }
+
 
         protected override void InitializeSettings(ParticleSettings settings)
         {
             settings.TextureName = "engineBlue";
 
-            settings.MaxParticles = 250;
+            settings.MaxParticles = 300;
 
-            settings.Duration = TimeSpan.FromSeconds(0.8);
+            settings.Duration = TimeSpan.FromSeconds(0.2);
 
             settings.DurationRandomness = 0;
 
@@ -28,8 +31,8 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinVerticalVelocity = -1;
             settings.MaxVerticalVelocity = 1;
 
-            settings.MinColor = new Color(155, 255, 155, 10);
-            settings.MaxColor = new Color(205, 255, 200, 50);
+            settings.MinColor = new Color(155, 255, 155, 70);
+            settings.MaxColor = new Color(205, 255, 200, 100);
 
             settings.MinRotateSpeed = -4;
             settings.MaxRotateSpeed = 4;
@@ -39,9 +42,6 @@ namespace SpaceAssault.Utils.Particle.Settings
 
             settings.MinEndSize = 1;
             settings.MaxEndSize = 3;
-
-            // Use additive blending.
-            settings.BlendState = BlendState.Additive;
         }
     }
 }

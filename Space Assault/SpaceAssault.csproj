@@ -91,6 +91,7 @@
     <Compile Include="Utils\Particle\ExplosionSystem.cs" />
     <Compile Include="Utils\Particle\Settings\CircleExplosionSettings.cs" />
     <Compile Include="Utils\Particle\Settings\DroneTrail.cs" />
+    <Compile Include="Utils\Particle\Settings\DroneTrailSettings.cs" />
     <Compile Include="Utils\Particle\Settings\DustParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\ShinyParticleSettings.cs" />
     <Compile Include="Utils\Particle\Settings\AsteroidExplosionSettings.cs" />
