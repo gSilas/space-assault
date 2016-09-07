@@ -94,12 +94,12 @@ namespace SpaceAssault.Utils
             {
                 if(ship.GetType() == typeof(EnemyFighter))
                 {
-                    ship.Health = fighterStats[0] + 5;
-                    ship.gunMakeDmg = fighterStats[1] + 2;
-                    ship.KillMoney = fighterStats[2] + 5;
-                    fighterStats[0] = ship.Health;
-                    fighterStats[1] = ship.gunMakeDmg;
-                    fighterStats[2] = ship.KillMoney;
+                    fighterStats[0] += 5;
+                    fighterStats[1] += 2;
+                    fighterStats[2] += 5;
+                    ship.Health = fighterStats[0];
+                    ship.gunMakeDmg = fighterStats[1];
+                    ship.KillMoney = fighterStats[2];
                 }
                 else if (ship.GetType() == typeof(EnemyFighter2))
                 {
@@ -109,12 +109,12 @@ namespace SpaceAssault.Utils
                 }
                 else if (ship.GetType() == typeof(EnemyBomber))
                 {
-                    ship.Health = bomberStats[0] + 10;
-                    ship.gunMakeDmg = bomberStats[1] + 5;
-                    ship.KillMoney = bomberStats[2] + 10;
-                    bomberStats[0] = ship.Health;
-                    bomberStats[1] = ship.gunMakeDmg;
-                    bomberStats[2] = ship.KillMoney;
+                    bomberStats[0] += 10;
+                    bomberStats[1] += 5;
+                    bomberStats[2] += 10;
+                    ship.Health = bomberStats[0];
+                    ship.gunMakeDmg = bomberStats[1];
+                    ship.KillMoney = bomberStats[2];
                 }                 
             }
         }
