@@ -24,7 +24,6 @@ namespace SpaceAssault.Entities
         private float _moveSpeedModifierSideways;
         private float _tiltZ;
         private float _tiltZMax;
-        private Model _modelLaser;
         private Matrix _rotationMatrixLaser = Matrix.Identity;
 
         public int _maxHealth;
@@ -109,7 +108,6 @@ namespace SpaceAssault.Entities
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
-            _modelLaser = Global.ContentManager.Load<Model>("Models/drone_laser");
             Spheres = Collider3D.UpdateBoundingSphere(this);
             GunPrimary.LoadContent();
             GunSecondary.LoadContent();
@@ -317,19 +315,6 @@ namespace SpaceAssault.Entities
                         effect.EnableDefaultLighting();
                         effect.PreferPerPixelLighting = true;
                         effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
-                        effect.View = Global.Camera.ViewMatrix;
-                        effect.Projection = Global.Camera.ProjectionMatrix;
-                    }
-                    mesh.Draw();
-                }
-
-                foreach (var mesh in _modelLaser.Meshes)
-                {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.EnableDefaultLighting();
-                        effect.PreferPerPixelLighting = true;
-                        effect.World = _rotationMatrixLaser * Matrix.CreateWorld(Position + new Vector3(0,3,5), Vector3.Forward, Vector3.Up);
                         effect.View = Global.Camera.ViewMatrix;
                         effect.Projection = Global.Camera.ProjectionMatrix;
                     }

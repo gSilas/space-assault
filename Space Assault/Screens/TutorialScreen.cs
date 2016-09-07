@@ -84,7 +84,7 @@ namespace SpaceAssault.Screens
         //#################################
         public TutorialScreen()
         {
-            explosionParticles = new ExplosionParticleSystem();
+            explosionParticles = new ShipExplosionSettings();
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
             _explosionSpawner = new ExplosionSpawner();
@@ -99,7 +99,7 @@ namespace SpaceAssault.Screens
             _frame = new Frame();
             dustParticles = new DustParticleSystem();
             tutorialDialog = new Dialog(0,0,80,400,8,false,true);
-            borderParticles = new BorderParticleSystem();
+            borderParticles = new BorderParticleSettings();
            _asteroidField= new AsteroidBuilder();
             TutorialText.Add(0, "This is your drone!\nPress [Space] to\nContinue!");
             TutorialText.Add(1, "You can go back with\n[Back]!\nTry it!");

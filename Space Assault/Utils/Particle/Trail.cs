@@ -3,13 +3,6 @@ using Microsoft.Xna.Framework;
 
 namespace SpaceAssault.Utils.Particle
 {
-    /// <summary>
-    /// This class demonstrates how to combine several different particle systems
-    /// to build up a more sophisticated composite effect. It implements a rocket
-    /// projectile, which arcs up into the sky using a ParticleEmitter to leave a
-    /// steady stream of trail particles behind it. After a while it explodes,
-    /// creating a sudden burst of explosion and smoke particles.
-    /// </summary>
     public class Trail
     {
         const float trailParticlesPerSecond = 150;

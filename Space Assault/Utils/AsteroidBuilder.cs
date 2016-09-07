@@ -22,7 +22,7 @@ namespace SpaceAssault.Utils
             _asteroidList = new List<Asteroid>();
             _asteroidsToAdd = new List<Asteroid>();
             _rand = new Random();
-            shinyParticles = new ShinyParticleSystem();
+            shinyParticles = new ShinyParticleSettings();
         }
 
         public void LoadContent()

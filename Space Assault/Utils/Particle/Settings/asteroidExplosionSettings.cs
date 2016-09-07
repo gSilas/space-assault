@@ -7,18 +7,18 @@ namespace SpaceAssault.Utils.Particle.Settings
     /// <summary>
     /// Custom particle system for creating the fiery part of the explosions.
     /// </summary>
-    class ExplosionParticleSystem : ParticleSystem
+    class AsteroidExplosionSettings : ParticleSystem
     {
-        public ExplosionParticleSystem()
+        public AsteroidExplosionSettings()
         { }
 
         protected override void InitializeSettings(ParticleSettings settings)
         {
-            settings.TextureName = "explosion";
+            settings.TextureName = "dust2";
 
-            settings.MaxParticles = 200;
+            settings.MaxParticles = 400;
 
-            settings.Duration = TimeSpan.FromSeconds(0.8);
+            settings.Duration = TimeSpan.FromSeconds(1);
             settings.DurationRandomness = 0;
 
             settings.MinHorizontalVelocity = 20;
@@ -29,14 +29,14 @@ namespace SpaceAssault.Utils.Particle.Settings
 
             settings.EndVelocity = 0;
 
-            settings.MinColor = Color.White;
-            settings.MaxColor = Color.White;
+            settings.MinColor = Color.Black;
+            settings.MaxColor = Color.DarkGray;
 
             settings.MinRotateSpeed = -1;
             settings.MaxRotateSpeed = 1;
 
-            settings.MinStartSize = 40;
-            settings.MaxStartSize = 50;
+            settings.MinStartSize = 20;
+            settings.MaxStartSize = 30;
 
             settings.MinEndSize = 80;
             settings.MaxEndSize = 100;

@@ -4,10 +4,10 @@ using System;
 
 namespace SpaceAssault.Utils.Particle.Settings
 {
-    class ShinyParticleSystem : ParticleSystem
+    class ShinyParticleSettings : ParticleSystem
     {
    
-        public ShinyParticleSystem()
+        public ShinyParticleSettings()
         { }
 
         protected override void InitializeSettings(ParticleSettings settings)

@@ -7,9 +7,9 @@ namespace SpaceAssault.Utils.Particle.Settings
     /// <summary>
     /// Custom particle system for leaving smoke trails behind the rocket projectiles.
     /// </summary>
-    class TrailParticleSystem : ParticleSystem
+    class TrailParticleSettings : ParticleSystem
     {
-        public TrailParticleSystem()
+        public TrailParticleSettings()
         { }
 
 
