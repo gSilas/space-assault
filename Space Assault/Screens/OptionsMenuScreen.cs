@@ -75,7 +75,7 @@ namespace SpaceAssault.Screens
             //staticNumberMenuEntry.Text = "Number: " + num;
             fullscreenMenuEntry.Text = "Fullscreen: " + (Global.GraphicsManager.IsFullScreen ? "on" : "off");
             frameCounterMenuEntry.Text = "FPS Counter: " + (Global.FrameCounterIsEnabled ? "on" : "off");
-            speakerVolumeMenuEntry.Text = "Volume: " + (Global.SpeakerVolume);
+            speakerVolumeMenuEntry.Text = "Effect Volume: " + (Global.SpeakerVolume);
             uiColorRMenuEntry.Text = "Color R: " + (Global.UIColor.R);
             uiColorGMenuEntry.Text = "Color G: " + (Global.UIColor.G);
             uiColorBMenuEntry.Text = "Color B: " + (Global.UIColor.B);

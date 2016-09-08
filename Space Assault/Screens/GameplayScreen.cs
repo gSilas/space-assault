@@ -208,7 +208,7 @@ namespace SpaceAssault.Screens
                     //playing the sound
                     _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                     ISound Open;
-                    Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
+                    Open = _engine.Play2D(_openShop, false, true, false);
                     Open.Volume = Global.SpeakerVolume/10;
                     Open.Paused = false;
                     ScreenManager.AddScreen(new ShopScreen(_droneFleet, _station));
@@ -222,7 +222,7 @@ namespace SpaceAssault.Screens
                 //playing the sound
                 _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                 ISound Open;
-                Open = _engine.Play3D(_openShop, 0, 0 + 15f, 0, false, true, false);
+                Open = _engine.Play2D(_openShop, false, true, false);
                 Open.Volume = Global.SpeakerVolume / 10;
                 Open.Paused = false;
                 ScreenManager.AddScreen(new PauseMenuScreen());

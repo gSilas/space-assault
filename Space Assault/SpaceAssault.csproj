@@ -234,6 +234,9 @@
     <Content Include="Content\Media\Music\SUBSET_-_05_-_Nazca.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Media\Music\Unrelenting.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
     <Content Include="ikpFlac.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
