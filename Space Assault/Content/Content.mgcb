@@ -590,3 +590,15 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/deusex.spritefont
 
+#begin Fonts/modenine/modenine.nfo
+/copy:Fonts/modenine/modenine.nfo
+
+#begin Fonts/modenine/MODENINE.TTF
+/copy:Fonts/modenine/MODENINE.TTF
+
+#begin Fonts/modenine.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/modenine.spritefont
+
