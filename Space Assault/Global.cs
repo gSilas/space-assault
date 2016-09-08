@@ -45,7 +45,11 @@ namespace SpaceAssault
         public static float SpeakerVolume = 5;
         public static float MusicVolume = 3;
 
+        //MUSIC
         public static ISound Music;
+
+        //RocketCount
+        public static int NumberOfRockets=1;
 
         //SETTINGS
         public static int FleetSpawnTime = 5; // 1 Fleet/5 sec

@@ -141,8 +141,7 @@ namespace SpaceAssault.Entities
                 _shield -= howMuch;
             else
             {
-                if (howMuch > _armor)
-                    _health -= (howMuch - _armor);
+                _health -= (howMuch - howMuch*(_armor/10));
             }
         }
         public void HandleInput(GameTime gameTime, Bullet.BulletType curBullet, ref List<Bullet> bulletList)
@@ -292,8 +291,13 @@ namespace SpaceAssault.Entities
 
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
-                // TODO: New BulletType for Secondary Fire
-                GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList);
+                if (Global.NumberOfRockets >0)
+                {
+                    GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList);
+                    Global.NumberOfRockets -= 1;
+                }
+                Console.WriteLine(Global.NumberOfRockets);
+
             }
 
             //RotationMatrix = Matrix.CreateRotationZ(_tiltZ);
