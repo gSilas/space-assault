@@ -372,6 +372,7 @@ namespace SpaceAssault.Screens
             {
                 if (Vector3.Distance(ast.Position,_station.Position) > Global.MapDespawnRadius)
                 {
+                    explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
                     _removeAsteroid.Add(ast);
                     continue;
                 }
@@ -419,6 +420,7 @@ namespace SpaceAssault.Screens
                 {
                     if (Collider3D.IntersectionSphere(bullet, ast))
                     {
+                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
                         break;
