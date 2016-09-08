@@ -109,11 +109,6 @@ namespace SpaceAssault.Screens
                 Global.SpeakerVolume = 0;
             else
                 Global.SpeakerVolume += 1;
-            
-            
-
-
-
             SetMenuEntryText();
         }
 

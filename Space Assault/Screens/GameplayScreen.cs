@@ -111,7 +111,7 @@ namespace SpaceAssault.Screens
             _waveBuilder.LoadContent();
 
             //Sounds
-            Global.Music = _engine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
+            Global.Music = _engine.Play2D("Content/Media/Music/Space Fighter Loop.mp3", false);
             Global.Music.Volume = Global.MusicVolume / 10;
 
             _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OpenShop.wav", StreamMode.AutoDetect, true);
@@ -140,7 +140,7 @@ namespace SpaceAssault.Screens
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
-
+            
             // Gradually fade in or out depending on whether we are covered by the pause screen.
             if (coveredByOtherScreen)
                 _pauseAlpha = Math.Min(_pauseAlpha + 1f / 32, 1);

@@ -42,7 +42,7 @@ namespace SpaceAssault
         //OPTIONS 
         // TODO: should be read from a settings file
         public static bool FrameCounterIsEnabled = false;
-        public static float SpeakerVolume = 3;
+        public static float SpeakerVolume = 5;
         public static float MusicVolume = 3;
 
         public static ISound Music;
