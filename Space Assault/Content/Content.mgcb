@@ -363,18 +363,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/UI/shield_ui.png
 
-#begin Fonts/pc_senior/license.txt
-/copy:Fonts/pc_senior/license.txt
-
-#begin Fonts/pc_senior/pcsenior.ttf
-/copy:Fonts/pc_senior/pcsenior.ttf
-
-#begin Fonts/pc_senior/pcsenior.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:Fonts/pc_senior/pcsenior.spritefont
-
 #begin Images/UI/dialog_edge.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -566,12 +554,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/dust2.png
 
-#begin Fonts\raider_crusader\raidercrusader.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:Fonts\raider_crusader\raidercrusader.spritefont
-
 #begin Images/Rocket_Icon.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -583,12 +565,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/Rocket_Icon.png
-
-#begin Fonts/deusex.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:Fonts/deusex.spritefont
 
 #begin Fonts/modenine/modenine.nfo
 /copy:Fonts/modenine/modenine.nfo
