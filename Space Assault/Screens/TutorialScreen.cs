@@ -158,6 +158,12 @@ namespace SpaceAssault.Screens
                 _pauseAlpha = Math.Max(_pauseAlpha - 1f / 32, 0);
 
 
+
+            foreach (ExplosionSystem explosion in explosionList)
+            {
+                explosion.Update(gameTime);
+            }
+
             // calling update of objects where necessary
             _station.Update(gameTime);
             if (movementAllowed)
@@ -271,6 +277,11 @@ namespace SpaceAssault.Screens
             _station.Draw();
             _droneFleet.Draw();
 
+            foreach (ExplosionSystem explosion in explosionList)
+            {
+                explosion.Draw();
+            }
+
             // If the game is transitioning on or off, fade it out to black.
             if (TransitionPosition > 0 || _pauseAlpha > 0)
             {
@@ -381,6 +392,10 @@ namespace SpaceAssault.Screens
             }
 
         }
+
+        //#################################
+        // Collision
+        //#################################
         void CollisionHandling(GameTime gameTime)
         {
             //remove lists for collisions etc 
@@ -392,6 +407,7 @@ namespace SpaceAssault.Screens
             {
                 if (Vector3.Distance(ast.Position, _station.Position) > Global.MapDespawnRadius)
                 {
+                    explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
                     _removeAsteroid.Add(ast);
                     continue;
                 }
@@ -408,6 +424,7 @@ namespace SpaceAssault.Screens
 
                 if (Collider3D.IntersectionSphere(_station, ast))
                 {
+                    explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
                     ast.IsDead = true;
                     _removeAsteroid.Add(ast);
                     _station.getHit(10);
@@ -427,6 +444,7 @@ namespace SpaceAssault.Screens
                 {
                     if (Collider3D.IntersectionSphere(bullet, ast))
                     {
+                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
                        
