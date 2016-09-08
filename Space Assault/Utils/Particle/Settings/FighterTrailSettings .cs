@@ -4,12 +4,9 @@ using Microsoft.Xna.Framework;
 
 namespace SpaceAssault.Utils.Particle.Settings
 {
-    /// <summary>
-    /// Custom particle system for leaving smoke trails behind the rocket projectiles.
-    /// </summary>
-    class TrailParticleSettings : ParticleSystem
+    class FighterTrailSettings : ParticleSystem
     {
-        public TrailParticleSettings()
+        public FighterTrailSettings()
         { }
 
 
@@ -17,9 +14,9 @@ namespace SpaceAssault.Utils.Particle.Settings
         {
             settings.TextureName = "engineBlue";
 
-            settings.MaxParticles = 500;
+            settings.MaxParticles = 300;
 
-            settings.Duration = TimeSpan.FromSeconds(0.5);
+            settings.Duration = TimeSpan.FromSeconds(0.4);
 
             settings.DurationRandomness = 0;
 
@@ -31,14 +28,14 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinVerticalVelocity = -1;
             settings.MaxVerticalVelocity = 1;
 
-            settings.MinColor = new Color(155, 255, 155, 70);
-            settings.MaxColor = new Color(205, 255, 200, 100);
+            settings.MinColor = new Color(255, 155, 155, 70);
+            settings.MaxColor = new Color(255, 205, 200, 100);
 
             settings.MinRotateSpeed = -4;
             settings.MaxRotateSpeed = 4;
 
-            settings.MinStartSize = 40;
-            settings.MaxStartSize = 42;
+            settings.MinStartSize = 25;
+            settings.MaxStartSize = 25;
 
             settings.MinEndSize = 1;
             settings.MaxEndSize = 3;

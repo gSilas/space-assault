@@ -15,12 +15,7 @@ namespace SpaceAssault.Entities
         private float _scale = 1;
         private BoundingSphere[] _spheres;
 
-        public ParticleSystem TrailParticles;
-        public List<Trail> trail;
-        public List<Trail> trail2;
-
-        public ParticleSystem bombTrailParticles;
-        public List<Trail> bombTrail;
+        public Trail _trail;
 
         public Model Model
         {

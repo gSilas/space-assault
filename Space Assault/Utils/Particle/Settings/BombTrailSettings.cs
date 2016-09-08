@@ -7,9 +7,9 @@ namespace SpaceAssault.Utils.Particle.Settings
     /// <summary>
     /// Custom particle system for leaving smoke trails behind the rocket projectiles.
     /// </summary>
-    class DroneTrail : ParticleSystem
+    class BombTrailSettings : ParticleSystem
     {
-        public DroneTrail()
+        public BombTrailSettings()
         { }
 
 
@@ -17,9 +17,9 @@ namespace SpaceAssault.Utils.Particle.Settings
         {
             settings.TextureName = "engineBlue";
 
-            settings.MaxParticles = 300;
+            settings.MaxParticles = 100;
 
-            settings.Duration = TimeSpan.FromSeconds(0.2);
+            settings.Duration = TimeSpan.FromSeconds(0.3);
 
             settings.DurationRandomness = 0;
 
@@ -37,8 +37,8 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinRotateSpeed = -4;
             settings.MaxRotateSpeed = 4;
 
-            settings.MinStartSize = 15;
-            settings.MaxStartSize = 15;
+            settings.MinStartSize = 20;
+            settings.MaxStartSize = 22;
 
             settings.MinEndSize = 1;
             settings.MaxEndSize = 3;

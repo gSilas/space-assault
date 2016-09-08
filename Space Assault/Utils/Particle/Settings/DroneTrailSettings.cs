@@ -12,14 +12,13 @@ namespace SpaceAssault.Utils.Particle.Settings
         public DroneTrailSettings()
         { }
 
-
         protected override void InitializeSettings(ParticleSettings settings)
         {
             settings.TextureName = "engineBlue";
 
-            settings.MaxParticles = 300;
+            settings.MaxParticles = 500;
 
-            settings.Duration = TimeSpan.FromSeconds(0.2);
+            settings.Duration = TimeSpan.FromSeconds(0.5);
 
             settings.DurationRandomness = 0;
 
@@ -37,8 +36,8 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinRotateSpeed = -4;
             settings.MaxRotateSpeed = 4;
 
-            settings.MinStartSize = 15;
-            settings.MaxStartSize = 15;
+            settings.MinStartSize = 40;
+            settings.MaxStartSize = 42;
 
             settings.MinEndSize = 1;
             settings.MaxEndSize = 3;

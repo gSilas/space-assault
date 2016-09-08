@@ -91,8 +91,8 @@
     <Compile Include="Utils\Particle\ExplosionSystem.cs" />
     <Compile Include="Utils\Particle\Settings\BombExplosionSettings.cs" />
     <Compile Include="Utils\Particle\Settings\BombRingExplosionSettings.cs" />
+    <Compile Include="Utils\Particle\Settings\FighterTrailSettings .cs" />
     <Compile Include="Utils\Particle\Settings\ShipRingExplosionSettings.cs" />
-    <Compile Include="Utils\Particle\Settings\DroneTrail.cs" />
     <Compile Include="Utils\Particle\Settings\DroneTrailSettings.cs" />
     <Compile Include="Utils\Particle\Settings\DustParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\ShinyParticleSettings.cs" />
@@ -140,7 +140,7 @@
     <Compile Include="Utils\Particle\Settings\ExplosionSmokeParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\BorderParticleSettings.cs" />
     <Compile Include="Utils\Particle\Settings\ProjectileTrailParticleSystem.cs" />
-    <Compile Include="Utils\Particle\Settings\TrailParticleSettings.cs" />
+    <Compile Include="Utils\Particle\Settings\BombTrailSettings.cs" />
     <Compile Include="Utils\Particle\ParticleVertex.cs" />
     <Compile Include="Utils\Particle\Projectile.cs" />
     <Compile Include="Utils\Particle\Settings\SmokeParticleSystem.cs" />

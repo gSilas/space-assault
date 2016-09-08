@@ -54,11 +54,8 @@ namespace SpaceAssault.Utils
                     }
 
                     // Trail
-                    foreach (Particle.Trail trail in ship.trail)
-                    {
-                        trail.Update(gameTime, ship.Position);
-                    }
-                    ship.TrailParticles.Update(gameTime);
+                    if (ship._trail != null)
+                        ship._trail.Update(gameTime, ship.Position);
 
                     ship.Intelligence(gameTime, targetPosition, ref _bulletList);
                     ship.Update(gameTime);
@@ -101,7 +98,8 @@ namespace SpaceAssault.Utils
             {
                 foreach (var ship in shipSquadron)
                 {
-                    ship.TrailParticles.Draw();
+                    if (ship._trail != null)
+                        ship._trail.Draw();
                     ship.Draw();
                 }
             }

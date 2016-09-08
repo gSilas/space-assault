@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities;
 using IrrKlang;
+using SpaceAssault.Utils.Particle;
+using SpaceAssault.Utils.Particle.Settings;
 
 namespace SpaceAssault.Utils
 {
@@ -74,7 +76,6 @@ namespace SpaceAssault.Utils
 
                 // adding bullet to ref list
                 bulletList.Add(new Bullet(bullet, getBullet(bullet).model, getBullet(bullet).moveSpeed, getBullet(bullet).canDmgStation, damage, position, droneRotateMatrix));
-
                 return true;
             }
             return false;

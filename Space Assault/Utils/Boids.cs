@@ -168,11 +168,7 @@ namespace SpaceAssault.Utils
                 }
 
                 // Trail
-                foreach (Particle.Trail trail in curShip.trail)
-                {
-                    trail.Update(gameTime, curShip.Position);
-                }
-                curShip.TrailParticles.Update(gameTime);
+                curShip._trail.Update(gameTime, curShip.Position);
                 curShip.Update(gameTime);
             }
 
@@ -193,7 +189,7 @@ namespace SpaceAssault.Utils
 
             foreach (var ship in _ships)
             {
-                ship.TrailParticles.Draw();
+                ship._trail.Draw();
                 ship.Draw();
             }
         }

@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
-using System.Collections.Generic;
 using SpaceAssault.Utils.Particle;
 using SpaceAssault.Utils.Particle.Settings;
 
@@ -42,10 +41,8 @@ namespace SpaceAssault.Entities
             _bulletLifeTime = 25000;
             _moveDirection = droneRotateMatrix.Forward;
             _moveSpeed = moveSpeed;
-
-            bombTrail = new List<Trail>();
-            bombTrailParticles = new TrailParticleSettings();
-            bombTrail.Add(new Trail(bombTrailParticles));
+            if (bulletType == BulletType.BigJoe)
+                _trail = new Trail(new BombTrailSettings());
         }
 
 
