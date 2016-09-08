@@ -39,7 +39,6 @@ namespace SpaceAssault.Screens
         ParticleSystem borderParticles;
         ParticleSystem explosionParticles;
         ParticleSystem dustParticles;
-        private ExplosionSpawner _explosionSpawner;
         // Sound
         private ISoundSource _explosionSource;
         private ISoundSource _explosionSource1;
@@ -57,19 +56,9 @@ namespace SpaceAssault.Screens
         AsteroidBuilder _asteroidField;
         public SortedDictionary<int, string> TutorialText = new SortedDictionary<int, string>();
 
-        Vector3 explosionPosition = Vector3.Zero;
-        double explosionEffectDelta = 0;
-        bool explosionTriggered = false;
+        List<ExplosionSystem> explosionList = new List<ExplosionSystem>();
+        private float _duration = 50;
 
-        // Switch between three different visual effects.
-        enum ParticleState
-        {
-            Explosions,
-            Smoke,
-            RingOfFire,
-        };
-
-        ParticleState currentState = ParticleState.Smoke;
 
         // The explosions effect works by firing projectiles up into the
         // air, so we need to keep track of all the active projectiles.
@@ -87,7 +76,6 @@ namespace SpaceAssault.Screens
             explosionParticles = new ShipExplosionSettings();
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-            _explosionSpawner = new ExplosionSpawner();
             //actual gameplay objects
             _station = new Station(new Vector3(0, _stationHeight, 0), 0);
             _droneFleet = new DroneBuilder();
@@ -399,24 +387,6 @@ namespace SpaceAssault.Screens
             List<Asteroid> _removeAsteroid = new List<Asteroid>();
             List<Bullet> _removeBullets = new List<Bullet>();
 
-            /* explosions with asteroids, enemy ships */
-            foreach (var expl in _explosionSpawner._explList)
-            {
-
-                foreach (var ast in _asteroidField._asteroidList)
-                {
-                    if (Collider3D.IntersectionSphere(expl, ast))
-                    {
-                        explosionPosition = ast.Position;
-                        explosionTriggered = true;
-                        ast.IsDead = true;
-                        _removeAsteroid.Add(ast);
-                        PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
-                        break;
-                    }
-                }
-
-            }
             /* asteroids with drone(& its bullets) & station & other asteroids & enemy ships (& its bullets)*/
             foreach (var ast in _asteroidField._asteroidList)
             {
@@ -438,8 +408,6 @@ namespace SpaceAssault.Screens
 
                 if (Collider3D.IntersectionSphere(_station, ast))
                 {
-                    explosionPosition = ast.Position;
-                    explosionTriggered = true;
                     ast.IsDead = true;
                     _removeAsteroid.Add(ast);
                     _station.getHit(10);
@@ -459,17 +427,13 @@ namespace SpaceAssault.Screens
                 {
                     if (Collider3D.IntersectionSphere(bullet, ast))
                     {
-                        explosionPosition = ast.Position;
-                        explosionTriggered = true;
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
                        
                         PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                         if (bullet._bulletType == Bullet.BulletType.BigJoe)
                         {
-                            float radius = 80;
-                            _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
-                            ExplosionCircle(bullet.Position, new Vector3(0, 0, 0), radius);
+                            explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ast.Position, _duration, 50, true));
                         }
                         if (ast.IsShiny)
                         {
@@ -478,19 +442,6 @@ namespace SpaceAssault.Screens
                         break;
                     }
                 }
-
-                if (explosionTriggered)
-                {
-                    explosionEffectDelta++;
-                    UpdateExplosions(gameTime, explosionPosition, Vector3.Zero);
-
-                    if (explosionEffectDelta > 3)
-                    {
-                        explosionTriggered = false;
-                        explosionEffectDelta = 0;
-                    }
-                }
-
 
             }
 
@@ -516,22 +467,6 @@ namespace SpaceAssault.Screens
             explosionParticles.AddParticle(position, velocity);
         }
 
-        //#################################
-        // Helper ExplosionCircle
-        //#################################
-        void ExplosionCircle(Vector3 pos, Vector3 velocity, float radius)
-        {
-            float angle = 0.0f;
-            for (int i = 0; i <= radius; i += 25)
-            {
-                while (angle < 2 * Math.PI)
-                {
-                    explosionParticles.AddParticle(pos + new Vector3(i * (float)Math.Cos(angle), 0, i * (float)Math.Sin(angle)), velocity);
-                    angle += 0.2f;
-                }
-                angle = 0;
-            }
-        }
     }
 }
 

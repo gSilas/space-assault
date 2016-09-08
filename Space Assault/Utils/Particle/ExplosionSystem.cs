@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace SpaceAssault.Utils.Particle
 {
@@ -12,6 +13,8 @@ namespace SpaceAssault.Utils.Particle
         private float _duration;
         private float _count;
         private float _radius;
+        private bool _advancedeffects;
+
 
         // Random number generator
         Random random = new Random();
@@ -22,6 +25,7 @@ namespace SpaceAssault.Utils.Particle
             _position = position;
             _duration = duration;
             _count = 0;
+            _radius = 0;
         }
 
         public ExplosionSystem(ParticleSystem particleSettings, ParticleSystem particleSettings2, Vector3 position, float duration, float radius)
@@ -30,8 +34,19 @@ namespace SpaceAssault.Utils.Particle
             _system2 = particleSettings2;
             _position = position;
             _duration = duration;
+            _radius = radius;
+            _count = 0;
+        }
+
+        public ExplosionSystem(ParticleSystem particleSettings, ParticleSystem particleSettings2, Vector3 position, float duration, float radius, bool advancedeffects)
+        {
+            _system = particleSettings;
+            _system2 = particleSettings2;
+            _position = position;
+            _duration = duration;
             _count = 0;
             _radius = radius;
+            _advancedeffects = advancedeffects;
         }
 
         public void Update(GameTime gameTime)
@@ -44,7 +59,7 @@ namespace SpaceAssault.Utils.Particle
                         _state = 1;
                     break;
                 case 1:
-                    if (_count > _duration + 100)
+                    if (_count > _duration + _radius)
                         _state = 2;
                     break;
             }
@@ -54,6 +69,9 @@ namespace SpaceAssault.Utils.Particle
                 _system.Update(gameTime);
                 if (_system2 != null)
                     CircleExplosion(gameTime);
+                if (_advancedeffects)
+                    ExplosionField();
+
                 _count++;
             }
 
@@ -92,6 +110,23 @@ namespace SpaceAssault.Utils.Particle
                 _system2.AddParticle(RandomPointOnCircle(), Vector3.Zero);
             }
             _system2.Update(gameTime);
+        }
+
+        //#################################
+        // Helper ExplosionField
+        //#################################
+        void ExplosionField()
+        {
+            float angle = 0.0f;
+            for (int i = 0; i <= _radius; i += 25)
+            {
+                while (angle < 2 * Math.PI)
+                {
+                    _system.AddParticle(_position + new Vector3(i * (float)Math.Cos(angle), 0, i * (float)Math.Sin(angle)), Vector3.Zero);
+                    angle += 0.2f;
+                }
+                angle = 0;
+            }
         }
 
     }

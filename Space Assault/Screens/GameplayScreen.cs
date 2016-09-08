@@ -28,12 +28,11 @@ namespace SpaceAssault.Screens
         private Station _station;
         private AsteroidBuilder _asteroidField;
         private DroneBuilder _droneFleet;
-        private ExplosionSpawner _explosionSpawner;
         private int _deathCounter = 0;
         public static int _stationHeight = 80;
         private WaveBuilder _waveBuilder;
 
-        private float _duration = 10;
+        private float _duration = 50;
 
 
         //UI + Frame + Background
@@ -55,8 +54,6 @@ namespace SpaceAssault.Screens
         ParticleSystem dustParticles;
 
         List<ExplosionSystem> explosionList = new List<ExplosionSystem>();
-        List<int> explosionRemoveList = new List<int>();
-
 
         // Keep track of all the active projectiles
         List<Projectile> projectiles = new List<Projectile>();
@@ -77,7 +74,6 @@ namespace SpaceAssault.Screens
             _station = new Station(new Vector3(0, _stationHeight, 0), 0);
             _asteroidField = new AsteroidBuilder();
             _droneFleet = new DroneBuilder();
-            _explosionSpawner = new ExplosionSpawner();
 
             _waveBuilder = new WaveBuilder(TimeSpan.FromSeconds(15d),2,2);
             Global.Money = 0;
@@ -158,7 +154,6 @@ namespace SpaceAssault.Screens
             _droneFleet.Update(gameTime);
             _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
             Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + Global.CameraPosition, _droneFleet.GetActiveDrone().Position);
-            _explosionSpawner.Update(gameTime);
 
             // Particles
             dustParticles.Update(gameTime);
@@ -167,17 +162,7 @@ namespace SpaceAssault.Screens
             foreach (ExplosionSystem explosion in explosionList)
             {
                 explosion.Update(gameTime);
-
-                if (explosion._state == 2)
-                    explosionRemoveList.Add(explosionList.IndexOf(explosion));
             }
-
-            foreach (int value in explosionRemoveList)
-            {
-                explosionList.RemoveAt(value);
-            }
-            explosionRemoveList.Clear();
-
 
 
             // if station dies go back to MainMenu
@@ -343,9 +328,7 @@ namespace SpaceAssault.Screens
                         {
                             if (bullet._bulletType == Bullet.BulletType.BigJoe)
                             {
-                                float radius = 80;
-                                _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
-                                //ExplosionField(bullet.Position, new Vector3(0, 0, 0), radius, shipExplosionParticles);
+                                explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ship.Position, _duration, 50, true));
                             }
                             ship.getHit(bullet.makeDmg);
                             _removeBullets.Add(bullet);
@@ -353,7 +336,7 @@ namespace SpaceAssault.Screens
 
                             if (ship.Health <= 0)
                             {
-                                explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), new CircleExplosionSettings(), ship.Position, _duration, 50));
+                                explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), new ShipRingExplosionSettings(), ship.Position, _duration, 30));
                                 PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
                             }
                             break;
@@ -362,33 +345,7 @@ namespace SpaceAssault.Screens
 
             }
 
-            /* explosions with asteroids, enemy ships */
-            foreach (var expl in _explosionSpawner._explList)
-            {
-                foreach (var ship in _waveBuilder.ShipList)
-                {
-                        if (Collider3D.IntersectionSphere(ship, expl))
-                        {
-                            ship.getHit(expl._makeDmg);
-                            Global.HighScorePoints += 20;
-                            PlayExplosionSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
 
-                        }
-                }
-
-                foreach (var ast in _asteroidField._asteroidList)
-                {
-                    if (Collider3D.IntersectionSphere(expl, ast))
-                    {
-                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
-                        ast.IsDead = true;
-                        _removeAsteroid.Add(ast);
-                        PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
-                        break;
-                    }
-                }
-
-            }
 
             /* bullet of enemy ships with drone and station */
             foreach (var bullet in _waveBuilder.BulletList)
@@ -477,9 +434,7 @@ namespace SpaceAssault.Screens
 
                         if (bullet._bulletType == Bullet.BulletType.BigJoe)
                         {
-                            float radius = 80;
-                            _explosionSpawner.SpawnExplosion(bullet.Position, radius, 100);
-                            //ExplosionField(bullet.Position, new Vector3(0, 0, 0), radius, asteroidExplosionParticles);
+                            explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ast.Position, _duration, 50, true));
                         }
                         if (ast.IsShiny)
                         {
@@ -538,23 +493,6 @@ namespace SpaceAssault.Screens
             return new Vector3(x * radius, 0, y * radius);
         }
 
-
-        //#################################
-        // Helper ExplosionField
-        //#################################
-        void ExplosionField(Vector3 pos, Vector3 velocity, float radius, ParticleSystem system)
-        {
-            float angle = 0.0f;
-            for (int i = 0; i <= radius; i += 25)
-            {
-                while (angle < 2 * Math.PI)
-                {
-                    system.AddParticle(pos + new Vector3(i * (float)Math.Cos(angle), 0, i * (float)Math.Sin(angle)), velocity);
-                    angle += 0.2f;
-                }
-                angle = 0;
-            }
-        }
 
         //#################################
         // Helper Update - Projectiles
