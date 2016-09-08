@@ -111,6 +111,7 @@ namespace SpaceAssault.Screens
             _waveBuilder.LoadContent();
 
             //Sounds
+            Global.Music.Stop();
             Global.Music = _engine.Play2D("Content/Media/Music/Space Fighter Loop.mp3", false);
             Global.Music.Volume = Global.MusicVolume / 10;
 
