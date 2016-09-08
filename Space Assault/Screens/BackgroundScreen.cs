@@ -67,8 +67,8 @@ namespace SpaceAssault.Screens
             //Sound
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
             _engine.SetListenerPosition(new Vector3D(0,0,0), new Vector3D(0, 0, 1));
-            _music = _engine.Play3D("Content/Media/Music/SUBSET_-_05_-_Nazca.mp3", new Vector3D(0, 0, 0), true, false, StreamMode.AutoDetect, true);
-            _music.Volume = Global.SpeakerVolume / 10;
+            _music = _engine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
+            _music.Volume = 0.2f;
 
             _back = new Background();
         }

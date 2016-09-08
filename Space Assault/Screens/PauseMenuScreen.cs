@@ -36,7 +36,7 @@ namespace SpaceAssault.Screens
             //playing the sound
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
-            Accept = SoundEngine.Play3D(OkClick, 0, 0 + 15f, 0, false, true, false);
+            Accept = SoundEngine.Play2D(OkClick, false, true, false);
             Accept.Volume = Global.SpeakerVolume / 10;
             Accept.Paused = false;
         }
@@ -54,7 +54,7 @@ namespace SpaceAssault.Screens
             //playing the sound
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
-            Accept = SoundEngine.Play3D(GoBack, 0, 0 + 15f, 0, false, true, false);
+            Accept = SoundEngine.Play2D(GoBack, false, true, false);
             Accept.Volume = Global.SpeakerVolume / 10;
             Accept.Paused = false;
         }

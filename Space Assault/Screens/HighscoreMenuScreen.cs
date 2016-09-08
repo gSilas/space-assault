@@ -1,11 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
 using IrrKlang;
 using SpaceAssault.ScreenManagers;
-using SpaceAssault.Utils;
+using SpaceAssault.Screens.UI;
 
 /* TODO: it would be ideal if our textinput were eventbased: http://www.gamedev.net/topic/457783-xna-getting-text-from-keyboard/
  * Question: Do we really need it? Input doesnt have to be perfect, it just has to work.
@@ -18,12 +15,13 @@ namespace SpaceAssault.Screens
         MenuEntry back;
         bool _enter;
         private bool _nextIterationFalse;
-
         private string _entryString;
-        private int _elapsedTimeMilliseconds;
         private float inputBoxWidth;
         private KeyboardState oldKeyboardState;
         private KeyboardState currentKeyboardState;
+
+        private Dialog _highScoreDialog;
+        private Dialog _inputDialog;
 
         public string EntryText
         {
@@ -71,12 +69,20 @@ namespace SpaceAssault.Screens
 
             EntryText = "";
             _enter = enter;
+
+            int spawnPointX = 150;
+            int spawnPointY = 200;
+            _highScoreDialog = new Dialog(spawnPointX, spawnPointY, 250, 500, 6, false, true);
+            _inputDialog = new Dialog(spawnPointX, spawnPointY + 300, 48, 400, 6, false, true);
         }
 
         public override void LoadContent()
         {
             base.LoadContent();
 
+            //Dialogs + Background + Frame
+            _inputDialog.LoadContent();
+            _highScoreDialog.LoadContent();
         }
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
@@ -147,20 +153,26 @@ namespace SpaceAssault.Screens
 
             if (this.TransitionPosition <= 0f)
             {
-                int zeilenAbstand = 20;
+
+                _highScoreDialog.Draw("");
+
+                
+                int zeilenAbstand = 24;
                 int spaltenAbstand = 200;
-                int spawnPointX = 150;
-                int spawnPointY = 200;
+                float spawnPointX = _highScoreDialog.position.ToVector2().X + _highScoreDialog.size.X;
+                float spawnPointY = _highScoreDialog.position.ToVector2().Y + _highScoreDialog.size.Y;
+                Global.UIBatch.Begin();
                 for (int i = 0; i < Global.HighScoreList._listLength; i++)
                 {
-                    Global.SpriteBatch.DrawString(Global.GameFont, (i + 1) + ". Platz", new Vector2(spawnPointX, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
-                    Global.SpriteBatch.DrawString(Global.GameFont, Global.HighScoreList._scoresList[i].Name, new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
-                    Global.SpriteBatch.DrawString(Global.GameFont, (Global.HighScoreList._scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand * 2, spawnPointY + i * zeilenAbstand), Color.BurlyWood);
+                    Global.UIBatch.DrawString(Global.DialogFont, (i + 1) + ". Platz", new Vector2(spawnPointX, spawnPointY + i * zeilenAbstand), Color.White);
+                    Global.UIBatch.DrawString(Global.DialogFont, Global.HighScoreList._scoresList[i].Name, new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.White);
+                    Global.UIBatch.DrawString(Global.DialogFont, (Global.HighScoreList._scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand * 2, spawnPointY + i * zeilenAbstand), Color.White);
                 }
+                Global.UIBatch.End();
 
                 if (_enter)
                 {
-                    Global.SpriteBatch.DrawString(Global.GameFont, EntryText, new Vector2(spawnPointX, spawnPointY + 11 * zeilenAbstand), Color.White);
+                    _inputDialog.Draw("Score: " + Global.HighScorePoints + "   Your Name: " + EntryText);
                 }
             }
         }
@@ -214,7 +226,7 @@ namespace SpaceAssault.Screens
                     //playing the sound
                     SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                     ISound Accept;
-                    Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                    Accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
                     Accept.Volume = Global.SpeakerVolume / 10;
                     Accept.Paused = false;
 
@@ -230,7 +242,7 @@ namespace SpaceAssault.Screens
                     //playing the sound
                     SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                     ISound Accept;
-                    Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                    Accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
                     Accept.Volume = Global.SpeakerVolume / 10;
                     Accept.Paused = false;
 
