@@ -16,9 +16,9 @@ namespace SpaceAssault.Utils.Particle.Settings
         {
             settings.TextureName = "engineBlue";
 
-            settings.MaxParticles = 500;
+            settings.MaxParticles = 600;
 
-            settings.Duration = TimeSpan.FromSeconds(1.8);
+            settings.Duration = TimeSpan.FromSeconds(2);
             settings.DurationRandomness = 0;
 
             settings.MinHorizontalVelocity = 20;

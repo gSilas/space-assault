@@ -18,7 +18,7 @@ namespace SpaceAssault.Utils.Particle.Settings
 
             settings.MaxParticles = 100;
 
-            settings.Duration = TimeSpan.FromSeconds(0.4);
+            settings.Duration = TimeSpan.FromSeconds(0.8);
             settings.DurationRandomness = 0;
 
             settings.MinHorizontalVelocity = 20;
@@ -29,8 +29,8 @@ namespace SpaceAssault.Utils.Particle.Settings
 
             settings.EndVelocity = 0;
 
-            settings.MinColor = new Color(155, 255, 155, 80);
-            settings.MaxColor = new Color(205, 255, 200, 100);
+            settings.MinColor = new Color(255, 255, 155, 80);
+            settings.MaxColor = new Color(255, 255, 200, 10);
 
             settings.MinRotateSpeed = -1;
             settings.MaxRotateSpeed = 1;
