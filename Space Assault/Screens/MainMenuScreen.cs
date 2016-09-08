@@ -27,8 +27,9 @@ namespace SpaceAssault.Screens
             exitMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
-            MenuEntries.Add(tutorialMenuEntry);
+
             MenuEntries.Add(playGameMenuEntry);
+            MenuEntries.Add(tutorialMenuEntry);
             MenuEntries.Add(highscoreMenuEntry);
             MenuEntries.Add(optionsMenuEntry);
             MenuEntries.Add(creditsMenuEntry);
