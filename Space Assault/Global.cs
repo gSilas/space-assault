@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Screens;
 using SpaceAssault.Utils;
 using System.Collections.Generic;
+using IrrKlang;
 
 /// <summary>
 /// Everything in here has to have values assigned either in here or on it's first occurence
@@ -42,7 +43,9 @@ namespace SpaceAssault
         // TODO: should be read from a settings file
         public static bool FrameCounterIsEnabled = false;
         public static float SpeakerVolume = 3;
+        public static float MusicVolume = 3;
 
+        public static ISound Music;
 
         //SETTINGS
         public static int FleetSpawnTime = 5; // 1 Fleet/5 sec

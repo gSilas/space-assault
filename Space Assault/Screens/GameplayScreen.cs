@@ -111,6 +111,9 @@ namespace SpaceAssault.Screens
             _waveBuilder.LoadContent();
 
             //Sounds
+            Global.Music = _engine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
+            Global.Music.Volume = Global.MusicVolume / 10;
+
             _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OpenShop.wav", StreamMode.AutoDetect, true);
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
             _explosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion1.wav", StreamMode.AutoDetect, true);
