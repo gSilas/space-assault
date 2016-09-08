@@ -10,16 +10,18 @@ namespace SpaceAssault.Utils.Particle
         public ParticleSystem _system2;
         public Vector3 _position;
         public int _state;
-        private float _duration;
+        private double _duration;
         private float _count;
-        private float _radius;
+        private double _radius;
+        private double _timer;
+        private double _tmptime;
         private bool _advancedeffects;
 
 
         // Random number generator
         Random random = new Random();
 
-        public ExplosionSystem(ParticleSystem particleSettings, Vector3 position, float duration)
+        public ExplosionSystem(ParticleSystem particleSettings, Vector3 position, double duration)
         {
             _system = particleSettings;
             _position = position;
@@ -28,7 +30,7 @@ namespace SpaceAssault.Utils.Particle
             _radius = 0;
         }
 
-        public ExplosionSystem(ParticleSystem particleSettings, ParticleSystem particleSettings2, Vector3 position, float duration, float radius)
+        public ExplosionSystem(ParticleSystem particleSettings, ParticleSystem particleSettings2, Vector3 position, double duration, double radius)
         {
             _system = particleSettings;
             _system2 = particleSettings2;
@@ -38,7 +40,7 @@ namespace SpaceAssault.Utils.Particle
             _count = 0;
         }
 
-        public ExplosionSystem(ParticleSystem particleSettings, ParticleSystem particleSettings2, Vector3 position, float duration, float radius, bool advancedeffects)
+        public ExplosionSystem(ParticleSystem particleSettings, ParticleSystem particleSettings2, Vector3 position, double duration, double radius, bool advancedeffects)
         {
             _system = particleSettings;
             _system2 = particleSettings2;
@@ -51,23 +53,35 @@ namespace SpaceAssault.Utils.Particle
 
         public void Update(GameTime gameTime)
         {
-            switch(_state)
+                
+
+            switch (_state)
             {
                 case 0:
                     _system.AddParticle(_position, Vector3.Zero);
-                    if (_count > _duration)
+                    if (_timer > _duration)
                         _state = 1;
                     break;
                 case 1:
-                    if (_count > _duration + _radius)
+                    // 4 seconds afterduration to finish the animations
+                    if (_timer > _duration + 4)
                         _state = 2;
                     break;
             }
 
             if (_state != 2)
-            { 
+            {
+                if (gameTime.TotalGameTime.TotalSeconds - _tmptime >= 0.1)
+                {
+                    _timer += 0.1;
+                    _tmptime = gameTime.TotalGameTime.TotalSeconds;
+                }
+
                 _system.Update(gameTime);
                 if (_system2 != null)
+
+
+                    if (_system2 != null)
                     CircleExplosion(gameTime);
                 if (_advancedeffects)
                     ExplosionField();
@@ -105,9 +119,12 @@ namespace SpaceAssault.Utils.Particle
         {
             const int borderParticlesPerFrame = 50;
 
-            for (int i = 0; i < borderParticlesPerFrame; i++)
+            if (_timer < _duration + 1)
             {
-                _system2.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+                for (int i = 0; i < borderParticlesPerFrame; i++)
+                {
+                    _system2.AddParticle(RandomPointOnCircle(), Vector3.Zero);
+                }
             }
             _system2.Update(gameTime);
         }
@@ -118,15 +135,20 @@ namespace SpaceAssault.Utils.Particle
         void ExplosionField()
         {
             float angle = 0.0f;
-            for (int i = 0; i <= _radius; i += 25)
+            if (_timer < _duration + 1)
             {
-                while (angle < 2 * Math.PI)
+                for (int i = 0; i <= _radius; i += 25)
                 {
-                    _system.AddParticle(_position + new Vector3(i * (float)Math.Cos(angle), 0, i * (float)Math.Sin(angle)), Vector3.Zero);
-                    angle += 0.2f;
+                    while (angle < 2 * Math.PI)
+                    {
+                        _system.AddParticle(_position + new Vector3(i * (float)Math.Cos(angle), 0, i * (float)Math.Sin(angle)), Vector3.Zero);
+                        angle += 0.2f;
+                    }
+                    angle = 0;
                 }
-                angle = 0;
             }
+
+
         }
 
     }

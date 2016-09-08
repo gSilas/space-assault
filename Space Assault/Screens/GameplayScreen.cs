@@ -347,7 +347,7 @@ namespace SpaceAssault.Screens
                         {
                             if (bullet._bulletType == Bullet.BulletType.BigJoe)
                             {
-                                explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ship.Position, _duration, 50, true));
+                                explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ship.Position, 0.4, 50, true));
                             }
                             ship.getHit(bullet.makeDmg);
                             _removeBullets.Add(bullet);
@@ -355,7 +355,7 @@ namespace SpaceAssault.Screens
 
                             if (ship.Health <= 0)
                             {
-                                explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), new ShipRingExplosionSettings(), ship.Position, _duration, 30));
+                                explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), new ShipRingExplosionSettings(), ship.Position, 0.4, 30));
                                 PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
                             }
                             break;
@@ -388,7 +388,7 @@ namespace SpaceAssault.Screens
             {
                 if (Vector3.Distance(ast.Position,_station.Position) > Global.MapDespawnRadius)
                 {
-                    explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
+                    explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.4));
                     _removeAsteroid.Add(ast);
                     continue;
                 }
@@ -405,7 +405,7 @@ namespace SpaceAssault.Screens
 
                 if (Collider3D.IntersectionSphere(_station, ast))
                 {
-                    explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
+                    explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.4));
                     ast.IsDead = true;
                     _removeAsteroid.Add(ast);
                     _station.getHit(10);
@@ -436,7 +436,7 @@ namespace SpaceAssault.Screens
                 {
                     if (Collider3D.IntersectionSphere(bullet, ast))
                     {
-                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
+                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.4));
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
                         break;
@@ -447,7 +447,7 @@ namespace SpaceAssault.Screens
                 {
                     if (Collider3D.IntersectionSphere(bullet, ast))
                     {
-                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
+                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.4));
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
                         Global.HighScorePoints += 50;
@@ -455,7 +455,7 @@ namespace SpaceAssault.Screens
 
                         if (bullet._bulletType == Bullet.BulletType.BigJoe)
                         {
-                            explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ast.Position, _duration, 50, true));
+                            explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ast.Position, 0.6, 50, true));
                         }
                         if (ast.IsShiny)
                         {

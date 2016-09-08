@@ -11,12 +11,12 @@ namespace SpaceAssault.Utils.Particle.Settings
 
         protected override void InitializeSettings(ParticleSettings settings)
         {
-            settings.TextureName = "explosion";
+            settings.TextureName = "dust2";
 
             settings.MaxParticles = 100;
 
-            settings.Duration = TimeSpan.FromSeconds(0.4);
-            settings.DurationRandomness = 0;
+            settings.Duration = TimeSpan.FromSeconds(1.2);
+            settings.DurationRandomness = 1;
 
             settings.MinHorizontalVelocity = 20;
             settings.MaxHorizontalVelocity = 30;
@@ -26,17 +26,17 @@ namespace SpaceAssault.Utils.Particle.Settings
 
             settings.EndVelocity = 0;
 
-            settings.MinColor = new Color(114, 123, 132, 80);
-            settings.MaxColor = new Color(114, 123, 132, 100);
+            settings.MinColor = new Color(255, 255, 255, 80);
+            settings.MaxColor = new Color(255, 255, 255, 10);
 
             settings.MinRotateSpeed = -1;
             settings.MaxRotateSpeed = 1;
 
-            settings.MinStartSize = 40;
-            settings.MaxStartSize = 50;
+            settings.MinStartSize = 80;
+            settings.MaxStartSize = 100;
 
-            settings.MinEndSize = 80;
-            settings.MaxEndSize = 100;
+            settings.MinEndSize = 20;
+            settings.MaxEndSize = 40;
 
             // Use additive blending.
             settings.BlendState = BlendState.Additive;

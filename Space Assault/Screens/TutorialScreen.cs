@@ -57,7 +57,7 @@ namespace SpaceAssault.Screens
         public SortedDictionary<int, string> TutorialText = new SortedDictionary<int, string>();
 
         List<ExplosionSystem> explosionList = new List<ExplosionSystem>();
-        private float _duration = 50;
+        private double _duration = 0.4;
 
 
         // The explosions effect works by firing projectiles up into the
