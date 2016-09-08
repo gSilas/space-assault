@@ -86,11 +86,12 @@
     <Compile Include="Entities\EnemyFighter.cs" />
     <Compile Include="Screens\TutorialScreen.cs" />
     <Compile Include="Utils\Boids.cs" />
-    <Compile Include="Utils\ExplosionSpawner.cs" />
     <Compile Include="Entities\Station.cs" />
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Utils\Particle\ExplosionSystem.cs" />
-    <Compile Include="Utils\Particle\Settings\CircleExplosionSettings.cs" />
+    <Compile Include="Utils\Particle\Settings\BombExplosionSettings.cs" />
+    <Compile Include="Utils\Particle\Settings\BombRingExplosionSettings.cs" />
+    <Compile Include="Utils\Particle\Settings\ShipRingExplosionSettings.cs" />
     <Compile Include="Utils\Particle\Settings\DroneTrail.cs" />
     <Compile Include="Utils\Particle\Settings\DroneTrailSettings.cs" />
     <Compile Include="Utils\Particle\Settings\DustParticleSystem.cs" />

@@ -7,9 +7,9 @@ namespace SpaceAssault.Utils.Particle.Settings
     /// <summary>
     /// Custom particle system for creating a flame effect.
     /// </summary>
-    class CircleExplosionSettings : ParticleSystem
+    class ShipRingExplosionSettings : ParticleSystem
     {
-        public CircleExplosionSettings()
+        public ShipRingExplosionSettings()
         { }
 
 
