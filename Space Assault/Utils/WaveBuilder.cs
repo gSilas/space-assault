@@ -15,6 +15,7 @@ namespace SpaceAssault.Utils
         private int _max;
         private bool _timeSet;
         private Dialog _dialog;
+        private Dialog _waveDialog;
 
         public WaveBuilder(TimeSpan timeBetweenWaves, int maxwave)
         {
@@ -25,9 +26,11 @@ namespace SpaceAssault.Utils
         }
         public void LoadContent()
         {
-            _dialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width-450, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 178, 128,384, 8, false, true);
+            _waveDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width - 380, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 232, 48, 320, 8, false, true);
+            _dialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width - 380, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 178, 128, 320, 8, false, true);
             _currentWave.LoadContent();
             _dialog.LoadContent();
+            _waveDialog.LoadContent();
         }
         public bool HasEnded = false;
         public List<AEnemys> ShipList { get { return _currentWave.ShipList; } }
@@ -60,13 +63,14 @@ namespace SpaceAssault.Utils
         public void Draw(GameTime gameTime)
         {
             _currentWave.Draw();
+            _waveDialog.Draw("Wave " + (_waveCount).ToString() + "\n" + _currentWave.ShipList.Count + " Ships remaining");
 
             if (_currentWave.ShipList.Count <= 0)
             {
-                if(gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)).Subtract(TimeSpan.FromSeconds(5d)))
-                    _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n\n"+_currentWave.ShipList.Count.ToString() + " ships incoming!\n\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
+                if (gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)).Subtract(TimeSpan.FromSeconds(5d)))
+                    _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n\n\n\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
                 else
-                    _dialog.Draw("Wave " + _waveCount + " ended!\n\n"+ (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");               
+                    _dialog.Draw("Wave " + _waveCount + " ended!\n\n\n\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");               
             }
             if(_waveCount >= _max)
             {
