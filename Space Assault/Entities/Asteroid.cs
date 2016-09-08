@@ -63,7 +63,8 @@ namespace SpaceAssault.Entities
             otherDirection = new Vector3();
             otherDirection.X = otherAstdirection.Z + (optimizedP * normal.X);
             otherDirection.Z = otherAstdirection.X + (optimizedP * normal.Z);
-            //_direction.Normalize();
+            _direction.Normalize();
+            otherDirection.Normalize();
         }
         public float MaxRadius()
         {
