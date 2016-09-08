@@ -1,6 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using IrrKlang;
+using SpaceAssault.ScreenManagers;
+using SpaceAssault.Utils;
+
+/* TODO: it would be ideal if our textinput were eventbased: http://www.gamedev.net/topic/457783-xna-getting-text-from-keyboard/
+ * Question: Do we really need it? Input doesnt have to be perfect, it just has to work.
+ */
 
 namespace SpaceAssault.Screens
 {
@@ -8,6 +17,7 @@ namespace SpaceAssault.Screens
     {
         MenuEntry back;
         bool _enter;
+        private bool _nextIterationFalse;
 
         private string _entryString;
         private int _elapsedTimeMilliseconds;
@@ -52,8 +62,10 @@ namespace SpaceAssault.Screens
         public HighscoreMenuScreen(bool enter) : base("Highscore")
         {
             // Create our menu entries.
+            _nextIterationFalse = false;
             back = new MenuEntry("Back");
             inputBoxWidth = 150;
+            back.Selected += OnCancel;
             // Add entries to the menu.
             MenuEntries.Add(back);
 
@@ -70,11 +82,11 @@ namespace SpaceAssault.Screens
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+            if (_nextIterationFalse)
+                _enter = false;
 
             if (_enter)
             {
-                _elapsedTimeMilliseconds += gameTime.ElapsedGameTime.Milliseconds;
-
                 oldKeyboardState = currentKeyboardState;
                 currentKeyboardState = Keyboard.GetState();
 
@@ -88,7 +100,7 @@ namespace SpaceAssault.Screens
                         switch (curKey)
                         {
                             case Keys.Back:
-                                if(EntryText.Length > 0) EntryText = EntryText.Substring(0, EntryText.Length - 1);
+                                if (EntryText.Length > 0) EntryText = EntryText.Substring(0, EntryText.Length - 1);
                                 break;
 
                             case Keys.Space:
@@ -102,7 +114,7 @@ namespace SpaceAssault.Screens
                                     Global.HighScoreList.Add(EntryText, Global.HighScorePoints);
                                     EntryText = "";
                                     Global.HighScorePoints = 0;
-                                    _enter = false;
+                                    _nextIterationFalse = true;
                                 }
                                 break;
 
@@ -125,11 +137,7 @@ namespace SpaceAssault.Screens
                     }
                 }
             }
-            else
-            {
-                // Hook up menu event handlers.
-                back.Selected += OnCancel;
-            }
+
         }
 
         // Draws the menu.
@@ -153,6 +161,97 @@ namespace SpaceAssault.Screens
                 if (_enter)
                 {
                     Global.SpriteBatch.DrawString(Global.GameFont, EntryText, new Vector2(spawnPointX, spawnPointY + 11 * zeilenAbstand), Color.White);
+                }
+            }
+        }
+
+        public override void HandleInput(InputState input)
+        {
+            if (!_enter)
+            {
+                // mouse click on menu?
+                if (input.IsLeftMouseButtonNewPressed())
+                {
+                    Vector2 cornerA;
+                    Vector2 cornerD;
+                    for (int i = 0; i < MenuEntries.Count; i++)
+                    {
+                        //calculating 2 diagonal corners of current menuEntry (upper left, bottom right)
+                        cornerA = MenuEntries[i].Position;
+                        cornerA.Y -= MenuEntries[i].GetHeight() / 2f;
+
+                        cornerD = MenuEntries[i].Position;
+                        cornerD.Y += MenuEntries[i].GetHeight() / 2f;
+                        cornerD.X += MenuEntries[i].GetWidth();
+
+                        if (cornerA.X < input.MousePosition.X && cornerA.Y < input.MousePosition.Z)
+                        {
+                            if (cornerD.X > input.MousePosition.X && cornerD.Y > input.MousePosition.Z)
+                            {
+
+                                // menuEntry needs a double click
+                                /*
+                                if (selectedEntry == i)
+                                {
+                                    OnSelectEntry(selectedEntry);
+                                }
+                                else selectedEntry = i;
+                                */
+
+                                // menuEntry needs one click
+                                selectedEntry = i;
+                                OnSelectEntry(selectedEntry);
+                            }
+                        }
+                        else continue;
+
+                    }
+                }
+
+                // Move to the previous menu entry?
+                if (input.IsMenuUp())
+                {
+                    //playing the sound
+                    SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                    ISound Accept;
+                    Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                    Accept.Volume = Global.SpeakerVolume / 10;
+                    Accept.Paused = false;
+
+                    selectedEntry--;
+
+                    if (selectedEntry < 0)
+                        selectedEntry = MenuEntries.Count - 1;
+                }
+
+                // Move to the next menu entry?
+                if (input.IsMenuDown())
+                {
+                    //playing the sound
+                    SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                    ISound Accept;
+                    Accept = SoundEngine.Play3D(MenuAcceptSound, 0, 0 + 15f, 0, false, true, false);
+                    Accept.Volume = Global.SpeakerVolume / 10;
+                    Accept.Paused = false;
+
+                    selectedEntry++;
+
+                    if (selectedEntry >= MenuEntries.Count)
+                        selectedEntry = 0;
+                }
+
+                // Accept or cancel the menu.
+                if (input.IsMenuSelect())
+                {
+                    OnSelectEntry(selectedEntry);
+                }
+                if (MenuEntries[selectedEntry].IsIncreasingSelect && input.IsMenuIncreasingSelect())
+                {
+                    OnSelectEntry(selectedEntry);
+                }
+                else if (input.IsMenuCancel())
+                {
+                    OnCancel();
                 }
             }
         }

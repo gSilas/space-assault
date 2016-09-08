@@ -159,13 +159,6 @@ namespace SpaceAssault.Screens
         // Helper overload makes it easy to use OnCancel as a MenuEntry event handler.
         protected virtual void OnCancel(object sender, EventArgs e)
         {
-            //playing the sound
-            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            ISound Denie;
-            Denie = SoundEngine.Play3D(GoBack, 0, 0 + 15f, 0, false, true, false);
-            Denie.Volume = Global.SpeakerVolume/10;
-            Denie.Paused = false;
-
             OnCancel();
         }
 
