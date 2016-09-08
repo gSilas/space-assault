@@ -26,6 +26,7 @@ namespace SpaceAssault.Entities
         private float _tiltZMax;
         private Matrix _rotationMatrixLaser = Matrix.Identity;
 
+
         public int _maxHealth;
         public int _health;
         public int _armor;
@@ -59,14 +60,8 @@ namespace SpaceAssault.Entities
             _maxHealth = maxHealth;
             _armor = armor;
             _maxShield = maxShield;
-            trail = new List<Trail>();
-            trail2 = new List<Trail>();
 
-            TrailParticles = new DroneTrail();
-
-            trail.Add(new Trail(TrailParticles));
-            trail2.Add(new Trail(TrailParticles));
-
+            _trail = new Trail(new DroneTrailSettings());
 
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 6.0f;

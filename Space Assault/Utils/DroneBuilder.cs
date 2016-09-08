@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using SpaceAssault.Entities;
 
-
 namespace SpaceAssault.Utils
 {
 
@@ -23,6 +22,8 @@ namespace SpaceAssault.Utils
         {
             _droneShips = new List<Drone>();
             _bulletList = new List<Bullet>();
+
+
             _removeBulletList = new List<Bullet>();
             _makeDmg = 10;
             _maxHealth = 100;
@@ -53,11 +54,8 @@ namespace SpaceAssault.Utils
                 }
 
                 // BombTrail
-                for (int i = 0; i < bullet.bombTrail.Count; i++)
-                {
-                    bullet.bombTrail[i].Update(gameTime, bullet.Position);
-                }
-                bullet.bombTrailParticles.Update(gameTime);
+                if (bullet._trail != null)
+                    bullet._trail.Update(gameTime, bullet.Position);
             }
 
             foreach (Bullet bullet in _removeBulletList)
@@ -72,13 +70,10 @@ namespace SpaceAssault.Utils
                 drone.Update(gameTime);
 
                 // Trail
-                for (int i = 0; i < drone.trail.Count; i++)
-                {
-                    drone.trail[i].Update(gameTime, drone.Position + new Vector3(3,0,6));
-                    drone.trail2[i].Update(gameTime, drone.Position - new Vector3(3,0,-6));
-                }
+                if (drone._trail != null)
+                    drone._trail.Update(gameTime, drone.Position);
 
-                drone.TrailParticles.Update(gameTime);
+                //drone.TrailParticles.Update(gameTime);
             }
 
             // let active drone receive input
@@ -92,13 +87,16 @@ namespace SpaceAssault.Utils
         {
             foreach (Bullet bullet in _bulletList)
             {
-                bullet.bombTrailParticles.Draw();
+                // BombTrail
+                if (bullet._trail != null)
+                    bullet._trail.Draw();
                 bullet.Draw();
             }
 
             foreach (var ship in _droneShips)
             {
-                ship.TrailParticles.Draw();
+                if (ship._trail != null)
+                    ship._trail.Draw();
                 ship.Draw();
             }
         }
