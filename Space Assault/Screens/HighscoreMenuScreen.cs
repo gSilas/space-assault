@@ -11,17 +11,53 @@ namespace SpaceAssault.Screens
 
         private string _entryString;
         private int _elapsedTimeMilliseconds;
+        private float inputBoxWidth;
+        private KeyboardState oldKeyboardState;
+        private KeyboardState currentKeyboardState;
+
+        public string EntryText
+        {
+            get
+            {
+                return _entryString;
+            }
+            set
+            {
+                _entryString = value;
+
+                if (_entryString != "")
+                {
+                    //if you attempt to display a character that is not in your font
+                    //you will get an exception, so we filter the characters
+                    //remove the filtering if you're using a default character in your spritefont
+                    string filtered = "";
+                    foreach (char c in value)
+                    {
+                        if (Global.GameFont.Characters.Contains(c))
+                            filtered += c;
+                    }
+
+                    _entryString = filtered;
+
+                    while (Global.GameFont.MeasureString(_entryString).X > inputBoxWidth)
+                    {
+                        //to ensure that text cannot be larger than the box
+                        _entryString = _entryString.Substring(0, _entryString.Length - 1);
+                    }
+                }
+            }
+        }
 
         // Constructor.
         public HighscoreMenuScreen(bool enter) : base("Highscore")
         {
             // Create our menu entries.
             back = new MenuEntry("Back");
-
+            inputBoxWidth = 150;
             // Add entries to the menu.
             MenuEntries.Add(back);
 
-            _entryString = "";
+            EntryText = "";
             _enter = enter;
         }
 
@@ -39,44 +75,54 @@ namespace SpaceAssault.Screens
             {
                 _elapsedTimeMilliseconds += gameTime.ElapsedGameTime.Milliseconds;
 
-                KeyboardState keyState = Keyboard.GetState();
-                if (keyState.GetPressedKeys().Length > 0 && _elapsedTimeMilliseconds > 16 * 4)
+                oldKeyboardState = currentKeyboardState;
+                currentKeyboardState = Keyboard.GetState();
+
+                Keys[] pressedKeys;
+                pressedKeys = currentKeyboardState.GetPressedKeys();
+
+                foreach (Keys curKey in pressedKeys)
                 {
-
-                    Keys curKey = keyState.GetPressedKeys()[0];
-
-                    //handling text input
-                    if (_entryString.Length <= 10)
+                    if (oldKeyboardState.IsKeyUp(curKey))
                     {
-                        //wenn der key nur ein charakter hat
-                        if (curKey.ToString().ToCharArray().Length == 1)
-                            //wenn mehr als ein Key gleichzeitig gedrueckt wurde
-                            if (keyState.GetPressedKeys().Length > 1)
-                            {
-                                //wenn LeftShift ist => Großschreibung
-                                if (keyState.GetPressedKeys()[1] == Keys.LeftShift)
-                                    _entryString += curKey.ToString().ToUpper();
-                            }
-                            // => kleinschreibung
-                            else _entryString += curKey.ToString().ToLower();
-                        //wenn der key das minuszeichen ist
-                        else if (curKey == Keys.OemMinus)
-                            _entryString += "-";
+                        switch (curKey)
+                        {
+                            case Keys.Back:
+                                if(EntryText.Length > 0) EntryText = EntryText.Substring(0, EntryText.Length - 1);
+                                break;
+
+                            case Keys.Space:
+                                EntryText += " ";
+                                break;
+
+                            case Keys.Enter:
+                                if (EntryText.Length > 2)
+                                {
+                                    //enter, send the string + points to highscores
+                                    Global.HighScoreList.Add(EntryText, Global.HighScorePoints);
+                                    EntryText = "";
+                                    Global.HighScorePoints = 0;
+                                    _enter = false;
+                                }
+                                break;
+
+                            case Keys.OemMinus:
+                                EntryText += "-";
+                                break;
+
+                            default:
+                                if (curKey.ToString().ToCharArray().Length == 1)    //wenn der key nur ein charakter hat
+                                {
+                                    if (pressedKeys.Length > 1)   //wenn mehr als ein Key gleichzeitig gedrueckt wurde
+                                    {
+                                        if (pressedKeys[1] == Keys.LeftShift)   //wenn LeftShift ist => Großschreibung
+                                            EntryText += curKey.ToString().ToUpper();
+                                    }
+                                    else EntryText += curKey.ToString().ToLower();   // => kleinschreibung
+                                }
+                                break;
+                        }
                     }
-
-                    //handling other operations on string
-                    if (curKey == Keys.Back && _entryString.Length > 0)
-                        _entryString = _entryString.Remove(_entryString.Length - 1, 1);
-
-                    if (curKey == Keys.Enter && _entryString.Length > 0)
-                    {
-                        Global.HighScoreList.Add(_entryString, Global.HighScorePoints);
-                        _entryString = "";
-                        Global.HighScorePoints = 0;
-                        _enter = false;
-                    }
-
-                    _elapsedTimeMilliseconds = 0;
                 }
             }
             else
@@ -106,7 +152,7 @@ namespace SpaceAssault.Screens
 
                 if (_enter)
                 {
-                    Global.SpriteBatch.DrawString(Global.GameFont, _entryString, new Vector2(spawnPointX, spawnPointY + 11 * zeilenAbstand), Color.White);
+                    Global.SpriteBatch.DrawString(Global.GameFont, EntryText, new Vector2(spawnPointX, spawnPointY + 11 * zeilenAbstand), Color.White);
                 }
             }
         }
