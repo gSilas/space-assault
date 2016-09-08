@@ -1,6 +1,7 @@
 
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceAssault.Utils.Particle.Settings
 {
@@ -16,7 +17,7 @@ namespace SpaceAssault.Utils.Particle.Settings
 
             settings.MaxParticles = 300;
 
-            settings.Duration = TimeSpan.FromSeconds(0.4);
+            settings.Duration = TimeSpan.FromSeconds(0.6);
 
             settings.DurationRandomness = 0;
 
@@ -28,8 +29,8 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinVerticalVelocity = -1;
             settings.MaxVerticalVelocity = 1;
 
-            settings.MinColor = new Color(255, 155, 155, 70);
-            settings.MaxColor = new Color(255, 205, 200, 100);
+            settings.MinColor = new Color(255, 0, 0, 70);
+            settings.MaxColor = new Color(255, 0, 0, 70);
 
             settings.MinRotateSpeed = -4;
             settings.MaxRotateSpeed = 4;
@@ -39,6 +40,8 @@ namespace SpaceAssault.Utils.Particle.Settings
 
             settings.MinEndSize = 1;
             settings.MaxEndSize = 3;
+
+            settings.BlendState = BlendState.Additive;
         }
     }
 }
