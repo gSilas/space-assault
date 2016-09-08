@@ -584,3 +584,9 @@
 /processorParam:TextureFormat=Color
 /build:Images/Rocket_Icon.png
 
+#begin Fonts/deusex.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/deusex.spritefont
+
