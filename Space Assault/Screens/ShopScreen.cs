@@ -358,7 +358,7 @@ namespace SpaceAssault.Screens
         }
         void rocketMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > 500)
+            if (Global.Money >= 500)
             {
                 
                 Global.Money -= 500;
