@@ -291,6 +291,9 @@ namespace SpaceAssault.Utils.Particle
             // If there are any active particles, draw them now!
             if (firstActiveParticle != firstFreeParticle)
             {
+                BlendState oldBlendState = device.BlendState;
+                DepthStencilState oldStencilState = device.DepthStencilState;
+
                 device.BlendState = settings.BlendState;
                 device.DepthStencilState = DepthStencilState.DepthRead;
 
@@ -339,7 +342,8 @@ namespace SpaceAssault.Utils.Particle
 
                 // Reset some of the renderstates that we changed,
                 // so as not to mess up any other subsequent drawing.
-                device.DepthStencilState = DepthStencilState.Default;
+                device.DepthStencilState = oldStencilState;
+                device.BlendState = oldBlendState;
             }
 
             drawCounter++;

@@ -28,8 +28,11 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinVerticalVelocity = -1;
             settings.MaxVerticalVelocity = 1;
 
-            settings.MinColor = new Color(155, 255, 155, 255);
-            settings.MaxColor = new Color(205, 255, 200, 255);
+            settings.MinColor = new Color(155, 255, 155, 0);
+            settings.MaxColor = new Color(205, 255, 200, 0);
+
+            settings.MinColor = Color.White;
+            settings.MaxColor = Color.White;
 
             settings.MinRotateSpeed = -4;
             settings.MaxRotateSpeed = 4;
@@ -40,8 +43,7 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinEndSize = 1;
             settings.MaxEndSize = 3;
 
-            //this makes asteroids transparent, don't know why
-            //settings.BlendState = BlendState.Additive;
+            settings.BlendState = BlendState.Additive;
         }
     }
 }
