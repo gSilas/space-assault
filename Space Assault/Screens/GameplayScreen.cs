@@ -75,7 +75,7 @@ namespace SpaceAssault.Screens
             _asteroidField = new AsteroidBuilder();
             _droneFleet = new DroneBuilder();
 
-            _waveBuilder = new WaveBuilder(TimeSpan.FromSeconds(15d),2,2);
+            _waveBuilder = new WaveBuilder(TimeSpan.FromSeconds(15d),2,2,15);
             Global.Money = 0;
             //UI + Frame + BG 
             _ui = new InGameOverlay(_station);

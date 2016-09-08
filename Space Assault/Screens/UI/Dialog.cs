@@ -33,6 +33,18 @@ namespace SpaceAssault.Screens.UI
             _uiColor = Global.UIColor;
         }
 
+        public Point position
+        {
+            get { return _pos; }
+            protected set { _pos = value;  }
+        }
+
+        public Point size
+        {
+            get { return _size; }
+            protected set { _size = value; }
+        }
+
         public void LoadContent()
         {
             _space = Global.ContentManager.Load<Texture2D>("Images/UI/dialog_space");

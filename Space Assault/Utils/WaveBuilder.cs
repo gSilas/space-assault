@@ -9,24 +9,25 @@ namespace SpaceAssault.Utils
     class WaveBuilder
     {
         private Wave _currentWave;
-        private Wave _lastWave;
         private TimeSpan _timeBetweenWaves;
         private TimeSpan _timeOfEmptyness;
         private int _enemyCount;
         private int _increment;
         private int _waveCount;
+        private int _max;
         private bool _timeSet;
         private Dialog _dialog;
 
         int[] fighterStats;
         int[] bomberStats;
 
-        public WaveBuilder(TimeSpan timeBetweenWaves, int enemyCount, int increment)
+        public WaveBuilder(TimeSpan timeBetweenWaves, int enemyCount, int increment, int maxwave)
         {
             _currentWave = new Wave();
             _waveCount++;
             _enemyCount = enemyCount;
             _increment = increment;
+            _max = maxwave;
             _timeBetweenWaves = timeBetweenWaves;
             fighterStats = new int[3] { 5, 5, 20 };
             bomberStats = new int[3] { 5, 5, 20 };
@@ -50,13 +51,17 @@ namespace SpaceAssault.Utils
                     _timeOfEmptyness = gameTime.TotalGameTime.Duration();
                     _timeSet = true;
                 }
-                if(gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)))
+                if(gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)) && _waveCount < _max)
                 {
                     _currentWave = new Wave();
                     _enemyCount += _increment;
                     _currentWave.LoadContent(_enemyCount, ref fighterStats, ref bomberStats);
                     _waveCount++;
                     _timeSet = false;
+                }
+                else if(gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)) && _waveCount >= _max)
+                {
+                    //TODO ADD HIGHSCORE HERE
                 }
             }
         }
@@ -72,6 +77,10 @@ namespace SpaceAssault.Utils
                 else
                     _dialog.Draw("Wave " + _waveCount + " ended!\n\n" + "You destroyed " + _enemyCount.ToString() + " ships!\n" +"Bomber Stats: " + bomberStats[0] + " " + bomberStats[1] + " " + bomberStats[2] + "\n" + "Fighter Stats: " + fighterStats[0] + " " + fighterStats[1] + " " + fighterStats[2] + "\n"+ (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");               
             }
+            if(_waveCount >= _max)
+            {
+                _dialog.Draw("You have defeated the enemy commander!\nGood Job!");
+            }
         }
     }
 
@@ -82,7 +91,7 @@ namespace SpaceAssault.Utils
         {
             _boids = new Boids();
         }
-        public void LoadContent(int count,ref int[] fighterStats,ref int[] bomberStats)
+        public void LoadContent(int count, ref int[] fighterStats, ref int[] bomberStats)
         {
             int bCount = (int)(count * 0.25f);
             int f2count = (int)(count * 0.25f);
