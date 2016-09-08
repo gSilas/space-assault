@@ -51,9 +51,19 @@ namespace SpaceAssault.Entities
             get { return _speed; }
             set { _speed = value; }
         }
-        public void NegateDirection()
+        public void Reflect(Vector3 otherAstdirection, Vector3 otherAstCenter, out Vector3 otherDirection)
         {
-            _direction *= -1;
+            var normal = Spheres[0].Center - otherAstCenter;
+            normal.Normalize();
+            var tA = Vector3.Dot(_direction, normal);
+            var tB = Vector3.Dot(otherAstdirection, normal);
+            var optimizedP = (float)Math.Min((2.0 * (tA - tB)) / 2, 0);
+            _direction.X = _direction.X - (optimizedP * normal.X);
+            _direction.Z = _direction.Z - (optimizedP * normal.Z);
+            otherDirection = new Vector3();
+            otherDirection.X = otherAstdirection.Z + (optimizedP * normal.X);
+            otherDirection.Z = otherAstdirection.X + (optimizedP * normal.Z);
+            //_direction.Normalize();
         }
         public float MaxRadius()
         {

@@ -415,10 +415,12 @@ namespace SpaceAssault.Screens
                 foreach (var ast2 in _asteroidField._asteroidList)
                 {
                     if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
-                    {                   
-                            ast.NegateDirection();
-                            dustParticles.AddParticle(ast.Position, Vector3.Zero);
-                            ast.Position += ast.Direction * (2*((float) random.NextDouble())*ast.MaxRadius() + ast.MaxRadius());
+                    {
+                        var newDirection = new Vector3();
+                        ast.Reflect(ast2.Direction, ast2.Spheres[0].Center, out newDirection);
+                        ast2.Direction = newDirection;
+                        dustParticles.AddParticle(ast.Position, Vector3.Zero);
+                        //ast.Position += ast.Direction * (2*((float) random.NextDouble())*ast.MaxRadius() + ast.MaxRadius());
                     }
                 }
                 foreach (var ship in _waveBuilder.ShipList)

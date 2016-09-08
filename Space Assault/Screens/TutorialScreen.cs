@@ -435,9 +435,11 @@ namespace SpaceAssault.Screens
                 {
                     if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
                     {
-                        ast.NegateDirection();
+                        var newDirection = new Vector3();
+                        ast.Reflect(ast2.Direction, ast2.Spheres[0].Center, out newDirection);
+                        ast2.Direction = newDirection;
                         dustParticles.AddParticle(ast.Position, Vector3.Zero);
-                        ast.Position += ast.Direction * (2 * ((float)random.NextDouble()) * ast.MaxRadius() + ast.MaxRadius());
+                        //ast.Position += ast.Direction * (2 * ((float)random.NextDouble()) * ast.MaxRadius() + ast.MaxRadius());
                     }
                 }
                 foreach (var bullet in _droneFleet._bulletList)
