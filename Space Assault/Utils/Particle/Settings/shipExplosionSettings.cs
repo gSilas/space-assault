@@ -29,8 +29,8 @@ namespace SpaceAssault.Utils.Particle.Settings
 
             settings.EndVelocity = 0;
 
-            settings.MinColor = new Color(255, 255, 155, 80);
-            settings.MaxColor = new Color(255, 255, 200, 10);
+            settings.MinColor = new Color(255, 255, 155, 50);
+            settings.MaxColor = new Color(255, 255, 200, 20);
 
             settings.MinRotateSpeed = -1;
             settings.MaxRotateSpeed = 1;
@@ -41,7 +41,6 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinEndSize = 80;
             settings.MaxEndSize = 100;
 
-            // Use additive blending.
             settings.BlendState = BlendState.Additive;
         }
     }

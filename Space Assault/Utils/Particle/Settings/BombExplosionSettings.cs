@@ -4,9 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceAssault.Utils.Particle.Settings
 {
-    /// <summary>
-    /// Custom particle system for creating the fiery part of the explosions.
-    /// </summary>
     class BombExplosionSettings : ParticleSystem
     {
         public BombExplosionSettings()
@@ -29,8 +26,8 @@ namespace SpaceAssault.Utils.Particle.Settings
 
             settings.EndVelocity = 0;
 
-            settings.MinColor = Color.Black;
-            settings.MaxColor = Color.DarkGray;
+            settings.MinColor = new Color(255, 255, 255, 100);
+            settings.MaxColor = new Color(255, 255, 255, 120);
 
             settings.MinRotateSpeed = -1;
             settings.MaxRotateSpeed = 1;
@@ -41,7 +38,6 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinEndSize = 80;
             settings.MaxEndSize = 100;
 
-            // Use additive blending.
             settings.BlendState = BlendState.Additive;
         }
     }

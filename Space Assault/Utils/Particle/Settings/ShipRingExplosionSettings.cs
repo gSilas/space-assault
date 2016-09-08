@@ -17,7 +17,7 @@ namespace SpaceAssault.Utils.Particle.Settings
         {
             settings.TextureName = "explosion";
 
-            settings.MaxParticles = 5000;
+            settings.MaxParticles = 1000;
 
             settings.Duration = TimeSpan.FromSeconds(0.2);
 
@@ -32,8 +32,8 @@ namespace SpaceAssault.Utils.Particle.Settings
             // Set gravity upside down, so the flames will 'fall' upward.
             settings.Gravity = new Vector3(0, 20, 0);
 
-            settings.MinColor = new Color(255, 255, 255, 10);
-            settings.MaxColor = new Color(255, 255, 255, 40);
+            settings.MinColor = new Color(255, 255, 255, 20);
+            settings.MaxColor = new Color(255, 255, 255, 50);
 
             settings.MinStartSize = 30;
             settings.MaxStartSize = 30;
@@ -41,7 +41,6 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinEndSize = 10;
             settings.MaxEndSize = 10;
 
-            // Use additive blending.
             settings.BlendState = BlendState.Additive;
         }
     }

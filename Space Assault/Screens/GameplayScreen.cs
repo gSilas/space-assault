@@ -436,7 +436,7 @@ namespace SpaceAssault.Screens
                 {
                     if (Collider3D.IntersectionSphere(bullet, ast))
                     {
-                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.4));
+                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.35));
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
                         break;
@@ -447,7 +447,7 @@ namespace SpaceAssault.Screens
                 {
                     if (Collider3D.IntersectionSphere(bullet, ast))
                     {
-                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.4));
+                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.35));
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
                         Global.HighScorePoints += 50;
