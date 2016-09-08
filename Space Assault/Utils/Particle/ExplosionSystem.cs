@@ -71,9 +71,9 @@ namespace SpaceAssault.Utils.Particle
 
             if (_state != 2)
             {
-                if (gameTime.TotalGameTime.TotalSeconds - _tmptime >= 0.1)
+                if (gameTime.TotalGameTime.TotalSeconds - _tmptime >= 0.05)
                 {
-                    _timer += 0.1;
+                    _timer += 0.05;
                     _tmptime = gameTime.TotalGameTime.TotalSeconds;
                 }
 
