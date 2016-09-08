@@ -4,9 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceAssault.Utils.Particle.Settings
 {
-    /// <summary>
-    /// Custom particle system for creating the fiery part of the explosions.
-    /// </summary>
     class AsteroidExplosionSettings : ParticleSystem
     {
         public AsteroidExplosionSettings()
@@ -14,11 +11,11 @@ namespace SpaceAssault.Utils.Particle.Settings
 
         protected override void InitializeSettings(ParticleSettings settings)
         {
-            settings.TextureName = "dust2";
+            settings.TextureName = "explosion";
 
-            settings.MaxParticles = 400;
+            settings.MaxParticles = 100;
 
-            settings.Duration = TimeSpan.FromSeconds(1);
+            settings.Duration = TimeSpan.FromSeconds(0.4);
             settings.DurationRandomness = 0;
 
             settings.MinHorizontalVelocity = 20;
@@ -29,14 +26,14 @@ namespace SpaceAssault.Utils.Particle.Settings
 
             settings.EndVelocity = 0;
 
-            settings.MinColor = Color.Black;
-            settings.MaxColor = Color.DarkGray;
+            settings.MinColor = new Color(114, 123, 132, 80);
+            settings.MaxColor = new Color(114, 123, 132, 100);
 
             settings.MinRotateSpeed = -1;
             settings.MaxRotateSpeed = 1;
 
-            settings.MinStartSize = 20;
-            settings.MaxStartSize = 30;
+            settings.MinStartSize = 40;
+            settings.MaxStartSize = 50;
 
             settings.MinEndSize = 80;
             settings.MaxEndSize = 100;

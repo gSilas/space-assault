@@ -54,6 +54,7 @@ namespace SpaceAssault.Screens
         ParticleSystem dustParticles;
 
         List<ExplosionSystem> explosionList = new List<ExplosionSystem>();
+        List<ExplosionSystem> explosionRemoveList = new List<ExplosionSystem>();
 
         // Keep track of all the active projectiles
         List<Projectile> projectiles = new List<Projectile>();
@@ -166,7 +167,19 @@ namespace SpaceAssault.Screens
             foreach (ExplosionSystem explosion in explosionList)
             {
                 explosion.Update(gameTime);
+                if (explosion._state == 2)
+                {
+                    explosionRemoveList.Add(explosion);
+                }
             }
+
+            foreach (var explosion in explosionRemoveList)
+            {
+                explosionList.Remove(explosion);
+            }
+            explosionRemoveList.Clear();
+
+
 
 
             // if station dies go back to MainMenu
@@ -539,7 +552,7 @@ namespace SpaceAssault.Screens
         //#################################
         void UpdateBorder(GameTime gameTime)
         {
-            const int borderParticlesPerFrame = 100;
+            const int borderParticlesPerFrame = 50;
 
             // Create a number of border particles, randomly positioned around a circle.
             for (int i = 0; i < borderParticlesPerFrame; i++)
