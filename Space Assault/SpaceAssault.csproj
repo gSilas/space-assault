@@ -76,6 +76,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Entities\EnemyBoss.cs" />
     <Compile Include="Entities\EnemyFighter2.cs" />
     <Compile Include="Entities\AEnemys.cs" />
     <Compile Include="Entities\AEntity.cs" />
