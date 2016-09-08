@@ -40,8 +40,8 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinEndSize = 1;
             settings.MaxEndSize = 3;
 
-            // Use additive blending.
-            settings.BlendState = BlendState.Additive;
+            //this makes asteroids transparent, don't know why
+            //settings.BlendState = BlendState.Additive;
         }
     }
 }
