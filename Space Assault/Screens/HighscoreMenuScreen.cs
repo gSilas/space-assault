@@ -18,9 +18,6 @@ namespace SpaceAssault.Screens
             // Create our menu entries.
             back = new MenuEntry("Back");
 
-            // Hook up menu event handlers.
-            back.Selected += OnCancel;
-
             // Add entries to the menu.
             MenuEntries.Add(back);
 
@@ -81,6 +78,11 @@ namespace SpaceAssault.Screens
 
                     _elapsedTimeMilliseconds = 0;
                 }
+            }
+            else
+            {
+                // Hook up menu event handlers.
+                back.Selected += OnCancel;
             }
         }
 
