@@ -237,9 +237,6 @@
     <Content Include="Content\Media\Music\Space Fighter Loop.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Media\Music\SUBSET_-_05_-_Nazca.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\Media\Music\Truth of the Legend_Cut.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
