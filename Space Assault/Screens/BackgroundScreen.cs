@@ -67,8 +67,8 @@ namespace SpaceAssault.Screens
             //Sound
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
             _engine.SetListenerPosition(new Vector3D(0,0,0), new Vector3D(0, 0, 1));
-            _music = _engine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
-            _music.Volume = 0.2f;
+            Global.Music = _engine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
+            Global.Music.Volume = Global.MusicVolume / 10;
 
             _back = new Background();
         }
@@ -95,7 +95,7 @@ namespace SpaceAssault.Screens
 
 
             posOnCircle += 0.04f;
-            _music.Position = new Vector3D(5f * (float)Math.Cos(posOnCircle), 0, 5f * (float)Math.Sin(posOnCircle * 0.5f));
+            
         }
 
 

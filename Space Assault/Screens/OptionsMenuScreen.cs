@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace SpaceAssault.Screens
 {
@@ -13,7 +14,8 @@ namespace SpaceAssault.Screens
         //MenuEntry staticNumberMenuEntry;
         MenuEntry fullscreenMenuEntry;
         MenuEntry frameCounterMenuEntry;
-        MenuEntry speakerVolumeMenuEntry;
+        MenuEntry effectVolumeMenuEntry;
+        MenuEntry musicVolumeMenuEntry;
         MenuEntry uiColorRMenuEntry;
         MenuEntry uiColorGMenuEntry;
         MenuEntry uiColorBMenuEntry;
@@ -32,7 +34,8 @@ namespace SpaceAssault.Screens
             //staticNumberMenuEntry = new MenuEntry(string.Empty);
             fullscreenMenuEntry = new MenuEntry(string.Empty);
             frameCounterMenuEntry = new MenuEntry(string.Empty);
-            speakerVolumeMenuEntry = new MenuEntry(string.Empty);
+            effectVolumeMenuEntry = new MenuEntry(string.Empty);
+            musicVolumeMenuEntry = new MenuEntry(string.Empty);
             uiColorRMenuEntry = new MenuEntry(string.Empty);
             uiColorGMenuEntry = new MenuEntry(string.Empty);
             uiColorBMenuEntry = new MenuEntry(string.Empty);
@@ -45,7 +48,9 @@ namespace SpaceAssault.Screens
             //staticNumberMenuEntry.Selected += staticNumberMenuEntrySelected;
             fullscreenMenuEntry.Selected += fullscreenMenuEntrySelected;
             frameCounterMenuEntry.Selected += frameCounterMenuEntrySelected;
-            speakerVolumeMenuEntry.Selected += speakerVolumeMenuEntrySelected;
+            effectVolumeMenuEntry.Selected += effectVolumeMenuEntrySelected;
+            musicVolumeMenuEntry.Selected += musicVolumeMenuEntrySelected;
+            
             uiColorRMenuEntry.Selected += uiColorRMenuEntrySelected;
             uiColorGMenuEntry.Selected += uiColorGMenuEntrySelected;
             uiColorBMenuEntry.Selected += uiColorBMenuEntrySelected;
@@ -59,7 +64,9 @@ namespace SpaceAssault.Screens
             //MenuEntries.Add(staticNumberMenuEntry);
             MenuEntries.Add(fullscreenMenuEntry);
             MenuEntries.Add(frameCounterMenuEntry);
-            MenuEntries.Add(speakerVolumeMenuEntry);
+            MenuEntries.Add(musicVolumeMenuEntry);
+            MenuEntries.Add(effectVolumeMenuEntry);
+          
             MenuEntries.Add(uiColorRMenuEntry);
             MenuEntries.Add(uiColorGMenuEntry);
             MenuEntries.Add(uiColorBMenuEntry);
@@ -75,10 +82,12 @@ namespace SpaceAssault.Screens
             //staticNumberMenuEntry.Text = "Number: " + num;
             fullscreenMenuEntry.Text = "Fullscreen: " + (Global.GraphicsManager.IsFullScreen ? "on" : "off");
             frameCounterMenuEntry.Text = "FPS Counter: " + (Global.FrameCounterIsEnabled ? "on" : "off");
-            speakerVolumeMenuEntry.Text = "Effect Volume: " + (Global.SpeakerVolume);
+            effectVolumeMenuEntry.Text = "Effect Volume: " + (Global.SpeakerVolume);
+            musicVolumeMenuEntry.Text = "Music Volume: " + (Global.MusicVolume);
             uiColorRMenuEntry.Text = "Color R: " + (Global.UIColor.R);
             uiColorGMenuEntry.Text = "Color G: " + (Global.UIColor.G);
             uiColorBMenuEntry.Text = "Color B: " + (Global.UIColor.B);
+
         }
 
         // Event handler for when the Fullscreen menu entry is selected.
@@ -94,17 +103,33 @@ namespace SpaceAssault.Screens
             SetMenuEntryText();
         }
 
-        void speakerVolumeMenuEntrySelected(object sender, EventArgs e)
+        void effectVolumeMenuEntrySelected(object sender, EventArgs e)
         {
             if (Global.SpeakerVolume == 10)
-            {
                 Global.SpeakerVolume = 0;
-            }
             else
                 Global.SpeakerVolume += 1;
+            
+            
+
+
 
             SetMenuEntryText();
         }
+
+        void musicVolumeMenuEntrySelected(object sender, EventArgs e)
+        {
+            if (Global.MusicVolume == 10)
+                Global.MusicVolume = 0;
+            else
+                Global.MusicVolume += 1;
+
+            Global.Music.Volume = Global.MusicVolume/10;
+            SetMenuEntryText();
+
+        }
+
+
         void uiColorRMenuEntrySelected(object sender, EventArgs e)
         {
             Global.UIColor.R+=1;
