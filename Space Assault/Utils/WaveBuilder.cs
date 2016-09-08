@@ -38,6 +38,7 @@ namespace SpaceAssault.Utils
             _currentWave.LoadContent(_enemyCount, ref fighterStats, ref bomberStats);
             _dialog.LoadContent();
         }
+        public bool HasEnded = false;
         public List<AEnemys> ShipList { get { return _currentWave.ShipList; } }
         public List<Bullet> BulletList { get { return _currentWave.BulletList; } }
         public void Update(GameTime gameTime, ref AsteroidBuilder asteroidField, ref DroneBuilder droneFleet)
@@ -61,7 +62,7 @@ namespace SpaceAssault.Utils
                 }
                 else if(gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)) && _waveCount >= _max)
                 {
-                    //TODO ADD HIGHSCORE HERE
+                    HasEnded = true;
                 }
             }
         }

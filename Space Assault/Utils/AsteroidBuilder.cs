@@ -107,7 +107,7 @@ namespace SpaceAssault.Utils
             }
             */
             double angle;
-            int size = _rand.Next(0, 21);
+            int size = _rand.Next(0, 11);
             int noise;
             int astAngle;
             int shinyness;

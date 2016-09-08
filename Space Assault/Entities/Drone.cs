@@ -67,6 +67,7 @@ namespace SpaceAssault.Entities
             trail.Add(new Trail(TrailParticles));
             trail2.Add(new Trail(TrailParticles));
 
+
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 6.0f;
             _moveSpeedForward = 1.0f * _speedScaling;
