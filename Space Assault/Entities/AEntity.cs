@@ -19,6 +19,9 @@ namespace SpaceAssault.Entities
         public List<Trail> trail;
         public List<Trail> trail2;
 
+        public ParticleSystem bombTrailParticles;
+        public List<Trail> bombTrail;
+
         public Model Model
         {
             get { return _model; }
