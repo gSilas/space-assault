@@ -107,7 +107,11 @@ namespace SpaceAssault.ScreenManagers
         // Tells each screen to draw itself.
         public override void Draw(GameTime gameTime)
         {
-            Global.SpriteBatch.Begin();
+            Global.SpriteBatch.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            Global.BackgroundBatch.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            Global.UIBatch.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+
+            Global.SpriteBatch.Begin(SpriteSortMode.Deferred, null, null, DepthStencilState.Default, RasterizerState.CullNone);
             foreach (GameScreen screen in _screens)
             {
                 if (screen.ScreenState == ScreenState.Hidden)
@@ -124,7 +128,6 @@ namespace SpaceAssault.ScreenManagers
                 Global.SpriteBatch.DrawString(Global.GameFont, (1.0f / gameTime.ElapsedGameTime.TotalSeconds).ToString("N0"), new Vector2(3, 3), Color.LightGreen);
             }
             Global.SpriteBatch.End();
-            Global.GraphicsManager.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
         }
 
 
