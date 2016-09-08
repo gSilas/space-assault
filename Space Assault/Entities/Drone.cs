@@ -40,10 +40,10 @@ namespace SpaceAssault.Entities
         private TimeSpan _shieldrefreshdelay;
         private bool _wasDamaged = false;
 
-
+        private TimeSpan _cooldownOnRocket;
         private bool _alternatingGunLogic = false;
         private bool _isNotDead;
-        public int Money;
+       
 
 
         public Weapon GunPrimary;
@@ -292,12 +292,17 @@ namespace SpaceAssault.Entities
 
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
-                if (Global.NumberOfRockets >0)
+                if (gameTime.TotalGameTime > (_cooldownOnRocket.Add(TimeSpan.FromSeconds(5))))
                 {
-                    GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList);
-                    Global.NumberOfRockets -= 1;
+                    if (Global.NumberOfRockets > 0)
+                    {
+                        GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList);
+                        Global.NumberOfRockets -= 1;
+                    }
+                    Console.WriteLine(Global.NumberOfRockets);
+
+                    _cooldownOnRocket = gameTime.TotalGameTime;
                 }
-                Console.WriteLine(Global.NumberOfRockets);
 
             }
 
