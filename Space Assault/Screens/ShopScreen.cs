@@ -67,7 +67,7 @@ namespace SpaceAssault.Screens
 
             sHealthMenuEntry=new MenuEntry(string.Empty);
             sShieldMenuEntry=new MenuEntry(string.Empty);
-            rocketMenuEntry=new MenuEntry(String.Empty);
+            rocketMenuEntry=new MenuEntry(string.Empty);
 
             ShopText = new SortedDictionary<int, string>();
             SetMenuEntryText();
@@ -106,18 +106,23 @@ namespace SpaceAssault.Screens
             MenuEntries.Add(rocketMenuEntry);
             MenuEntries.Add(back);
 
-            _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 672, 704, 8, false, false);
+            _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 650, 320, 320, 8, false, true);
 
-            ShopText.Add(0, "Your Base Damage is: " + _droneFleet._makeDmg.ToString()+"\n\nFor Every Upgrade your\nGundamage is increased by 10");
-            ShopText.Add(1, "Your Base Health is: " + _droneFleet._maxHealth.ToString() + " Health\n\nIf your Health goes down to 0,\nyour Drone will die.\nCare!!! There is no way to restore it,\nexcept getting a new Drone.\n\nFor every Upgrade the maximum Health\nincreases by 100.");
-            ShopText.Add(2, "New Armor\n" + _droneFleet._armor.ToString() + " Armor\n\nFor every Upgrade in Armor,\nthe incoming Damage is reduced by Damage*Armor/10.");
-            ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield\n\nIf your Shield goes down to 0, \nyour Health will get Damage.\n\nAfter a short delay\nthe shield restores itself.\n\nFor every upgrade the maximum Shield\nincreases by 50. ");
-            ShopText.Add(4, "New Station Health\n" +_station._maxhealth.ToString() + " Health\n\nIf the Stationhealth goes down to 0,\nyour Game is Over.\nThe Station gets slowly repaired over time.\n\nFor every Upgrade the maximum Health\nincreases by 1000." );
-            ShopText.Add(5, "New Station Shield\n" + _station._maxShield.ToString() + " Shield\n\nIf the Stationshield goes down to 0,\nthe Station will get real Damage.\nThe Shield regenerates, \nif the Station doesnt get hit.\n\nFor every Upgrade the maximum Shield\nincreases by 500.");
-            ShopText.Add(6, "Buy your own Fragmentrocket\nIn One Word: BOOOOM\n\nYou have: "+Global.NumberOfRockets+" FragmentMissiles");
-            ShopText.Add(7, "Close Shop");
+            SetShopText();
         }
 
+        void SetShopText()
+        {
+            ShopText.Clear();
+            ShopText.Add(0, "Your Base Damage is: " + _droneFleet._makeDmg.ToString() + "\n\nFor Every Upgrade your\nGundamage is increased by 10\nLevel: " + _droneDamageLevel + " for " + _priceDMG + " Fragments");
+            ShopText.Add(1, "Your Base Health is: " + _droneFleet._maxHealth.ToString() + " Health\n\nIf your Health goes down to 0,\nyour Drone will die.\nCare!!! There is no way to restore it,\nexcept getting a new Drone.\n\nFor every Upgrade the maximum Health\nincreases by 100.\nLevel: " + _droneHealthLevel + " for " + _priceDroneHealth + " Fragments");
+            ShopText.Add(2, "New Armor\n" + _droneFleet._armor.ToString() + " Armor\n\nFor every Upgrade in Armor,\nthe incoming Damage is reduced by Damage*Armor/10.\nLevel: " + _droneArmorLevel + " for " + _priceArmor + " Fragments");
+            ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield\n\nIf your Shield goes down to 0, \nyour Health will get Damage.\n\nAfter a short delay\nthe shield restores itself.\n\nFor every upgrade the maximum Shield\nincreases by 50.\nLevel: " + _droneShieldLevel + " for " + _priceDroneShield + " Fragments");
+            ShopText.Add(4, "New Station Health\n" + _station._maxhealth.ToString() + " Health\n\nIf the Stationhealth goes down to 0,\nyour Game is Over.\nThe Station gets slowly repaired over time.\n\nFor every Upgrade the maximum Health\nincreases by 1000.\nLevel: " + _StationHealthLevel + " for " + _priceStationHealth + " Fragments");
+            ShopText.Add(5, "New Station Shield\n" + _station._maxShield.ToString() + " Shield\n\nIf the Stationshield goes down to 0,\nthe Station will get real Damage.\nThe Shield regenerates, \nif the Station doesnt get hit.\n\nFor every Upgrade the maximum Shield\nincreases by 500.\nLevel: " + _StationShieldLevel + " for " + _priceStationShield + " Fragments");
+            ShopText.Add(6, "Buy your own Fragmentrocket\nIn One Word: BOOOOM\n\nYou have: " + Global.NumberOfRockets + " FragmentMissiles\nfor 500 each");
+            ShopText.Add(7, "Close Shop");
+        }
 
         //#################################
         // LoadContent - Function
@@ -131,7 +136,6 @@ namespace SpaceAssault.Screens
 
             //Sound
             SoundEngine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
-
             MenuAcceptSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/Blip_Select.wav", StreamMode.AutoDetect, true);
             MenuDenieSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointDenie.wav", StreamMode.AutoDetect, true);
             OkClick = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointAccept.wav", StreamMode.AutoDetect, true);
@@ -144,13 +148,13 @@ namespace SpaceAssault.Screens
         //#################################
         void SetMenuEntryText()
         {
-            damageMenuEntry.Text = "Damage Level: " + _droneDamageLevel +" for "+ _priceDMG+" Fragments";
-            healthMenuEntry.Text = "Health Level: " + _droneHealthLevel +" for "+_priceDroneHealth + " Fragments";
-            armorMenuEntry.Text = "Armor Level: " + _droneArmorLevel + " for " + _priceArmor + " Fragments";
-            shieldMenuEntry.Text = "Shield Level: " + _droneShieldLevel + " for " + _priceDroneShield + " Fragments";
-            sHealthMenuEntry.Text = "Station Health Level: " + _StationHealthLevel + " for " + _priceStationHealth + " Fragments";
-            sShieldMenuEntry.Text = "Station Shield Level: " + _StationShieldLevel + " for " + _priceStationShield + " Fragments";
-            rocketMenuEntry.Text = "FragmentMissiles for 500 each";
+            damageMenuEntry.Text = "Damage ";
+            healthMenuEntry.Text = "Health";
+            armorMenuEntry.Text = "Armor";
+            shieldMenuEntry.Text = "Shield";
+            sHealthMenuEntry.Text = "Station Health";
+            sShieldMenuEntry.Text = "Station Shield";
+            rocketMenuEntry.Text = "Fragment Missiles";
         }
 
         // Event handler for when the Damage menu entry is selected.
@@ -203,8 +207,7 @@ namespace SpaceAssault.Screens
                 this._droneFleet._maxHealth += 100;
 
                 SetMenuEntryText();
-                ShopText.Remove(1);
-                ShopText.Add(1, "Your Drone has now:\n" + _droneFleet._maxHealth.ToString() + " maximum Health\n\nIf your Health goes down to 0,\nyour Drone will die.\nCare!!! There is no way to restore it,\nexcept getting a new Drone.\n\nFor every Upgrade the maximum Health\nincreases by 100.");
+                SetShopText();
 
                 //playing the sound
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
@@ -274,8 +277,7 @@ namespace SpaceAssault.Screens
         
            
                 SetMenuEntryText();
-                ShopText.Remove(3);
-                ShopText.Add(3, "Your Drone has now:\n" + _droneFleet._maxShield.ToString() + " maximum Shield\n\nIf your Shield goes down to 0, \nyour Health will get Damage.\n\nAfter a short delay\nthe shield restores itself.\n\nFor every upgrade the maximum Shield\nincreases by 50. ");
+                SetShopText();
 
                 //playing the sound
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
@@ -305,8 +307,7 @@ namespace SpaceAssault.Screens
                 this._station._health += 1000;
              
                 SetMenuEntryText();
-                ShopText.Remove(4);
-                ShopText.Add(4, "Your Station has now:\n" + _station._maxhealth.ToString() + " maximum Health\n\nIf the Stationhealth goes down to 0,\nyour Game is Over.\nThe Station gets slowly repaired over time.\n\nFor every Upgrade the maximum Health\nincreases by 1000.");
+                SetShopText();
 
                 //playing the sound
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
@@ -336,8 +337,7 @@ namespace SpaceAssault.Screens
                 this._station._maxShield += 500;
     
                 SetMenuEntryText();
-                ShopText.Remove(5);
-                ShopText.Add(5, "Your Station has now:\n" + _station._maxShield.ToString() + " maximum Shield\n\nIf the Stationshield goes down to 0,\nthe Station will get real Damage.\nThe Shield regenerates, \nif the Station doesnt get hit.\n\nFor every Upgrade the maximum Shield\nincreases by 500.");
+                SetShopText();
 
                 //playing the sound
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
@@ -364,10 +364,8 @@ namespace SpaceAssault.Screens
                 Global.Money -= 500;
                 Global.NumberOfRockets += 1;
 
-                ShopText.Remove(6);
-                ShopText.Add(6, "Buy your own Fragmentrocket\nIn One Word: BOOOOM\n\nYou have: "+Global.NumberOfRockets+" FragmentMissiles");
-
-
+                SetMenuEntryText();
+                SetShopText();
 
                 //playing the sound
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
