@@ -29,7 +29,7 @@ namespace SpaceAssault.Screens
         private int _priceStationShield=2000;
         MenuEntry sHealthMenuEntry;
         private int _priceStationHealth = 2000;
-        MenuEntry stationlaserMenuEntry;
+        MenuEntry rocketMenuEntry;
 
 
         List<Label> Labels = new List<Label>();
@@ -39,7 +39,7 @@ namespace SpaceAssault.Screens
         public static int _droneShieldLevel = 1;
         public static int _StationHealthLevel = 1;
         public static int _StationShieldLevel = 1;
-        public static bool _stationLaser = false;
+
 
         private DroneBuilder _droneFleet;
         private Station _station;
@@ -67,7 +67,7 @@ namespace SpaceAssault.Screens
 
             sHealthMenuEntry=new MenuEntry(string.Empty);
             sShieldMenuEntry=new MenuEntry(string.Empty);
-            stationlaserMenuEntry=new MenuEntry(String.Empty);
+            rocketMenuEntry=new MenuEntry(String.Empty);
 
             ShopText = new SortedDictionary<int, string>();
             SetMenuEntryText();
@@ -82,7 +82,7 @@ namespace SpaceAssault.Screens
 
             sHealthMenuEntry.Selected += sHealthMenuEntrySelected;
             sShieldMenuEntry.Selected += sShieldMenuEntrySelected;
-            stationlaserMenuEntry.Selected += stationlaserhMenuEntrySelected;
+            rocketMenuEntry.Selected += rocketMenuEntrySelected;
 
             back.Selected += OnCancel;
 
@@ -103,7 +103,7 @@ namespace SpaceAssault.Screens
 
             MenuEntries.Add(sHealthMenuEntry);
             MenuEntries.Add(sShieldMenuEntry);
-            MenuEntries.Add(stationlaserMenuEntry);
+            MenuEntries.Add(rocketMenuEntry);
             MenuEntries.Add(back);
 
             _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 672, 704, 8, false, false);
@@ -114,7 +114,7 @@ namespace SpaceAssault.Screens
             ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield\n\nIf your Shield goes down to 0, \nyour Health will get Damage.\n\nAfter a short delay\nthe shield restores itself.\n\nFor every upgrade the maximum Shield\nincreases by 50. ");
             ShopText.Add(4, "New Station Health\n" +_station._maxhealth.ToString() + " Health\n\nIf the Stationhealth goes down to 0,\nyour Game is Over.\nThe Station gets slowly repaired over time.\n\nFor every Upgrade the maximum Health\nincreases by 1000." );
             ShopText.Add(5, "New Station Shield\n" + _station._maxShield.ToString() + " Shield\n\nIf the Stationshield goes down to 0,\nthe Station will get real Damage.\nThe Shield regenerates, \nif the Station doesnt get hit.\n\nFor every Upgrade the maximum Shield\nincreases by 500.");
-            ShopText.Add(6, "5000 Fragments\nUpgrade the Station,\nso it can destroy Astroids");
+            ShopText.Add(6, "Buy your own Fragmentrocket\nIn One Word: BOOOOM\n\nYou have: "+Global.NumberOfRockets+" FragmentMissiles");
             ShopText.Add(7, "Close Shop");
         }
 
@@ -150,7 +150,7 @@ namespace SpaceAssault.Screens
             shieldMenuEntry.Text = "Shield Level: " + _droneShieldLevel + " for " + _priceDroneShield + " Fragments";
             sHealthMenuEntry.Text = "Station Health Level: " + _StationHealthLevel + " for " + _priceStationHealth + " Fragments";
             sShieldMenuEntry.Text = "Station Shield Level: " + _StationShieldLevel + " for " + _priceStationShield + " Fragments";
-            stationlaserMenuEntry.Text = "Station Laser Online: " + _stationLaser;
+            rocketMenuEntry.Text = "FragmentMissiles for 500 each";
         }
 
         // Event handler for when the Damage menu entry is selected.
@@ -349,18 +349,18 @@ namespace SpaceAssault.Screens
                 _denie.Paused = false;
             }
         }
-        void stationlaserhMenuEntrySelected(object sender, EventArgs e)
+        void rocketMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > 5000 && _stationLaser==false)
+            if (Global.Money > 500)
             {
-                _stationLaser = true;
-                Global.Money -= 5000;
+                
+                Global.Money -= 500;
+                Global.NumberOfRockets += 1;
 
-                this._station.makeDmg += 5000;
-
-                SetMenuEntryText();
                 ShopText.Remove(6);
-                ShopText.Add(6, "The Stationlaser is now ONLINE\n");
+                ShopText.Add(6, "Buy your own Fragmentrocket\nIn One Word: BOOOOM\n\nYou have: "+Global.NumberOfRockets+" FragmentMissiles");
+
+
 
                 //playing the sound
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));

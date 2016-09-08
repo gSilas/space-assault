@@ -219,6 +219,8 @@ namespace SpaceAssault.Screens
                 }
                   
             }
+            if (input.IsNewKeyPress(Keys.K))
+                Global.Money += 10000;
 
             //player hits ESC it pauses the game
             if (input.IsPauseGame())

@@ -297,8 +297,13 @@ namespace SpaceAssault.Entities
 
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
-                // TODO: New BulletType for Secondary Fire
-                GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList);
+                if (Global.NumberOfRockets >0)
+                {
+                    GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList);
+                    Global.NumberOfRockets -= 1;
+                }
+                Console.WriteLine(Global.NumberOfRockets);
+
             }
 
             //RotationMatrix = Matrix.CreateRotationZ(_tiltZ);

@@ -51,7 +51,7 @@ namespace SpaceAssault.Entities
             //playing the sound
             Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
             Engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
-            ISound Fly;
+            //ISound Fly;
             //Fly = Engine.Play3D(FlySound, curListenerPos.X, curListenerPos.Y + 15f, curListenerPos.Z, false, true, false);
             //Fly.Volume = 0.5f;
             //Fly.Paused = false;

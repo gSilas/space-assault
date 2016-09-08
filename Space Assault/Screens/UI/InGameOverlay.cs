@@ -18,10 +18,14 @@ namespace SpaceAssault.Screens
         List<Label> Labels = new List<Label>();
         List<Bar> Bars = new List<Bar>();
         private UIItem _shields = new UIItem();
+        private UIItem _rocketSymbol = new UIItem();
+
         private Dialog _upgradeVincinityDialog;
         private Dialog _scoreDialog;
         private Dialog _moneyDialog;
         private Dialog _alertDialog;
+
+       
 
         //#################################
         // Constructor
@@ -37,9 +41,12 @@ namespace SpaceAssault.Screens
         public void LoadContent(DroneBuilder droneFleet)
         {
             //UI
+            
 
             //Shield
             _shields.LoadContent("Images/UI/shield_ui");
+            //Rocket
+            _rocketSymbol.LoadContent("Images/Rocket_Icon");
 
             //Bars
             Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 80), new Point(300, 60)), Color.Red, droneFleet.GetActiveDrone()._maxHealth));
@@ -69,6 +76,12 @@ namespace SpaceAssault.Screens
         public void Draw(DroneBuilder droneFleet)
         {
             _shields.Draw(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 130), droneFleet._armor, new Color(1f, 1f, 1f, 0.5f));
+            _rocketSymbol.Draw(new Point(355, 717),1 , new Color(1f, 1f, 1f, 0.5f));
+            Global.UIBatch.Begin();
+            Global.UIBatch.DrawString(Global.DialogFont, Global.NumberOfRockets.ToString(), new Vector2(390,725), new Color(58f, 116f, 112f));
+            //new Color(194f,230f,227f)
+            //Global.NumberOfRockets.ToString()
+            Global.UIBatch.End();
 
             Bars[0].Draw(droneFleet.GetActiveDrone()._health, droneFleet.GetActiveDrone()._maxHealth);
             Bars[1].Draw(droneFleet.GetActiveDrone()._shield, droneFleet.GetActiveDrone()._maxShield);
@@ -108,8 +121,9 @@ namespace SpaceAssault.Screens
                     _upgradeVincinityDialog.Draw("Press B for Shop!");
                 }
                     
-            } 
-                    
+            }
+            
+
         }
     }
 }
