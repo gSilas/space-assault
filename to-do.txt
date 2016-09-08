@@ -1,23 +1,12 @@
 Gameplay:		
 	bounding spehre station malen
-	raketenschweif
 	highscore						#hans
 	wavespawning					#daniel	
 		* großer asteroid Gegner
 	Bossgegner
 	Rauschschreen außerhalb der Spielwelt ( wird stärker wenn man sich von der Station entfernt)		#dustin	
 	
-
-Shop: 	
-	abwehrlaser für asteriodien	
-	
-
-Sound: 	
-	verschiedene Explosionen für alle Objekte
-	Musik
-	Schusssounds
-	UI sounds (Stimmen, klicken, piepen)	#philipp
-	
+BOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSS	
 
 partikeldinge:
 	Explosionen für alles (farbe)
@@ -26,6 +15,6 @@ partikeldinge:
 Modelle:
 	drone
 	Photonbombe
-	rakete
+
 	BOSS
 	2 asterioden
