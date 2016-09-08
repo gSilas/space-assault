@@ -95,7 +95,7 @@
     <Compile Include="Utils\Particle\Settings\ShipRingExplosionSettings.cs" />
     <Compile Include="Utils\Particle\Settings\DroneTrailSettings.cs" />
     <Compile Include="Utils\Particle\Settings\DustParticleSystem.cs" />
-    <Compile Include="Utils\Particle\Settings\ShinyParticleSettings.cs" />
+    <Compile Include="Utils\Particle\Settings\AsteroidTrailSettings.cs" />
     <Compile Include="Utils\Particle\Settings\AsteroidExplosionSettings.cs" />
     <Compile Include="Utils\Squadron.cs" />
     <Compile Include="Utils\WaveBuilder.cs" />

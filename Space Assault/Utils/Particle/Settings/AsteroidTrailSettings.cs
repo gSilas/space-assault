@@ -4,17 +4,17 @@ using System;
 
 namespace SpaceAssault.Utils.Particle.Settings
 {
-    class ShinyParticleSettings : ParticleSystem
+    class AsteroidTrailSettings : ParticleSystem
     {
    
-        public ShinyParticleSettings()
+        public AsteroidTrailSettings()
         { }
 
         protected override void InitializeSettings(ParticleSettings settings)
         {
             settings.TextureName = "engineBlue";
 
-            settings.MaxParticles = 250;
+            settings.MaxParticles = 1000;
 
             settings.Duration = TimeSpan.FromSeconds(0.8);
 
@@ -28,8 +28,8 @@ namespace SpaceAssault.Utils.Particle.Settings
             settings.MinVerticalVelocity = -1;
             settings.MaxVerticalVelocity = 1;
 
-            settings.MinColor = new Color(155, 255, 155, 10);
-            settings.MaxColor = new Color(205, 255, 200, 50);
+            settings.MinColor = new Color(155, 255, 155, 255);
+            settings.MaxColor = new Color(205, 255, 200, 255);
 
             settings.MinRotateSpeed = -4;
             settings.MaxRotateSpeed = 4;

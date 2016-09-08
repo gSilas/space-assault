@@ -17,7 +17,7 @@ namespace SpaceAssault.Utils.Particle.Settings
         {
             settings.TextureName = "engineBlue";
 
-            settings.MaxParticles = 10000;
+            settings.MaxParticles = 3000;
 
             settings.Duration = TimeSpan.FromSeconds(1);
 
@@ -32,8 +32,8 @@ namespace SpaceAssault.Utils.Particle.Settings
             // Set gravity upside down, so the flames will 'fall' upward.
             settings.Gravity = new Vector3(0, 20, 0);
 
-            settings.MinColor = new Color(255, 255, 255, 10);
-            settings.MaxColor = new Color(255, 255, 255, 40);
+            settings.MinColor = new Color(255, 255, 255, 80);
+            settings.MaxColor = new Color(255, 255, 255, 100);
 
             settings.MinStartSize = 30;
             settings.MaxStartSize = 30;

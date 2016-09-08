@@ -17,7 +17,7 @@ namespace SpaceAssault.Utils.Particle.Settings
         {
             settings.TextureName = "engineBLue";
 
-            settings.MaxParticles = 5000;
+            settings.MaxParticles = 500;
 
             settings.Duration = TimeSpan.FromSeconds(0.2);
 
