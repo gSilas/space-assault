@@ -59,7 +59,7 @@ namespace SpaceAssault.Screens
             }
 
             //Dialogs        
-            _upgradeVincinityDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 64, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 82, 24, 136, 8, false, true);
+            _upgradeVincinityDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 64, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 82, 24, 176, 8, false, true);
             _scoreDialog = new Dialog(260, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 24, 200, 8, false, true);
             _moneyDialog = new Dialog(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750, 24, 200, 8, false, true);
             _alertDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width /2 - 160, Global.GraphicsManager.GraphicsDevice.Viewport.Height /2 -16, 24, 320, 8, false, true);
@@ -78,7 +78,7 @@ namespace SpaceAssault.Screens
             _shields.Draw(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 130), droneFleet._armor, new Color(1f, 1f, 1f, 0.5f));
             _rocketSymbol.Draw(new Point(355, 717),1 , new Color(1f, 1f, 1f, 0.5f));
             Global.UIBatch.Begin();
-            Global.UIBatch.DrawString(Global.DialogFont, Global.NumberOfRockets.ToString(), new Vector2(390,725), new Color(58f, 116f, 112f));
+            Global.UIBatch.DrawString(Global.Font, Global.NumberOfRockets.ToString(), new Vector2(390,725), new Color(58f, 116f, 112f));
             //new Color(194f,230f,227f)
             //Global.NumberOfRockets.ToString()
             Global.UIBatch.End();
