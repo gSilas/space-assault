@@ -485,3 +485,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/modenine.spritefont
 
+#begin Effects\stationEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects\stationEffect.fx
+

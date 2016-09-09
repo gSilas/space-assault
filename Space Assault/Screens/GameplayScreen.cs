@@ -18,7 +18,7 @@ namespace SpaceAssault.Screens
         //#################################
         // Variables
         //#################################
-
+        
         // Fade to black
         float _deadDroneAlpha;
         float _actualDeadDroneAlpha;
@@ -52,6 +52,9 @@ namespace SpaceAssault.Screens
 
         List<ExplosionSystem> explosionList = new List<ExplosionSystem>();
         List<ExplosionSystem> explosionRemoveList = new List<ExplosionSystem>();
+
+        //Effects
+        private Effect _stationEffect;
 
         // Keep track of all the active projectiles
         List<Projectile> projectiles = new List<Projectile>();
@@ -107,6 +110,9 @@ namespace SpaceAssault.Screens
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             _waveBuilder.LoadContent();
+
+            //Effects
+            _stationEffect = Global.ContentManager.Load<Effect>("Effects/stationEffect");
 
             //Sounds
             Global.Music.Stop();
@@ -254,7 +260,7 @@ namespace SpaceAssault.Screens
             Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0);
 
             // calling draw of objects where necessary
-            _back.Draw(90, new Vector3(-15000, -2000, -15000));
+            _back.Draw(90, new Vector3(-15000, -2000, -15000));   
             _station.Draw();
             _droneFleet.Draw();
             _asteroidField.Draw();
