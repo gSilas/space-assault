@@ -74,7 +74,7 @@ namespace SpaceAssault.Screens
             int spawnPointX = 150;
             int spawnPointY = 200;
             _highScoreDialog = new Dialog(spawnPointX, spawnPointY, 250, 500, 6, false, true);
-            _inputDialog = new Dialog(spawnPointX, spawnPointY + 300, 48, 400, 6, false, true);
+            _inputDialog = new Dialog(spawnPointX, spawnPointY + 300, 30, 500, 6, false, true);
         }
 
         public override void LoadContent()
@@ -178,8 +178,12 @@ namespace SpaceAssault.Screens
 
                 if (_enter)
                 {
+                    Global.UIBatch.Begin();
+                    Global.UIBatch.DrawString(Global.DialogFont,"Please register with our Database!", new Vector2(_inputDialog.position.X+10, _inputDialog.position.Y-20), Color.White);
+                    Global.UIBatch.End();
                     _inputDialog.Draw("Score: " + Global.HighScorePoints + "   Your Name: " + EntryText);
                 }
+
             }
         }
 

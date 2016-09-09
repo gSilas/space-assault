@@ -1,6 +1,5 @@
 Gameplay:		
 	bounding spehre station malen
-	highscore						#hans
 	wavespawning					#daniel	
 		* großer asteroid Gegner
 	Bossgegner
@@ -18,10 +17,3 @@ Modelle:
 
 	BOSS
 	2 asterioden
-
-
-
-
-LIST OF DEBUGGINKEYS:
-
-	N - activate mouse click spawning of enemies (Boids.cs)
