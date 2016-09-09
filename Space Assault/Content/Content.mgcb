@@ -491,3 +491,9 @@
 /processorParam:DebugMode=Auto
 /build:Effects\stationEffect.fx
 
+#begin Fonts/modenine_big.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/modenine_big.spritefont
+

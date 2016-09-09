@@ -44,6 +44,8 @@ namespace SpaceAssault
             //Global.GameFont = Global.ContentManager.Load<SpriteFont>("Fonts/pc_senior/pcsenior");
             //Global.DialogFont = Global.ContentManager.Load<SpriteFont>("Fonts/pc_senior/pcsenior");
             Global.Font = Global.ContentManager.Load<SpriteFont>("Fonts/modenine");
+            Global.MenuFont= Global.ContentManager.Load<SpriteFont>("Fonts/modenine_big");
+
             base.LoadContent();
         }
 

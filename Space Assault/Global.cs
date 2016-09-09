@@ -33,6 +33,7 @@ namespace SpaceAssault
 
         //fonts
         public static SpriteFont Font;
+        public static SpriteFont MenuFont;
 
         //highscore points
         public static int HighScorePoints;
