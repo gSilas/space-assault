@@ -20,7 +20,7 @@ namespace SpaceAssault.Utils
 
         public Label(string label, int x, int y, Color color)
         {
-            _font = Global.GameFont;
+            _font = Global.Font;
             _label = label;
             _vector = new Vector2(x, y);
             _color = color;

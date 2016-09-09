@@ -42,13 +42,13 @@ namespace SpaceAssault.Screens
                     string filtered = "";
                     foreach (char c in value)
                     {
-                        if (Global.GameFont.Characters.Contains(c))
+                        if (Global.Font.Characters.Contains(c))
                             filtered += c;
                     }
 
                     _entryString = filtered;
 
-                    while (Global.GameFont.MeasureString(_entryString).X > inputBoxWidth)
+                    while (Global.Font.MeasureString(_entryString).X > inputBoxWidth)
                     {
                         //to ensure that text cannot be larger than the box
                         _entryString = _entryString.Substring(0, _entryString.Length - 1);
@@ -170,9 +170,9 @@ namespace SpaceAssault.Screens
                 Global.UIBatch.Begin();
                 for (int i = 0; i < Global.HighScoreList._listLength; i++)
                 {
-                    Global.UIBatch.DrawString(Global.DialogFont, (i + 1) + ". Platz", new Vector2(spawnPointX, spawnPointY + i * zeilenAbstand), Color.White);
-                    Global.UIBatch.DrawString(Global.DialogFont, Global.HighScoreList._scoresList[i].Name, new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.White);
-                    Global.UIBatch.DrawString(Global.DialogFont, (Global.HighScoreList._scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand * 2, spawnPointY + i * zeilenAbstand), Color.White);
+                    Global.UIBatch.DrawString(Global.Font, (i + 1) + ". Platz", new Vector2(spawnPointX, spawnPointY + i * zeilenAbstand), Color.White);
+                    Global.UIBatch.DrawString(Global.Font, Global.HighScoreList._scoresList[i].Name, new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.White);
+                    Global.UIBatch.DrawString(Global.Font, (Global.HighScoreList._scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand * 2, spawnPointY + i * zeilenAbstand), Color.White);
                 }
                 Global.UIBatch.End();
 

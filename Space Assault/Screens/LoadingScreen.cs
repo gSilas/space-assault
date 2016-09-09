@@ -109,13 +109,13 @@ namespace SpaceAssault.Screens
                 // Center the text in the viewport.
                 Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
                 Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
-                Vector2 textSize = Global.GameFont.MeasureString(message);
+                Vector2 textSize = Global.Font.MeasureString(message);
                 Vector2 textPosition = (viewportSize - textSize) / 2;
 
                 Color color = Color.White * TransitionAlpha;
 
                 // Draw the text.
-                Global.SpriteBatch.DrawString(Global.GameFont, message, textPosition, color);
+                Global.SpriteBatch.DrawString(Global.Font, message, textPosition, color);
             }
         }
     }
