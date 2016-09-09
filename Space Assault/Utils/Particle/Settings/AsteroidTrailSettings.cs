@@ -14,30 +14,28 @@ namespace SpaceAssault.Utils.Particle.Settings
         {
             settings.TextureName = "engineBlue";
 
-            settings.MaxParticles = 1000;
+            settings.MaxParticles = 300;
 
-            settings.Duration = TimeSpan.FromSeconds(0.8);
+            settings.Duration = TimeSpan.FromSeconds(1.2);
 
             settings.DurationRandomness = 0;
 
-            settings.EmitterVelocitySensitivity = 0.1f;
-
-            settings.MinHorizontalVelocity = 0;
+            settings.MinHorizontalVelocity = -1;
             settings.MaxHorizontalVelocity = 1;
 
             settings.MinVerticalVelocity = -1;
             settings.MaxVerticalVelocity = 1;
 
-            settings.MinColor = new Color(155, 255, 155, 255);
-            settings.MaxColor = new Color(205, 255, 200, 255);
+            settings.MinColor = Color.DarkSlateBlue;
+            settings.MaxColor = Color.DarkSlateBlue;
 
             settings.MinRotateSpeed = -4;
             settings.MaxRotateSpeed = 4;
 
-            settings.MinStartSize = 15;
-            settings.MaxStartSize = 15;
+            settings.MinStartSize = 22;
+            settings.MaxStartSize = 26;
 
-            settings.MinEndSize = 1;
+            settings.MinEndSize = 0;
             settings.MaxEndSize = 3;
 
             settings.BlendState = BlendState.Additive;
