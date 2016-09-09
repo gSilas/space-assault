@@ -92,7 +92,11 @@ namespace SpaceAssault.Screens
         // When the user cancels the main menu, ask if they want to exit the sample.
         protected override void OnCancel(object sender, EventArgs e)
         {
-            //playing the sound
+            OnCancel();
+        }
+
+        protected override void OnCancel()
+        {
             SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
             ISound Accept;
             Accept = SoundEngine.Play2D(OkClick, false, true, false);
