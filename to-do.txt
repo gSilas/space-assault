@@ -19,3 +19,31 @@ Modelle:
 Easter Egg:
 	Konamicode
 	Nyan Cat
+
+
+### FEEDBACK ###
+
+	- du wartest nach jeder wave irgendwie jedes mal 10 sekunden und schießt nur auf die meteoriten
+	- man sieht nicht ob man das schiff getroffen hat oder nicht (viell. partikel als feedback für spieler)
+	- am anfang statt "current mission" im menü vllt start game stattdessen
+	- intro text a la "blah blah your crew has left for a mission and you're stranded on this satellite when suddenly an unknown species sends threats to your blubb defend them as long as you can"
+	- wenn man esc drückt pausiert es nicht wirklich
+	- immer erst tutorial bzw. dialogabfrage (ja/nein)
+	- tutorial komplettieren (alle funktionen erklären)
+	- man sieht nicht was die sachen im shop machen bevor man sie kauft
+	- statt shield und dmg sollte man vllt split shots oder homing missiles kaufen können
+	- wenn das gegnerschiff nicht aufm screen ist vllt n kleiner pinker pfeil am rand?
+	- armor würd ich komplett rausnehmen weil es irgendwie nicht passt
+	- vllt shield recharge rate im shop? (dass es schneller aufläd)
+	- oder attack speed, movement speed
+	- die musik hört einfach auf, 5/7 would play again
+	- bei dmg upgrade animation vom schuss ändern (sonst nicht befriedigend zu upgraden)
+	- n sound effekt wenn das schild kaputt geht
+	- die zeitspanne zwischen den waves einfach verkürzen und dafür im shop und bei esc wirklich pausieren
+	- beim bestätigen vom beenden des spiels auch mit maus klick ermöglichen
+
+	## Balancing:
+		- man bekommt zu viel gelg
+		- das mit dem schwierigkeitsgrad is kompliziert, im moment zu einfach
+		- großen schiffe sollten nicht mit einem hit draufgehen
+		- selbst wenn ich 30s raustabbe und da vier schiffe sind sterb ich allerdings nicht :P

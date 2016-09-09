@@ -8,9 +8,9 @@ namespace SpaceAssault.Screens
 {
     class CreditsMenuScreen : MenuScreen
     {
-        MenuEntry Programmers;
-        MenuEntry ProgramsANDLibraries;
-        MenuEntry Sounds;
+        MenuEntry team;
+        MenuEntry softwareOther;
+        MenuEntry thirdAssets;
         MenuEntry SpecialThanks;
 
         private Dialog _itemDialog;
@@ -22,9 +22,9 @@ namespace SpaceAssault.Screens
 
 
             // Create our menu entries.
-            Programmers =new MenuEntry("Programmers");
-            ProgramsANDLibraries=new MenuEntry("Programs and Libraries");
-            Sounds=new MenuEntry("Effects");
+            team =new MenuEntry("Developer Team");
+            softwareOther=new MenuEntry("Software & Other");
+            thirdAssets=new MenuEntry("3rd Party Assets");
             SpecialThanks=new MenuEntry("Special Thanks");
 
             ShopText = new SortedDictionary<int, string>();
@@ -34,18 +34,18 @@ namespace SpaceAssault.Screens
             back.Selected += OnCancel;
 
             // Add entries to the menu.
-            MenuEntries.Add(Programmers);
-            MenuEntries.Add(ProgramsANDLibraries);
-            MenuEntries.Add(Sounds);
+            MenuEntries.Add(team);
+            MenuEntries.Add(softwareOther);
+            MenuEntries.Add(thirdAssets);
             MenuEntries.Add(SpecialThanks);
             MenuEntries.Add(back);
 
             _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 110, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 650, 380, 685, 8, false, false);
 
-            ShopText.Add(0, "Programmers:\n     - Philipp 'the_slasher' Thoms\n     - Dustin 'renderThis' Boettcher\n     - Hans-Martin 'debuGger' Wulfmeyer\n     - Daniel 'garbage_collctr' Micheel");
-            ShopText.Add(1, "\n Programms:\n   This Games was created with: \n   Microsoft Visual Studio and Monogame\n\n Models:\n   All of the Models were made with 3Ds Max or Blender\n\n Libraries:\n   IrrKlang\n\n Art:\n   The Graphical assets were made with Krita");
-            ShopText.Add(2, "\n Music:\n   MainMenu:\n        Unrelenting by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\n   HighscoreMenu:\n        Truth of the Legend by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\n   GamePlayScreen:\n        SpaceFighterLoop by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\n SoundEffects:\n   They were made with http://www.bfxr.net/ \n\n Font:\n   This Game uses the " + '\u0022'+ "modenine"+ '\u0022'+" Font ");
-            ShopText.Add(3, "\n Special Thanks to\n    AcaGamics\n\n    and our Testers:\n       - Jan-Ole-Perschefski\n       - Julia Heise\n ");
+            ShopText.Add(0, "\n Our Team:\n     - Philipp 'the_slasher' Thoms\n     - Dustin 'renderThis' Boettcher\n     - Hans-Martin 'debuGger' Wulfmeyer\n     - Daniel 'garbage_collctr' Micheel");
+            ShopText.Add(1, "\n This game was created with Microsoft Visual Studio \n and Monogame.\n\n 3D modeling work done with 3Ds Max and Blender. \n\n External library Irrklang used as sound engine.\n\n All graphical assets were made with Krita or MS Paint.");
+            ShopText.Add(2, "\n Music:\n    Unrelenting\n    Truth of the Legend\n    SpaceFighterLoop\n      by Kevin MacLeod (incompetech.com),\n      licensed under Creative Commons: By Attribution 3.0 License\n      creativecommons.org/licenses/by/3.0/ \n\n SoundEffects made with www.bfxr.net \n\n Space Assault uses the " + '\u0022'+ "ModeNine" + '\u0022'+" Font ");
+            ShopText.Add(3, "\n Special Thanks to\n     AcaGamics\n\n and our testers:\n     - Jan-Ole Perschewski\n     - Julia Heise\n     - Delia Wulfmeyer\n ");
             ShopText.Add(4, "");
 
             _itemDialog.LoadContent();
