@@ -35,7 +35,7 @@ namespace SpaceAssault.Utils
             int shinyness;
             for (int i = 0; i < 40; i++)
             {
-                movespeed = _rand.Next(10, 100);
+                movespeed = _rand.Next(20, 100);
                 astAngle = _rand.Next(-360, 360);
                 noise = _rand.Next(0, 90);
                 shinyness = _rand.Next(0, 21);
@@ -113,7 +113,7 @@ namespace SpaceAssault.Utils
             int shinyness;
             for (int i = 0; i < size; i++)
             {
-                movespeed = _rand.Next(10, 100);
+                movespeed = _rand.Next(20, 100);
                 astAngle = _rand.Next(-360, 360);
                 noise = _rand.Next(0, 90);
                 shinyness = _rand.Next(0, 21);

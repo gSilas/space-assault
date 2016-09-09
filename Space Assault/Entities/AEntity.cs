@@ -67,11 +67,13 @@ namespace SpaceAssault.Entities
                         effect.EnableDefaultLighting();
 
                         effect.DiffuseColor = entityColor.ToVector3();
+                        effect.SpecularColor = entityColor.ToVector3();
 
+                        effect.DirectionalLight0.Enabled = true;
                         effect.DirectionalLight0.DiffuseColor = Color.LightGoldenrodYellow.ToVector3(); // a red light
                         effect.DirectionalLight0.Direction = new Vector3(-1, -1, 0);  // coming along the x-axis
                         effect.DirectionalLight0.SpecularColor = Color.DarkGoldenrod.ToVector3(); // with green highlights
-
+                        
                         effect.PreferPerPixelLighting = true;
                         _world = effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(_scale);
                         effect.View = Global.Camera.ViewMatrix;
