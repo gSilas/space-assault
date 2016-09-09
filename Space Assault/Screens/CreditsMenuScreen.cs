@@ -42,7 +42,7 @@ namespace SpaceAssault.Screens
 
             _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 650, 500, 704, 8, false, false);
 
-            ShopText.Add(0, "Programmers:\n     - Philipp Thoms\n     - Dustin Boettcher\n      - Hans-Martin Wulfmeier\n     - Daniel Micheel");
+            ShopText.Add(0, "Programmers:\n     - Philipp 'the_slasher' Thoms\n     - Dustin 'renderThis' Boettcher\n     - Hans-Martin 'debuGger' Wulfmeyer\n     - Daniel 'garbage_collctr' Micheel");
             ShopText.Add(1, "Programms:\nThis Games was created with: \nMicrosoft Visual Studio and Monogame\n\nModels:\nAll of the Models were made with 3Ds Max or Blender\n\nLibraries:\nIrrKlang");
             ShopText.Add(2, "Music:\n   MainMenu:\n        Unrelenting by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\n   HighscoreMenu:\n        Truth of the Legend by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\n   GamePlayScreen:\n        SpaceFighterLoop by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\nSoundEffects:\n        They were made with http://www.bfxr.net/");
             ShopText.Add(3, "Special Thanks to\n    AcaGamics\n\n    and our Testers:\n       Jan-Ole-Perschefski\n       Julia Heise\n ");
