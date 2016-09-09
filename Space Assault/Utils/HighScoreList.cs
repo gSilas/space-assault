@@ -45,8 +45,8 @@ namespace SpaceAssault.Utils
                 Add("Major Tom", 201);
                 Add("Han Solo", 199);
                 Add("Cpt. Picard", 200);
-                Add("Cpt. Malcolm Reynolds", 180);
-                Add("Käpt'n Balu", 10);
+                Add("Ripley", 180);
+                Add("Kapt'n Balu", 10);
             }
         }
 
