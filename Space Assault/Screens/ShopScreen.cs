@@ -91,15 +91,6 @@ namespace SpaceAssault.Screens
 
             back.Selected += OnCancel;
 
-            /*/ADD Costs for Upgrades
-            _priceDMG = 1000;
-            _priceArmor = 2000;
-            //_priceDroneHealth = 500;
-            _priceDroneShield = 500;
-            _priceStationShield = 5000;
-            _priceStationHealth = 5000;
-            */
-
             // Add entries to the menu.
             MenuEntries.Add(damageMenuEntry);
             MenuEntries.Add(healthMenuEntry);
@@ -174,7 +165,6 @@ namespace SpaceAssault.Screens
             MenuDenieSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointDenie.wav", StreamMode.AutoDetect, true);
             OkClick = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointAccept.wav", StreamMode.AutoDetect, true);
             GoBack = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/GoBack2.wav", StreamMode.AutoDetect, true);
-
         }
 
         //#################################
@@ -212,7 +202,6 @@ namespace SpaceAssault.Screens
                 _accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
                 _accept.Volume = Global.SpeakerVolume / 10;
                 _accept.Paused = false;
-
             }
             else
             {
@@ -222,7 +211,6 @@ namespace SpaceAssault.Screens
                 _denie = SoundEngine.Play2D(MenuDenieSound, false, true, false);
                 _denie.Volume = Global.SpeakerVolume / 10;
                 _denie.Paused = false;
-
             }
         }
         // Event handler for when the Health menu entry is selected.
@@ -430,16 +418,6 @@ namespace SpaceAssault.Screens
                     {
                         if (cornerD.X > input.MousePosition.X && cornerD.Y > input.MousePosition.Z)
                         {
-
-                            // menuEntry needs a double click
-                            /*
-                            if (selectedEntry == i)
-                            {
-                                OnSelectEntry(selectedEntry);
-                            }
-                            else selectedEntry = i;
-                            */
-
                             // menuEntry needs one click
                             selectedEntry = i;
                             OnSelectEntry(selectedEntry);
@@ -465,7 +443,6 @@ namespace SpaceAssault.Screens
                 if (selectedEntry < 0)
                     selectedEntry = MenuEntries.Count - 1;
             }
-
             // Move to the next menu entry?
             if (input.IsMenuDown())
             {
@@ -481,7 +458,6 @@ namespace SpaceAssault.Screens
                 if (selectedEntry >= MenuEntries.Count)
                     selectedEntry = 0;
             }
-
             // Accept or cancel the menu.
             if (input.IsMenuSelect())
             {
