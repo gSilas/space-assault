@@ -1,19 +1,11 @@
 Gameplay:		
 	bounding spehre station malen
-	wavespawning					#daniel	
-		* großer asteroid Gegner
 	Bossgegner
-	Rauschschreen außerhalb der Spielwelt ( wird stärker wenn man sich von der Station entfernt)		#dustin	
-	
-BOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSS	
-
-partikeldinge:
-	Explosionen für alles (farbe)
-
+	Rauschschreen außerhalb der Spielwelt ( wird stärker wenn man sich von der Station entfernt)		#dustin		
+	waves anpassen/balancing																			#daniel, alle
 
 Modelle:
-	drone
-	Photonbombe
-
-	BOSS
-	2 asterioden
+	drone?
+	weisser lazer
+	Boss
+	2ten asterioden
