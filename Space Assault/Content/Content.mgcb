@@ -13,18 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Fonts/gamefont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:Fonts/gamefont.spritefont
-
-#begin Fonts/menufont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:Fonts/menufont.spritefont
-
 #begin Images/blank.png
 /importer:TextureImporter
 /processor:TextureProcessor
