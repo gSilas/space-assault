@@ -24,7 +24,7 @@ namespace SpaceAssault.Screens
             // Create our menu entries.
             Programmers =new MenuEntry("Programmers");
             ProgramsANDLibraries=new MenuEntry("Programs and Libraries");
-            Sounds=new MenuEntry("Music and Sounds");
+            Sounds=new MenuEntry("Effects");
             SpecialThanks=new MenuEntry("Special Thanks");
 
             ShopText = new SortedDictionary<int, string>();
@@ -40,12 +40,12 @@ namespace SpaceAssault.Screens
             MenuEntries.Add(SpecialThanks);
             MenuEntries.Add(back);
 
-            _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 150, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 650, 500, 704, 8, false, false);
+            _itemDialog = new Dialog(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 110, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 650, 380, 685, 8, false, false);
 
-            ShopText.Add(0, "Programmers:\n     - Philipp Thoms\n     - Dustin Boettcher\n      - Hans-Martin Wulfmeier\n     - Daniel Micheel");
-            ShopText.Add(1, "Programms:\nThis Games was created with: \nMicrosoft Visual Studio and Monogame\n\nModels:\nAll of the Models were made with 3Ds Max or Blender\n\nLibraries:\nIrrKlang");
-            ShopText.Add(2, "Music:\n   MainMenu:\n        Unrelenting by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\n   HighscoreMenu:\n        Truth of the Legend by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\n   GamePlayScreen:\n        SpaceFighterLoop by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\nSoundEffects:\n        They were made with http://www.bfxr.net/");
-            ShopText.Add(3, "Special Thanks to\n    AcaGamics\n\n    and our Testers:\n       Jan-Ole-Perschefski\n       Julia Heise\n ");
+            ShopText.Add(0, "\n Programmers:\n     - Philipp Thoms\n     - Dustin Boettcher\n     - Hans-Martin Wulfmeier\n     - Daniel Micheel");
+            ShopText.Add(1, "\n Programms:\n   This Games was created with: \n   Microsoft Visual Studio and Monogame\n\n Models:\n   All of the Models were made with 3Ds Max or Blender\n\n Libraries:\n   IrrKlang\n\n Art:\n   The Graphical assets were made with Krita");
+            ShopText.Add(2, "\n Music:\n   MainMenu:\n        Unrelenting by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\n   HighscoreMenu:\n        Truth of the Legend by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\n   GamePlayScreen:\n        SpaceFighterLoop by Kevin MacLeod (incompetech.com)\n        Licensed under Creative Commons: By Attribution 3.0 License\n        http://creativecommons.org/licenses/by/3.0/ \n\n SoundEffects:\n   They were made with http://www.bfxr.net/ \n\n Font:\n   This Game uses the " + '\u0022'+ "modenine"+ '\u0022'+" Font ");
+            ShopText.Add(3, "\n Special Thanks to\n    AcaGamics\n\n    and our Testers:\n       - Jan-Ole-Perschefski\n       - Julia Heise\n ");
             ShopText.Add(4, "");
 
             _itemDialog.LoadContent();
