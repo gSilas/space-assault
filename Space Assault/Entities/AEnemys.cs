@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
@@ -21,8 +20,7 @@ namespace SpaceAssault.Entities
         public Weapon Gun;
         public int gunMakeDmg = 0;
 
-        protected ISoundEngine Engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);  
-        protected ISoundSource FlySound;
+        protected ISoundEngine Engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
         protected ISoundSource HitSound;
         protected bool FreshSpawn;
 
@@ -98,10 +96,6 @@ namespace SpaceAssault.Entities
             ISound Hit = Engine.Play3D(HitSound, curListenerPos.X, curListenerPos.Y + 15f, curListenerPos.Z, false, true, false);
             Hit.Volume = Global.SpeakerVolume / 10;
             Hit.Paused = false;
-            
-
         }
-        public abstract void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList);
-
     }
 }

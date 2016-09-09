@@ -10,8 +10,6 @@ namespace SpaceAssault.Utils
         private Texture2D _edge;
         private Point _size;
         private Random _rand;
-        private int _x;
-        private int _y;
 
         public void LoadContent()
         {

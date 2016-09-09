@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
 using SpaceAssault.Utils.Particle;
-using System.Collections.Generic;
 
 namespace SpaceAssault.Entities
 {

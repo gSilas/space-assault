@@ -167,6 +167,7 @@ namespace SpaceAssault.Utils
                     break;
 
                 case 5:
+                    //Enemy Elite Pilot
                     _boids.addRandomBoids(4, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(1, Boids.EnemyType.Fighter2);
                     _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
@@ -180,9 +181,9 @@ namespace SpaceAssault.Utils
                         }
                         else if (ship.GetType() == typeof(EnemyFighter2))
                         {
-                            ship.Health = 50;
-                            ship.gunMakeDmg = 20;
-                            ship.KillMoney = 120;
+                            ship.Health = 100;
+                            ship.gunMakeDmg = 50;
+                            ship.KillMoney = 200;
                         }
                         else if (ship.GetType() == typeof(EnemyBomber))
                         {
@@ -274,7 +275,17 @@ namespace SpaceAssault.Utils
                     break;
 
                 case 10:
-
+                    //Large Bomber Fleet
+                    _boids.addRandomBoids(5, Boids.EnemyType.Bomber);
+                    foreach (var ship in ShipList)
+                    {
+                        if (ship.GetType() == typeof(EnemyBomber))
+                        {
+                            ship.Health = 100;
+                            ship.gunMakeDmg = 500;
+                            ship.KillMoney = 200;
+                        }
+                    }
                     break;
 
                 case 11:
