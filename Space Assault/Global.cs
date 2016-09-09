@@ -64,8 +64,8 @@ namespace SpaceAssault
         public static Color DroneColor = Color.Aquamarine;
         public static Color DroneBulletColor = Color.LightGreen;
         public static Color EnemyBulletColor = Color.LightGreen;
-        public static Color EnemyColor = Color.CornflowerBlue;
+        public static Color EnemyColor = Color.Crimson;
         public static Color AsteroidColor = Color.LightGray;
-        public static Color StationColor = Color.IndianRed;
+        public static Color StationColor = new Color(82, 139, 139);
     }
 }

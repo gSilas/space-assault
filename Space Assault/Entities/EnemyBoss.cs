@@ -55,6 +55,9 @@ namespace SpaceAssault.Entities
             MoveSpeedForward = 0.5f;
             TurnSpeed = 2.0f;
 
+            //BIGJOE Rocket for Body
+            Gun = new Weapon(1000);
+
             Position = spawnposition;
             Health = shipHealth;
             _tower1 = new AttackTower(Position, 600, 100, new Weapon(400));
