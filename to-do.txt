@@ -2,7 +2,9 @@ Gameplay:
 	bounding spehre station malen
 	Bossgegner
 	Rauschschreen außerhalb der Spielwelt ( wird stärker wenn man sich von der Station entfernt)		#dustin		
-	waves anpassen/balancing																			#daniel, alle
+	waves anpassen/balancing																#daniel, alle
+	boids schießen direkt auf schiff (nicht RotationMatrix.Forward)		#hm
+	boids schießen vorraus				#hm
 
 Modelle:
 	drone?
