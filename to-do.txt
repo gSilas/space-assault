@@ -1,5 +1,7 @@
 Gameplay:		
-	highscore						#hans
+	bounding spehre station malen
+	wavespawning					#daniel	
+		* großer asteroid Gegner
 	Bossgegner
 	Rauschschreen außerhalb der Spielwelt ( wird stärker wenn man sich von der Station entfernt)		#dustin		
 	waves anpassen
