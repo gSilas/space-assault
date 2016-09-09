@@ -37,16 +37,16 @@ namespace SpaceAssault.Utils
             }
             else
             {
-                Add("Philipp", 789);
-                Add("Daniel", 777);
-                Add("Dustin", 888);
-                Add("Gerd", 999);
-                Add("Hans-Martin", 1337);
-                Add("Markus", 1111);
-                Add("Arne", 1234);
-                Add("Andre", 666);
-                Add("Ulrich", 555);
-                Add("Acagamic", 1777);
+                Add("Philipp", 50);
+                Add("Daniel", 50);
+                Add("Dustin", 50);
+                Add("Hans-Martin", 50);
+                Add("Acagamic", 550);
+                Add("Major Tom", 201);
+                Add("Han Solo", 199);
+                Add("Cpt. Picard", 200);
+                Add("Ripley", 180);
+                Add("Kapt'n Balu", 10);
             }
         }
 

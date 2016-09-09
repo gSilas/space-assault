@@ -11,3 +11,7 @@ Modelle:
 	weisser lazer
 	Boss
 	2ten asterioden
+
+Easter Egg:
+	Konamicode
+	Nyan Cat
