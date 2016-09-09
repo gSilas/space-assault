@@ -65,7 +65,7 @@ namespace SpaceAssault.Utils
             _currentWave.Draw();
             _waveDialog.Draw("Wave " + (_waveCount).ToString() + "\n" + _currentWave.ShipList.Count + " Ships remaining");
 
-            if (_currentWave.ShipList.Count <= 0)
+            if (_currentWave.ShipList.Count <= 0 && _waveCount < _max)
             {
                 if (gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)).Subtract(TimeSpan.FromSeconds(5d)))
                     _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n\n\n\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
@@ -74,7 +74,7 @@ namespace SpaceAssault.Utils
             }
             if(_waveCount >= _max)
             {
-                _dialog.Draw("You have defeated the enemy commander!\nGood Job!");
+                _dialog.Draw("You have defeated the enemy threat!\nGood Job!");
             }
         }
     }
