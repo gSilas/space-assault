@@ -135,14 +135,19 @@ namespace SpaceAssault.Screens
                                 break;
 
                             default:
-                                if (curKey.ToString().ToCharArray().Length == 1)    //wenn der key nur ein charakter hat
+                                char[] keyText = curKey.ToString().ToCharArray();
+                                if (keyText.Length == 1)    //wenn der key nur ein charakter hat
                                 {
                                     if (pressedKeys.Length > 1)   //wenn mehr als ein Key gleichzeitig gedrueckt wurde
                                     {
-                                        if (pressedKeys[1] == Keys.LeftShift)   //wenn LeftShift ist => Großschreibung
+                                        if (pressedKeys[1] == Keys.LeftShift || pressedKeys[1] == Keys.RightShift)   //wenn LeftShift ist => Großschreibung
                                             EntryText += curKey.ToString().ToUpper();
                                     }
                                     else EntryText += curKey.ToString().ToLower();   // => kleinschreibung
+                                }
+                                else if (keyText.Length == 2 && keyText[0] == 'D')
+                                {
+                                    EntryText += keyText[1];
                                 }
                                 break;
                         }
