@@ -38,7 +38,7 @@ namespace SpaceAssault.Utils
                 movespeed = _rand.Next(10, 100);
                 astAngle = _rand.Next(-360, 360);
                 noise = _rand.Next(0, 90);
-                shinyness = _rand.Next(0, 14);
+                shinyness = _rand.Next(0, 21);
                 angle = _rand.NextDouble() * Math.PI * 2;
                 Vector3 position = new Vector3((Global.MapRingRadius - 200 )* (float)Math.Cos(angle), 0, Global.MapSpawnRadius * (float)Math.Sin(angle));
                 Vector3 direction = new Vector3((Global.MapRingRadius - 200 )* (float)Math.Cos(angle + 180d), 0, Global.MapSpawnRadius * (float)Math.Sin(angle + 180d)) - position;
@@ -116,7 +116,7 @@ namespace SpaceAssault.Utils
                 movespeed = _rand.Next(10, 100);
                 astAngle = _rand.Next(-360, 360);
                 noise = _rand.Next(0, 90);
-                shinyness = _rand.Next(0, 14);
+                shinyness = _rand.Next(0, 21);
                 angle = _rand.NextDouble() * Math.PI * 2;
                 Vector3 position = new Vector3(Global.MapSpawnRadius * (float)Math.Cos(angle), 0, Global.MapSpawnRadius * (float)Math.Sin(angle));
                 Vector3 direction = new Vector3(Global.MapSpawnRadius * (float)Math.Cos(angle + 180d), 0, Global.MapSpawnRadius * (float)Math.Sin(angle + 180d)) - position;
