@@ -23,8 +23,11 @@ namespace SpaceAssault.Screens
         // Fade to black
         float _pauseAlpha;
 
+        float _sphereAlpha;
+
         // Gameplay
         private Station _station;
+        private Sphere _sphere;
         private DroneBuilder _droneFleet;
         public static int _stationHeight = 80;
 
@@ -76,9 +79,11 @@ namespace SpaceAssault.Screens
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
             //actual gameplay objects
             _station = new Station(new Vector3(0, _stationHeight, 0), 0);
+            _sphere = new Sphere(new Vector3(0, _stationHeight / 2, 0), 0);
             _droneFleet = new DroneBuilder();
             movementAllowed = false;
             Global.Money = 1000;
+            _sphereAlpha = 0.1f;
             //UI + Frame + BG 
             _ui = new InGameOverlay(_station);
             _back = new Background();
@@ -117,6 +122,7 @@ namespace SpaceAssault.Screens
             _droneFleet.addDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
             _station.LoadContent();
+            _sphere.LoadContent();
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             tutorialDialog.LoadContent();
@@ -150,6 +156,10 @@ namespace SpaceAssault.Screens
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
+
+            if (_sphereAlpha > 0.1f)
+                _sphereAlpha -= 0.001f;
+
             dustParticles.Update(gameTime);
             // Gradually fade in or out depending on whether we are covered by the pause screen.
             if (coveredByOtherScreen)
@@ -313,6 +323,10 @@ namespace SpaceAssault.Screens
             DrawDirectionArrow();
             DrawDialog();
             explosionParticles.Draw();
+
+            if (_station._shield > 0)
+                _sphere.Draw(new Color(255, 255, 255), _sphereAlpha);
+
             //FRAME & UI ALWAYS LAST
             _ui.Draw(_droneFleet);
             _frame.Draw();

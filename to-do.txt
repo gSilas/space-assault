@@ -11,8 +11,7 @@ Gameplay:
 	boids schießen vorraus				#hm
 
 Modelle:
-	drone?
-	weisser lazer
+	Drone
 	Boss
 	2ten asterioden
 

@@ -25,8 +25,11 @@ namespace SpaceAssault.Screens
         float _actualDeadDroneAlpha;
         float _pauseAlpha;
 
+        float _sphereAlpha;
+
         // Gameplay
         private Station _station;
+        private Sphere _sphere;
         private AsteroidBuilder _asteroidField;
         private DroneBuilder _droneFleet;
         private int _deathCounter = 0;
@@ -57,9 +60,6 @@ namespace SpaceAssault.Screens
         List<ExplosionSystem> explosionList = new List<ExplosionSystem>();
         List<ExplosionSystem> explosionRemoveList = new List<ExplosionSystem>();
 
-        //Effects
-        private Effect _stationEffect;
-
         // Keep track of all the active projectiles
         List<Projectile> projectiles = new List<Projectile>();
         TimeSpan timeToNextProjectile = TimeSpan.Zero;
@@ -81,11 +81,14 @@ namespace SpaceAssault.Screens
 
             //actual gameplay objects
             _station = new Station(new Vector3(0, _stationHeight, 0), 0);
+            _sphere = new Sphere(new Vector3(0, _stationHeight/2, 0), 0);
             _asteroidField = new AsteroidBuilder();
             _droneFleet = new DroneBuilder();
 
             _waveBuilder = new WaveBuilder(TimeSpan.FromSeconds(15d), 15);
             Global.Money = 0;
+
+            _sphereAlpha = 0.1f;
             //UI + Frame + BG 
             _ui = new InGameOverlay(_station);
             _back = new Background();
@@ -98,9 +101,6 @@ namespace SpaceAssault.Screens
 
             // Construct Particles
             borderParticles = new BorderParticleSettings();
-            //explosionSmokeParticles = new ExplosionSmokeParticleSystem();
-            //projectileTrailParticles = new ProjectileTrailParticleSystem();
-            //SmokeParticles = new SmokeParticleSystem();
             dustParticles = new DustParticleSystem();
         }
 
@@ -115,13 +115,11 @@ namespace SpaceAssault.Screens
             _droneFleet.addDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
             _station.LoadContent();
+            _sphere.LoadContent();
             _asteroidField.LoadContent();
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             _waveBuilder.LoadContent();
-
-            //Effects
-            _stationEffect = Global.ContentManager.Load<Effect>("Effects/stationEffect");
 
             //Sounds
             Global.Music.Stop();
@@ -153,6 +151,9 @@ namespace SpaceAssault.Screens
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, false);
+
+            if (_sphereAlpha > 0.1f)
+            _sphereAlpha -= 0.001f;
 
             // Gradually fade in or out depending on whether we are covered by the pause screen.
             if (coveredByOtherScreen)
@@ -335,6 +336,9 @@ namespace SpaceAssault.Screens
 
             DrawDirectionArrow();
 
+            if(_station._shield > 0)
+                _sphere.Draw(new Color(255, 255, 255), _sphereAlpha);
+
             //FRAME & UI ALWAYS LAST
             _ui.Draw(_droneFleet);
             _frame.Draw();
@@ -400,7 +404,10 @@ namespace SpaceAssault.Screens
 
                         if (ship.Health <= 0)
                         {
-                            explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), new ShipRingExplosionSettings(), ship.Position, 0.4, 30));
+                            if(ship.GetType() == typeof(EnemyBomber))
+                                explosionList.Add(new ExplosionSystem(new ShipBigExplosionSettings(), new ShipRingExplosionSettings(), ship.Position, 0.4, 50,true));
+                            else
+                                explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), new ShipRingExplosionSettings(), ship.Position, 0.4, 30));
                             PlayExplosionSound(new Vector3D(bullet.Position.X, bullet.Position.Y, bullet.Position.Z));
                         }
                         break;
@@ -423,6 +430,7 @@ namespace SpaceAssault.Screens
 
                 if (bullet.CanDamageStation && Collider3D.IntersectionSphere(bullet, _station))
                 {
+                    _sphereAlpha = 0.2f;
                     explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), bullet.Position, 0.4));
                     _station.getHit(bullet.makeDmg);
                     _removeBullets.Add(bullet);
@@ -451,6 +459,7 @@ namespace SpaceAssault.Screens
 
                 if (Collider3D.IntersectionSphere(_station, ast))
                 {
+                    _sphereAlpha = 0.2f;
                     explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.4));
                     ast.IsDead = true;
                     _removeAsteroid.Add(ast);

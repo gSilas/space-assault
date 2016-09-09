@@ -70,9 +70,9 @@ namespace SpaceAssault.Entities
                         effect.SpecularColor = entityColor.ToVector3();
 
                         effect.DirectionalLight0.Enabled = true;
-                        effect.DirectionalLight0.DiffuseColor = Color.LightGoldenrodYellow.ToVector3(); // a red light
+                        effect.DirectionalLight0.DiffuseColor = Color.LightGoldenrodYellow.ToVector3(); // a light
                         effect.DirectionalLight0.Direction = new Vector3(-1, -1, 0);  // coming along the x-axis
-                        effect.DirectionalLight0.SpecularColor = Color.DarkGoldenrod.ToVector3(); // with green highlights
+                        effect.DirectionalLight0.SpecularColor = Color.DarkGoldenrod.ToVector3(); // with highlights
                         
                         effect.PreferPerPixelLighting = true;
                         _world = effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(_scale);
@@ -84,27 +84,36 @@ namespace SpaceAssault.Entities
             }
         }
 
-        public virtual void Draw(Effect effectShader)
+        public virtual void Draw(Color entityColor, float alphaValue)
         {
             if (Collider3D.BoundingFrustumIntersection(this))
             {
                 foreach (var mesh in Model.Meshes)
                 {
-                    foreach (ModelMeshPart part in mesh.MeshParts)
+                    foreach (BasicEffect effect in mesh.Effects)
                     {
-                        part.Effect = effectShader;
-                        _world = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(_scale);
-                        part.Effect.Parameters["World"].SetValue(_world);
-                        part.Effect.Parameters["View"].SetValue(Global.Camera.ViewMatrix);
-                        part.Effect.Parameters["Projection"].SetValue(Global.Camera.ProjectionMatrix);
-                        part.Effect.Parameters["AmbientColor"].SetValue(Color.Pink.ToVector4());
-                        part.Effect.Parameters["AmbientIntensity"].SetValue(1f);
+                        effect.EnableDefaultLighting();
+
+                        effect.DiffuseColor = entityColor.ToVector3();
+                        effect.SpecularColor = entityColor.ToVector3();
+                        effect.Alpha = alphaValue;
+
+                        effect.DirectionalLight0.Enabled = true;
+                        effect.DirectionalLight0.DiffuseColor = Color.LightGoldenrodYellow.ToVector3(); // a light
+                        effect.DirectionalLight0.Direction = new Vector3(-1, -1, 0);  // coming along the x-axis
+                        effect.DirectionalLight0.SpecularColor = Color.DarkGoldenrod.ToVector3(); // with highlights
+
+                        effect.PreferPerPixelLighting = true;
+                        _world = effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(_scale);
+                        effect.View = Global.Camera.ViewMatrix;
+                        effect.Projection = Global.Camera.ProjectionMatrix;
                     }
                     mesh.Draw();
-                    
                 }
             }
         }
+
+
 
     }
 }
