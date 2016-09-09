@@ -11,12 +11,12 @@ namespace SpaceAssault.Screens
         {
 
             // Create our menu entries.
-            MenuEntry playGameMenuEntry = new MenuEntry("Current Mission");
-            MenuEntry highscoreMenuEntry = new MenuEntry("Personal Record");
+            MenuEntry playGameMenuEntry = new MenuEntry("Start Game");
+            MenuEntry highscoreMenuEntry = new MenuEntry("Station Records");
             MenuEntry optionsMenuEntry = new MenuEntry("Station Configuration");
             MenuEntry creditsMenuEntry = new MenuEntry("Honorable Mentions");
-            MenuEntry exitMenuEntry = new MenuEntry("Quit Dronecontrol");
-            MenuEntry tutorialMenuEntry = new MenuEntry("Tutorial");
+            MenuEntry exitMenuEntry = new MenuEntry("Quit Game");
+            MenuEntry tutorialMenuEntry = new MenuEntry("Begin Your Mission");
 
             // Hook up menu event handlers.
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
@@ -28,10 +28,10 @@ namespace SpaceAssault.Screens
 
             // Add entries to the menu.
 
-            MenuEntries.Add(playGameMenuEntry);
+            //MenuEntries.Add(playGameMenuEntry);
             MenuEntries.Add(tutorialMenuEntry);
-            MenuEntries.Add(highscoreMenuEntry);
             MenuEntries.Add(optionsMenuEntry);
+            MenuEntries.Add(highscoreMenuEntry);
             MenuEntries.Add(creditsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
