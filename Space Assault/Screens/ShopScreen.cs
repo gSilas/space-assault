@@ -16,29 +16,29 @@ namespace SpaceAssault.Screens
         // Variables
         //#################################
         //Drone
+        List<Label> Labels = new List<Label>();
+
         MenuEntry damageMenuEntry;
-        private int _priceDMG=500;
         MenuEntry healthMenuEntry;
-        public static int _priceDroneHealth=500;
         MenuEntry armorMenuEntry;
-        private int _priceArmor=2000;
         MenuEntry shieldMenuEntry;
-        private int _priceDroneShield=500;
-        //Station
         MenuEntry sShieldMenuEntry;
-        private int _priceStationShield=2000;
         MenuEntry sHealthMenuEntry;
-        private int _priceStationHealth = 2000;
         MenuEntry rocketMenuEntry;
 
+        private int _priceDMG=500;
+        private  int _priceDroneHealth=500;
+        private int _priceArmor=2000;
+        private int _priceDroneShield=500;
+        private int _priceStationShield=2000;
+        private int _priceStationHealth = 2000;
 
-        List<Label> Labels = new List<Label>();
-        public static int _droneDamageLevel = 1;
-        public static int _droneHealthLevel = 1;
-        public static int _droneArmorLevel = 1;
-        public static int _droneShieldLevel = 1;
-        public static int _StationHealthLevel = 1;
-        public static int _StationShieldLevel = 1;
+        public int _droneDamageLevel = 1;
+        public int _droneHealthLevel = 1;
+        public int _droneArmorLevel = 1;
+        public int _droneShieldLevel = 1;
+        public int _StationHealthLevel = 1;
+        public int _StationShieldLevel = 1;
 
         private Random _rand = new Random();
         private DroneBuilder _droneFleet;
@@ -48,9 +48,9 @@ namespace SpaceAssault.Screens
         private Dialog _levelDialog;
         private Dialog _priceDialog;
 
-        public SortedDictionary<int, string> ShopText = new SortedDictionary<int, string>();
-        public SortedDictionary<int, string> PriceText = new SortedDictionary<int, string>();
-        public SortedDictionary<int, string> LevelText = new SortedDictionary<int, string>();
+        public SortedDictionary<int, string> ShopText;
+        public SortedDictionary<int, string> PriceText;
+        public SortedDictionary<int, string> LevelText;
 
         private ISound _accept;
         private ISound _denie;
@@ -64,7 +64,11 @@ namespace SpaceAssault.Screens
             this._droneFleet = droneFleet;
             this._station = station;
 
-            // Create our menu entries.
+            ShopText = new SortedDictionary<int, string>();
+            PriceText = new SortedDictionary<int, string>();
+            LevelText = new SortedDictionary<int, string>();
+
+        // Create our menu entries.
             damageMenuEntry = new MenuEntry(string.Empty);
             healthMenuEntry = new MenuEntry(string.Empty);
             armorMenuEntry = new MenuEntry(string.Empty);

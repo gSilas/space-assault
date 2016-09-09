@@ -67,6 +67,10 @@ namespace SpaceAssault.Screens
         // Random number generator
         Random random = new Random();
 
+        //Created screens
+        PauseMenuScreen pause;
+        ShopScreen shop;
+
         //#################################
         // Constructor
         //#################################
@@ -105,7 +109,7 @@ namespace SpaceAssault.Screens
         // LoadContent
         //#################################
         public override void LoadContent()
-        {
+        { 
             _stationSymbol = new UIItem();
             _stationSymbol.LoadContent("Images/station_icon");
             _droneFleet.addDrone(new Vector3(150, 0, 100));
@@ -138,7 +142,6 @@ namespace SpaceAssault.Screens
         public override void UnloadContent()
         {
             //Global.ContentManager.Unload();
-
             _engine.StopAllSounds();
             _engine.Dispose();
         }
@@ -230,6 +233,18 @@ namespace SpaceAssault.Screens
             {
                 _station._health -= 1000;
             }
+            if (_input.IsNewKeyPress(Keys.F1))
+            {
+                Console.WriteLine("Drone Damage: " + _droneFleet.GetActiveDrone()._makeDmg);
+            }
+            if (_input.IsNewKeyPress(Keys.F2))
+            {
+                Console.WriteLine("Drone Shield: " + _droneFleet.GetActiveDrone()._shield);
+            }
+            if (_input.IsNewKeyPress(Keys.F3))
+            {
+                Console.WriteLine("Drone Health: " + _droneFleet.GetActiveDrone()._health);
+            }
         }
 
         //#################################
@@ -254,7 +269,10 @@ namespace SpaceAssault.Screens
                     Open = _engine.Play2D(_openShop, false, true, false);
                     Open.Volume = Global.SpeakerVolume / 10;
                     Open.Paused = false;
-                    ScreenManager.AddScreen(new ShopScreen(_droneFleet, _station));
+                    if (shop == null)
+                        shop = new ShopScreen(_droneFleet, _station);
+                    ScreenManager.AddScreen(shop);
+                    //LoadingScreen.Load(this.ScreenManager, false, new ShopScreen(_droneFleet, _station));
                 }
 
             }
@@ -268,7 +286,10 @@ namespace SpaceAssault.Screens
                 Open = _engine.Play2D(_openShop, false, true, false);
                 Open.Volume = Global.SpeakerVolume / 10;
                 Open.Paused = false;
-                ScreenManager.AddScreen(new PauseMenuScreen());
+                if (pause == null)
+                    pause = new PauseMenuScreen();
+                ScreenManager.AddScreen(pause);
+                //LoadingScreen.Load(this.ScreenManager, false, new PauseMenuScreen());
             }
         }
 
