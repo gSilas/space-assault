@@ -10,8 +10,6 @@ namespace SpaceAssault.Entities
 
     public class Bullet : AEntity
     {
-
-
         private Vector3 _moveDirection;
         private float _moveSpeed;
         public int _bulletLifeTime;
@@ -74,6 +72,24 @@ namespace SpaceAssault.Entities
         {
             get { return _canDmgStation; }
         }
-
+        public override void Draw()
+        {
+            if (Collider3D.BoundingFrustumIntersection(this))
+            {
+                foreach (var mesh in Model.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.DiffuseColor = new Color(255, 100, 100, 255).ToVector3();
+                        effect.EnableDefaultLighting();
+                        effect.PreferPerPixelLighting = true;
+                        World = effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(Scale);
+                        effect.View = Global.Camera.ViewMatrix;
+                        effect.Projection = Global.Camera.ProjectionMatrix;
+                    }
+                    mesh.Draw();
+                }
+            }
+        }
     }
 }

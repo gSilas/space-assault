@@ -89,9 +89,9 @@ namespace SpaceAssault.Screens
             // Modify the alpha to fade text out during transitions.
             color *= screen.TransitionAlpha;
 
-            Vector2 origin = new Vector2(0, Global.GameFont.LineSpacing / 2);
+            Vector2 origin = new Vector2(0, Global.Font.LineSpacing / 2);
 
-            Global.SpriteBatch.DrawString(Global.GameFont, text, position, color, 0,
+            Global.SpriteBatch.DrawString(Global.Font, text, position, color, 0,
                                    origin, scale, SpriteEffects.None, 0);
         }
 
@@ -99,13 +99,13 @@ namespace SpaceAssault.Screens
         // Queries how much space this menu entry requires.
         public virtual int GetHeight()
         {
-            return Global.GameFont.LineSpacing;
+            return Global.Font.LineSpacing;
         }
 
         // Queries how wide the entry is, used for centering on the screen.
         public virtual int GetWidth()
         {
-            return (int)Global.GameFont.MeasureString(Text).X;
+            return (int)Global.Font.MeasureString(Text).X;
         }
     }
 }

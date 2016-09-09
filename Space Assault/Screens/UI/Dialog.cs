@@ -100,7 +100,7 @@ namespace SpaceAssault.Screens.UI
 
             if(msg != null)
             {
-                Global.UIBatch.DrawString(Global.DialogFont, msg, _pos.ToVector2() + new Vector2(_size.X, _size.Y), Color.White);
+                Global.UIBatch.DrawString(Global.Font, msg, _pos.ToVector2() + new Vector2(_size.X, _size.Y), Color.White);
             }
 
             Global.UIBatch.End();
@@ -153,7 +153,7 @@ namespace SpaceAssault.Screens.UI
 
             if (msg != null)
             {
-                Global.UIBatch.DrawString(Global.DialogFont, msg, _pos.ToVector2() + new Vector2(_size.X, _size.Y), msgColor);
+                Global.UIBatch.DrawString(Global.Font, msg, _pos.ToVector2() + new Vector2(_size.X, _size.Y), msgColor);
             }
 
             Global.UIBatch.End();
@@ -206,7 +206,7 @@ namespace SpaceAssault.Screens.UI
 
             if (msg != null)
             {
-                Global.UIBatch.DrawString(Global.DialogFont, msg, pos.ToVector2() + new Vector2(_size.X, _size.Y), Color.White);
+                Global.UIBatch.DrawString(Global.Font, msg, pos.ToVector2() + new Vector2(_size.X, _size.Y), Color.White);
             }
 
             Global.UIBatch.End();
@@ -259,7 +259,7 @@ namespace SpaceAssault.Screens.UI
 
             if (msg != null)
             {
-                Global.UIBatch.DrawString(Global.DialogFont, msg, pos.ToVector2() + new Vector2(_size.X, _size.Y), msgColor);
+                Global.UIBatch.DrawString(Global.Font, msg, pos.ToVector2() + new Vector2(_size.X, _size.Y), msgColor);
             }
 
             Global.UIBatch.End();

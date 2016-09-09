@@ -125,7 +125,7 @@ namespace SpaceAssault.ScreenManagers
             //FPS COUNTER
             if (Global.FrameCounterIsEnabled)
             {
-                Global.SpriteBatch.DrawString(Global.GameFont, (1.0f / gameTime.ElapsedGameTime.TotalSeconds).ToString("N0"), new Vector2(3, 3), Color.LightGreen);
+                Global.SpriteBatch.DrawString(Global.Font, (1.0f / gameTime.ElapsedGameTime.TotalSeconds).ToString("N0"), new Vector2(3, 3), Color.LightGreen);
             }
             Global.SpriteBatch.End();
         }

@@ -130,7 +130,7 @@ namespace SpaceAssault.Screens
         public override void LoadContent()
         {
             //UI
-            Labels.Add(new Label("gamefont", "Fragments: ", 50, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
+            Labels.Add(new Label("Fragments: ", 50, Global.GraphicsManager.PreferredBackBufferHeight - 50, Color.White));
             _itemDialog.LoadContent();
             _frame.LoadContent();
 

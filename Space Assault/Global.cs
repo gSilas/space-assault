@@ -32,8 +32,7 @@ namespace SpaceAssault
         public static HighScoreList HighScoreList = new HighScoreList();
 
         //fonts
-        public static SpriteFont GameFont;
-        public static SpriteFont DialogFont;
+        public static SpriteFont Font;
 
         //highscore points
         public static int HighScorePoints;

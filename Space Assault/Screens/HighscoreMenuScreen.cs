@@ -42,13 +42,13 @@ namespace SpaceAssault.Screens
                     string filtered = "";
                     foreach (char c in value)
                     {
-                        if (Global.GameFont.Characters.Contains(c))
+                        if (Global.Font.Characters.Contains(c))
                             filtered += c;
                     }
 
                     _entryString = filtered;
 
-                    while (Global.GameFont.MeasureString(_entryString).X > inputBoxWidth)
+                    while (Global.Font.MeasureString(_entryString).X > inputBoxWidth)
                     {
                         //to ensure that text cannot be larger than the box
                         _entryString = _entryString.Substring(0, _entryString.Length - 1);
@@ -74,7 +74,7 @@ namespace SpaceAssault.Screens
             int spawnPointX = 150;
             int spawnPointY = 200;
             _highScoreDialog = new Dialog(spawnPointX, spawnPointY, 250, 500, 6, false, true);
-            _inputDialog = new Dialog(spawnPointX, spawnPointY + 300, 48, 400, 6, false, true);
+            _inputDialog = new Dialog(spawnPointX, spawnPointY + 300, 30, 500, 6, false, true);
         }
 
         public override void LoadContent()
@@ -170,16 +170,20 @@ namespace SpaceAssault.Screens
                 Global.UIBatch.Begin();
                 for (int i = 0; i < Global.HighScoreList._listLength; i++)
                 {
-                    Global.UIBatch.DrawString(Global.DialogFont, (i + 1) + ". Platz", new Vector2(spawnPointX, spawnPointY + i * zeilenAbstand), Color.White);
-                    Global.UIBatch.DrawString(Global.DialogFont, Global.HighScoreList._scoresList[i].Name, new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.White);
-                    Global.UIBatch.DrawString(Global.DialogFont, (Global.HighScoreList._scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand * 2, spawnPointY + i * zeilenAbstand), Color.White);
+                    Global.UIBatch.DrawString(Global.Font, (i + 1) + ". Platz", new Vector2(spawnPointX, spawnPointY + i * zeilenAbstand), Color.White);
+                    Global.UIBatch.DrawString(Global.Font, Global.HighScoreList._scoresList[i].Name, new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.White);
+                    Global.UIBatch.DrawString(Global.Font, (Global.HighScoreList._scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand * 2, spawnPointY + i * zeilenAbstand), Color.White);
                 }
                 Global.UIBatch.End();
 
                 if (_enter)
                 {
+                    Global.UIBatch.Begin();
+                    Global.UIBatch.DrawString(Global.Font,"Please register with our Database!", new Vector2(_inputDialog.position.X+10, _inputDialog.position.Y-20), Color.White);
+                    Global.UIBatch.End();
                     _inputDialog.Draw("Score: " + Global.HighScorePoints + "   Your Name: " + EntryText);
                 }
+
             }
         }
 
