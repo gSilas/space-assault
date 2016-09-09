@@ -9,7 +9,6 @@ namespace SpaceAssault.Entities
 {
     class EnemyBoss : AEnemys
     {
-
         //The Boss has 4 Seperate AttackTowers who need to be destroyed seperatly
         internal class AttackTower : AEnemys
         {
@@ -37,7 +36,6 @@ namespace SpaceAssault.Entities
                 Gun.LoadContent();
 
                 HitSound = Engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);
-
             }
         }
 
