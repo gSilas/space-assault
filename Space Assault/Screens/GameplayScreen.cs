@@ -190,7 +190,7 @@ namespace SpaceAssault.Screens
             // if station dies go back to MainMenu
             // TODO: change to EndScreen and HighScore list)
             if (_station._health <= 0)
-                LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen());
+                LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new HighscoreMenuScreen(true));
 
             CollisionHandling(gameTime);
 
@@ -209,13 +209,20 @@ namespace SpaceAssault.Screens
             }
         }
 
+        //#################################
+        // Everything related to Debugstuff/input etc. here (only works in debug mode)
+        //#################################
         [Conditional("DEBUG")]
         public void DebugFunctions()
         {   
-            //debug, only works in debug mode
             if (_input.IsNewKeyPress(Keys.L) && _input.IsNewKeyPress(Keys.K))
             {
                 Global.Money += 10000;
+            }
+
+            if (_input.IsNewKeyPress(Keys.F) && _input.IsNewKeyPress(Keys.G))
+            {
+                _station._health -= 1000;
             }
         }
 

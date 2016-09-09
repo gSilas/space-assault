@@ -179,7 +179,7 @@ namespace SpaceAssault.Screens
                 if (_enter)
                 {
                     Global.UIBatch.Begin();
-                    Global.UIBatch.DrawString(Global.DialogFont,"Please register with our Database!", new Vector2(_inputDialog.position.X+10, _inputDialog.position.Y-20), Color.White);
+                    Global.UIBatch.DrawString(Global.Font,"Please register with our Database!", new Vector2(_inputDialog.position.X+10, _inputDialog.position.Y-20), Color.White);
                     Global.UIBatch.End();
                     _inputDialog.Draw("Score: " + Global.HighScorePoints + "   Your Name: " + EntryText);
                 }
