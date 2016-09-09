@@ -1,3 +1,7 @@
+Optimisierung:
+	Collision Handling
+	BoundingFrustrum für alles
+
 Gameplay:		
 	bounding spehre station malen
 	Bossgegner
