@@ -1,0 +1,13 @@
+
+List of Releasekeys:
+	
+	WASD - movement of ship
+	LMouse - Shoot laser
+	RMouse - Shoot photonbomb
+	B - opens shop (if near station and with sufficient funds)
+
+
+List of Debuggingkeys:
+
+	N - activates mouse click spawning of enemies (Boids.cs)
+	K+L - adds 10000 to your money (GameplayScreen.cs)

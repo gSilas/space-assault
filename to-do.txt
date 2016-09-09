@@ -18,3 +18,10 @@ Modelle:
 
 	BOSS
 	2 asterioden
+
+
+
+
+LIST OF DEBUGGINKEYS:
+
+	N - activate mouse click spawning of enemies (Boids.cs)

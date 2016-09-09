@@ -18,6 +18,14 @@ namespace SpaceAssault.Utils
             _color = color;
         }
 
+        public Label(string label, int x, int y, Color color)
+        {
+            _font = Global.GameFont;
+            _label = label;
+            _vector = new Vector2(x, y);
+            _color = color;
+        }
+
         public void Update(){}
 
         public void Draw()
