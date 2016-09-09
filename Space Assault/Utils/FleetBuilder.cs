@@ -35,6 +35,10 @@ namespace SpaceAssault.Utils
                 {
                     _removeBulletList.Add(bullet);
                 }
+
+                // BombTrail
+                if (bullet._trail != null)
+                    bullet._trail.Update(gameTime, bullet.Position);
             }
             foreach (Bullet bullet in _removeBulletList)
             {
@@ -91,6 +95,9 @@ namespace SpaceAssault.Utils
         {
             foreach (Bullet bullet in _bulletList)
             {
+                // BombTrail
+                if (bullet._trail != null)
+                    bullet._trail.Draw();
                 bullet.Draw();
             }
 

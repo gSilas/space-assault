@@ -43,6 +43,8 @@ namespace SpaceAssault.Entities
             _moveSpeed = moveSpeed;
             if (bulletType == BulletType.BigJoe)
                 _trail = new Trail(new BombTrailSettings());
+            if (bulletType == BulletType.PhotonBomb)
+                _trail = new Trail(new BomberBombTrailSettings());
         }
 
 

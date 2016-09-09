@@ -91,7 +91,9 @@
     <Compile Include="Utils\Particle\ExplosionSystem.cs" />
     <Compile Include="Utils\Particle\Settings\BombExplosionSettings.cs" />
     <Compile Include="Utils\Particle\Settings\BombRingExplosionSettings.cs" />
-    <Compile Include="Utils\Particle\Settings\FighterTrailSettings .cs" />
+    <Compile Include="Utils\Particle\Settings\BomberBombTrailSettings.cs" />
+    <Compile Include="Utils\Particle\Settings\EnemyBomberTrailSettings.cs" />
+    <Compile Include="Utils\Particle\Settings\EnemyTrailSettings .cs" />
     <Compile Include="Utils\Particle\Settings\ShipRingExplosionSettings.cs" />
     <Compile Include="Utils\Particle\Settings\DroneTrailSettings.cs" />
     <Compile Include="Utils\Particle\Settings\DustParticleSystem.cs" />

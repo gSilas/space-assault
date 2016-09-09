@@ -378,6 +378,7 @@ namespace SpaceAssault.Screens
 
                 if (bullet.CanDamageStation && Collider3D.IntersectionSphere(bullet, _station))
                 {
+                    explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), bullet.Position, 0.4));
                     _station.getHit(bullet.makeDmg);
                     _removeBullets.Add(bullet);
                 }

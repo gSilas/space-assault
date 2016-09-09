@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceAssault.Utils.Particle.Settings
 {
-    class FighterTrailSettings : ParticleSystem
+    class EnemyTrailSettings : ParticleSystem
     {
-        public FighterTrailSettings()
+        public EnemyTrailSettings()
         { }
 
 

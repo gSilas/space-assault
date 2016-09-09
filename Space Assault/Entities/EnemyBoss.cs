@@ -78,7 +78,7 @@ namespace SpaceAssault.Entities
         {
             SpawnPos = spawnposition;
             Position = spawnposition;
-            _trail = new Trail(new FighterTrailSettings());
+            _trail = new Trail(new EnemyTrailSettings());
 
             RotationMatrix = Matrix.Identity;
 
