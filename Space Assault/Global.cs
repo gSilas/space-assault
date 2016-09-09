@@ -59,5 +59,12 @@ namespace SpaceAssault
         public static Vector3 CameraPosition = new Vector3(0,350,350);
 
         public static Color UIColor = new Color(30,110,166,255);
+        //Color for Entity
+        public static Color DroneColor = Color.Aquamarine;
+        public static Color DroneBulletColor = Color.LightGreen;
+        public static Color EnemyBulletColor = Color.LightGreen;
+        public static Color EnemyColor = Color.CornflowerBlue;
+        public static Color AsteroidColor = Color.LightGray;
+        public static Color StationColor = Color.IndianRed;
     }
 }

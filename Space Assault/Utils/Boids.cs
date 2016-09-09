@@ -194,13 +194,13 @@ namespace SpaceAssault.Utils
         {
             foreach (Bullet bullet in _bullets)
             {
-                bullet.Draw();
+                bullet.Draw(Global.EnemyBulletColor);
             }
 
             foreach (var ship in _ships)
             {
                 ship._trail.Draw();
-                ship.Draw();
+                ship.Draw(Global.EnemyColor);
             }
         }
 

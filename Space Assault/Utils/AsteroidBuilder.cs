@@ -142,7 +142,7 @@ namespace SpaceAssault.Utils
             foreach (var ast in _asteroidList)
             {
                 shinyParticles.Draw();
-                ast.Draw();
+                ast.Draw(Global.AsteroidColor);
             }
         }
     }

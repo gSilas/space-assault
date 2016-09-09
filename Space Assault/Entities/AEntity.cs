@@ -56,7 +56,7 @@ namespace SpaceAssault.Entities
 
         public abstract void LoadContent();
 
-        public virtual void Draw()
+        public virtual void Draw(Color entityColor)
         {
             if (Collider3D.BoundingFrustumIntersection(this))
             {
@@ -66,9 +66,11 @@ namespace SpaceAssault.Entities
                     {
                         effect.EnableDefaultLighting();
 
-                        effect.DirectionalLight0.DiffuseColor = new Vector3(0.5f, 0, 0); // a red light
-                        effect.DirectionalLight0.Direction = new Vector3(1, 1, 0);  // coming along the x-axis
-                        effect.DirectionalLight0.SpecularColor = new Vector3(1, 0, 0); // with green highlights
+                        effect.DiffuseColor = entityColor.ToVector3();
+
+                        effect.DirectionalLight0.DiffuseColor = Color.LightGoldenrodYellow.ToVector3(); // a red light
+                        effect.DirectionalLight0.Direction = new Vector3(-1, -1, 0);  // coming along the x-axis
+                        effect.DirectionalLight0.SpecularColor = Color.DarkGoldenrod.ToVector3(); // with green highlights
 
                         effect.PreferPerPixelLighting = true;
                         _world = effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up) * Matrix.CreateScale(_scale);

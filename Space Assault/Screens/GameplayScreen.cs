@@ -284,7 +284,7 @@ namespace SpaceAssault.Screens
 
             // calling draw of objects where necessary
             _back.Draw(90, new Vector3(-15000, -2000, -15000));   
-            _station.Draw();
+            _station.Draw(Global.StationColor);
             _droneFleet.Draw();
             _asteroidField.Draw();
             _waveBuilder.Draw(gameTime);
