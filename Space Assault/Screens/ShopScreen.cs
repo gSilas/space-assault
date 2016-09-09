@@ -40,7 +40,7 @@ namespace SpaceAssault.Screens
         public static int _StationHealthLevel = 1;
         public static int _StationShieldLevel = 1;
 
-
+        private Random _rand = new Random();
         private DroneBuilder _droneFleet;
         private Station _station;
 
@@ -166,15 +166,11 @@ namespace SpaceAssault.Screens
             {
                 _droneDamageLevel++;
                 Global.Money -= _priceDMG;
-                _priceDMG *= 2;
 
                 this._droneFleet._makeDmg += 10;
-
+                Global.DroneBulletColor = new Color(_rand.Next(100,200),_rand.Next(100,200),_rand.Next(100,200),255);
                 SetMenuEntryText();
-                ShopText.Remove(0);
-                ShopText.Add(0,
-                    "Your Laser does now " + _droneFleet._makeDmg.ToString() +
-                    " Damage\n\nFor Every Upgrade your\nGundamage is increased by 10");
+                SetShopText();
                 
                 //playing the sound
                 SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
@@ -202,10 +198,10 @@ namespace SpaceAssault.Screens
             {
                 _droneHealthLevel++;
                 Global.Money -= _priceDroneHealth;
-                //_priceDroneHealth *=2;
 
                 this._droneFleet._maxHealth += 100;
                 _droneFleet.GetActiveDrone()._health += 100;
+
                 SetMenuEntryText();
                 SetShopText();
 
@@ -230,9 +226,7 @@ namespace SpaceAssault.Screens
         void armorMenuEntrySelected(object sender, EventArgs e)
         {
             if (Global.Money > _priceArmor)
-            {
-                //_priceArmor *= 2;
-              
+            {       
                 if(_droneFleet._armor < 5)
                 {
                     _droneArmorLevel++;
@@ -271,11 +265,9 @@ namespace SpaceAssault.Screens
             {
                 _droneShieldLevel++;
                 Global.Money -= _priceDroneShield;
-                //_priceDroneShield *= 2;
       
                 this._droneFleet._maxShield+=50;   
-        
-           
+            
                 SetMenuEntryText();
                 SetShopText();
 
@@ -302,7 +294,6 @@ namespace SpaceAssault.Screens
             {
                 _StationHealthLevel++;
                 Global.Money -= _priceStationHealth;
-                //_priceStationHealth *= 2;
              
                 this._station._health += 1000;
              
@@ -332,7 +323,6 @@ namespace SpaceAssault.Screens
             {
                 _StationShieldLevel++;
                 Global.Money -= _priceStationShield;
-                //_priceStationShield *= 2;
            
                 this._station._maxShield += 500;
     
@@ -359,8 +349,7 @@ namespace SpaceAssault.Screens
         void rocketMenuEntrySelected(object sender, EventArgs e)
         {
             if (Global.Money >= 500)
-            {
-                
+            {                
                 Global.Money -= 500;
                 Global.NumberOfRockets += 1;
 
