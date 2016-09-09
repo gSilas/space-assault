@@ -33,7 +33,7 @@ namespace SpaceAssault.Screens
         public static int _stationHeight = 80;
         private WaveBuilder _waveBuilder;
 
-        private float _duration = 50;
+        private InputState _input;
 
 
         //UI + Frame + Background
