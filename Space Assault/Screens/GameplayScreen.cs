@@ -191,8 +191,8 @@ namespace SpaceAssault.Screens
             explosionRemoveList.Clear();
 
 
-
-
+            if(_waveBuilder.HasEnded)
+                LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen(), new HighscoreMenuScreen(true));
             // if station dies go back to MainMenu
             // TODO: change to EndScreen and HighScore list)
             if (_station._health <= 0)
