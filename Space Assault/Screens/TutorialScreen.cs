@@ -50,7 +50,7 @@ namespace SpaceAssault.Screens
         bool movementAllowed;
         Dialog tutorialDialog;
         string tutorialMessage;
-        int nextIndex = 1;
+        int nextIndex = 0;
         AsteroidBuilder _asteroidField;
         public SortedDictionary<int, string> TutorialText = new SortedDictionary<int, string>();
 
@@ -84,25 +84,27 @@ namespace SpaceAssault.Screens
             _back = new Background();
             _frame = new Frame();
             dustParticles = new DustParticleSystem();
-            tutorialDialog = new Dialog(0,0,80,400,8,false,true);
+            tutorialDialog = new Dialog(0, 0, 80, 400, 8, false, true);
             borderParticles = new BorderParticleSettings();
-           _asteroidField= new AsteroidBuilder();
-            TutorialText.Add(0, "This is your drone!\nPress [Space] to\nContinue!");
-            TutorialText.Add(1, "You can go back with\n[Back]!\nTry it!");
-            TutorialText.Add(2, "You have to defend the\nstation against waves of\nenemys!");
-            TutorialText.Add(3, "The red bar is your\ndronehull and the\nblue bar is your shield!");
-            TutorialText.Add(4, "The green bar is the\nstationhull. The white\nbar is the stationshield!");
-            TutorialText.Add(5, "Fragments are the common\ncurrency on this station.");
-            TutorialText.Add(6, "You score is your rating!\nShooting stuff increases\nyour score!");
-            TutorialText.Add(7, "The armor icon shows your\ncurrent amount of armor!\nArmor reduces incoming\nDamage.");
-            TutorialText.Add(8, "You can buy upgrades in\nthe stations store for\nfragments.");
-            TutorialText.Add(9, "W - fly upward\nA - fly left\nS - fly downward\nD - fly right");
-            TutorialText.Add(10, "Left Mouse Button\n-> Shoots your Laser\nRight Mouse Button\n-> Shoots your Torpedo\n");
-            TutorialText.Add(11, "I'll now give you your\ncontrols back! But stay\nin radio range.");
-            TutorialText.Add(12, "I also heard of incoming\nasteroids. The comets\nwith the blue trail\noffer a nice income.");
-            TutorialText.Add(13, "Press [X] to start your\nmission!");
+            _asteroidField = new AsteroidBuilder();
+            TutorialText.Add(TutorialText.Count, "Do you want to skip the tutorial? (Y/N) \n\nYour Mission will begin immediately if \nyou choose to skip.");
+            TutorialText.Add(TutorialText.Count, "This is your drone!\nPress [Space] to\nContinue!");
+            TutorialText.Add(TutorialText.Count, "You can go back with\n[Back]!\nTry it!");
+            TutorialText.Add(TutorialText.Count, "You have to defend the\nstation against waves of\nenemys!");
+            TutorialText.Add(TutorialText.Count, "The red bar is your\ndronehull and the\nblue bar is your shield!");
+            TutorialText.Add(TutorialText.Count, "The green bar is the\nstationhull. The white\nbar is the stationshield!");
+            TutorialText.Add(TutorialText.Count, "Fragments are the common\ncurrency on this station.");
+            TutorialText.Add(TutorialText.Count, "You score is your rating!\nShooting stuff increases\nyour score!");
+            TutorialText.Add(TutorialText.Count, "The armor icon shows your\ncurrent amount of armor!\nArmor reduces incoming\nDamage.");
+            TutorialText.Add(TutorialText.Count, "You can buy upgrades in\nthe stations store for\nfragments.");
+            TutorialText.Add(TutorialText.Count, "W - fly upward\nA - fly left\nS - fly downward\nD - fly right");
+            TutorialText.Add(TutorialText.Count, "Left Mouse Button\n-> Shoots your Laser\nRight Mouse Button\n-> Shoots your Torpedo\n");
+            TutorialText.Add(TutorialText.Count, "I'll now give you your\ncontrols back! But stay\nin radio range.");
+            TutorialText.Add(TutorialText.Count, "I also heard of incoming\nasteroids. The comets\nwith the blue trail\noffer a nice income.");
+            TutorialText.Add(TutorialText.Count, "Press [X] to start your\nmission!");
+
             TutorialText.TryGetValue(0, out tutorialMessage);
-             }
+        }
 
 
         //#################################
@@ -169,7 +171,7 @@ namespace SpaceAssault.Screens
                 _droneFleet.Update(gameTime);
                 _asteroidField.Update(gameTime, _station.Position);
             }
-                
+
             Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + Global.CameraPosition, _droneFleet.GetActiveDrone().Position);
 
             // if station dies go back to MainMenu
@@ -196,10 +198,15 @@ namespace SpaceAssault.Screens
             // Look up inputs for the player.
             KeyboardState keyboardState = input.CurrentKeyboardState;
 
-            // key for the ship etc.
-            if (input.IsNewKeyPress(Keys.B))
+            TutorialText.TryGetValue(nextIndex, out tutorialMessage);
+            if (nextIndex == 0)
             {
-                if ((Vector3.Distance(_station.Position, _droneFleet.GetActiveDrone().Position) - _stationHeight) < 150)
+                if (input.IsNewKeyPress(Keys.Y))
+                {
+                    ScreenManager.AddScreen(new GameplayScreen());
+                    ScreenManager.RemoveScreen(this);
+                }
+                else if (input.IsNewKeyPress(Keys.N))
                 {
                     //playing the sound
                     _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
@@ -207,25 +214,45 @@ namespace SpaceAssault.Screens
                     Open = _engine.Play2D(_openShop, false, true, false);
                     Open.Volume = Global.SpeakerVolume / 10;
                     Open.Paused = false;
-                    ScreenManager.AddScreen(new ShopScreen(_droneFleet, _station));
-                }
-   
-            }
-            if (input.IsNewKeyPress(Keys.Space) && (nextIndex+1) < TutorialText.Count && (nextIndex+1) > 0)
-            {
-                //playing the sound
-                _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-                ISound Open;
-                Open = _engine.Play2D(_openShop, false, true, false);
-                Open.Volume = Global.SpeakerVolume / 10;
-                Open.Paused = false;
 
-                nextIndex++;
-                TutorialText.TryGetValue(nextIndex, out tutorialMessage);
-                if (nextIndex == TutorialText.Count - 1)
-                    movementAllowed = true;
+                    nextIndex++;
+                    TutorialText.TryGetValue(nextIndex, out tutorialMessage);
+                }
             }
-            if (input.IsNewKeyPress(Keys.Back) && nextIndex < TutorialText.Count && (nextIndex-1) >= 0)
+            else
+            {
+                // key for the ship etc.
+                if (input.IsNewKeyPress(Keys.B))
+                {
+                    if ((Vector3.Distance(_station.Position, _droneFleet.GetActiveDrone().Position) - _stationHeight) < 150)
+                    {
+                        //playing the sound
+                        _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                        ISound Open;
+                        Open = _engine.Play2D(_openShop, false, true, false);
+                        Open.Volume = Global.SpeakerVolume / 10;
+                        Open.Paused = false;
+                        ScreenManager.AddScreen(new ShopScreen(_droneFleet, _station));
+                    }
+
+                }
+                if (input.IsNewKeyPress(Keys.Space) && (nextIndex + 1) < TutorialText.Count && (nextIndex + 1) > 0)
+                {
+                    //playing the sound
+                    _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                    ISound Open;
+                    Open = _engine.Play2D(_openShop, false, true, false);
+                    Open.Volume = Global.SpeakerVolume / 10;
+                    Open.Paused = false;
+
+                    nextIndex++;
+                    TutorialText.TryGetValue(nextIndex, out tutorialMessage);
+                    if (nextIndex == TutorialText.Count - 1)
+                        movementAllowed = true;
+                }
+            }
+
+            if (input.IsNewKeyPress(Keys.Back) && nextIndex < TutorialText.Count && (nextIndex - 1) >= 0)
             {
                 //playing the sound
                 _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
@@ -260,7 +287,7 @@ namespace SpaceAssault.Screens
         public override void Draw(GameTime gameTime)
         {
             Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0);
-            
+
             // calling draw of objects where necessary
             _back.Draw(90, new Vector3(-5000, -2500, -5000));
             _station.Draw(Global.StationColor);
@@ -340,9 +367,9 @@ namespace SpaceAssault.Screens
 
         void DrawDialog()
         {
-            dialogPos.X = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X+32;
-            dialogPos.Y = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y+32;
-            tutorialDialog.Draw(dialogPos,tutorialMessage);
+            dialogPos.X = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X + 32;
+            dialogPos.Y = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y + 32;
+            tutorialDialog.Draw(dialogPos, tutorialMessage);
         }
         //#################################
         // Sound
@@ -402,7 +429,7 @@ namespace SpaceAssault.Screens
                     _droneFleet.GetActiveDrone().getHit(5);
                     dustParticles.AddParticle(ast.Position, Vector3.Zero);
                     _removeAsteroid.Add(ast);
-                    
+
                     PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                     continue;
                 }
@@ -434,7 +461,7 @@ namespace SpaceAssault.Screens
                         explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, _duration));
                         _removeAsteroid.Add(ast);
                         _removeBullets.Add(bullet);
-                       
+
                         PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                         if (bullet._bulletType == Bullet.BulletType.BigJoe)
                         {
