@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using IrrKlang;
+﻿using IrrKlang;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
@@ -11,9 +9,6 @@ namespace SpaceAssault.Entities
 {
     class EnemyBomber : AEnemys
     {
-
-        private bool neuerAnflug = false;
-
         public EnemyBomber(Vector3 position)
         {
             SpawnPos = position;
@@ -39,8 +34,6 @@ namespace SpaceAssault.Entities
             Model = Global.ContentManager.Load<Model>("Models/enemy_bomber");
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.LoadContent();
-
-            FlySound = Engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/FlyBomber.wav", StreamMode.AutoDetect, true);
             HitSound = Engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);
         }
 
@@ -50,44 +43,7 @@ namespace SpaceAssault.Entities
 
             Spheres = Collider3D.UpdateBoundingSphere(this);
             //TODO: health, armor update
-
         }
-
-        public override void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList)
-        {
-            double distanceToTarget = (Position - targetPosition).Length();
-            double distanceToStation = Position.Length();
-
-            if (distanceToStation < 200)
-                neuerAnflug = true;
-
-            //flying away from drone
-            if (distanceToTarget < 200)
-                FlyToDirection(-(Position - targetPosition));
-
-            if (neuerAnflug)
-            {
-                //flying away from station
-                FlyToDirection(-(Position - new Vector3(0, 0, 0)));
-                if (distanceToStation > 500)
-                    neuerAnflug = false;
-            }
-            else
-            {   
-                //flying away from drone
-                if (distanceToTarget < 200)
-                    FlyToDirection(-(Position - targetPosition));
-                else
-                    FlyToPoint(new Vector3(0, 0, 0));
-            }
-            if (distanceToStation < 400 && neuerAnflug == false)
-            {
-                Gun.Shoot(gameTime, Bullet.BulletType.PhotonBomb, gunMakeDmg, Position - RotationMatrix.Forward * 22.0f, RotationMatrix, ref bulletList);
-            }
-
-        }
-
-
     }
 }
 

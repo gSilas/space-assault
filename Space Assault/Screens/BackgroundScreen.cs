@@ -17,7 +17,6 @@ namespace SpaceAssault.Screens
         private Station _station;
 
         //Sound
-        private ISound _music;
         private ISoundEngine _engine;
         float posOnCircle = 0;
 

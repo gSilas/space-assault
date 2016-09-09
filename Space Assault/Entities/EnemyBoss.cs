@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IrrKlang;
+﻿using IrrKlang;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
@@ -18,16 +13,12 @@ namespace SpaceAssault.Entities
         //The Boss has 4 Seperate AttackTowers who need to be destroyed seperatly
         internal class AttackTower : AEnemys
         {
-            private Weapon _gun;
- 
             public AttackTower(Vector3 position, int health, int damage, Weapon gun)
             {
                 Health = health;
                 SpawnPos = position;
                 Position = position;
                 Gun = gun;
-        
-
             }
 
             public override void Update(GameTime gameTime)
@@ -47,25 +38,6 @@ namespace SpaceAssault.Entities
 
                 HitSound = Engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);
 
-            }
-
-            public override void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList)
-            {
-                double distanceToTarget = (Position - targetPosition).Length();
-                double distanceToStation = Position.Length();
-
-
-                //Shoots Tower Laser or Bombs?
-                if (Gun == new Weapon(2000))
-                {
-                    Gun.Shoot(gameTime, Bullet.BulletType.PhotonBomb, gunMakeDmg, Position - RotationMatrix.Forward * 22.0f, RotationMatrix, ref bulletList);
-                }
-                if (Gun == new Weapon(400))
-                {
-                    if(distanceToTarget<=600)
-                        Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, gunMakeDmg, Position - RotationMatrix.Forward * 22.0f, RotationMatrix, ref bulletList);
-
-                }
             }
         }
 
@@ -114,13 +86,7 @@ namespace SpaceAssault.Entities
             _tower3.LoadContent();
             _tower4.LoadContent();
 
-            FlySound = Engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/FlyBomber.wav", StreamMode.AutoDetect, true);
             HitSound = Engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);
-        }
-
-        public override void Intelligence(GameTime gameTime, Vector3 targetPosition, ref List<Bullet> bulletList)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -154,6 +154,16 @@ namespace SpaceAssault.Utils
                     }
                 }
 
+                if (curShip.GetType() == typeof(EnemyFighter2))
+                {
+                    Vector3 direction = Global.Camera.Target - curShip.Position;
+                    float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
+                    double distanceToTarget = Vector3.Distance(curShip.Position, Global.Camera.Target);
+                    if (Math.Abs(vectorDirection) <= 16 && distanceToTarget < 185 && !curShip.flyingAwayFromDrone)
+                    {
+                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix, ref _bullets);
+                    }
+                }
 
                 //shotlogic bomber
                 if (curShip.GetType() == typeof(EnemyBomber))

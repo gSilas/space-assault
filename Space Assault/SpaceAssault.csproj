@@ -99,7 +99,6 @@
     <Compile Include="Utils\Particle\Settings\DustParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\AsteroidTrailSettings.cs" />
     <Compile Include="Utils\Particle\Settings\AsteroidExplosionSettings.cs" />
-    <Compile Include="Utils\Squadron.cs" />
     <Compile Include="Utils\WaveBuilder.cs" />
     <Compile Include="Utils\Weapon.cs" />
     <Compile Include="Global.cs" />
@@ -130,7 +129,6 @@
     <Compile Include="Utils\Background.cs" />
     <Compile Include="Utils\Camera.cs" />
     <Compile Include="Utils\DroneBuilder.cs" />
-    <Compile Include="Utils\FleetBuilder.cs" />
     <Compile Include="Screens\UI\Frame.cs" />
     <Compile Include="Utils\HighScoreList.cs" />
     <Compile Include="Utils\Label.cs" />

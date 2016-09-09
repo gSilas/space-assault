@@ -21,8 +21,6 @@ namespace SpaceAssault.Screens
         //#################################
 
         // Fade to black
-        float _deadDroneAlpha;
-        float _actualDeadDroneAlpha;
         float _pauseAlpha;
 
         // Gameplay
@@ -181,19 +179,10 @@ namespace SpaceAssault.Screens
             explosionParticles.Update(gameTime);
             CollisionHandling(gameTime);
             UpdateBorder(gameTime);
-            // fading out/in when drone is dead & alive again
+
+            // drone is dead 
             if (!_droneFleet.GetActiveDrone().IsNotDead)
-                _deadDroneAlpha = Math.Min(_deadDroneAlpha + 1f / 32, 1);
-            else
-                _deadDroneAlpha = Math.Max(_deadDroneAlpha - 1f / 32, 0);
-
-            // if fading out is max, respawn
-            if (_actualDeadDroneAlpha >= 1f)
-            {
-                _droneFleet.GetActiveDrone().Reset();
-            }
-
-
+                LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen());
         }
 
         //#################################
@@ -328,10 +317,8 @@ namespace SpaceAssault.Screens
         Vector3 RandomPointOnCircle(float radius, float height)
         {
             double angle = random.NextDouble() * Math.PI * 2;
-
             float x = (float)Math.Cos(angle);
             float y = (float)Math.Sin(angle);
-
             return new Vector3(x * radius, 0, y * radius + height);
         }
 
@@ -341,15 +328,13 @@ namespace SpaceAssault.Screens
         void UpdateBorder(GameTime gameTime)
         {
             const int borderParticlesPerFrame = 100;
-
             // Create a number of fire particles, randomly positioned around a circle.
             for (int i = 0; i < borderParticlesPerFrame; i++)
             {
-                borderParticles.AddParticle(RandomPointOnCircle(Global.MapSpawnRadius, 40), Vector3.Zero);
+                borderParticles.AddParticle(RandomPointOnCircle(Global.MapRingRadius, 40), Vector3.Zero);
             }
             // Create one smoke particle per frmae, too.
             //SmokeParticles.AddParticle(RandomPointOnCircle(), Vector3.Zero);
-
             borderParticles.Update(gameTime);
         }
 

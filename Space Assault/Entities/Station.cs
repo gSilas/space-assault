@@ -101,11 +101,5 @@ namespace SpaceAssault.Entities
                 _health -= howMuch;
             }
         }
-
-        public void selfDefense()
-        {
-            if (makeDmg != 0) { }
-               
-        }
     }
 }

@@ -35,8 +35,6 @@ namespace SpaceAssault.Screens
 
         private float _duration = 50;
 
-        private InputState _input;
-
 
         //UI + Frame + Background
         private InGameOverlay _ui;
