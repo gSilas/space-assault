@@ -36,26 +36,6 @@ namespace SpaceAssault.Entities
             set { _direction = value; }
         }
 
-        public override void Draw()
-        {
-            if (Collider3D.BoundingFrustumIntersection(this))
-            {
-                foreach (var mesh in Model.Meshes)
-                {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.EnableDefaultLighting();
-                        effect.PreferPerPixelLighting = true;
-                        effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
-                        effect.View = Global.Camera.ViewMatrix;
-                        effect.Projection = Global.Camera.ProjectionMatrix;
-                    }
-                    mesh.Draw();
-                }
-            }
-
-        }
-
         public void FlyToPoint(Vector3 target)
         {
             Vector3 direction = Position - target;

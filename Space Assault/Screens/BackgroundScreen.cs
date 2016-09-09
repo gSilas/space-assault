@@ -102,7 +102,7 @@ namespace SpaceAssault.Screens
         public override void Draw(GameTime gameTime)
         {
             _back.Draw(0, new Vector3(-9000, -8000, -5000));
-            _station.Draw();
+            _station.Draw(Global.StationColor);
             _welcomedialog.Draw("Welcome pilot! " + gameTime.TotalGameTime.TotalSeconds.ToString().Remove(5) + " seconds without accidents! :)");
             _pilotdialog.Draw("Pilot ID:   "+ _id +  "\nStation ID: " + _id2);         
         }

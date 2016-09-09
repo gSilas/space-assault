@@ -308,27 +308,5 @@ namespace SpaceAssault.Entities
             //RotationMatrix = Matrix.CreateRotationZ(_tiltZ);
             //Position -= RotationMatrix.Forward * _moveSpeedModifier;
         }
-
-        public override void Draw()
-        {
-            if (IsNotDead)
-            {
-                foreach (var mesh in Model.Meshes)
-                {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.EnableDefaultLighting();
-                        effect.PreferPerPixelLighting = true;
-                        effect.World = RotationMatrix * Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
-                        effect.View = Global.Camera.ViewMatrix;
-                        effect.Projection = Global.Camera.ProjectionMatrix;
-                    }
-                    mesh.Draw();
-                }
-            }
-
-        }
-
-
     }
 }

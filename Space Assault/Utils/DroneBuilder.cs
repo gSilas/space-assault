@@ -90,14 +90,14 @@ namespace SpaceAssault.Utils
                 // BombTrail
                 if (bullet._trail != null)
                     bullet._trail.Draw();
-                bullet.Draw();
+                bullet.Draw(Global.DroneBulletColor);
             }
 
             foreach (var ship in _droneShips)
             {
                 if (ship._trail != null)
                     ship._trail.Draw();
-                ship.Draw();
+                ship.Draw(Global.DroneColor);
             }
         }
 
