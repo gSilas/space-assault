@@ -65,8 +65,6 @@ namespace SpaceAssault.Entities
 
         }
 
-
-
         public void getHit(int HowMuchDMG)
         {
             Health -= HowMuchDMG;

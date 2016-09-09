@@ -9,11 +9,9 @@ namespace SpaceAssault.Screens
 {
     class InGameOverlay
     {
-
         //#################################
         // Variables
         //#################################
-
         private Station _station;
         List<Label> Labels = new List<Label>();
         List<Bar> Bars = new List<Bar>();
@@ -24,8 +22,6 @@ namespace SpaceAssault.Screens
         private Dialog _scoreDialog;
         private Dialog _moneyDialog;
         private Dialog _alertDialog;
-
-       
 
         //#################################
         // Constructor
@@ -39,10 +35,7 @@ namespace SpaceAssault.Screens
         // LoadContent - Function
         //#################################
         public void LoadContent(DroneBuilder droneFleet)
-        {
-            //UI
-            
-
+        {          
             //Shield
             _shields.LoadContent("Images/UI/shield_ui");
             //Rocket
@@ -67,8 +60,7 @@ namespace SpaceAssault.Screens
             _scoreDialog.LoadContent();
             _alertDialog.LoadContent();
             _moneyDialog.LoadContent();
-            _upgradeVincinityDialog.LoadContent();
-            
+            _upgradeVincinityDialog.LoadContent();          
         }
         //#################################
         // Draw
@@ -104,7 +96,6 @@ namespace SpaceAssault.Screens
             _scoreDialog.Draw("Score: " + Global.HighScorePoints.ToString());
             _moneyDialog.Draw("Fragments: "+Global.Money);
 
-
             float _distance = Vector2.Distance(new Vector2(droneFleet.GetActiveDrone().Position.X, droneFleet.GetActiveDrone().Position.Z), Vector2.Zero);
             if (_distance > Global.MapRingRadius && _distance < Global.MapRingRadius + 80)
                 _alertDialog.Draw("ALERT! OUT OF RANGE", Color.OrangeRed);
@@ -119,11 +110,8 @@ namespace SpaceAssault.Screens
                     vec.X = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X + 200;
                     vec.Y = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_station.Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y + 150;
                     _upgradeVincinityDialog.Draw("Press B for Shop!");
-                }
-                    
-            }
-            
-
+                }                  
+            }          
         }
     }
 }

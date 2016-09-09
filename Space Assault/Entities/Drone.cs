@@ -26,7 +26,6 @@ namespace SpaceAssault.Entities
         private float _tiltZMax;
         private Matrix _rotationMatrixLaser = Matrix.Identity;
 
-
         public int _maxHealth;
         public int _health;
         public int _armor;
@@ -44,7 +43,6 @@ namespace SpaceAssault.Entities
         private bool _alternatingGunLogic = false;
         private bool _isNotDead;
        
-
 
         public Weapon GunPrimary;
         public Weapon GunSecondary;

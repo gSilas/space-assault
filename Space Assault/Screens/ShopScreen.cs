@@ -112,11 +112,11 @@ namespace SpaceAssault.Screens
         {
             ShopText.Clear();
             ShopText.Add(0, "Your Base Damage is: " + _droneFleet._makeDmg.ToString() + "\n\nFor Every Upgrade your\nGundamage is increased by 10");
-            ShopText.Add(1, "Your Base Health is: " + _droneFleet._maxHealth.ToString() + " Health\n\nIf your Health goes down to 0,\nyour Drone will die.\nCare!!! There is no way to restore it,\nexcept getting a new Drone.\n\nFor every Upgrade the maximum Health\nincreases by 100.");
-            ShopText.Add(2, "New Armor\n" + _droneFleet._armor.ToString() + " Armor\n\nFor every Upgrade in Armor,\nthe incoming Damage is reduced by Damage*Armor/10.");
-            ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield\n\nIf your Shield goes down to 0, \nyour Health will get Damage.\n\nAfter a short delay\nthe shield restores itself.\n\nFor every upgrade the maximum Shield\nincreases by 50.");
-            ShopText.Add(4, "New Station Health\n" + _station._maxhealth.ToString() + " Health\n\nIf the Stationhealth goes down to 0,\nyour Game is Over.\nThe Station gets slowly repaired over time.\n\nFor every Upgrade the maximum Health\nincreases by 1000.");
-            ShopText.Add(5, "New Station Shield\n" + _station._maxShield.ToString() + " Shield\n\nIf the Stationshield goes down to 0,\nthe Station will get real Damage.\nThe Shield regenerates, \nif the Station doesnt get hit.\n\nFor every Upgrade the maximum Shield\nincreases by 500.");
+            ShopText.Add(1, "Your Base Health is: " + _droneFleet._maxHealth.ToString() + " Health\n\nIf your Health goes down to 0,\nyour Drone will die.\nFor every Upgrade the maximum\nHealth increases by 100.");
+            ShopText.Add(2, "New Armor\n" + _droneFleet._armor.ToString() + " Armor\n\nFor every Upgrade in Armor,\nthe incoming Damage is reduced\nby Damage*Armor/10.");
+            ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield\n\nIf your Shield goes down to 0,\nyour Health will get Damage.\n\nAfter a short delay\nthe shield restores itself.\n\nFor every upgrade the maximum\nShield increases by 50.");
+            ShopText.Add(4, "New Station Health\n" + _station._maxhealth.ToString() + " Health\n\nIf the Stationhealth goes down\nto 0, your Game is Over.\nThe Station gets slowly\nrepaired over time.\n\nFor every Upgrade the maximum\nHealth increases by 1000.");
+            ShopText.Add(5, "New Station Shield\n" + _station._maxShield.ToString() + " Shield\n\nIf the Stationshield goes down\nto 0,the Station will get real\nDamage.\nThe Shield regenerates, \nif the Station doesnt get hit.\n\nFor every Upgrade the maximum\nShield increases by 500.");
             ShopText.Add(6, "Buy your own Fragmentrocket\nIn One Word: BOOOOM\n\nYou have: " + Global.NumberOfRockets + " FragmentMissiles\nfor 500 each");
             ShopText.Add(7, "Close Shop");
             SetPriceText();
