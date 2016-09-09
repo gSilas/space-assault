@@ -1,27 +1,12 @@
 Gameplay:		
-	bounding spehre station malen
 	highscore						#hans
-	wavespawning					#daniel	
-		* großer asteroid Gegner
 	Bossgegner
-	Rauschschreen außerhalb der Spielwelt ( wird stärker wenn man sich von der Station entfernt)		#dustin	
-	
-BOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSSBOSS	
-
-partikeldinge:
-	Explosionen für alles (farbe)
-
+	Rauschschreen außerhalb der Spielwelt ( wird stärker wenn man sich von der Station entfernt)		#dustin		
+	waves anpassen
 
 Modelle:
 	drone
 	Photonbombe
-
-	BOSS
-	2 asterioden
-
-
-
-
-LIST OF DEBUGGINKEYS:
-
-	N - activate mouse click spawning of enemies (Boids.cs)
+	weisser lazer
+	Boss
+	2ten asterioden
