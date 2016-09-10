@@ -10,30 +10,6 @@ namespace SpaceAssault.Entities
     class EnemyBoss : AEnemys
     {
         //The Boss has 4 Seperate AttackTowers who need to be destroyed seperatly
-        internal class AttackTower : AEnemys
-        {
-            public AttackTower(Vector3 position, int health, int damage, Weapon gun)
-            {
-                Health = health;
-                SpawnPos = position;
-                Position = position;
-                Gun = gun;
-            }
-
-            public override void Update(GameTime gameTime)
-            {
-                if (Health <= 0)
-                    IsDead = true;
-                Spheres = Collider3D.UpdateBoundingSphere(this);
-            }
-
-            public override void LoadContent()
-            {
-                Model = Global.ContentManager.Load<Model>("Models/helidrone");
-                Spheres = Collider3D.UpdateBoundingSphere(this);
-                Gun.LoadContent();
-            }
-        }
         internal struct Vec3Rectangle
         {
             private Vector3 _center;
@@ -78,20 +54,24 @@ namespace SpaceAssault.Entities
         public EnemyBoss(Vector3 spawnposition)
         {
             SpawnPos = spawnposition;
-            Position = spawnposition;
-            _trail = new Trail(new EnemyTrailSettings());
+            _trail = new Trail(new EnemyBomberTrailSettings());
+
             RotationMatrix = Matrix.Identity;
-            MoveSpeedForward = 0.5f;
+
+            MoveSpeedForward = 0.8f;
             TurnSpeed = 2.0f;
+            KillMoney = 100;
+            Health = 40;
+            Gun = new Weapon(3000);
+            gunMakeDmg = 500;
 
             //BIGJOE Rocket for Body
-            Gun = new Weapon(1000);
             _compositionRec = new Vec3Rectangle(spawnposition, 100, 100);
             Position = _compositionRec.Center;
-            _tower1 = new AttackTower(_compositionRec.EdgeBottomLeft, 600, 100, new Weapon(400));
-            _tower2 = new AttackTower(_compositionRec.EdgeBottomRight, 600, 100, new Weapon(400));
-            _tower3 = new AttackTower(_compositionRec.EdgeTopLeft, 600, 100, new Weapon(2000));
-            _tower4 = new AttackTower(_compositionRec.EdgeTopRight, 600, 100, new Weapon(2000));
+            _tower1 = new AttackTower(_compositionRec.EdgeBottomLeft, 600, 150, new Weapon(100));
+            _tower2 = new AttackTower(_compositionRec.EdgeBottomRight, 600, 150, new Weapon(100));
+            _tower3 = new AttackTower(_compositionRec.EdgeTopLeft, 600, 150, new Weapon(100));
+            _tower4 = new AttackTower(_compositionRec.EdgeTopRight, 600, 150, new Weapon(100));
         }
         public AttackTower[] GetTowers
         {
@@ -115,11 +95,35 @@ namespace SpaceAssault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/enemy_bomber");           
             Spheres = Collider3D.UpdateBoundingSphere(this);
-
+            Gun.LoadContent();
             _tower1.LoadContent();
             _tower2.LoadContent();
             _tower3.LoadContent();
             _tower4.LoadContent();
+        }
+    }
+    class AttackTower : AEnemys
+    {
+        public AttackTower(Vector3 position, int health, int damage, Weapon gun)
+        {
+            Health = health;
+            SpawnPos = position;
+            Position = position;
+            Gun = gun;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (Health <= 0)
+                IsDead = true;
+            Spheres = Collider3D.UpdateBoundingSphere(this);
+        }
+
+        public override void LoadContent()
+        {
+            Model = Global.ContentManager.Load<Model>("Models/laser");
+            Spheres = Collider3D.UpdateBoundingSphere(this);
+            Gun.LoadContent();
         }
     }
 }
