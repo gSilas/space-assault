@@ -197,6 +197,9 @@
     <Content Include="Content\Media\Effects\Objects\Explosion3.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Media\Effects\Objects\Explosion4.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Media\Effects\Objects\FlyBomber.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
