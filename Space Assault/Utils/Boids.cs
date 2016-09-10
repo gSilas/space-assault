@@ -242,38 +242,23 @@ namespace SpaceAssault.Utils
                 avoidO = avoidObjRule(curShip);
                 noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
 
+                _maxSpeed = curShip.MoveSpeedForward;
                 if (curShip.GetType() == typeof(EnemyBomber) || curShip.GetType() == typeof(EnemyBomber2))
                 {
-                    _maxSpeed = curShip.MoveSpeedForward;
                     flyToDrone = droneStationRuleBomber(curShip);
                 }
 
-                if (curShip.GetType() == typeof(EnemyFighter))
+                if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2) || curShip.GetType() == typeof(EnemyFighter3))
                 {
-                    _maxSpeed = curShip.MoveSpeedForward;
                     cohesion = cohesionRule(curShip);
-                    flyToDrone = droneStationRuleFighter(curShip);
-                    avoidS = avoidStationRule(curShip);
-                }
-                if (curShip.GetType() == typeof(EnemyFighter2))
-                {
-                    _maxSpeed = curShip.MoveSpeedForward;
-                    cohesion = cohesionRule(curShip);
-                    flyToDrone = droneStationRuleFighter(curShip);
-                    avoidS = avoidStationRule(curShip);
-                }
-                if (curShip.GetType() == typeof(EnemyFighter3))
-                {
-                    _maxSpeed = curShip.MoveSpeedForward;
-                    cohesion = cohesionRule(curShip);
-                    flyToDrone = droneStationRuleFighter(curShip);
+                    //flyToDrone = droneStationRuleFighter(curShip);
                     avoidS = avoidStationRule(curShip);
                 }
 
-                Vector3 lastDirection = curShip._flyingDirection;
+
                 curShip._flyingDirection += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS) / 30;
-
                 curShip._flyingDirection.Y = 0;
+                Vector3 lastDirection = curShip._flyingDirection;
 
                 if (curShip._flyingDirection.Length() > _maxSpeed)
                 {
