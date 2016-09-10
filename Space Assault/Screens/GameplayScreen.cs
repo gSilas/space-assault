@@ -104,9 +104,6 @@ namespace SpaceAssault.Screens
 
             // Construct Particles
             borderParticles = new BorderParticleSettings();
-            //explosionSmokeParticles = new ExplosionSmokeParticleSystem();
-            //projectileTrailParticles = new ProjectileTrailParticleSystem();
-            //SmokeParticles = new SmokeParticleSystem();
             dustParticles = new DustParticleSystem();
         }
 

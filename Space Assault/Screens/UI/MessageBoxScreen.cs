@@ -11,7 +11,9 @@ namespace SpaceAssault.Screens
     class MessageBoxScreen : GameScreen
     {
         string message;
-        Texture2D gradientTexture;
+        Texture2D _space;
+        Texture2D _edge;
+        Texture2D _frame;
 
         public event EventHandler<EventArgs> Accepted;
         public event EventHandler<EventArgs> Cancelled;
@@ -46,7 +48,9 @@ namespace SpaceAssault.Screens
         public override void LoadContent()
         {
             ContentManager content = ScreenManager.Game.Content;
-            gradientTexture = content.Load<Texture2D>("Images/gradient");
+            _space = content.Load<Texture2D>("Images//UI/dialog_space");
+            _edge = Global.ContentManager.Load<Texture2D>("Images/UI/dialog_edge");
+            _frame = Global.ContentManager.Load<Texture2D>("Images/UI/dialog_frame");
         }
 
 
@@ -97,7 +101,7 @@ namespace SpaceAssault.Screens
             Color color = Color.White * TransitionAlpha;
 
             // Draw the background rectangle.
-            Global.SpriteBatch.Draw(gradientTexture, backgroundRectangle, color);
+            Global.SpriteBatch.Draw(_space, backgroundRectangle, Global.UIColor);
 
             // Draw the message box text.
             Global.SpriteBatch.DrawString(Global.Font, message, textPosition, color);
