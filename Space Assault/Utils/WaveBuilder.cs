@@ -87,8 +87,8 @@ namespace SpaceAssault.Utils
     {
         private Boids _boids;
         private int _waveNumber = 1;
-        public List<AEnemys> ShipList { get { return _boids._ships; } }
-        public List<Bullet> BulletList { get { return _boids._bullets; } }
+        public List<AEnemys> ShipList { get { return _boids.ships; } }
+        public List<Bullet> BulletList { get { return _boids.bullets; } }
         public Wave(int waveNumber)
         {
             _boids = new Boids();

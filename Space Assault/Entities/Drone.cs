@@ -53,6 +53,7 @@ namespace SpaceAssault.Entities
             this.maxHealth = maxHealth;
             this.armor = armor;
             this.maxShield = maxShield;
+            _input = new InputState();
 
             _trail = new Trail(new DroneTrailSettings());
 
