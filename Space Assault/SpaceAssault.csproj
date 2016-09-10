@@ -86,6 +86,7 @@
     <Compile Include="Entities\EnemyBomber.cs" />
     <Compile Include="Entities\EnemyFighter.cs" />
     <Compile Include="Entities\EnemyFighter3.cs" />
+    <Compile Include="Entities\Planet.cs" />
     <Compile Include="Entities\Sphere.cs" />
     <Compile Include="Screens\TutorialScreen.cs" />
     <Compile Include="Utils\Boids.cs" />

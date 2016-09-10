@@ -15,11 +15,11 @@ namespace SpaceAssault.Utils.Particle.Settings
 
                 settings.MaxParticles = 100;
 
-                settings.Duration = TimeSpan.FromSeconds(0.2);
+                settings.Duration = TimeSpan.FromSeconds(0.3);
                 settings.DurationRandomness = 0;
 
                 settings.MinHorizontalVelocity = 20;
-                settings.MaxHorizontalVelocity = 30;
+                settings.MaxHorizontalVelocity = 40;
 
                 settings.MinVerticalVelocity = -20;
                 settings.MaxVerticalVelocity = 20;
@@ -32,11 +32,11 @@ namespace SpaceAssault.Utils.Particle.Settings
                 settings.MinRotateSpeed = -1;
                 settings.MaxRotateSpeed = 1;
 
-                settings.MinStartSize = 8;
+                settings.MinStartSize = 4;
                 settings.MaxStartSize = 8;
 
                 settings.MinEndSize = 8;
-                settings.MaxEndSize = 8;
+                settings.MaxEndSize = 16;
 
                 settings.BlendState = BlendState.Additive;
             }
