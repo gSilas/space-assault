@@ -12,6 +12,7 @@ List of Debuggingkeys:
 	N - activates mouse click spawning of enemies (Boids.cs)
 	K+L - adds 10000 to your money (GameplayScreen.cs)
 	F+G - deals 1000 dmg(health) to the station (GameplayScreen.cs)
+	F+H - deals 1000 dmg(shield) to the station (GameplayScreen.cs)
 
 	Console Output:
     F1 - Drone Damage

@@ -83,7 +83,7 @@ namespace SpaceAssault.Entities
                 if (_health < _maxhealth) _health += 100;
             }
             if (_wasDamaged == false && _shield < _maxShield)
-                _shield += 1;
+                _shield += _maxShield/1000;
 
             if (makeDmg != 0)
             {
