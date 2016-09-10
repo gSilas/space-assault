@@ -120,7 +120,7 @@
     <Compile Include="Screens\UI\InGameOverlay.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
-    <Compile Include="Screens\MenuEntry.cs" />
+    <Compile Include="Utils\MenuEntry.cs" />
     <Compile Include="Screens\MenuScreen.cs" />
     <Compile Include="Screens\UI\MessageBoxScreen.cs" />
     <Compile Include="Screens\OptionsMenuScreen.cs" />

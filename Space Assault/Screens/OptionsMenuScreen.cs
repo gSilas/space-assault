@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
-using System.Runtime.CompilerServices;
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Screens
 {
@@ -20,18 +21,10 @@ namespace SpaceAssault.Screens
         MenuEntry uiColorGMenuEntry;
         MenuEntry uiColorBMenuEntry;
 
-        //static enumMenu currentEnum = enumMenu.enum1;
-        //static string[] languages = { "English", "Deutsch" };
-        //static int currentLanguage = 0;
-        //static int num = 42;
-
         // Constructor.
         public OptionsMenuScreen() : base("Options")
         {
-            // Create our menu entries.me
-            //enumMenuEntry = new MenuEntry(string.Empty);
-            //languageMenuEntry = new MenuEntry(string.Empty);
-            //staticNumberMenuEntry = new MenuEntry(string.Empty);
+
             fullscreenMenuEntry = new MenuEntry(string.Empty);
             frameCounterMenuEntry = new MenuEntry(string.Empty);
             effectVolumeMenuEntry = new MenuEntry(string.Empty);
@@ -39,29 +32,25 @@ namespace SpaceAssault.Screens
             uiColorRMenuEntry = new MenuEntry(string.Empty);
             uiColorGMenuEntry = new MenuEntry(string.Empty);
             uiColorBMenuEntry = new MenuEntry(string.Empty);
-            SetMenuEntryText();
             MenuEntry back = new MenuEntry("Back");
 
+            SetMenuEntryText();
+
             // Hook up menu event handlers.
-            //enumMenuEntry.Selected += enumMenuEntrySelected;
-            //languageMenuEntry.Selected += LanguageMenuEntrySelected;
-            //staticNumberMenuEntry.Selected += staticNumberMenuEntrySelected;
             fullscreenMenuEntry.Selected += fullscreenMenuEntrySelected;
             frameCounterMenuEntry.Selected += frameCounterMenuEntrySelected;
             effectVolumeMenuEntry.Selected += effectVolumeMenuEntrySelected;
-            musicVolumeMenuEntry.Selected += musicVolumeMenuEntrySelected;
-            
+            musicVolumeMenuEntry.Selected += musicVolumeMenuEntrySelected;        
             uiColorRMenuEntry.Selected += uiColorRMenuEntrySelected;
             uiColorGMenuEntry.Selected += uiColorGMenuEntrySelected;
             uiColorBMenuEntry.Selected += uiColorBMenuEntrySelected;
             back.Selected += OnCancel;
+
             uiColorRMenuEntry.IsIncreasingSelect = true;
             uiColorGMenuEntry.IsIncreasingSelect = true;
             uiColorBMenuEntry.IsIncreasingSelect = true;
+
             // Add entries to the menu.
-            //MenuEntries.Add(enumMenuEntry);
-            //MenuEntries.Add(languageMenuEntry);
-            //MenuEntries.Add(staticNumberMenuEntry);
             MenuEntries.Add(fullscreenMenuEntry);
             MenuEntries.Add(frameCounterMenuEntry);
             MenuEntries.Add(musicVolumeMenuEntry);
@@ -77,9 +66,6 @@ namespace SpaceAssault.Screens
         // Fills in the latest values for the options screen menu text.
         void SetMenuEntryText()
         {
-            //enumMenuEntry.Text = "Preferred enum: " + currentEnum;
-            //languageMenuEntry.Text = "Language: " + languages[currentLanguage];
-            //staticNumberMenuEntry.Text = "Number: " + num;
             fullscreenMenuEntry.Text = "Fullscreen: " + (Global.GraphicsManager.IsFullScreen ? "on" : "off");
             frameCounterMenuEntry.Text = "FPS Counter: " + (Global.FrameCounterIsEnabled ? "on" : "off");
             effectVolumeMenuEntry.Text = "Effect Volume: " + (Global.SpeakerVolume);
@@ -121,9 +107,7 @@ namespace SpaceAssault.Screens
 
             Global.Music.Volume = Global.MusicVolume/10;
             SetMenuEntryText();
-
         }
-
 
         void uiColorRMenuEntrySelected(object sender, EventArgs e)
         {
@@ -140,33 +124,5 @@ namespace SpaceAssault.Screens
             Global.UIColor.B+=1;
             SetMenuEntryText();
         }
-
-        /*
-        // Event handler for when the Enum menu entry is selected.
-        void enumMenuEntrySelected(object sender, EventArgs e)
-        {
-            currentEnum++;
-
-            if (currentEnum > enumMenu.enum3)
-                currentEnum = 0;
-
-            SetMenuEntryText();
-        }
-
-
-        // Event handler for when the Language menu entry is selected.
-        void LanguageMenuEntrySelected(object sender, EventArgs e)
-        {
-            currentLanguage = (currentLanguage + 1) % languages.Length;
-            SetMenuEntryText();
-        }
-
-        // Event handler for when the Number menu entry is selected.
-        void staticNumberMenuEntrySelected(object sender, EventArgs e)
-        {
-            num++;
-            SetMenuEntryText();
-        }
-        */
     }
 }
