@@ -101,6 +101,7 @@ namespace SpaceAssault.Screens
             _frame = new Frame();
             Global.HighScorePoints = 0;
             Global.Money = 0;
+            Global.NumberOfRockets = 1;
             _input = new InputState();
 
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);

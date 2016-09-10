@@ -36,9 +36,17 @@ Easter Egg:
 	- n sound effekt wenn das schild kaputt geht
 	- die zeitspanne zwischen den waves einfach verkürzen und dafür im shop und bei esc wirklich pausieren
 	- beim bestätigen vom beenden des spiels auch mit maus klick ermöglichen
+	- Lautstärke sollte man auch leiser stellen können
+	- Nach einer Weile laggt es sehr stark
+	- Asteroidenexplosion sollte anders klingen als von gegnerischen Fightern
+
+	- Bomber kann man nur schwer von Fightern unterscheiden (Vielleicht andere Farbe oder größeres Modell)
+	- während des Spiels sollte man noch zwischen Voll- und Fenstermodus wechseln können
+	- shop ist sehr unübersichtlich (sollte im tutorial erklärt werden bzw eine Wave im Tutorial)
 
 	## Balancing:
 		- man bekommt zu viel gelg
 		- das mit dem schwierigkeitsgrad is kompliziert, im moment zu einfach
 		- großen schiffe sollten nicht mit einem hit draufgehen
 		- selbst wenn ich 30s raustabbe und da vier schiffe sind sterb ich allerdings nicht :P
+		- Zu viele Bomber am Anfang, zu viel Schaden
