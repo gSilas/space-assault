@@ -24,7 +24,7 @@ namespace SpaceAssault.Utils
         private BulletMemory bigJoe;
         private BulletMemory enemyLazer;
 
-        internal class BulletMemory
+        public class BulletMemory
         {
             public Model model;
             public ISoundSource soundSource;
@@ -82,7 +82,7 @@ namespace SpaceAssault.Utils
             return false;
         }
 
-        private BulletMemory getBullet(Bullet.BulletType bullet)
+        public BulletMemory getBullet(Bullet.BulletType bullet)
         {
             switch (bullet)
             {

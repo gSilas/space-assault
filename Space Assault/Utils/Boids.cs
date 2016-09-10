@@ -49,11 +49,11 @@ namespace SpaceAssault.Utils
             _avoidBoidsRadius = 30;
             _avoidObjRadius = 40;
             _proximityRadius = Math.Max(_cohesionRadius, _aligningRadius);
-            _flyToDroneRadius = 280;
+            _flyToDroneRadius = 300;
             _flyToStationRadius = (int)(_flyToDroneRadius * 1.3f);
-            _avoidDroneRadius = (int)(_flyToDroneRadius * 0.4f);
+            _avoidDroneRadius = (int)(_flyToDroneRadius * 0.6f);
             _avoidStationRadius = 50;
-            _fighterShootRadius = 185;
+            _fighterShootRadius = 230;
         }
 
         [Conditional("DEBUG")]
@@ -87,6 +87,8 @@ namespace SpaceAssault.Utils
             }
 
             ship.LoadContent();
+            ship.flyingAwayFromDrone = false;
+            ship.flyingAwayFromStation = false;
             ships.Add(ship);
         }
 
@@ -102,7 +104,7 @@ namespace SpaceAssault.Utils
         }
 
 
-        public void Update(GameTime gameTime, List<AEntity> objList)
+        public void Update(GameTime gameTime, List<AEntity> objList, Drone curDrone)
         {
             _input.Update();
             MouseAdd();
@@ -140,6 +142,7 @@ namespace SpaceAssault.Utils
                     continue;
                 }
 
+                /*
                 //shootlogic fighters
                 if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2))
                 {
@@ -147,23 +150,27 @@ namespace SpaceAssault.Utils
                     direction.Normalize();
                     float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
                     double distanceToTarget = Vector3.Distance(curShip.Position, Global.Camera.Target);
-                    if (Math.Abs(vectorDirection) <= 0.14f && distanceToTarget < _fighterShootRadius && !curShip.flyingAwayFromDrone)
+                    if (Math.Abs(vectorDirection) <= 0.15f && distanceToTarget < _fighterShootRadius && !curShip.flyingAwayFromDrone)
                     {
                         curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position+curShip.RotationMatrix.Forward*2, direction, ref bullets);
                     }
-                }
-                /*
-                //shootlogic fighter2
-                if (curShip.GetType() == typeof(EnemyFighter2))
-                {
-                    Vector3 direction = Global.Camera.Target - curShip.Position;
-                    float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
-                    double distanceToTarget = Vector3.Distance(curShip.Position, Global.Camera.Target);
-                    if (Math.Abs(vectorDirection) <= 16 && distanceToTarget < 185 && !curShip.flyingAwayFromDrone)
-                    {
-                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix, ref bullets);
-                    }
                 }*/
+
+                //shootlogic fighters with prediction shooting
+                if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2))
+                {
+                    float distanceToTarget = Vector3.Distance(curShip.Position, curDrone.Position);
+                    Vector3 futureDronePos = curDrone.Position + (distanceToTarget / curShip.Gun.getBullet(Bullet.BulletType.EnemyLazer).moveSpeed) * curDrone.curVelocity;
+
+                    Vector3 direction = -goToPlace(curShip, futureDronePos);
+                    direction.Normalize();
+
+                    float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
+                    if (Math.Abs(vectorDirection) <= 0.15f && distanceToTarget < _fighterShootRadius && !curShip.flyingAwayFromDrone)
+                    {
+                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position + curShip.RotationMatrix.Forward * 2, direction, ref bullets);
+                    }
+                }
 
                 //shotlogic bomber
                 if (curShip.GetType() == typeof(EnemyBomber))
@@ -221,7 +228,7 @@ namespace SpaceAssault.Utils
                     flyToDrone = Vector3.Zero,
                     noise = Vector3.Zero,
                     avoidS = Vector3.Zero;
-               
+
                 aligning = aligningRule(curShip);
                 avoidB = avoidBoidRule(curShip);
                 avoidO = avoidObjRule(curShip);
@@ -312,7 +319,6 @@ namespace SpaceAssault.Utils
             }
 
             if (count > 0) pcj /= count;
-            pcj -= curShip.Position;
 
             //richtungsvektor zur 'masse'
             return pcj;
@@ -363,7 +369,7 @@ namespace SpaceAssault.Utils
                 }
             }
             if (count > 0) pvj /= count;
-            return pvj - curShip.Direction;
+            return pvj;
         }
 
         private Vector3 goToPlace(AEnemys curShip, Vector3 place)
@@ -387,8 +393,11 @@ namespace SpaceAssault.Utils
             float distanceToDrone = Vector3.Distance(curShip.Position, Global.Camera.Target);
             if (curShip.flyingAwayFromDrone)
             {
+                Console.WriteLine("flying away from drone");
                 if (distanceToDrone < _avoidDroneRadius)
+                {
                     return -goToPlace(curShip, Global.Camera.Target) / distanceToDrone;
+                }
                 else
                 {
                     curShip.flyingAwayFromDrone = false;
@@ -398,10 +407,10 @@ namespace SpaceAssault.Utils
             {
                 if (distanceToDrone < _flyToDroneRadius)
                 {
+                    Console.WriteLine("flying to drone");
                     if (distanceToDrone < _avoidObjRadius)
                     {
                         curShip.flyingAwayFromDrone = true;
-                        return -goToPlace(curShip, Global.Camera.Target) / distanceToDrone;
                     }
                     else
                     {
@@ -410,10 +419,11 @@ namespace SpaceAssault.Utils
                 }
                 else if (curShip.Position.Length() > _flyToStationRadius)
                 {
+                    Console.WriteLine("flying to station");
                     return goToPlace(curShip, Vector3.Zero);
                 }
             }
-
+            Console.WriteLine("doing nothing");
             return Vector3.Zero;
         }
     }
