@@ -251,7 +251,7 @@ namespace SpaceAssault.Utils
                 if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2) || curShip.GetType() == typeof(EnemyFighter3))
                 {
                     cohesion = cohesionRule(curShip);
-                    //flyToDrone = droneStationRuleFighter(curShip);
+                    flyToDrone = droneStationRuleFighter(curShip);
                     avoidS = avoidStationRule(curShip);
                 }
 
@@ -321,7 +321,7 @@ namespace SpaceAssault.Utils
             if (count > 0) pcj /= count;
 
             //richtungsvektor zur 'masse'
-            return pcj;
+            return pcj - curShip.Position;
         }
 
         // RULE2: Boids try to keep a small distance away from other boids
@@ -368,14 +368,12 @@ namespace SpaceAssault.Utils
                     count++;
                 }
             }
-            if (count > 0) pvj /= count;
+            if (count > 0)
+            {
+                pvj /= count;
+                pvj.Normalize();
+            }
             return pvj;
-        }
-
-        private Vector3 goToPlace(AEnemys curShip, Vector3 place)
-        {
-            Vector3 placeDir = place - curShip.Position;
-            return placeDir;
         }
 
         private Vector3 avoidStationRule(AEnemys curShip)
@@ -393,7 +391,6 @@ namespace SpaceAssault.Utils
             float distanceToDrone = Vector3.Distance(curShip.Position, Global.Camera.Target);
             if (curShip.flyingAwayFromDrone)
             {
-                Console.WriteLine("flying away from drone");
                 if (distanceToDrone < _avoidDroneRadius)
                 {
                     return -goToPlace(curShip, Global.Camera.Target) / distanceToDrone;
@@ -407,7 +404,6 @@ namespace SpaceAssault.Utils
             {
                 if (distanceToDrone < _flyToDroneRadius)
                 {
-                    Console.WriteLine("flying to drone");
                     if (distanceToDrone < _avoidObjRadius)
                     {
                         curShip.flyingAwayFromDrone = true;
@@ -419,12 +415,17 @@ namespace SpaceAssault.Utils
                 }
                 else if (curShip.Position.Length() > _flyToStationRadius)
                 {
-                    Console.WriteLine("flying to station");
                     return goToPlace(curShip, Vector3.Zero);
                 }
             }
-            Console.WriteLine("doing nothing");
+
             return Vector3.Zero;
+        }
+
+        private Vector3 goToPlace(AEnemys curShip, Vector3 place)
+        {
+            Vector3 placeDir = place - curShip.Position;
+            return placeDir;
         }
     }
 }
