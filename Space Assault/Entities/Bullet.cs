@@ -23,7 +23,8 @@ namespace SpaceAssault.Entities
             BlueLazer,
             PhotonBomb,
             BigJoe,
-            EnemyLazer
+            EnemyLazer,
+            BossGun
         }
 
         public Bullet(BulletType bulletType, Model model, float moveSpeed, bool canDamageStation, int damage, Vector3 position, Vector3 direction)
@@ -43,6 +44,9 @@ namespace SpaceAssault.Entities
                 _trail = new Trail(new BombTrailSettings());
             if (bulletType == BulletType.PhotonBomb)
                 _trail = new Trail(new BomberBombTrailSettings());
+            if (bulletType == BulletType.BossGun)
+                _trail = new Trail(new BomberBombTrailSettings());
+
         }
 
 

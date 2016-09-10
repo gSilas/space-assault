@@ -63,10 +63,12 @@ namespace SpaceAssault.Entities
             KillMoney = 100;
             Health = 40;
             Gun = new Weapon(2000);
+           
             gunMakeDmg = 500;
 
             //BIGJOE Rocket for Body
             _compositionRec = new Vec3Rectangle(spawnposition, 50, 50);
+
             Position = _compositionRec.Center;
             _tower1 = new AttackTower(_compositionRec.EdgeBottomLeft, 600, 150, new Weapon(100), this);
             _tower2 = new AttackTower(_compositionRec.EdgeBottomRight, 600, 150, new Weapon(100), this);
