@@ -11,7 +11,7 @@ namespace SpaceAssault.Entities
         protected Vector3 SpawnPos;
         public float MoveSpeedForward;
         protected float TurnSpeed;
-        public Vector3 _direction;
+        public Vector3 _flyingDirection;
         public int Health;
         public int KillMoney; //The Money the player gets if he kills the unit
         public bool flyingAwayFromDrone;
@@ -32,8 +32,8 @@ namespace SpaceAssault.Entities
 
         public Vector3 Direction
         {
-            get { return _direction; }
-            set { _direction = value; }
+            get { return _flyingDirection; }
+            set { _flyingDirection = value; }
         }
 
         public void FlyToPoint(Vector3 target)
