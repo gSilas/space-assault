@@ -143,12 +143,13 @@ namespace SpaceAssault.Utils
                 //shootlogic fighters
                 if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2))
                 {
-                    Vector3 direction = Global.Camera.Target - curShip.Position;
+                    Vector3 direction = -goToPlace(curShip, Global.Camera.Target);
+                    direction.Normalize();
                     float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
                     double distanceToTarget = Vector3.Distance(curShip.Position, Global.Camera.Target);
-                    if (Math.Abs(vectorDirection) <= 16 && distanceToTarget < _fighterShootRadius && !curShip.flyingAwayFromDrone)
+                    if (Math.Abs(vectorDirection) <= 0.14f && distanceToTarget < _fighterShootRadius && !curShip.flyingAwayFromDrone)
                     {
-                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position, direction, ref bullets);
+                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position+curShip.RotationMatrix.Forward*2, direction, ref bullets);
                     }
                 }
                 /*
@@ -247,15 +248,15 @@ namespace SpaceAssault.Utils
                     avoidS = avoidStationRule(curShip);
                 }
 
-                Vector3 lastDirection = curShip._direction;
-                curShip._direction += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS) / 30;
+                Vector3 lastDirection = curShip._flyingDirection;
+                curShip._flyingDirection += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS) / 30;
 
-                curShip._direction.Y = 0;
+                curShip._flyingDirection.Y = 0;
 
-                if (curShip._direction.Length() > _maxSpeed)
+                if (curShip._flyingDirection.Length() > _maxSpeed)
                 {
-                    curShip._direction.Normalize();
-                    curShip._direction *= _maxSpeed;
+                    curShip._flyingDirection.Normalize();
+                    curShip._flyingDirection *= _maxSpeed;
                 }
 
                 curShip.RotateTowards(-(curShip.Direction + lastDirection * 30));
