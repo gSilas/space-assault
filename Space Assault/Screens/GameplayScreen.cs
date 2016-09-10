@@ -619,7 +619,7 @@ namespace SpaceAssault.Screens
                 var vec = new Vector2();
                 vec.X = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position + vec3 * 100, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X;
                 vec.Y = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position + vec3 * 100, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y;
-                _stationSymbol.Draw(vec.ToPoint(), 1, Color.White);
+                _stationSymbol.Draw(vec.ToPoint(), 1, Global.StationColor);
             }
         }
         void DrawShipDirectionArrow()
