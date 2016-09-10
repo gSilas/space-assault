@@ -34,7 +34,6 @@ namespace SpaceAssault.Entities
             Model = Global.ContentManager.Load<Model>("Models/enemy_bomber");
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.LoadContent();
-            HitSound = Engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);
         }
 
         public override void Update(GameTime gameTime)

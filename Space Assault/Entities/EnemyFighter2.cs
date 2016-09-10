@@ -32,16 +32,10 @@ namespace SpaceAssault.Entities
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.LoadContent();
 
-            HitSound = Engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);
         }
         public override void Update(GameTime gameTime)
         {
             Spheres = Collider3D.UpdateBoundingSphere(this);
-
-            //playing the sound
-            Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
-            Engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
-
             if (Health <= 0)
             {
 
