@@ -22,7 +22,7 @@ namespace SpaceAssault.Entities
             KillMoney = 70;
             Health = 40;
 
-            Gun = new Weapon(600d);
+            Gun = new Weapon(300d);
             gunMakeDmg = 10;
         }
         public override void Update(GameTime gameTime)
