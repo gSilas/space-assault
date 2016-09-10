@@ -51,6 +51,9 @@ namespace SpaceAssault.Screens
         private ISoundSource _explosionSource1;
         private ISoundSource _explosionSource2;
         private ISoundSource _explosionSource3;
+        private ISoundSource _astexplosionSource1;
+        private ISoundSource _astexplosionSource2;
+        private ISoundSource _astexplosionSource3;
         private ISoundSource _openShop;
         private ISoundSource _hitSound;
         private ISoundEngine _engine;
@@ -145,6 +148,10 @@ namespace SpaceAssault.Screens
             _explosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion1.wav", StreamMode.AutoDetect, true);
             _explosionSource2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion2.wav", StreamMode.AutoDetect, true);
             _explosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion3.wav", StreamMode.AutoDetect, true);
+            _astexplosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst1.wav", StreamMode.AutoDetect, true);
+            _astexplosionSource2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst2.wav", StreamMode.AutoDetect, true);
+            _astexplosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst3.wav", StreamMode.AutoDetect, true);
+
             _hitSound = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);
         }
 
@@ -403,6 +410,29 @@ namespace SpaceAssault.Screens
                     break;              
             }
         }
+        protected void PlayAstExplosionSound(Vector3D pos)
+        {
+            var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
+            _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
+            switch (random.Next(0, 2))
+            {
+                case 0:
+                    var astexplosionSound = _engine.Play2D(_astexplosionSource1, false, true, false);
+                    astexplosionSound.Volume = Global.SpeakerVolume / 10;
+                    astexplosionSound.Paused = false;
+                    break;
+                case 1:
+                    var explosionAstSound1 = _engine.Play2D(_astexplosionSource2, false, true, false);
+                    explosionAstSound1.Volume = Global.SpeakerVolume / 10;
+                    explosionAstSound1.Paused = false;
+                    break;
+                case 2:
+                    var explosionAstSound2 = _engine.Play2D(_astexplosionSource3, false, true, false);
+                    explosionAstSound2.Volume = Global.SpeakerVolume / 10;
+                    explosionAstSound2.Paused = false;
+                    break;
+            }
+        }
         protected void PlayShipHitSound(Vector3D pos)
         {
             var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
@@ -510,7 +540,7 @@ namespace SpaceAssault.Screens
                         dustParticles.AddParticle(ast.Position, Vector3.Zero);
                         _removeAsteroid.Add(ast);
                         Global.HighScorePoints -= 50;
-                        PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
+                        PlayAstExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                         continue;
                     }
 
@@ -521,6 +551,7 @@ namespace SpaceAssault.Screens
                         ast.IsDead = true;
                         _removeAsteroid.Add(ast);
                         _station.getHit(10);
+                        PlayAstExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                         continue;
                     }
 
@@ -575,7 +606,7 @@ namespace SpaceAssault.Screens
                                 _removeAsteroid.Add(ast);
                                 _removeBullets.Add(bullet);
                                 Global.HighScorePoints += 50;
-                                PlayExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
+                                PlayAstExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
 
                                 if (bullet._bulletType == Bullet.BulletType.BigJoe)
                                 {
