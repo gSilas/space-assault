@@ -35,7 +35,8 @@ namespace SpaceAssault.Utils
             Fighter2,
             Fighter3,
             Bomber,
-            Bomber2
+            Bomber2,
+            Boss
         }
 
         public Boids()
@@ -81,13 +82,16 @@ namespace SpaceAssault.Utils
                     ship = new EnemyFighter2(position);
                     break;
                 case EnemyType.Fighter3:
-                    ship=new EnemyFighter3(position);
+                    ship = new EnemyFighter3(position);
                     break;
                 case EnemyType.Bomber:
                     ship = new EnemyBomber(position);
                     break;
                 case EnemyType.Bomber2:
                     ship = new EnemyBomber2(position);
+                    break;
+                case EnemyType.Boss:
+                    ship = new EnemyBoss(position);
                     break;
                 default:
                     ship = new EnemyFighter(position);
@@ -98,6 +102,17 @@ namespace SpaceAssault.Utils
             ship.flyingAwayFromDrone = false;
             ship.flyingAwayFromStation = false;
             ships.Add(ship);
+            if (ship.GetType() == typeof(EnemyBoss))
+            {
+                var bship = (EnemyBoss)ship;
+                foreach (var tower in bship.GetTowers)
+                {
+                    tower.LoadContent();
+                    tower.flyingAwayFromDrone = false;
+                    tower.flyingAwayFromStation = false;
+                    ships.Add(tower);
+                }
+            }
         }
 
         // adds a number of random boids at the map corner (which is a circle), for radius see Global.cs
@@ -190,9 +205,40 @@ namespace SpaceAssault.Utils
                         curShip.Gun.Shoot(gameTime, Bullet.BulletType.PhotonBomb, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix.Forward, ref bullets);
                     }
                 }
+                if (curShip.GetType() == typeof(EnemyBoss))
+                {
+                    float distanceToTarget = Vector3.Distance(curShip.Position, curDrone.Position);
+                    Vector3 futureDronePos = curDrone.Position + (distanceToTarget / curShip.Gun.getBullet(Bullet.BulletType.BigJoe).moveSpeed) * curDrone.curVelocity;
+
+                    Vector3 direction = -goToPlace(curShip, futureDronePos);
+                    direction.Normalize();
+
+                    float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
+                    if (Math.Abs(vectorDirection) <= 0.15f && distanceToTarget < _fighterShootRadius && !curShip.flyingAwayFromDrone)
+                    {
+                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.BigJoe, curShip.gunMakeDmg, curShip.Position + curShip.RotationMatrix.Forward * 2, direction, ref bullets);
+                    }
+                }
+                if (curShip.GetType() == typeof(AttackTower))
+                {
+                    float distanceToTarget = Vector3.Distance(curShip.Position, curDrone.Position);
+                    Vector3 futureDronePos = curDrone.Position + (distanceToTarget / curShip.Gun.getBullet(Bullet.BulletType.EnemyLazer).moveSpeed) * curDrone.curVelocity;
+
+                    Vector3 direction = -goToPlace(curShip, futureDronePos);
+                    direction.Normalize();
+
+                    float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
+                    if (Math.Abs(vectorDirection) <= 0.15f && distanceToTarget < _fighterShootRadius && !curShip.flyingAwayFromDrone)
+                    {
+                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position + curShip.RotationMatrix.Forward * 2, direction, ref bullets);
+                    }
+                }
 
                 // Trail
-                curShip._trail.Update(gameTime, curShip.Position);
+                if (curShip.GetType() != typeof(AttackTower))
+                {
+                    curShip._trail.Update(gameTime, curShip.Position);
+                }
                 curShip.Update(gameTime);
             }
 
@@ -216,8 +262,11 @@ namespace SpaceAssault.Utils
 
             foreach (var ship in ships)
             {
-                ship._trail.Draw();
-                ship.Draw(Global.EnemyColor);
+                if(ship.GetType() != typeof(AttackTower))
+                {
+                    ship._trail.Draw();
+                }
+               ship.Draw(Global.EnemyColor);
             }
         }
 
@@ -242,23 +291,43 @@ namespace SpaceAssault.Utils
                 avoidO = avoidObjRule(curShip);
                 noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
 
-                _maxSpeed = curShip.MoveSpeedForward;
                 if (curShip.GetType() == typeof(EnemyBomber) || curShip.GetType() == typeof(EnemyBomber2))
                 {
+                    _maxSpeed = curShip.MoveSpeedForward;
                     flyToDrone = droneStationRuleBomber(curShip);
                 }
 
-                if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2) || curShip.GetType() == typeof(EnemyFighter3))
+                if (curShip.GetType() == typeof(EnemyFighter))
                 {
+                    _maxSpeed = curShip.MoveSpeedForward;
                     cohesion = cohesionRule(curShip);
                     flyToDrone = droneStationRuleFighter(curShip);
                     avoidS = avoidStationRule(curShip);
                 }
+                if (curShip.GetType() == typeof(EnemyFighter2))
+                {
+                    _maxSpeed = curShip.MoveSpeedForward;
+                    cohesion = cohesionRule(curShip);
+                    flyToDrone = droneStationRuleFighter(curShip);
+                    avoidS = avoidStationRule(curShip);
+                }
+                if (curShip.GetType() == typeof(EnemyFighter3))
+                {
+                    _maxSpeed = curShip.MoveSpeedForward;
+                    cohesion = cohesionRule(curShip);
+                    flyToDrone = droneStationRuleFighter(curShip);
+                    avoidS = avoidStationRule(curShip);
+                }
+                if (curShip.GetType() == typeof(EnemyBoss))
+                {
+                    _maxSpeed = curShip.MoveSpeedForward;
+                    flyToDrone = droneStationRuleBomber(curShip);
+                }
 
-
-                curShip._flyingDirection += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS) / 30;
-                curShip._flyingDirection.Y = 0;
                 Vector3 lastDirection = curShip._flyingDirection;
+                curShip._flyingDirection += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS) / 30;
+
+                curShip._flyingDirection.Y = 0;
 
                 if (curShip._flyingDirection.Length() > _maxSpeed)
                 {
