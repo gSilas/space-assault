@@ -126,8 +126,15 @@ namespace SpaceAssault.Screens
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             tutorialDialog.LoadContent();
+            _asteroidField.LoadContent();
+
+            //Sounds
 
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+
+            Global.Music.Stop();
+            Global.Music = _engine.Play2D("Content/Media/Music/Space Fighter Loop.mp3", false);
+            Global.Music.Volume = Global.MusicVolume / 10;
 
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
             _explosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion1.wav", StreamMode.AutoDetect, true);
@@ -135,8 +142,6 @@ namespace SpaceAssault.Screens
             _explosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion3.wav", StreamMode.AutoDetect, true);
 
             _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OkClick.wav", StreamMode.AutoDetect, true);
-
-            _asteroidField.LoadContent();
 
         }
 

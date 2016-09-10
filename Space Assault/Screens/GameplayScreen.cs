@@ -128,7 +128,7 @@ namespace SpaceAssault.Screens
             _stationEffect = Global.ContentManager.Load<Effect>("Effects/stationEffect");
 
             //Sounds
-            Global.Music.Stop();
+           
             Global.Music = _engine.Play2D("Content/Media/Music/Space Fighter Loop.mp3", false);
             Global.Music.Volume = Global.MusicVolume / 10;
 
