@@ -190,7 +190,7 @@ namespace SpaceAssault.Screens
         {
 
 
-            if (Global.Money > _priceDMG)
+            if (Global.Money >= _priceDMG)
             {
                 _droneDamageLevel++;
                 Global.Money -= _priceDMG;
@@ -220,7 +220,7 @@ namespace SpaceAssault.Screens
         // Event handler for when the Health menu entry is selected.
         void healthMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > _priceDroneHealth)
+            if (Global.Money >= _priceDroneHealth)
             {
                 _droneHealthLevel++;
                 Global.Money -= _priceDroneHealth;
@@ -251,7 +251,7 @@ namespace SpaceAssault.Screens
 
         void armorMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > _priceArmor)
+            if (Global.Money >= _priceArmor)
             {       
                 if(_droneFleet._armor < 5)
                 {
@@ -287,7 +287,7 @@ namespace SpaceAssault.Screens
         }
         void shieldMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > _priceDroneShield)
+            if (Global.Money >= _priceDroneShield)
             {
                 _droneShieldLevel++;
                 Global.Money -= _priceDroneShield;
@@ -316,7 +316,7 @@ namespace SpaceAssault.Screens
         }
         void sHealthMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > _priceStationHealth)
+            if (Global.Money >= _priceStationHealth)
             {
                 _StationHealthLevel++;
                 Global.Money -= _priceStationHealth;
@@ -346,7 +346,7 @@ namespace SpaceAssault.Screens
         }
         void sShieldMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > _priceStationShield)
+            if (Global.Money >= _priceStationShield)
             {
                 _StationShieldLevel++;
                 Global.Money -= _priceStationShield;

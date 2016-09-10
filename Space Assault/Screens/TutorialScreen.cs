@@ -112,7 +112,7 @@ namespace SpaceAssault.Screens
             TutorialText.Add(TutorialText.Count, "Left mouse button\n-> Shoots your laser\nRight mouse button\n-> Shoots your rocket\n");
             TutorialText.Add(TutorialText.Count, "I'll now give you your\ncontrols back! But stay\nin radio range.");
             TutorialText.Add(TutorialText.Count, "I also heard of incoming\nasteroids. The comets\nwith the blue trail\noffer a nice income.");
-            TutorialText.Add(TutorialText.Count, "Before you start, test the things we taught you!");
+            TutorialText.Add(TutorialText.Count, "Before you start, visit the shop and its upgrades!");
             TutorialText.Add(TutorialText.Count, "Press [X] to start your\nmission!");
             TutorialText.TryGetValue(0, out tutorialMessage);
         }
