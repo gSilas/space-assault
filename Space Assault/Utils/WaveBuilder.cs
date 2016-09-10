@@ -146,7 +146,7 @@ namespace SpaceAssault.Utils
                         }
                         else if (ship.GetType() == typeof(EnemyBoss))
                         {
-                            ship.Health = 6000;
+                            ship.Health = 1000;
                             ship.gunMakeDmg = 200;
                             ship.KillMoney = 5000;
                         }

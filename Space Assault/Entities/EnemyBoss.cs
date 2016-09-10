@@ -68,10 +68,10 @@ namespace SpaceAssault.Entities
             //BIGJOE Rocket for Body
             _compositionRec = new Vec3Rectangle(spawnposition, 100, 100);
             Position = _compositionRec.Center;
-            _tower1 = new AttackTower(_compositionRec.EdgeBottomLeft, 600, 100, new Weapon(400));
-            _tower2 = new AttackTower(_compositionRec.EdgeBottomRight, 600, 100, new Weapon(400));
-            _tower3 = new AttackTower(_compositionRec.EdgeTopLeft, 600, 100, new Weapon(2000));
-            _tower4 = new AttackTower(_compositionRec.EdgeTopRight, 600, 100, new Weapon(2000));
+            _tower1 = new AttackTower(_compositionRec.EdgeBottomLeft, 600, 150, new Weapon(100));
+            _tower2 = new AttackTower(_compositionRec.EdgeBottomRight, 600, 150, new Weapon(100));
+            _tower3 = new AttackTower(_compositionRec.EdgeTopLeft, 600, 150, new Weapon(100));
+            _tower4 = new AttackTower(_compositionRec.EdgeTopRight, 600, 150, new Weapon(100));
         }
         public AttackTower[] GetTowers
         {
