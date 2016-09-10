@@ -365,7 +365,7 @@
 /processorParam:RotationX=-90
 /processorParam:RotationY=0
 /processorParam:RotationZ=0
-/processorParam:Scale=8
+/processorParam:Scale=4
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=DxtCompressed
 /build:Models/enemy_bomber.fbx

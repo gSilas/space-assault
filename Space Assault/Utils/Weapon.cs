@@ -57,7 +57,7 @@ namespace SpaceAssault.Utils
             ISoundSource rocket= _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/RocketShot.wav", StreamMode.AutoDetect, true);
             yellowLazer = new BulletMemory("Models/laser", lazer, 6f, false);
             blueLazer = new BulletMemory("Models/laser2", lazer2, 6f, false);
-            photonBomb = new BulletMemory("Models/bullet", lazer, 0.7f, true);
+            photonBomb = new BulletMemory("Models/bullet", lazer, 2f, true);
             bigJoe = new BulletMemory("Models/bullet", rocket, 4f, false);
             enemyLazer = new BulletMemory("Models/laser", lazer3, 6f, false);
         }

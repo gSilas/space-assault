@@ -18,7 +18,7 @@ namespace SpaceAssault.Entities
 
             RotationMatrix = Matrix.Identity;
 
-            MoveSpeedForward = 0.5f;
+            MoveSpeedForward = 0.8f;
             TurnSpeed = 2.0f;
 
             //_moveSpeedBackward = -0.5f;
@@ -26,7 +26,7 @@ namespace SpaceAssault.Entities
             Health = 40;
 
             Gun = new Weapon(3000d);
-            gunMakeDmg = 5;
+            gunMakeDmg = 500;
         }
 
         public override void LoadContent()

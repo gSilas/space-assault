@@ -174,7 +174,7 @@ namespace SpaceAssault.Utils
                     double distanceToDrone = (curShip.Position - Global.Camera.Target).Length();
                     double distanceToStation = curShip.Position.Length();
 
-                    if (distanceToStation < 400 && !curShip.flyingAwayFromStation && !curShip.flyingAwayFromDrone)
+                    if (distanceToStation < 500 && !curShip.flyingAwayFromStation && !curShip.flyingAwayFromDrone)
                     {
                         curShip.Gun.Shoot(gameTime, Bullet.BulletType.PhotonBomb, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix, ref _bullets);
                     }

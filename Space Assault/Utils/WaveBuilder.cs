@@ -100,6 +100,7 @@ namespace SpaceAssault.Utils
             {
                 case 1:
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Bomber);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
@@ -108,11 +109,17 @@ namespace SpaceAssault.Utils
                             ship.gunMakeDmg = 5;
                             ship.KillMoney = 50;
                         }
+                        else if (ship.GetType() == typeof(EnemyBomber))
+                        {
+                            ship.Health = 50;
+                            ship.gunMakeDmg = 400;
+                            ship.KillMoney = 70;
+                        }
                     }
                     break;
                 case 2:
-                    _boids.addRandomBoids(2, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(1, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
@@ -124,14 +131,14 @@ namespace SpaceAssault.Utils
                         else if (ship.GetType() == typeof(EnemyBomber))
                         {
                             ship.Health = 50;
-                            ship.gunMakeDmg = 100;
+                            ship.gunMakeDmg = 400;
                             ship.KillMoney = 70;
                         }
                     }
                     break;
 
                 case 3:
-                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(5, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(1, Boids.EnemyType.Bomber);
                     foreach (var ship in ShipList)
                     {
@@ -144,15 +151,15 @@ namespace SpaceAssault.Utils
                         else if (ship.GetType() == typeof(EnemyBomber))
                         {
                             ship.Health = 50;
-                            ship.gunMakeDmg = 100;
+                            ship.gunMakeDmg = 500;
                             ship.KillMoney = 70;
                         }
                     }
                     break;
 
                 case 4:
-                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(8, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(4, Boids.EnemyType.Bomber);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
@@ -164,7 +171,7 @@ namespace SpaceAssault.Utils
                         else if (ship.GetType() == typeof(EnemyBomber))
                         {
                             ship.Health = 50;
-                            ship.gunMakeDmg = 100;
+                            ship.gunMakeDmg = 500;
                             ship.KillMoney = 70;
                         }
                     }
@@ -185,9 +192,9 @@ namespace SpaceAssault.Utils
                         }
                         else if (ship.GetType() == typeof(EnemyFighter2))
                         {
-                            ship.Health = 100;
+                            ship.Health = 400;
                             ship.gunMakeDmg = 50;
-                            ship.KillMoney = 200;
+                            ship.KillMoney = 500;
                         }
                         else if (ship.GetType() == typeof(EnemyBomber))
                         {
