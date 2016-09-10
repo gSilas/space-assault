@@ -18,8 +18,8 @@ namespace SpaceAssault.Entities
 
             RotationMatrix = Matrix.Identity;
 
-            MoveSpeedForward = 0.8f;
-            TurnSpeed = 2.0f;
+            MoveSpeedForward = 0.9f;
+            TurnSpeed = 4.0f;
 
             //_moveSpeedBackward = -0.5f;
             KillMoney = 100;
@@ -31,7 +31,7 @@ namespace SpaceAssault.Entities
 
         public override void LoadContent()
         {
-            Model = Global.ContentManager.Load<Model>("Models/enemyship1");
+            Model = Global.ContentManager.Load<Model>("Models/enemyship");
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.LoadContent();
             HitSound = Engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);

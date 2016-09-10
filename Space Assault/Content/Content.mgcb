@@ -327,7 +327,7 @@
 /processorParam:RotationX=-90
 /processorParam:RotationY=-90
 /processorParam:RotationZ=3
-/processorParam:Scale=1.5
+/processorParam:Scale=2.4
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=DxtCompressed
 /build:Models\enemyship.fbx
@@ -499,7 +499,7 @@
 /processorParam:RotationX=-90
 /processorParam:RotationY=90
 /processorParam:RotationZ=0
-/processorParam:Scale=4
+/processorParam:Scale=2
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=DxtCompressed
 /build:Models/enemyship3.fbx

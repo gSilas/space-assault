@@ -33,7 +33,9 @@ namespace SpaceAssault.Utils
         {
             Fighter,
             Fighter2,
-            Bomber
+            Fighter3,
+            Bomber,
+            Bomber2
         }
 
         public Boids()
@@ -78,8 +80,14 @@ namespace SpaceAssault.Utils
                 case EnemyType.Fighter2:
                     ship = new EnemyFighter2(position);
                     break;
+                case EnemyType.Fighter3:
+                    ship=new EnemyFighter3(position);
+                    break;
                 case EnemyType.Bomber:
                     ship = new EnemyBomber(position);
+                    break;
+                case EnemyType.Bomber2:
+                    ship = new EnemyBomber2(position);
                     break;
                 default:
                     ship = new EnemyFighter(position);
@@ -141,7 +149,7 @@ namespace SpaceAssault.Utils
                 }
 
                 //shootlogic fighters
-                if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2))
+                if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2) || curShip.GetType() == typeof(EnemyFighter3))
                 {
                     Vector3 direction = -goToPlace(curShip, Global.Camera.Target);
                     direction.Normalize();
@@ -166,7 +174,7 @@ namespace SpaceAssault.Utils
                 }*/
 
                 //shotlogic bomber
-                if (curShip.GetType() == typeof(EnemyBomber))
+                if (curShip.GetType() == typeof(EnemyBomber) || curShip.GetType() == typeof(EnemyBomber2))
                 {
                     double distanceToStation = curShip.Position.Length();
 
@@ -227,7 +235,7 @@ namespace SpaceAssault.Utils
                 avoidO = avoidObjRule(curShip);
                 noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
 
-                if (curShip.GetType() == typeof(EnemyBomber))
+                if (curShip.GetType() == typeof(EnemyBomber) || curShip.GetType() == typeof(EnemyBomber2))
                 {
                     _maxSpeed = curShip.MoveSpeedForward;
                     flyToDrone = droneStationRuleBomber(curShip);
@@ -241,6 +249,13 @@ namespace SpaceAssault.Utils
                     avoidS = avoidStationRule(curShip);
                 }
                 if (curShip.GetType() == typeof(EnemyFighter2))
+                {
+                    _maxSpeed = curShip.MoveSpeedForward;
+                    cohesion = cohesionRule(curShip);
+                    flyToDrone = droneStationRuleFighter(curShip);
+                    avoidS = avoidStationRule(curShip);
+                }
+                if (curShip.GetType() == typeof(EnemyFighter3))
                 {
                     _maxSpeed = curShip.MoveSpeedForward;
                     cohesion = cohesionRule(curShip);
