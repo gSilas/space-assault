@@ -453,6 +453,10 @@ namespace SpaceAssault.Screens
                     {
                         //_drone.getHit(ship.Gun.makeDmg);
                         _droneFleet.GetActiveDrone().getHit(bullet.makeDmg);
+                        if (bullet._bulletType == Bullet.BulletType.BossGun)
+                        {
+                            explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), bullet.Position, 0.6, 50, true));
+                        }
                         _removeBullets.Add(bullet);
                     }
 
@@ -461,6 +465,10 @@ namespace SpaceAssault.Screens
                         _sphereAlpha = 0.2f;
                         explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), bullet.Position, 0.4));
                         _station.getHit(bullet.makeDmg);
+                        if (bullet._bulletType == Bullet.BulletType.BossGun)
+                        {
+                            explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), bullet.Position, 0.6, 50, true));
+                        }
                         _removeBullets.Add(bullet);
                     }
                 }
