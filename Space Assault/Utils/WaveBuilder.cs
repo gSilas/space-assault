@@ -86,7 +86,7 @@ namespace SpaceAssault.Utils
     class Wave
     {
         private Boids _boids;
-        private int _waveNumber = 0;
+        private int _waveNumber = 1;
         public List<AEnemys> ShipList { get { return _boids.ships; } }
         public List<Bullet> BulletList { get { return _boids.bullets; } }
         public Wave(int waveNumber)
@@ -165,7 +165,7 @@ namespace SpaceAssault.Utils
                         else if (ship.GetType() == typeof(EnemyBomber2))
                         {
                             ship.Health = 60;
-                            ship.gunMakeDmg = 100;
+                            ship.gunMakeDmg = 500;
                             ship.KillMoney = 50;
                         }
                     }
@@ -194,7 +194,7 @@ namespace SpaceAssault.Utils
                         else if (ship.GetType() == typeof(EnemyBomber2))
                         {
                             ship.Health = 30;
-                            ship.gunMakeDmg = 200;
+                            ship.gunMakeDmg = 500;
                             ship.KillMoney = 70;
                         }
                     }
@@ -223,7 +223,7 @@ namespace SpaceAssault.Utils
                         else if (ship.GetType() == typeof(EnemyBomber2))
                         {
                             ship.Health = 30;
-                            ship.gunMakeDmg = 100;
+                            ship.gunMakeDmg = 500;
                             ship.KillMoney = 70;
                         }
                     }
@@ -231,10 +231,10 @@ namespace SpaceAssault.Utils
 
                 case 5:
                     //Enemy Elite Pilot
-                    _boids.addRandomBoids(4, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(1, Boids.EnemyType.Fighter2);
                     _boids.addRandomBoids(1, Boids.EnemyType.Fighter3);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber2);
+                    _boids.addRandomBoids(6, Boids.EnemyType.Bomber2);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
@@ -258,129 +258,236 @@ namespace SpaceAssault.Utils
                         else if (ship.GetType() == typeof(EnemyBomber2))
                         {
                             ship.Health = 50;
-                            ship.gunMakeDmg = 100;
+                            ship.gunMakeDmg = 500;
                             ship.KillMoney = 70;
                         }
                     }
                     break;
 
                 case 6:
-                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter2);
+                    _boids.addRandomBoids(5, Boids.EnemyType.Fighter3);
+                    _boids.addRandomBoids(6, Boids.EnemyType.Bomber2);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
                         {
-                            ship.Health = 50;
-                            ship.gunMakeDmg = 10;
-                            ship.KillMoney = 60;
-                        }
-                        else if (ship.GetType() == typeof(EnemyBomber))
-                        {
-                            ship.Health = 50;
-                            ship.gunMakeDmg = 100;
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 20;
                             ship.KillMoney = 70;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter2))
+                        {
+                            ship.Health = 400;
+                            ship.gunMakeDmg = 50;
+                            ship.KillMoney = 500;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter3))
+                        {
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 20;
+                            ship.KillMoney = 70;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBomber2))
+                        {
+                            ship.Health = 90;
+                            ship.gunMakeDmg = 600;
+                            ship.KillMoney = 100;
                         }
                     }
                     break;
 
                 case 7:
-                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(2, Boids.EnemyType.Fighter2);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter3);
+                    _boids.addRandomBoids(6, Boids.EnemyType.Bomber2);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
                         {
-                            ship.Health = 50;
-                            ship.gunMakeDmg = 10;
-                            ship.KillMoney = 60;
-                        }
-                        else if (ship.GetType() == typeof(EnemyBomber))
-                        {
-                            ship.Health = 50;
-                            ship.gunMakeDmg = 100;
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 20;
                             ship.KillMoney = 70;
                         }
+                        else if (ship.GetType() == typeof(EnemyFighter2))
+                        {
+                            ship.Health = 400;
+                            ship.gunMakeDmg = 50;
+                            ship.KillMoney = 500;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter3))
+                        {
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 20;
+                            ship.KillMoney = 70;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBomber2))
+                        {
+                            ship.Health = 90;
+                            ship.gunMakeDmg = 600;
+                            ship.KillMoney = 100;
+                        }
                     }
+                    
                     break;
 
                 case 8:
-                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(2, Boids.EnemyType.Fighter2);
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter3);
+                    _boids.addRandomBoids(8, Boids.EnemyType.Bomber2);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
                         {
-                            ship.Health = 50;
-                            ship.gunMakeDmg = 10;
-                            ship.KillMoney = 60;
-                        }
-                        else if (ship.GetType() == typeof(EnemyBomber))
-                        {
-                            ship.Health = 50;
-                            ship.gunMakeDmg = 100;
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 30;
                             ship.KillMoney = 70;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter2))
+                        {
+                            ship.Health = 200;
+                            ship.gunMakeDmg = 50;
+                            ship.KillMoney = 300;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter3))
+                        {
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 30;
+                            ship.KillMoney = 70;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBomber2))
+                        {
+                            ship.Health = 120;
+                            ship.gunMakeDmg = 600;
+                            ship.KillMoney = 100;
                         }
                     }
                     break;
 
                 case 9:
-                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter2);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter3);
+                    _boids.addRandomBoids(10, Boids.EnemyType.Bomber2);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
                         {
-                            ship.Health = 50;
-                            ship.gunMakeDmg = 10;
-                            ship.KillMoney = 60;
-                        }
-                        else if (ship.GetType() == typeof(EnemyBomber))
-                        {
-                            ship.Health = 50;
-                            ship.gunMakeDmg = 100;
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 30;
                             ship.KillMoney = 70;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter2))
+                        {
+                            ship.Health = 200;
+                            ship.gunMakeDmg = 50;
+                            ship.KillMoney = 300;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter3))
+                        {
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 30;
+                            ship.KillMoney = 70;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBomber2))
+                        {
+                            ship.Health = 120;
+                            ship.gunMakeDmg = 600;
+                            ship.KillMoney = 100;
                         }
                     }
                     break;
 
                 case 10:
-                    //Large Bomber Fleet
-                    _boids.addRandomBoids(5, Boids.EnemyType.Bomber);
-                    foreach (var ship in ShipList)
-                    {
-                        if (ship.GetType() == typeof(EnemyBomber))
-                        {
-                            ship.Health = 100;
-                            ship.gunMakeDmg = 500;
-                            ship.KillMoney = 200;
-                        }
-                    }
-                    break;
-
-                case 11:
-                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter2);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter3);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(5, Boids.EnemyType.Bomber2);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
                         {
-                            ship.Health = 50;
-                            ship.gunMakeDmg = 10;
-                            ship.KillMoney = 60;
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 30;
+                            ship.KillMoney = 70;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter2))
+                        {
+                            ship.Health = 200;
+                            ship.gunMakeDmg = 50;
+                            ship.KillMoney = 300;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter3))
+                        {
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 30;
+                            ship.KillMoney = 70;
                         }
                         else if (ship.GetType() == typeof(EnemyBomber))
                         {
+                            ship.Health = 500;
+                            ship.gunMakeDmg = 3000;
+                            ship.KillMoney = 1000;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBomber2))
+                        {
                             ship.Health = 50;
-                            ship.gunMakeDmg = 100;
+                            ship.gunMakeDmg = 600;
+                            ship.KillMoney = 70;
+                        }
+                    }
+                    break;
+                case 11:
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter2);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter3);
+                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(5, Boids.EnemyType.Bomber2);
+                    foreach (var ship in ShipList)
+                    {
+                        if (ship.GetType() == typeof(EnemyFighter))
+                        {
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 30;
+                            ship.KillMoney = 70;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter2))
+                        {
+                            ship.Health = 200;
+                            ship.gunMakeDmg = 50;
+                            ship.KillMoney = 300;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter3))
+                        {
+                            ship.Health = 80;
+                            ship.gunMakeDmg = 30;
+                            ship.KillMoney = 70;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBomber))
+                        {
+                            ship.Health = 500;
+                            ship.gunMakeDmg = 3000;
+                            ship.KillMoney = 1000;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBomber2))
+                        {
+                            ship.Health = 50;
+                            ship.gunMakeDmg = 800;
                             ship.KillMoney = 70;
                         }
                     }
                     break;
 
                 case 12:
-                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter2);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter3);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(5, Boids.EnemyType.Bomber2);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
@@ -389,18 +496,40 @@ namespace SpaceAssault.Utils
                             ship.gunMakeDmg = 10;
                             ship.KillMoney = 60;
                         }
+                        else if (ship.GetType() == typeof(EnemyFighter2))
+                        {
+                            ship.Health = 400;
+                            ship.gunMakeDmg = 50;
+                            ship.KillMoney = 500;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter3))
+                        {
+                            ship.Health = 30;
+                            ship.gunMakeDmg = 5;
+                            ship.KillMoney = 50;
+                        }
                         else if (ship.GetType() == typeof(EnemyBomber))
                         {
+                            ship.Health = 500;
+                            ship.gunMakeDmg = 3000;
+                            ship.KillMoney = 1000;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBomber2))
+                        {
                             ship.Health = 50;
-                            ship.gunMakeDmg = 100;
+                            ship.gunMakeDmg = 800;
                             ship.KillMoney = 70;
                         }
                     }
+            
                     break;
 
                 case 13:
-                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter2);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter3);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(5, Boids.EnemyType.Bomber2);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
@@ -409,7 +538,25 @@ namespace SpaceAssault.Utils
                             ship.gunMakeDmg = 10;
                             ship.KillMoney = 60;
                         }
+                        else if (ship.GetType() == typeof(EnemyFighter2))
+                        {
+                            ship.Health = 400;
+                            ship.gunMakeDmg = 50;
+                            ship.KillMoney = 500;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter3))
+                        {
+                            ship.Health = 30;
+                            ship.gunMakeDmg = 5;
+                            ship.KillMoney = 50;
+                        }
                         else if (ship.GetType() == typeof(EnemyBomber))
+                        {
+                            ship.Health = 500;
+                            ship.gunMakeDmg = 3000;
+                            ship.KillMoney = 1000;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBomber2))
                         {
                             ship.Health = 50;
                             ship.gunMakeDmg = 100;
@@ -419,8 +566,11 @@ namespace SpaceAssault.Utils
                     break;
 
                 case 14:
-                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter2);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter3);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(5, Boids.EnemyType.Bomber2);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
@@ -429,7 +579,25 @@ namespace SpaceAssault.Utils
                             ship.gunMakeDmg = 10;
                             ship.KillMoney = 60;
                         }
+                        else if (ship.GetType() == typeof(EnemyFighter2))
+                        {
+                            ship.Health = 400;
+                            ship.gunMakeDmg = 50;
+                            ship.KillMoney = 500;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter3))
+                        {
+                            ship.Health = 30;
+                            ship.gunMakeDmg = 5;
+                            ship.KillMoney = 50;
+                        }
                         else if (ship.GetType() == typeof(EnemyBomber))
+                        {
+                            ship.Health = 500;
+                            ship.gunMakeDmg = 3000;
+                            ship.KillMoney = 1000;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBomber2))
                         {
                             ship.Health = 50;
                             ship.gunMakeDmg = 100;
@@ -439,8 +607,12 @@ namespace SpaceAssault.Utils
                     break;
 
                 case 15:
-                    _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber);
+                    //BOSS is needet
+                    _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter2);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter3);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Bomber);
+                    _boids.addRandomBoids(5, Boids.EnemyType.Bomber2);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
@@ -449,7 +621,25 @@ namespace SpaceAssault.Utils
                             ship.gunMakeDmg = 10;
                             ship.KillMoney = 60;
                         }
+                        else if (ship.GetType() == typeof(EnemyFighter2))
+                        {
+                            ship.Health = 400;
+                            ship.gunMakeDmg = 50;
+                            ship.KillMoney = 500;
+                        }
+                        else if (ship.GetType() == typeof(EnemyFighter3))
+                        {
+                            ship.Health = 30;
+                            ship.gunMakeDmg = 5;
+                            ship.KillMoney = 50;
+                        }
                         else if (ship.GetType() == typeof(EnemyBomber))
+                        {
+                            ship.Health = 500;
+                            ship.gunMakeDmg = 3000;
+                            ship.KillMoney = 1000;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBomber2))
                         {
                             ship.Health = 50;
                             ship.gunMakeDmg = 100;
