@@ -22,7 +22,7 @@ namespace SpaceAssault.Utils
         private int _avoidDroneRadius;
         private int _avoidStationRadius;
         private float _maxSpeed;
-        private bool workMouseAdd = false;
+        private bool _workMouseAdd = false;
 
         public List<AEnemys> ships;
         public List<AEntity> objectsToAvoid;
@@ -57,8 +57,8 @@ namespace SpaceAssault.Utils
         [Conditional("DEBUG")]
         public void MouseAdd()
         {
-            if (_input.IsNewKeyPress(Keys.N)) workMouseAdd = !workMouseAdd;
-            if (workMouseAdd)
+            if (_input.IsNewKeyPress(Keys.N)) _workMouseAdd = !_workMouseAdd;
+            if (_workMouseAdd)
             {
                 if (_input.IsLeftMouseButtonNewPressed())
                     addBoid(_input.getMouseInWorldPos(), EnemyType.Fighter);
@@ -138,18 +138,19 @@ namespace SpaceAssault.Utils
                     continue;
                 }
 
-                //shootlogic fighter
-                if (curShip.GetType() == typeof(EnemyFighter))
+                //shootlogic fighters
+                if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2))
                 {
                     Vector3 direction = Global.Camera.Target - curShip.Position;
                     float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
                     double distanceToTarget = Vector3.Distance(curShip.Position, Global.Camera.Target);
                     if (Math.Abs(vectorDirection) <= 16 && distanceToTarget < 185 && !curShip.flyingAwayFromDrone)
                     {
-                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix, ref bullets);
+                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position, direction, ref bullets);
                     }
                 }
-
+                /*
+                //shootlogic fighter2
                 if (curShip.GetType() == typeof(EnemyFighter2))
                 {
                     Vector3 direction = Global.Camera.Target - curShip.Position;
@@ -159,7 +160,7 @@ namespace SpaceAssault.Utils
                     {
                         curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix, ref bullets);
                     }
-                }
+                }*/
 
                 //shotlogic bomber
                 if (curShip.GetType() == typeof(EnemyBomber))
@@ -169,7 +170,7 @@ namespace SpaceAssault.Utils
 
                     if (distanceToStation < 500 && !curShip.flyingAwayFromStation && !curShip.flyingAwayFromDrone)
                     {
-                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.PhotonBomb, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix, ref bullets);
+                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.PhotonBomb, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix.Forward, ref bullets);
                     }
                 }
 

@@ -62,7 +62,7 @@ namespace SpaceAssault.Utils
             enemyLazer = new BulletMemory("Models/laser", lazer3, 6f, false);
         }
 
-        public bool Shoot(GameTime gameTime, Bullet.BulletType bullet, int damage, Vector3 position, Matrix droneRotateMatrix, ref List<Bullet> bulletList)
+        public bool Shoot(GameTime gameTime, Bullet.BulletType bullet, int damage, Vector3 position, Vector3 direction, ref List<Bullet> bulletList)
         {
             if (gameTime.TotalGameTime > _lastShotTime.Add(_coolDownTime))
             {
@@ -76,7 +76,7 @@ namespace SpaceAssault.Utils
                 _shootSound.Paused = false;
 
                 // adding bullet to ref list
-                bulletList.Add(new Bullet(bullet, getBullet(bullet).model, getBullet(bullet).moveSpeed, getBullet(bullet).canDmgStation, damage, position, droneRotateMatrix));
+                bulletList.Add(new Bullet(bullet, getBullet(bullet).model, getBullet(bullet).moveSpeed, getBullet(bullet).canDmgStation, damage, position, direction));
                 return true;
             }
             return false;
