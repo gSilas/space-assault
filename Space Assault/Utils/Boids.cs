@@ -21,6 +21,7 @@ namespace SpaceAssault.Utils
         private int _flyToStationRadius;
         private int _avoidDroneRadius;
         private int _avoidStationRadius;
+        private int _fighterShootRadius;
         private float _maxSpeed;
         private bool _workMouseAdd = false;
 
@@ -52,6 +53,7 @@ namespace SpaceAssault.Utils
             _flyToStationRadius = (int)(_flyToDroneRadius * 1.3f);
             _avoidDroneRadius = (int)(_flyToDroneRadius * 0.4f);
             _avoidStationRadius = 50;
+            _fighterShootRadius = 185;
         }
 
         [Conditional("DEBUG")]
@@ -144,7 +146,7 @@ namespace SpaceAssault.Utils
                     Vector3 direction = Global.Camera.Target - curShip.Position;
                     float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
                     double distanceToTarget = Vector3.Distance(curShip.Position, Global.Camera.Target);
-                    if (Math.Abs(vectorDirection) <= 16 && distanceToTarget < 185 && !curShip.flyingAwayFromDrone)
+                    if (Math.Abs(vectorDirection) <= 16 && distanceToTarget < _fighterShootRadius && !curShip.flyingAwayFromDrone)
                     {
                         curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position, direction, ref bullets);
                     }
@@ -165,7 +167,6 @@ namespace SpaceAssault.Utils
                 //shotlogic bomber
                 if (curShip.GetType() == typeof(EnemyBomber))
                 {
-                    double distanceToDrone = (curShip.Position - Global.Camera.Target).Length();
                     double distanceToStation = curShip.Position.Length();
 
                     if (distanceToStation < 500 && !curShip.flyingAwayFromStation && !curShip.flyingAwayFromDrone)
