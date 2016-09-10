@@ -91,7 +91,7 @@ namespace SpaceAssault.Screens
             dustParticles = new DustParticleSystem();
             tutorialDialog = new Dialog(0, 0, 80, 400, 8, false, true);
             borderParticles = new BorderParticleSettings();
-            _asteroidField = new AsteroidBuilder();
+            _asteroidField = new AsteroidBuilder(40);
             TutorialText.Add(TutorialText.Count, "Do you want to skip the tutorial? (Y/N) \n\nYour Mission will begin immediately if \nyou choose to skip.");
             TutorialText.Add(TutorialText.Count, "This is your drone!\nPress [Space] to\nContinue!");
             TutorialText.Add(TutorialText.Count, "You can go back with\n[Back]!\nTry it!");
@@ -107,7 +107,6 @@ namespace SpaceAssault.Screens
             TutorialText.Add(TutorialText.Count, "I'll now give you your\ncontrols back! But stay\nin radio range.");
             TutorialText.Add(TutorialText.Count, "I also heard of incoming\nasteroids. The comets\nwith the blue trail\noffer a nice income.");
             TutorialText.Add(TutorialText.Count, "Press [X] to start your\nmission!");
-
             TutorialText.TryGetValue(0, out tutorialMessage);
         }
 
