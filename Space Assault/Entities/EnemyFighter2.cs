@@ -25,14 +25,6 @@ namespace SpaceAssault.Entities
             Gun = new Weapon(600d);
             gunMakeDmg = 10;
         }
-
-        public override void LoadContent()
-        {
-            Model = Global.ContentManager.Load<Model>("Models/enemyship4");
-            Spheres = Collider3D.UpdateBoundingSphere(this);
-            Gun.LoadContent();
-
-        }
         public override void Update(GameTime gameTime)
         {
             Spheres = Collider3D.UpdateBoundingSphere(this);

@@ -29,13 +29,6 @@ namespace SpaceAssault.Entities
             gunMakeDmg = 500;
         }
 
-        public override void LoadContent()
-        {
-            Model = Global.ContentManager.Load<Model>("Models/enemyship");
-            Spheres = Collider3D.UpdateBoundingSphere(this);
-            Gun.LoadContent();
-        }
-
         public override void Update(GameTime gameTime)
         {
             if (Health <= 0) IsDead = true;

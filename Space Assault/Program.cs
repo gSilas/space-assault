@@ -15,7 +15,10 @@ namespace SpaceAssault
         static void Main()
         {
             using (var game = new SpaceAssaultGame())
+            {
                 game.Run();
+            }
+
         }
     }
 #endif

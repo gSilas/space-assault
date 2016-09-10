@@ -1,6 +1,4 @@
-﻿using IrrKlang;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 using SpaceAssault.Utils;
 using SpaceAssault.Utils.Particle;
 using SpaceAssault.Utils.Particle.Settings;
@@ -28,14 +26,6 @@ namespace SpaceAssault.Entities
             Gun = new Weapon(3000d);
             gunMakeDmg = 500;
         }
-
-        public override void LoadContent()
-        {
-            Model = Global.ContentManager.Load<Model>("Models/enemy_bomber");
-            Spheres = Collider3D.UpdateBoundingSphere(this);
-            Gun.LoadContent();
-        }
-
         public override void Update(GameTime gameTime)
         {
             if (Health <= 0) IsDead = true;
