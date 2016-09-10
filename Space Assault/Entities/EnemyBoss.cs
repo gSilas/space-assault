@@ -112,6 +112,7 @@ namespace SpaceAssault.Entities
             Position = position;
             Gun = gun;
             _boss = boss;
+            gunMakeDmg = damage;
         }
 
         public override void Update(GameTime gameTime)
