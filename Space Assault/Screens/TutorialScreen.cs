@@ -96,16 +96,23 @@ namespace SpaceAssault.Screens
             TutorialText.Add(TutorialText.Count, "This is your drone!\nPress [Space] to\nContinue!");
             TutorialText.Add(TutorialText.Count, "You can go back with\n[Back]!\nTry it!");
             TutorialText.Add(TutorialText.Count, "You have to defend the\nstation against waves of\nenemys!");
-            TutorialText.Add(TutorialText.Count, "The red bar is your\ndronehull and the\nblue bar is your shield!");
-            TutorialText.Add(TutorialText.Count, "The green bar is the\nstationhull. The white\nbar is the stationshield!");
-            TutorialText.Add(TutorialText.Count, "Fragments are the common\ncurrency on this station.");
+            TutorialText.Add(TutorialText.Count, "There are different types of Enemys,\nfor example Bomber and Fighter.");
+            TutorialText.Add(TutorialText.Count, "Fighter attack your drone and\ntry to harass you\nuntil the Bombers destroy your Station.");
+            TutorialText.Add(TutorialText.Count, "If your Station dies, the Game is over.\nSo you need to Keep your Drone\nand Station alive.");
+            TutorialText.Add(TutorialText.Count, "The red bar is your dronehull \nand the blue bar is your shield!");
+            TutorialText.Add(TutorialText.Count, "The green bar is the stationhull.\nThe whitebar is the stationshield!");
+            TutorialText.Add(TutorialText.Count, "The armor icon shows your\ncurrent amount of armor!\nArmor reduces incoming Damage.");
+            TutorialText.Add(TutorialText.Count, "The Number besides the Rocket Icon\nis the amout of your BIG Rockets.\nUse them wisely.");
             TutorialText.Add(TutorialText.Count, "You score is your rating!\nShooting stuff increases\nyour score!");
-            TutorialText.Add(TutorialText.Count, "The armor icon shows your\ncurrent amount of armor!\nArmor reduces incoming\nDamage.");
-            TutorialText.Add(TutorialText.Count, "You can buy upgrades in\nthe stations store for\nfragments.");
-            TutorialText.Add(TutorialText.Count, "W - fly upward\nA - fly left\nS - fly downward\nD - fly right");
+            TutorialText.Add(TutorialText.Count, "Fragments are the common\ncurrency on this station.");
+            TutorialText.Add(TutorialText.Count, "You can buy upgrades \nin the stationsstore for fragments");
+            TutorialText.Add(TutorialText.Count, "Press B to open the Shop and\nnavigate through it with the ArrowKeys.");
+            TutorialText.Add(TutorialText.Count, "But Care! \nYou need to be at the station \nto open the Store");
+            TutorialText.Add(TutorialText.Count, "W - fly up\nA - fly left\nS - fly down\nD - fly right");
             TutorialText.Add(TutorialText.Count, "Left Mouse Button\n-> Shoots your Laser\nRight Mouse Button\n-> Shoots your Torpedo\n");
             TutorialText.Add(TutorialText.Count, "I'll now give you your\ncontrols back! But stay\nin radio range.");
             TutorialText.Add(TutorialText.Count, "I also heard of incoming\nasteroids. The comets\nwith the blue trail\noffer a nice income.");
+            TutorialText.Add(TutorialText.Count, "Now test the Things we taught you");
             TutorialText.Add(TutorialText.Count, "Press [X] to start your\nmission!");
             TutorialText.TryGetValue(0, out tutorialMessage);
         }
@@ -130,9 +137,6 @@ namespace SpaceAssault.Screens
             //Sounds
 
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
-
-           
-
 
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
             _explosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion1.wav", StreamMode.AutoDetect, true);
