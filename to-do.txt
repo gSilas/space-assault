@@ -44,7 +44,7 @@ Easter Egg:
 	- während des Spiels sollte man noch zwischen Voll- und Fenstermodus wechseln können
 	- shop ist sehr unübersichtlich (sollte im tutorial erklärt werden bzw eine Wave im Tutorial)
 
-	
+	- sofort ins hauptspiel springen
 
 	## Balancing:
 		- man bekommt zu viel gelg

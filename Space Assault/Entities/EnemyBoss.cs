@@ -64,7 +64,7 @@ namespace SpaceAssault.Entities
             gunMakeDmg = 500;
 
             //BIGJOE Rocket for Body
-            _compositionRec = new Vec3Rectangle(spawnposition, 50, 50);
+            _compositionRec = new Vec3Rectangle(spawnposition, 10, 20);
             Position = _compositionRec.Center;
             towerList = new List<AttackTower>();
             towerList.Add(new AttackTower(_compositionRec.EdgeBottomLeft, 600, 150, new Weapon(100), this));
