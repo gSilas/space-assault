@@ -137,7 +137,6 @@
     <Compile Include="Screens\UI\Frame.cs" />
     <Compile Include="Utils\HighScoreList.cs" />
     <Compile Include="Utils\Label.cs" />
-    <Compile Include="Utils\Mousehandler.cs" />
     <Compile Include="Utils\Particle\ParticleEmitter.cs" />
     <Compile Include="Utils\Particle\ParticleSettings.cs" />
     <Compile Include="Utils\Particle\ParticleSystem.cs" />
