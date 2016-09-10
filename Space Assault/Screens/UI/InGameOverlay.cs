@@ -76,7 +76,7 @@ namespace SpaceAssault.Screens
 
             Bars[0].Draw(droneFleet.GetActiveDrone().health, droneFleet.GetActiveDrone().maxHealth);
             Bars[1].Draw(droneFleet.GetActiveDrone().shield, droneFleet.GetActiveDrone().maxShield);
-
+            /*
             if (Vector3.Distance(this._station.Position, droneFleet.GetActiveDrone().Position) < 300)
             {
                 var vec = new Point();
@@ -87,10 +87,10 @@ namespace SpaceAssault.Screens
                 Bars[3].Draw(vec, _station._shield, _station._maxShield);
             }
             else
-            {
+            {*/
                 Bars[2].Draw(_station._health, _station._maxhealth);
                 Bars[3].Draw(_station._shield, _station._maxShield);
-            }
+            //}
                        
             _scoreDialog.Draw("Score: " + Global.HighScorePoints.ToString());
             _moneyDialog.Draw("Fragments: "+Global.Money);
