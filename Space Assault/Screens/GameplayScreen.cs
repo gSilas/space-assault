@@ -332,7 +332,7 @@ namespace SpaceAssault.Screens
             _back.Draw(90, new Vector3(-15000, -2000, -15000));
             _station.Draw(Global.StationColor);
             _droneFleet.Draw();
-            _asteroidField.Draw();
+            //_asteroidField.Draw();
             _waveBuilder.Draw(gameTime);
 
             // Particle
@@ -628,6 +628,8 @@ namespace SpaceAssault.Screens
         }
         void DrawShipDirectionArrow()
         {
+           if(_waveBuilder.ShipList.Count > 0)
+           {   
             float minDistance = float.MaxValue;
             Vector3 posS = Vector3.Zero;
             foreach (var ship in _waveBuilder.ShipList)
@@ -646,7 +648,8 @@ namespace SpaceAssault.Screens
             vec.X = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position + vec3 * 50, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X;
             vec.Y = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position + vec3 * 50, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y;
             _enemySymbol.Draw(vec.ToPoint(), 1, Global.EnemyColor);
-         }
+          }
+        }
         
         //#################################
         // Helper RndPoint
