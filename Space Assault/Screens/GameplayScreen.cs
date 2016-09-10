@@ -51,6 +51,7 @@ namespace SpaceAssault.Screens
         private ISoundSource _explosionSource2;
         private ISoundSource _explosionSource3;
         private ISoundSource _openShop;
+        private ISoundSource _hitSound;
         private ISoundEngine _engine;
 
         //Particle
@@ -68,7 +69,7 @@ namespace SpaceAssault.Screens
         TimeSpan timeToNextProjectile = TimeSpan.Zero;
 
         // Random number generator
-        Random random = new Random();
+        Random random;
 
         //Created screens
         PauseMenuScreen pause;
@@ -89,7 +90,7 @@ namespace SpaceAssault.Screens
             _droneFleet = new DroneBuilder();
 
             _sphereAlpha = 0.1f;
-
+            random = new Random();
             _waveBuilder = new WaveBuilder(TimeSpan.FromSeconds(10d), 15);
             Global.Money = 0;
             //UI + Frame + BG 
@@ -138,7 +139,7 @@ namespace SpaceAssault.Screens
             _explosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion1.wav", StreamMode.AutoDetect, true);
             _explosionSource2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion2.wav", StreamMode.AutoDetect, true);
             _explosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion3.wav", StreamMode.AutoDetect, true);
-
+            _hitSound = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);
         }
 
         //#################################
@@ -363,8 +364,7 @@ namespace SpaceAssault.Screens
         {
             var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
             _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
-            Random _rand = new Random(); ;
-            switch (_rand.Next(0, 3))
+            switch (random.Next(0, 3))
             {
                 case 0:
                     var _explosionSound = _engine.Play3D(_explosionSource, pos.X, pos.Y, pos.Z, false, true, true);
@@ -388,6 +388,14 @@ namespace SpaceAssault.Screens
                     break;
             }
 
+        }
+        protected void PlayShipHitSound(Vector3D pos)
+        {
+            var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
+            _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
+            ISound Hit = _engine.Play2D(_hitSound, false, true, false);
+            Hit.Volume = Global.SpeakerVolume / 10;
+            Hit.Paused = false;
         }
 
         //#################################
@@ -415,6 +423,7 @@ namespace SpaceAssault.Screens
                                     explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ship.Position, 0.4, 50, true));
                                 }
                                 ship.getHit(bullet.makeDmg);
+                                PlayShipHitSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
                                 _removeBullets.Add(bullet);
                                 Global.HighScorePoints += 20;
 
@@ -660,11 +669,8 @@ namespace SpaceAssault.Screens
         void SoundDJ()
         {
             if (Global.Music.Finished)
-            {
-
-                Random _rand = new Random();
-          
-                switch (_rand.Next(1, 4))
+            {      
+                switch (random.Next(1, 4))
                 {
                     case 1:
                         Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Space Fighter Loop.mp3", false);

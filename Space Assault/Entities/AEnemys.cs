@@ -20,8 +20,6 @@ namespace SpaceAssault.Entities
         public Weapon Gun;
         public int gunMakeDmg = 0;
 
-        protected ISoundEngine Engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
-        protected ISoundSource HitSound;
         protected bool FreshSpawn;
 
         public bool IsDead
@@ -69,11 +67,6 @@ namespace SpaceAssault.Entities
         {
             Health -= HowMuchDMG;
             //playing the sound
-            Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
-            Engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
-            ISound Hit = Engine.Play2D(HitSound, false, true, false);
-            Hit.Volume = Global.SpeakerVolume/10;
-            Hit.Paused = false;
         }
     }
 }

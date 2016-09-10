@@ -7,9 +7,9 @@ using IrrKlang;
 
 namespace SpaceAssault.Entities
 {
-    class EnemyFighter2 : AEnemys
+    class EnemyFighter3 : AEnemys
     {
-        public EnemyFighter2(Vector3 position)
+        public EnemyFighter3(Vector3 position)
         {
             SpawnPos = position;
             Position = position;
@@ -19,8 +19,8 @@ namespace SpaceAssault.Entities
             MoveSpeedForward = 1.2f;
             TurnSpeed = 8.0f;
 
-            KillMoney = 70;
-            Health = 40;
+            KillMoney = 50;
+            Health = 30;
 
             Gun = new Weapon(600d);
             gunMakeDmg = 10;
@@ -28,14 +28,14 @@ namespace SpaceAssault.Entities
 
         public override void LoadContent()
         {
-            Model = Global.ContentManager.Load<Model>("Models/enemyship4");
+            Model = Global.ContentManager.Load<Model>("Models/enemyship3");
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.LoadContent();
-
         }
         public override void Update(GameTime gameTime)
         {
             Spheres = Collider3D.UpdateBoundingSphere(this);
+
             if (Health <= 0)
             {
 
