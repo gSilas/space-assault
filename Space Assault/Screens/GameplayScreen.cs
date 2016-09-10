@@ -373,8 +373,7 @@ namespace SpaceAssault.Screens
         {
             var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
             _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
-            int a = random.Next(0, 3);
-            switch (a)
+            switch (random.Next(0, 3))
             {
                 case 0:
                     var explosionSound = _engine.Play2D(_explosionSource, false, true, false);
@@ -395,10 +394,8 @@ namespace SpaceAssault.Screens
                     var explosionSound3 = _engine.Play2D(_explosionSource3, false, true, false);
                     explosionSound3.Volume = Global.SpeakerVolume / 10;
                     explosionSound3.Paused = false;
-                    break;
-              
+                    break;              
             }
-            Console.WriteLine(a);
         }
         protected void PlayShipHitSound(Vector3D pos)
         {
