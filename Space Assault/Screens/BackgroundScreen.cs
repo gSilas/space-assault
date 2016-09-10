@@ -76,7 +76,7 @@ namespace SpaceAssault.Screens
         // Unloads content for this screen.
         public override void UnloadContent()
         {
-            _engine.StopAllSounds();
+            //_engine.StopAllSounds();
             _engine.Dispose();
         }
 
