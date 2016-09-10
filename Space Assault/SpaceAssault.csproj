@@ -92,6 +92,7 @@
     <Compile Include="Entities\Station.cs" />
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Utils\Particle\ExplosionSystem.cs" />
+    <Compile Include="Utils\Particle\Settings\HitMarkerParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\ShipBigExplosionSettings.cs" />
     <Compile Include="Utils\Particle\Settings\BombExplosionSettings.cs" />
     <Compile Include="Utils\Particle\Settings\BombRingExplosionSettings.cs" />

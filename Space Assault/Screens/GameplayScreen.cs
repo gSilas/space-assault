@@ -57,6 +57,7 @@ namespace SpaceAssault.Screens
         //Particle
         ParticleSystem borderParticles;
         ParticleSystem dustParticles;
+        ParticleSystem hitmarkerParticles;
 
         List<ExplosionSystem> explosionList = new List<ExplosionSystem>();
         List<ExplosionSystem> explosionRemoveList = new List<ExplosionSystem>();
@@ -106,6 +107,7 @@ namespace SpaceAssault.Screens
             // Construct Particles
             borderParticles = new BorderParticleSettings();
             dustParticles = new DustParticleSystem();
+            hitmarkerParticles = new HitMarkerParticleSystem();
         }
 
 
@@ -125,7 +127,7 @@ namespace SpaceAssault.Screens
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             _waveBuilder.LoadContent();
-
+            
             //Effects
             _stationEffect = Global.ContentManager.Load<Effect>("Effects/stationEffect");
 
@@ -189,6 +191,7 @@ namespace SpaceAssault.Screens
             // Particles
             dustParticles.Update(gameTime);
             UpdateBorder(gameTime);
+            hitmarkerParticles.Update(gameTime);
 
             foreach (ExplosionSystem explosion in explosionList)
             {
@@ -325,6 +328,7 @@ namespace SpaceAssault.Screens
             // Particle
             dustParticles.Draw();
             borderParticles.Draw();
+            hitmarkerParticles.Draw();
 
             foreach (ExplosionSystem explosion in explosionList)
             {
@@ -426,8 +430,11 @@ namespace SpaceAssault.Screens
                                 PlayShipHitSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
                                 _removeBullets.Add(bullet);
                                 Global.HighScorePoints += 20;
-
-                                if (ship.Health <= 0)
+                                if (ship.Health > 0)
+                                {
+                                    hitmarkerParticles.AddParticle(bullet.Position, Vector3.Zero);
+                                }
+                                else if (ship.Health <= 0)
                                 {
                                     if (ship.GetType() == typeof(EnemyBomber))
                                         explosionList.Add(new ExplosionSystem(new ShipBigExplosionSettings(), new ShipRingExplosionSettings(), ship.Position, 0.4, 50, true));
