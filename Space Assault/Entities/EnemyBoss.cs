@@ -29,7 +29,7 @@ namespace SpaceAssault.Entities
 
             public override void LoadContent()
             {
-                Model = Global.ContentManager.Load<Model>("Models/enemy_bomber");
+                Model = Global.ContentManager.Load<Model>("Models/helidrone");
                 Spheres = Collider3D.UpdateBoundingSphere(this);
                 Gun.LoadContent();
             }
@@ -75,7 +75,7 @@ namespace SpaceAssault.Entities
         private AttackTower _tower4;
         private Vec3Rectangle _compositionRec;
 
-        public EnemyBoss(Vector3 spawnposition,int shipHealth, int damage )
+        public EnemyBoss(Vector3 spawnposition)
         {
             SpawnPos = spawnposition;
             Position = spawnposition;
@@ -88,13 +88,15 @@ namespace SpaceAssault.Entities
             Gun = new Weapon(1000);
             _compositionRec = new Vec3Rectangle(spawnposition, 100, 100);
             Position = _compositionRec.Center;
-            Health = shipHealth;
             _tower1 = new AttackTower(_compositionRec.EdgeBottomLeft, 600, 100, new Weapon(400));
             _tower2 = new AttackTower(_compositionRec.EdgeBottomRight, 600, 100, new Weapon(400));
             _tower3 = new AttackTower(_compositionRec.EdgeTopLeft, 600, 100, new Weapon(2000));
             _tower4 = new AttackTower(_compositionRec.EdgeTopRight, 600, 100, new Weapon(2000));
         }
-
+        public AttackTower[] GetTowers
+        {
+            get { return new AttackTower[] { _tower1, _tower2, _tower3, _tower4 }; }
+        }
 
         public override void Update(GameTime gameTime)
         {
