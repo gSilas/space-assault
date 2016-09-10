@@ -22,6 +22,7 @@ namespace SpaceAssault.Utils
         private int _avoidDroneRadius;
         private int _avoidStationRadius;
         private int _fighterShootRadius;
+        private int _towerShootRadius;
         private float _maxSpeed;
         private bool _workMouseAdd = false;
 
@@ -57,6 +58,7 @@ namespace SpaceAssault.Utils
             _avoidDroneRadius = (int)(_flyToDroneRadius * 0.6f);
             _avoidStationRadius = 50;
             _fighterShootRadius = 230;
+            _towerShootRadius = 350;
         }
 
         [Conditional("DEBUG")]
@@ -228,7 +230,7 @@ namespace SpaceAssault.Utils
                     direction.Normalize();
 
                     float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
-                    if (Math.Abs(vectorDirection) <= 0.15f && distanceToTarget < _fighterShootRadius && !curShip.flyingAwayFromDrone)
+                    if (Math.Abs(vectorDirection) <= 0.15f && distanceToTarget < _towerShootRadius && !curShip.flyingAwayFromDrone)
                     {
                         curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position + curShip.RotationMatrix.Forward * 2, direction, ref bullets);
                     }

@@ -62,16 +62,16 @@ namespace SpaceAssault.Entities
             TurnSpeed = 2.0f;
             KillMoney = 100;
             Health = 40;
-            Gun = new Weapon(3000);
+            Gun = new Weapon(2000);
             gunMakeDmg = 500;
 
             //BIGJOE Rocket for Body
-            _compositionRec = new Vec3Rectangle(spawnposition, 100, 100);
+            _compositionRec = new Vec3Rectangle(spawnposition, 50, 50);
             Position = _compositionRec.Center;
-            _tower1 = new AttackTower(_compositionRec.EdgeBottomLeft, 600, 150, new Weapon(100));
-            _tower2 = new AttackTower(_compositionRec.EdgeBottomRight, 600, 150, new Weapon(100));
-            _tower3 = new AttackTower(_compositionRec.EdgeTopLeft, 600, 150, new Weapon(100));
-            _tower4 = new AttackTower(_compositionRec.EdgeTopRight, 600, 150, new Weapon(100));
+            _tower1 = new AttackTower(_compositionRec.EdgeBottomLeft, 600, 150, new Weapon(100), this);
+            _tower2 = new AttackTower(_compositionRec.EdgeBottomRight, 600, 150, new Weapon(100), this);
+            _tower3 = new AttackTower(_compositionRec.EdgeTopLeft, 600, 150, new Weapon(100), this);
+            _tower4 = new AttackTower(_compositionRec.EdgeTopRight, 600, 150, new Weapon(100), this);
         }
         public AttackTower[] GetTowers
         {
@@ -104,18 +104,22 @@ namespace SpaceAssault.Entities
     }
     class AttackTower : AEnemys
     {
-        public AttackTower(Vector3 position, int health, int damage, Weapon gun)
+        EnemyBoss _boss;
+        public AttackTower(Vector3 position, int health, int damage, Weapon gun, EnemyBoss boss)
         {
             Health = health;
             SpawnPos = position;
             Position = position;
             Gun = gun;
+            _boss = boss;
         }
 
         public override void Update(GameTime gameTime)
         {
             if (Health <= 0)
                 IsDead = true;
+            if (_boss.IsDead)
+                this.IsDead = true;
             Spheres = Collider3D.UpdateBoundingSphere(this);
         }
 
