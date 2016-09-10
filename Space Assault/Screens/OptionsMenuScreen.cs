@@ -1,4 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using IrrKlang;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using SpaceAssault.Utils;
 using SpaceAssault.ScreenManagers;
 
@@ -9,29 +14,29 @@ namespace SpaceAssault.Screens
     // in various hopefully useful ways.
     class OptionsMenuScreen : MenuScreen
     {
-        //MenuEntry enumMenuEntry;
-        //MenuEntry languageMenuEntry;
-        //MenuEntry staticNumberMenuEntry;
-        MenuEntry fullscreenMenuEntry;
-        MenuEntry frameCounterMenuEntry;
-        MenuEntry effectVolumeMenuEntry;
-        MenuEntry musicVolumeMenuEntry;
-        MenuEntry uiColorRMenuEntry;
-        MenuEntry uiColorGMenuEntry;
-        MenuEntry uiColorBMenuEntry;
+        OptionMenuEntry fullscreenMenuEntry;
+        OptionMenuEntry frameCounterMenuEntry;
+        OptionMenuEntry effectVolumeMenuEntry;
+        OptionMenuEntry musicVolumeMenuEntry;
+        OptionMenuEntry uiColorRMenuEntry;
+        OptionMenuEntry uiColorGMenuEntry;
+        OptionMenuEntry uiColorBMenuEntry;
+
+        List<OptionMenuEntry> optionMenuEntries = new List<OptionMenuEntry>();
+        protected int lastSelectedEntry = 0;
 
         // Constructor.
         public OptionsMenuScreen() : base("Options")
         {
 
-            fullscreenMenuEntry = new MenuEntry(string.Empty);
-            frameCounterMenuEntry = new MenuEntry(string.Empty);
-            effectVolumeMenuEntry = new MenuEntry(string.Empty);
-            musicVolumeMenuEntry = new MenuEntry(string.Empty);
-            uiColorRMenuEntry = new MenuEntry(string.Empty);
-            uiColorGMenuEntry = new MenuEntry(string.Empty);
-            uiColorBMenuEntry = new MenuEntry(string.Empty);
-            MenuEntry back = new MenuEntry("Back");
+            fullscreenMenuEntry = new OptionMenuEntry(string.Empty);
+            frameCounterMenuEntry = new OptionMenuEntry(string.Empty);
+            effectVolumeMenuEntry = new OptionMenuEntry(string.Empty);
+            musicVolumeMenuEntry = new OptionMenuEntry(string.Empty);
+            uiColorRMenuEntry = new OptionMenuEntry(string.Empty);
+            uiColorGMenuEntry = new OptionMenuEntry(string.Empty);
+            uiColorBMenuEntry = new OptionMenuEntry(string.Empty);
+            OptionMenuEntry back = new OptionMenuEntry("Back");
 
             SetMenuEntryText();
 
@@ -39,7 +44,7 @@ namespace SpaceAssault.Screens
             fullscreenMenuEntry.Selected += fullscreenMenuEntrySelected;
             frameCounterMenuEntry.Selected += frameCounterMenuEntrySelected;
             effectVolumeMenuEntry.Selected += effectVolumeMenuEntrySelected;
-            musicVolumeMenuEntry.Selected += musicVolumeMenuEntrySelected;        
+            musicVolumeMenuEntry.Selected += musicVolumeMenuEntrySelected;
             uiColorRMenuEntry.Selected += uiColorRMenuEntrySelected;
             uiColorGMenuEntry.Selected += uiColorGMenuEntrySelected;
             uiColorBMenuEntry.Selected += uiColorBMenuEntrySelected;
@@ -50,15 +55,16 @@ namespace SpaceAssault.Screens
             uiColorBMenuEntry.IsIncreasingSelect = true;
 
             // Add entries to the menu.
-            MenuEntries.Add(fullscreenMenuEntry);
-            MenuEntries.Add(frameCounterMenuEntry);
-            MenuEntries.Add(musicVolumeMenuEntry);
-            MenuEntries.Add(effectVolumeMenuEntry);
-          
-            MenuEntries.Add(uiColorRMenuEntry);
-            MenuEntries.Add(uiColorGMenuEntry);
-            MenuEntries.Add(uiColorBMenuEntry);
-            MenuEntries.Add(back);
+            optionMenuEntries.Add(fullscreenMenuEntry);
+            optionMenuEntries.Add(frameCounterMenuEntry);
+            optionMenuEntries.Add(musicVolumeMenuEntry);
+            optionMenuEntries.Add(effectVolumeMenuEntry);
+
+            optionMenuEntries.Add(uiColorRMenuEntry);
+            optionMenuEntries.Add(uiColorGMenuEntry);
+            optionMenuEntries.Add(uiColorBMenuEntry);
+            optionMenuEntries.Add(back);
+            menuEntries = optionMenuEntries.Cast<MenuEntry>().ToList();
         }
 
 
@@ -72,8 +78,118 @@ namespace SpaceAssault.Screens
             uiColorRMenuEntry.Text = "Color R: " + (Global.UIColor.R);
             uiColorGMenuEntry.Text = "Color G: " + (Global.UIColor.G);
             uiColorBMenuEntry.Text = "Color B: " + (Global.UIColor.B);
-
         }
+
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        {
+            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+
+            lastSelectedEntry = selectedEntry;
+        }
+
+        public override void HandleInput(InputState input)
+        {
+            // mouse click on menu?
+            if (input.IsLeftMouseButtonNewPressed())
+            {
+                Vector2 cornerA;
+                Vector2 cornerD;
+                for (int i = 0; i < MenuEntries.Count; i++)
+                {
+                    //calculating 2 diagonal corners of current menuEntry (upper left, bottom right)
+                    cornerA = MenuEntries[i].Position;
+                    cornerA.Y -= MenuEntries[i].GetHeight() / 2f;
+
+                    cornerD = MenuEntries[i].Position;
+                    cornerD.Y += MenuEntries[i].GetHeight() / 2f;
+                    cornerD.X += MenuEntries[i].GetWidth();
+
+                    if (cornerA.X < input.MousePosition.X && cornerA.Y < input.MousePosition.Z)
+                    {
+                        if (cornerD.X > input.MousePosition.X && cornerD.Y > input.MousePosition.Z)
+                        {
+                            // menuEntry needs one click
+                            selectedEntry = i;
+                            //OnSelectEntry(selectedEntry);
+                        }
+                    }
+                    else continue;
+
+                }
+            }
+
+            // Move to the previous menu entry?
+            if (input.IsMenuUp())
+            {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                ISound Accept;
+                Accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
+                Accept.Volume = Global.SpeakerVolume / 10;
+                Accept.Paused = false;
+
+                selectedEntry--;
+
+                if (selectedEntry < 0)
+                    selectedEntry = MenuEntries.Count - 1;
+            }
+
+            // Move to the next menu entry?
+            if (input.IsMenuDown())
+            {
+                //playing the sound
+                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
+                ISound Accept;
+                Accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
+                Accept.Volume = Global.SpeakerVolume / 10;
+                Accept.Paused = false;
+
+                selectedEntry++;
+
+                if (selectedEntry >= MenuEntries.Count)
+                    selectedEntry = 0;
+            }
+
+            // Accept or cancel the menu.
+            if (input.IsMenuSelect())
+            {
+                OnSelectEntry(selectedEntry);
+            }
+            if (MenuEntries[selectedEntry].IsIncreasingSelect && input.IsMenuIncreasingSelect())
+            {
+                OnSelectEntry(selectedEntry);
+            }
+            else if (input.IsMenuCancel())
+            {
+                OnCancel();
+            }
+
+            if (lastSelectedEntry == selectedEntry)
+            {
+                if (input.IsNewKeyPress(Keys.Left))
+                {
+                    OnSelectEntryIncrease(selectedEntry);
+                }
+
+                if (input.IsNewKeyPress(Keys.Right))
+                {
+                    OnSelectEntryDecrease(selectedEntry);
+                }
+            }
+        }
+
+        // Handler for when the user increases menu entry.
+        protected virtual void OnSelectEntryIncrease(int entryIndex)
+        {
+            optionMenuEntries[entryIndex].OnSelectEntryIncrease();
+        }
+
+        // Handler for when the user decreases menu entry.
+        protected virtual void OnSelectEntryDecrease(int entryIndex)
+        {
+            optionMenuEntries[entryIndex].OnSelectEntryDecrease();
+        }
+
 
         // Event handler for when the Fullscreen menu entry is selected.
         void fullscreenMenuEntrySelected(object sender, EventArgs e)
@@ -104,23 +220,23 @@ namespace SpaceAssault.Screens
             else
                 Global.MusicVolume += 1;
 
-            Global.Music.Volume = Global.MusicVolume/10;
+            Global.Music.Volume = Global.MusicVolume / 10;
             SetMenuEntryText();
         }
 
         void uiColorRMenuEntrySelected(object sender, EventArgs e)
         {
-            Global.UIColor.R+=1;
+            Global.UIColor.R += 1;
             SetMenuEntryText();
         }
         void uiColorGMenuEntrySelected(object sender, EventArgs e)
         {
-            Global.UIColor.G+=1;
+            Global.UIColor.G += 1;
             SetMenuEntryText();
         }
         void uiColorBMenuEntrySelected(object sender, EventArgs e)
         {
-            Global.UIColor.B+=1;
+            Global.UIColor.B += 1;
             SetMenuEntryText();
         }
     }

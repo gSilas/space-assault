@@ -19,7 +19,7 @@ namespace SpaceAssault.ScreenManagers
         protected ISoundSource GoBack;
         protected ISoundSource OpenMenu;
 
-        List<MenuEntry> menuEntries = new List<MenuEntry>();
+        public List<MenuEntry> menuEntries = new List<MenuEntry>();
         protected int selectedEntry = 0;
         protected string menuTitle;
 
@@ -67,17 +67,6 @@ namespace SpaceAssault.ScreenManagers
                     {
                         if (cornerD.X > input.MousePosition.X && cornerD.Y > input.MousePosition.Z)
                         {
-
-                            // menuEntry needs a double click
-                            /*
-                            if (selectedEntry == i)
-                            {
-                                OnSelectEntry(selectedEntry);
-                            }
-                            else selectedEntry = i;
-                            */
-
-                            // menuEntry needs one click
                             selectedEntry = i;
                             OnSelectEntry(selectedEntry);
                         }
