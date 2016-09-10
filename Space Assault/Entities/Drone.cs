@@ -106,6 +106,7 @@ namespace SpaceAssault.Entities
 
         public override void Update(GameTime gameTime)
         {
+            _input.Update();
             Spheres = Collider3D.UpdateBoundingSphere(this);
 
             if (gameTime.TotalGameTime > (_shieldrefreshdelay.Add(TimeSpan.FromSeconds(3))))
