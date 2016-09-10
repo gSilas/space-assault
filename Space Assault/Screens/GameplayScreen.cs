@@ -125,7 +125,8 @@ namespace SpaceAssault.Screens
             _stationSymbol = new UIItem();
             _enemySymbol = new UIItem();
             _stationSymbol.LoadContent("Images/station_icon");
-            _enemySymbol.LoadContent("Images/enemy_icon");
+            _enemySymbol.LoadContent("Images/hit_marker");
+            
             _droneFleet.addDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
             _station.LoadContent();
@@ -654,7 +655,7 @@ namespace SpaceAssault.Screens
             var vec = new Vector2();
             vec.X = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position + vec3 * 50, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X;
             vec.Y = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position + vec3 * 50, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y;
-            _enemySymbol.Draw(vec.ToPoint(), 1, Global.EnemyColor);
+            _enemySymbol.Draw(vec.ToPoint(), 1, Color.Red);
           }
         }
         
