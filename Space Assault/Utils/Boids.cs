@@ -59,16 +59,8 @@ namespace SpaceAssault.Utils
             if (_input.IsNewKeyPress(Keys.N)) workMouseAdd = !workMouseAdd;
             if (workMouseAdd)
             {
-                Vector3 nearScreenPoint = new Vector3(MouseHandler.Position, 0);
-                Vector3 farScreenPoint = new Vector3(MouseHandler.Position, 1);
-                Vector3 nearWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(nearScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
-                Vector3 farWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(farScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
-                Vector3 direction = farWorldPoint - nearWorldPoint;
-                float zFactor = -nearWorldPoint.Y / direction.Y;
-                Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
-                zeroWorldPoint.Y = 0;
                 if (_input.IsLeftMouseButtonNewPressed())
-                    addBoid(zeroWorldPoint, EnemyType.Fighter);
+                    addBoid(_input.getMouseInWorldPos(), EnemyType.Fighter);
             }
         }
 

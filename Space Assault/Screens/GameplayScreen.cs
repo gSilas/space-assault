@@ -242,15 +242,15 @@ namespace SpaceAssault.Screens
             }
             if (_input.IsNewKeyPress(Keys.F1))
             {
-                Console.WriteLine("Drone Damage: " + _droneFleet.GetActiveDrone()._makeDmg);
+                Console.WriteLine("Drone Damage: " + _droneFleet.GetActiveDrone().makeDmg);
             }
             if (_input.IsNewKeyPress(Keys.F2))
             {
-                Console.WriteLine("Drone Shield: " + _droneFleet.GetActiveDrone()._shield);
+                Console.WriteLine("Drone Shield: " + _droneFleet.GetActiveDrone().shield);
             }
             if (_input.IsNewKeyPress(Keys.F3))
             {
-                Console.WriteLine("Drone Health: " + _droneFleet.GetActiveDrone()._health);
+                Console.WriteLine("Drone Health: " + _droneFleet.GetActiveDrone().health);
             }
         }
 
