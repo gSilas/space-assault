@@ -132,7 +132,6 @@ namespace SpaceAssault.Utils
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter3);
                     _boids.addRandomBoids(2, Boids.EnemyType.Bomber2);
-                    _boids.addRandomBoids(1, Boids.EnemyType.Boss);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
@@ -152,12 +151,6 @@ namespace SpaceAssault.Utils
                             ship.Health = 60;
                             ship.gunMakeDmg = 200;
                             ship.KillMoney = 50;
-                        }
-                        else if (ship.GetType() == typeof(EnemyBoss))
-                        {
-                            ship.Health = 1000;
-                            ship.gunMakeDmg = 200;
-                            ship.KillMoney = 5000;
                         }
                     }
                     break;
@@ -258,7 +251,7 @@ namespace SpaceAssault.Utils
                 case 5:
                     Global.EnemyColor = Color.DarkGreen;
                     Global.EnemyFighterColor = Color.LightYellow;
-                    Global.EnemyBomberColor = Color.LightYellow;
+                    Global.EnemyBomberColor = Color.DarkGreen;
                     //Enemy Elite Pilot
                     _boids.addRandomBoids(6, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(1, Boids.EnemyType.Fighter2);
@@ -296,7 +289,7 @@ namespace SpaceAssault.Utils
                 case 6:
                     Global.EnemyColor = Color.LightYellow;
                     Global.EnemyFighterColor = Color.Orange;
-                    Global.EnemyBomberColor = Color.Orange;
+                    Global.EnemyBomberColor = Color.LightYellow;
                     _boids.addRandomBoids(6, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter2);
                     _boids.addRandomBoids(6, Boids.EnemyType.Fighter3);
@@ -333,7 +326,7 @@ namespace SpaceAssault.Utils
                 case 7:
                     Global.EnemyColor = Color.LightYellow;
                     Global.EnemyFighterColor = Color.Orange;
-                    Global.EnemyBomberColor = Color.Orange;
+                    Global.EnemyBomberColor = Color.LightYellow;
                     _boids.addRandomBoids(6, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter2);
                     _boids.addRandomBoids(6, Boids.EnemyType.Fighter3);
@@ -371,7 +364,7 @@ namespace SpaceAssault.Utils
                 case 8:
                     Global.EnemyColor = Color.Orange;
                     Global.EnemyFighterColor = Color.DarkOrange;
-                    Global.EnemyBomberColor = Color.DarkOrange;
+                    Global.EnemyBomberColor = Color.Orange;
                     _boids.addRandomBoids(7, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter2);
                     _boids.addRandomBoids(7, Boids.EnemyType.Fighter3);
@@ -408,7 +401,7 @@ namespace SpaceAssault.Utils
                 case 9:
                     Global.EnemyColor = Color.Orange;
                     Global.EnemyFighterColor = Color.DarkOrange;
-                    Global.EnemyBomberColor = Color.DarkOrange;
+                    Global.EnemyBomberColor = Color.Orange;
                     _boids.addRandomBoids(7, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(3, Boids.EnemyType.Fighter2);
                     _boids.addRandomBoids(7, Boids.EnemyType.Fighter3);
@@ -445,7 +438,7 @@ namespace SpaceAssault.Utils
                 case 10:
                     Global.EnemyColor = Color.DarkOrange;
                     Global.EnemyFighterColor = Color.Red;
-                    Global.EnemyBomberColor = Color.Red;
+                    Global.EnemyBomberColor = Color.DarkOrange;
                     //First TIme BIg Bomber
                     _boids.addRandomBoids(7, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(3, Boids.EnemyType.Fighter2);
@@ -489,7 +482,7 @@ namespace SpaceAssault.Utils
                 case 11:
                     Global.EnemyColor = Color.DarkOrange;
                     Global.EnemyFighterColor = Color.Crimson;
-                    Global.EnemyBomberColor = Color.Crimson;
+                    Global.EnemyBomberColor = Color.DarkOrange;
                     _boids.addRandomBoids(7, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(3, Boids.EnemyType.Fighter2);
                     _boids.addRandomBoids(5, Boids.EnemyType.Fighter3);
@@ -533,7 +526,7 @@ namespace SpaceAssault.Utils
                 case 12:
                     Global.EnemyColor = Color.Crimson;
                     Global.EnemyFighterColor = Color.Red;
-                    Global.EnemyBomberColor = Color.Red;
+                    Global.EnemyBomberColor = Color.Crimson;
                     _boids.addRandomBoids(7, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(3, Boids.EnemyType.Fighter2);
                     _boids.addRandomBoids(5, Boids.EnemyType.Fighter3);
@@ -578,7 +571,7 @@ namespace SpaceAssault.Utils
                 case 13:
                     Global.EnemyColor = Color.Crimson;
                     Global.EnemyFighterColor = Color.Red;
-                    Global.EnemyBomberColor = Color.Red;
+                    Global.EnemyBomberColor = Color.Crimson;
                     _boids.addRandomBoids(7, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(3, Boids.EnemyType.Fighter2);
                     _boids.addRandomBoids(5, Boids.EnemyType.Fighter3);
@@ -661,7 +654,6 @@ namespace SpaceAssault.Utils
                     Global.EnemyColor = Color.Red;
                     Global.EnemyFighterColor = Color.IndianRed;
                     Global.EnemyBomberColor = Color.MediumVioletRed;
-                    //BOSS is needet
                     _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(10, Boids.EnemyType.Fighter2);
                     _boids.addRandomBoids(4, Boids.EnemyType.Bomber);
@@ -698,7 +690,12 @@ namespace SpaceAssault.Utils
                             ship.gunMakeDmg = 200;
                             ship.KillMoney = 5000;
                         }
-
+                        else if (ship.GetType() == typeof(AttackTower))
+                        {
+                            ship.Health = 200;
+                            ship.gunMakeDmg = 0;
+                            ship.KillMoney = 1250;
+                        }
                     }
                     break;
 

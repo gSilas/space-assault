@@ -56,7 +56,7 @@ namespace SpaceAssault.Entities
 
             RotationMatrix = Matrix.Identity;
 
-            MoveSpeedForward = 0.8f;
+            MoveSpeedForward = 1.0f;
             TurnSpeed = 2.0f;
             KillMoney = 100;
             Health = 40;
@@ -64,13 +64,13 @@ namespace SpaceAssault.Entities
             gunMakeDmg = 500;
 
             //BIGJOE Rocket for Body
-            _compositionRec = new Vec3Rectangle(spawnposition, 10, 20);
+            _compositionRec = new Vec3Rectangle(spawnposition, 10, 10);
             Position = _compositionRec.Center;
             towerList = new List<AttackTower>();
-            towerList.Add(new AttackTower(_compositionRec.EdgeBottomLeft, 600, 150, new Weapon(100), this));
-            towerList.Add(new AttackTower(_compositionRec.EdgeBottomRight, 600, 150, new Weapon(100), this));
-            towerList.Add(new AttackTower(_compositionRec.EdgeTopLeft, 600, 150, new Weapon(100), this));
-            towerList.Add(new AttackTower(_compositionRec.EdgeTopRight, 600, 150, new Weapon(100), this));
+            towerList.Add(new AttackTower(_compositionRec.EdgeBottomLeft, 200, 150, new Weapon(500), this));
+            towerList.Add(new AttackTower(_compositionRec.EdgeBottomRight, 200, 150, new Weapon(500), this));
+            towerList.Add(new AttackTower(_compositionRec.EdgeTopLeft, 200, 150, new Weapon(500), this));
+            towerList.Add(new AttackTower(_compositionRec.EdgeTopRight, 200, 150, new Weapon(500), this));
         }
 
         public override void Update(GameTime gameTime)
@@ -100,6 +100,8 @@ namespace SpaceAssault.Entities
 
                 Vector3 direction = -(futureDronePos - tower.Position);
                 direction.Normalize();
+                tower.Direction = direction;
+                tower.RotateTowards(direction);
 
                 float vectorDirection = tower.RotationMatrix.Forward.Z * direction.X - tower.RotationMatrix.Forward.X * direction.Z;
                 if (Math.Abs(vectorDirection) <= 0.15f && distanceToTarget < 350 && !tower.flyingAwayFromDrone)
@@ -149,6 +151,10 @@ namespace SpaceAssault.Entities
             Gun = gun;
             _boss = boss;
             RotationMatrix = Matrix.Identity;
+            MoveSpeedForward = 0f;
+            TurnSpeed = 100f;
+            KillMoney = 100;
+            gunMakeDmg = 5;
         }
 
         public override void Update(GameTime gameTime)

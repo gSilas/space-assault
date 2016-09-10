@@ -231,8 +231,8 @@ namespace SpaceAssault.Utils
                 if (curShip.GetType() == typeof(EnemyBoss))
                 {
                     var bship = (EnemyBoss)curShip;
+                    bship.shootTower(gameTime, curDrone, ref bullets);;
                     collisionObjects.AddRange(bship.towerList);
-                    bship.shootTower(gameTime, curDrone, ref bullets);
 
                     float distanceToTarget = Vector3.Distance(curShip.Position, curDrone.Position);
                     Vector3 futureDronePos = curDrone.Position + (distanceToTarget / curShip.Gun.getBullet(Bullet.BulletType.BigJoe).moveSpeed) * curDrone.curVelocity;
@@ -245,8 +245,6 @@ namespace SpaceAssault.Utils
                     {
                         curShip.Gun.Shoot(gameTime, Bullet.BulletType.BossGun, curShip.gunMakeDmg, curShip.Position + curShip.RotationMatrix.Forward * 2, direction, ref bullets);
                     }
-
-
                 }
 
                 // Trail
@@ -280,9 +278,7 @@ namespace SpaceAssault.Utils
                     ship.Draw(Global.EnemyBossColor);
                 else if (ship.GetType() == typeof(EnemyBomber)|| ship.GetType() == typeof(EnemyBomber2))
                     ship.Draw(Global.EnemyBomberColor);
-                else if (ship.GetType() == typeof(EnemyFighter2))
-                    ship.Draw(Global.EnemyFighterColor);
-                else if (ship.GetType() == typeof(EnemyBoss))
+                else if (ship.GetType() == typeof(EnemyFighter) || ship.GetType() == typeof(EnemyFighter2) || ship.GetType() == typeof(EnemyFighter3))
                     ship.Draw(Global.EnemyFighterColor);
                 else ship.Draw(Global.EnemyColor);
             }
@@ -310,12 +306,18 @@ namespace SpaceAssault.Utils
                 noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
 
                 _maxSpeed = curShip.MoveSpeedForward;
-                if (curShip.GetType() == typeof(EnemyBomber) || curShip.GetType() == typeof(EnemyBomber2) || curShip.GetType() == typeof(EnemyBoss))
+                if (curShip.GetType() == typeof(EnemyBomber) || curShip.GetType() == typeof(EnemyBomber2))
                 {
                     flyToDrone = droneStationRuleBomber(curShip);
                 }
 
-                if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2) || curShip.GetType() == typeof(EnemyFighter3))
+                else if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2) || curShip.GetType() == typeof(EnemyFighter3))
+                {
+                    cohesion = cohesionRule(curShip);
+                    flyToDrone = droneStationRuleFighter(curShip);
+                    avoidS = avoidStationRule(curShip);
+                }
+                else if(curShip.GetType() == typeof(EnemyBoss))
                 {
                     cohesion = cohesionRule(curShip);
                     flyToDrone = droneStationRuleFighter(curShip);
