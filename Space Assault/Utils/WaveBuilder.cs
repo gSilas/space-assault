@@ -101,6 +101,7 @@ namespace SpaceAssault.Utils
                 case 0:
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(2, Boids.EnemyType.Bomber2);
+                    
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
@@ -122,6 +123,7 @@ namespace SpaceAssault.Utils
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter3);
                     _boids.addRandomBoids(2, Boids.EnemyType.Bomber2);
+                    _boids.addRandomBoids(1, Boids.EnemyType.Boss);
                     foreach (var ship in ShipList)
                     {
                         if (ship.GetType() == typeof(EnemyFighter))
@@ -141,6 +143,12 @@ namespace SpaceAssault.Utils
                             ship.Health = 60;
                             ship.gunMakeDmg = 200;
                             ship.KillMoney = 50;
+                        }
+                        else if (ship.GetType() == typeof(EnemyBoss))
+                        {
+                            ship.Health = 6000;
+                            ship.gunMakeDmg = 200;
+                            ship.KillMoney = 5000;
                         }
                     }
                     break;
