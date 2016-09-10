@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using IrrKlang;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceAssault.ScreenManagers;
 using SpaceAssault.Utils;
 
-namespace SpaceAssault.Screens
+namespace SpaceAssault.ScreenManagers
 {
     // Base class for screens that contain a menu of options. The user can
     // move up and down to select an entry, or cancel to back out of the screen.

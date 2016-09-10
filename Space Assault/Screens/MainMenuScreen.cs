@@ -1,5 +1,7 @@
 using System;
 using IrrKlang;
+using SpaceAssault.Utils;
+using SpaceAssault.ScreenManagers;
 
 namespace SpaceAssault.Screens
 {

@@ -1,9 +1,9 @@
 ﻿using System;
-using SpaceAssault.Entities;
-using SpaceAssault.Utils;
 using System.Collections.Generic;
 using IrrKlang;
 using Microsoft.Xna.Framework;
+using SpaceAssault.Entities;
+using SpaceAssault.Utils;
 using SpaceAssault.Screens.UI;
 using SpaceAssault.ScreenManagers;
 
@@ -115,13 +115,13 @@ namespace SpaceAssault.Screens
         void SetShopText()
         {
             ShopText.Clear();
-            ShopText.Add(0, "Your Base Damage is: " + _droneFleet._makeDmg.ToString() + "\n\nFor Every Upgrade your\nGundamage is increased by 10");
+            ShopText.Add(0, "Your Base Damage is: " + _droneFleet._makeDmg.ToString() + "\n\nFor every upgrade your\nGundamage is increased by 10");
             ShopText.Add(1, "Your Base Health is: " + _droneFleet._maxHealth.ToString() + " Health\n\nIf your Health goes down to 0,\nyour Drone will die.\nFor every Upgrade the maximum\nHealth increases by 100.");
             ShopText.Add(2, "New Armor\n" + _droneFleet._armor.ToString() + " Armor\n\nFor every Upgrade in Armor,\nthe incoming Damage is reduced\nby Damage*Armor/10.");
             ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield\n\nIf your Shield goes down to 0,\nyour Health will get Damage.\n\nAfter a short delay\nthe shield restores itself.\n\nFor every upgrade the maximum\nShield increases by 50.");
             ShopText.Add(4, "New Station Health\n" + _station._maxhealth.ToString() + " Health\n\nIf the Stationhealth goes down\nto 0, your Game is Over.\nThe Station gets slowly\nrepaired over time.\n\nFor every Upgrade the maximum\nHealth increases by 1000.");
             ShopText.Add(5, "New Station Shield\n" + _station._maxShield.ToString() + " Shield\n\nIf the Stationshield goes down\nto 0,the Station will get real\nDamage.\nThe Shield regenerates, \nif the Station doesnt get hit.\n\nFor every Upgrade the maximum\nShield increases by 500.");
-            ShopText.Add(6, "Buy your own Fragmentrocket\nIn One Word: BOOOOM\n\nYou have: " + Global.NumberOfRockets + " FragmentMissiles\nfor 500 each");
+            ShopText.Add(6, "Buy your own Fragment rocket\nIn One Word: BOOOOM\n\nYou have: " + Global.NumberOfRockets + " Fragment Missiles\nfor 500 each");
             ShopText.Add(7, "Close Shop");
             SetPriceText();
             SetLevelText();
@@ -190,7 +190,7 @@ namespace SpaceAssault.Screens
         {
 
 
-            if (Global.Money > _priceDMG)
+            if (Global.Money >= _priceDMG)
             {
                 _droneDamageLevel++;
                 Global.Money -= _priceDMG;
@@ -220,7 +220,7 @@ namespace SpaceAssault.Screens
         // Event handler for when the Health menu entry is selected.
         void healthMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > _priceDroneHealth)
+            if (Global.Money >= _priceDroneHealth)
             {
                 _droneHealthLevel++;
                 Global.Money -= _priceDroneHealth;
@@ -251,7 +251,7 @@ namespace SpaceAssault.Screens
 
         void armorMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > _priceArmor)
+            if (Global.Money >= _priceArmor)
             {       
                 if(_droneFleet._armor < 5)
                 {
@@ -287,7 +287,7 @@ namespace SpaceAssault.Screens
         }
         void shieldMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > _priceDroneShield)
+            if (Global.Money >= _priceDroneShield)
             {
                 _droneShieldLevel++;
                 Global.Money -= _priceDroneShield;
@@ -316,7 +316,7 @@ namespace SpaceAssault.Screens
         }
         void sHealthMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > _priceStationHealth)
+            if (Global.Money >= _priceStationHealth)
             {
                 _StationHealthLevel++;
                 Global.Money -= _priceStationHealth;
@@ -346,7 +346,7 @@ namespace SpaceAssault.Screens
         }
         void sShieldMenuEntrySelected(object sender, EventArgs e)
         {
-            if (Global.Money > _priceStationShield)
+            if (Global.Money >= _priceStationShield)
             {
                 _StationShieldLevel++;
                 Global.Money -= _priceStationShield;

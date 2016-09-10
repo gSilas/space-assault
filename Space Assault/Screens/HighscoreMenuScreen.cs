@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input;
 using IrrKlang;
 using SpaceAssault.ScreenManagers;
 using SpaceAssault.Screens.UI;
+using SpaceAssault.Utils;
 
 /* TODO: it would be ideal if our textinput were eventbased: http://www.gamedev.net/topic/457783-xna-getting-text-from-keyboard/
  * Question: Do we really need it? Input doesnt have to be perfect, it just has to work.
@@ -12,7 +13,6 @@ namespace SpaceAssault.Screens
 {
     class HighscoreMenuScreen : MenuScreen
     {
-        private ISoundEngine _engine;
         MenuEntry back;
         bool _enter;
         private bool _nextIterationFalse;

@@ -109,7 +109,7 @@
     <Compile Include="Utils\Weapon.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ScreenManagers\GameScreen.cs" />
-    <Compile Include="ScreenManagers\InputState.cs" />
+    <Compile Include="Utils\InputState.cs" />
     <Compile Include="ScreenManagers\ScreenManager.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
     <Compile Include="Screens\CreditsMenuScreen.cs" />
@@ -121,8 +121,8 @@
     <Compile Include="Screens\UI\InGameOverlay.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
-    <Compile Include="Screens\MenuEntry.cs" />
-    <Compile Include="Screens\MenuScreen.cs" />
+    <Compile Include="Utils\MenuEntry.cs" />
+    <Compile Include="ScreenManagers\MenuScreen.cs" />
     <Compile Include="Screens\UI\MessageBoxScreen.cs" />
     <Compile Include="Screens\OptionsMenuScreen.cs" />
     <Compile Include="Screens\PauseMenuScreen.cs" />
@@ -138,7 +138,6 @@
     <Compile Include="Screens\UI\Frame.cs" />
     <Compile Include="Utils\HighScoreList.cs" />
     <Compile Include="Utils\Label.cs" />
-    <Compile Include="Utils\Mousehandler.cs" />
     <Compile Include="Utils\Particle\ParticleEmitter.cs" />
     <Compile Include="Utils\Particle\ParticleSettings.cs" />
     <Compile Include="Utils\Particle\ParticleSystem.cs" />

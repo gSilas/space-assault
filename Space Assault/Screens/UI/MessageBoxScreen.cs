@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.ScreenManagers;
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Screens
 {

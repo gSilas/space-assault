@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
-using IrrKlang;
 
 namespace SpaceAssault.Entities
 {

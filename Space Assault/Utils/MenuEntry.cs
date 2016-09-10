@@ -1,8 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceAssault.ScreenManagers;
 
-namespace SpaceAssault.Screens
+namespace SpaceAssault.Utils
 {
 
     // Helper class represents a single entry in a MenuScreen. By default this
