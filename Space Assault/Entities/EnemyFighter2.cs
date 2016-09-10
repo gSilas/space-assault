@@ -28,7 +28,7 @@ namespace SpaceAssault.Entities
 
         public override void LoadContent()
         {
-            Model = Global.ContentManager.Load<Model>("Models/enemy_fighter2");
+            Model = Global.ContentManager.Load<Model>("Models/enemyship4");
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.LoadContent();
 
