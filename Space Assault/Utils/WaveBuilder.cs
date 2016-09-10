@@ -126,9 +126,9 @@ namespace SpaceAssault.Utils
                     break;
 
                 case 1:
-                    _boids.addRandomBoids(2, Boids.EnemyType.Fighter);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Fighter3);
-                    _boids.addRandomBoids(2, Boids.EnemyType.Bomber2);
+                    //_boids.addRandomBoids(2, Boids.EnemyType.Fighter);
+                    //_boids.addRandomBoids(2, Boids.EnemyType.Fighter3);
+                    //_boids.addRandomBoids(2, Boids.EnemyType.Bomber2);
                     _boids.addRandomBoids(1, Boids.EnemyType.Boss);
                     foreach (var ship in ShipList)
                     {
@@ -155,6 +155,12 @@ namespace SpaceAssault.Utils
                             ship.Health = 1000;
                             ship.gunMakeDmg = 200;
                             ship.KillMoney = 5000;
+                        }
+                        else if (ship.GetType() == typeof(AttackTower))
+                        {
+                            ship.Health = 200;
+                            ship.gunMakeDmg = 0;
+                            ship.KillMoney = 1250;
                         }
                     }
                     break;
