@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceAssault.Screens;
 using SpaceAssault.Utils;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using IrrKlang;
 
 /// <summary>
@@ -50,8 +47,6 @@ namespace SpaceAssault
         public static ISoundEngine MusicEngine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
         public static ISound Music;
         
-
-
         //RocketCount
         public static int NumberOfRockets=1;
 
@@ -62,14 +57,20 @@ namespace SpaceAssault
         public static int MapDespawnRadius = MapSpawnRadius + 500;
         public static Vector3 CameraPosition = new Vector3(0,350,350);
 
-        public static Color UIColor = new Color(30,110,166,255);
+        //Color for UI
+        public static Color UIColor = new Color(82, 139, 139);
         //Color for Entity
         public static Color DroneColor = Color.Aquamarine;
-        public static Color DroneBulletColor = Color.LightGreen;
-        public static Color EnemyBulletColor = Color.LightGreen;
-        public static Color EnemyColor = Color.Crimson;
         public static Color AsteroidColor = Color.LightGray;
         public static Color StationColor = new Color(82, 139, 139);
+        //Color for Bullets
+        public static Color DroneBulletColor = Color.LightGreen;
+        public static Color EnemyBulletColor = Color.LightGreen;
+        //Color for Enemys
+        public static Color EnemyColor = Color.Crimson;
+        public static Color EnemyFighterColor = Color.Crimson;
+        public static Color EnemyBomberColor = Color.MediumVioletRed;
+        public static Color EnemyBossColor = Color.DarkRed;
 
         public static SpaceAssaultGame game;
     }

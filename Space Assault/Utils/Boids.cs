@@ -276,7 +276,12 @@ namespace SpaceAssault.Utils
             {
                 ship._trail.Draw();
 
-                if (ship.GetType() == typeof(EnemyBoss)) ship.Draw(Color.Green);
+                if (ship.GetType() == typeof(EnemyBoss))
+                    ship.Draw(Global.EnemyBossColor);
+                else if (ship.GetType() == typeof(EnemyBomber))
+                    ship.Draw(Global.EnemyBomberColor);
+                else if (ship.GetType() == typeof(EnemyBoss))
+                    ship.Draw(Global.EnemyFighterColor);
                 else ship.Draw(Global.EnemyColor);
             }
         }
