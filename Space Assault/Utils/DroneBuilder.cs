@@ -35,10 +35,10 @@ namespace SpaceAssault.Utils
         public void Update(GameTime gameTime)
         {
             // updating current drone according to shoplevels
-            GetActiveDrone()._makeDmg = _makeDmg;
-            GetActiveDrone()._maxHealth = _maxHealth;
-            GetActiveDrone()._armor = _armor;
-            GetActiveDrone()._maxShield = _maxShield;
+            GetActiveDrone().makeDmg = _makeDmg;
+            GetActiveDrone().maxHealth = _maxHealth;
+            GetActiveDrone().armor = _armor;
+            GetActiveDrone().maxShield = _maxShield;
             if(_makeDmg >= 30)
             {
                 curBullet = Bullet.BulletType.BlueLazer;

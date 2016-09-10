@@ -226,7 +226,7 @@ namespace SpaceAssault.Screens
                 Global.Money -= _priceDroneHealth;
 
                 this._droneFleet._maxHealth += 100;
-                _droneFleet.GetActiveDrone()._health += 100;
+                _droneFleet.GetActiveDrone().health += 100;
 
                 SetMenuEntryText();
                 SetShopText();

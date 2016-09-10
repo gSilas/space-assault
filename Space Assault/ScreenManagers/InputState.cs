@@ -85,5 +85,29 @@ namespace SpaceAssault.ScreenManagers
         {
             return CurrentMouseState.LeftButton == ButtonState.Pressed;
         }
+
+        public bool IsRightMouseButtonNewPressed()
+        {
+            return (CurrentMouseState.RightButton == ButtonState.Pressed && LastMouseState.RightButton != ButtonState.Pressed);
+        }
+
+        public bool IsRightMouseButtonPressed()
+        {
+            return CurrentMouseState.RightButton == ButtonState.Pressed;
+        }
+
+        // projection of mouse from screen unto the 2d plane in the game
+        public Vector3 getMouseInWorldPos()
+        {
+            Vector3 nearScreenPoint = new Vector3(CurrentMouseState.Position.ToVector2(), 0);
+            Vector3 farScreenPoint = new Vector3(CurrentMouseState.Position.ToVector2(), 1);
+            Vector3 nearWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(nearScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
+            Vector3 farWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(farScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
+            Vector3 direction = farWorldPoint - nearWorldPoint;
+            float zFactor = -nearWorldPoint.Y / direction.Y;
+            Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
+            zeroWorldPoint.Y = 0;
+            return zeroWorldPoint;
+        }
     }
 }

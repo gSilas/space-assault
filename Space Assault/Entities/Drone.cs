@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using SpaceAssault.Utils;
 using SpaceAssault.Utils.Particle;
 using SpaceAssault.Utils.Particle.Settings;
+using SpaceAssault.ScreenManagers;
 
 /// <summary>
 ///  Movement, Schießen, Health, Sterben, neu Spawnen.
@@ -24,40 +25,35 @@ namespace SpaceAssault.Entities
         private float _moveSpeedModifierSideways;
         private float _tiltZ;
         private float _tiltZMax;
-        private Matrix _rotationMatrixLaser = Matrix.Identity;
-
-        public int _maxHealth;
-        public int _health;
-        public int _armor;
-        public int _makeDmg;
-        public int _maxRange;
-
-        //shieldLogic
-        public int _maxShield;
-        public int _shield;
+        private float _speedScaling = 2f;
         private int _shieldpast;
         private TimeSpan _shieldrefreshdelay;
-        private bool _wasDamaged = false;
-
         private TimeSpan _cooldownOnRocket;
+        private bool _wasDamaged = false;
         private bool _alternatingGunLogic = false;
         private bool _isNotDead;
-       
+        private Matrix _rotationMatrixLaser = Matrix.Identity;
+        private InputState _input;
 
-        public Weapon GunPrimary;
-        public Weapon GunSecondary;
-
-        //used for scaling all speed values beside turnSpeed;
-        private float _speedScaling = 2f;
+        public int maxHealth;
+        public int health;
+        public int armor;
+        public int makeDmg;
+        public int maxRange;
+        public int maxShield;
+        public int shield;
+        public Weapon gunPrimary;
+        public Weapon gunSecondary;
 
         public Drone(Vector3 position, int makeDmg, int maxHealth, int armor, int maxShield)
         {
             _spawnPos = position;
             Position = position;
-            _makeDmg = makeDmg;
-            _maxHealth = maxHealth;
-            _armor = armor;
-            _maxShield = maxShield;
+            this.makeDmg = makeDmg;
+            this.maxHealth = maxHealth;
+            this.armor = armor;
+            this.maxShield = maxShield;
+            _input = new InputState();
 
             _trail = new Trail(new DroneTrailSettings());
 
@@ -69,15 +65,15 @@ namespace SpaceAssault.Entities
             _moveSpeedRight = -1.0f * _speedScaling;
             _tiltZ = 0;
             _tiltZMax = 6.2f;
-            _shieldpast = _maxShield;
-            _shield = _maxShield;
-            _health = _maxHealth;
+            _shieldpast = this.maxShield;
+            shield = this.maxShield;
+            health = this.maxHealth;
             _isNotDead = true;
-            _maxRange = Global.MapRingRadius + 200;
+            maxRange = Global.MapRingRadius + 200;
 
-            GunPrimary = new Weapon(200d);
+            gunPrimary = new Weapon(200d);
 
-            GunSecondary = new Weapon(5000d);
+            gunSecondary = new Weapon(5000d);
         }
 
         public void Reset()
@@ -90,8 +86,8 @@ namespace SpaceAssault.Entities
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
 
-            _health = _maxHealth;
-            _shield = _maxShield;
+            health = maxHealth;
+            shield = maxShield;
 
             _isNotDead = true;
             _moveSpeedModifier = 0;
@@ -103,27 +99,28 @@ namespace SpaceAssault.Entities
         {
             Model = Global.ContentManager.Load<Model>("Models/drone");
             Spheres = Collider3D.UpdateBoundingSphere(this);
-            GunPrimary.LoadContent();
-            GunSecondary.LoadContent();
+            gunPrimary.LoadContent();
+            gunSecondary.LoadContent();
             //RotationMatrix = Matrix.CreateRotationX();
         }
 
         public override void Update(GameTime gameTime)
         {
+            _input.Update();
             Spheres = Collider3D.UpdateBoundingSphere(this);
 
             if (gameTime.TotalGameTime > (_shieldrefreshdelay.Add(TimeSpan.FromSeconds(3))))
             {
 
-                if (_shield == _shieldpast)
+                if (shield == _shieldpast)
                     _wasDamaged = false;
-                _shieldpast = _shield;
+                _shieldpast = shield;
                 _shieldrefreshdelay = gameTime.TotalGameTime;
             }
-            if (_wasDamaged == false && _shield < _maxShield)
-                _shield += 1;
+            if (_wasDamaged == false && shield < maxShield)
+                shield += 1;
 
-            if (_health <= 0 || Vector2.Distance(new Vector2(Position.X, Position.Z), Vector2.Zero) > _maxRange) IsNotDead = false;
+            if (health <= 0 || Vector2.Distance(new Vector2(Position.X, Position.Z), Vector2.Zero) > maxRange) IsNotDead = false;
         }
 
         public bool IsNotDead
@@ -135,28 +132,19 @@ namespace SpaceAssault.Entities
         public void getHit(int howMuch)
         {
             _wasDamaged = true;
-            if (_shield >= 0)
-                _shield -= howMuch;
+            if (shield >= 0)
+                shield -= howMuch;
             else
             {
-                _health -= (howMuch - howMuch*(_armor/10));
+                health -= (howMuch - howMuch*(armor/10));
             }
         }
         public void HandleInput(GameTime gameTime, Bullet.BulletType curBullet, ref List<Bullet> bulletList)
         {
             // handling rotation of the drone
-            // projection of mouse from screen unto the 2d plane in the game
-            Vector3 nearScreenPoint = new Vector3(MouseHandler.Position, 0);
-            Vector3 farScreenPoint = new Vector3(MouseHandler.Position, 1);
-            Vector3 nearWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(nearScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
-            Vector3 farWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(farScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
-            Vector3 direction = farWorldPoint - nearWorldPoint;
-            float zFactor = -nearWorldPoint.Y / direction.Y;
-            Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
-            zeroWorldPoint.Y = 0;
 
             // Laser - Mouse control
-            Vector3 screenDirection = this.Position - zeroWorldPoint;
+            Vector3 screenDirection = this.Position - _input.getMouseInWorldPos();
             screenDirection.Normalize();
             float worldDirection;
             for (int i = 0; i < (_turnSpeed / 0.5f); i++)
@@ -167,13 +155,13 @@ namespace SpaceAssault.Entities
             }
 
             // Drone - Mouse control
-            Vector3 direction2 = new Vector3(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, 0, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f) - new Vector3(Mouse.GetState().Position.X, 0, Mouse.GetState().Position.Y);
+            Vector3 direction = new Vector3(Global.GraphicsManager.PreferredBackBufferWidth / 2.0f, 0, Global.GraphicsManager.PreferredBackBufferHeight / 2.0f) - _input.MousePosition;
             direction.Normalize();
             float vectorDirection;
 
             for (float i = 0.5f; i < _turnSpeed; i++)
             {
-                vectorDirection = RotationMatrix.Forward.Z * direction2.X - RotationMatrix.Forward.X * direction2.Z;
+                vectorDirection = RotationMatrix.Forward.Z * direction.X - RotationMatrix.Forward.X * direction.Z;
                 if (vectorDirection > 0.01)
                 {
                     //turn left
@@ -275,25 +263,25 @@ namespace SpaceAssault.Entities
             Position -= new Vector3(1, 0, 0) * _moveSpeedModifierSideways;
 
             // shooting the gun
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            if (_input.IsLeftMouseButtonPressed())
             {
-                if (_alternatingGunLogic && GunPrimary.Shoot(gameTime, curBullet, 10, Position - _rotationMatrixLaser.Left * 3.6f - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList))
+                if (_alternatingGunLogic && gunPrimary.Shoot(gameTime, curBullet, 10, Position - _rotationMatrixLaser.Left * 3.6f - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser.Forward, ref bulletList))
                 {
                     _alternatingGunLogic = false;
                 }
-                else if (GunPrimary.Shoot(gameTime, curBullet, 10, Position - _rotationMatrixLaser.Right * 3.6f - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList))
+                else if (gunPrimary.Shoot(gameTime, curBullet, 10, Position - _rotationMatrixLaser.Right * 3.6f - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser.Forward, ref bulletList))
                 {
                     _alternatingGunLogic = true;
                 }
             }
 
-            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+            if (_input.IsRightMouseButtonPressed())
             {
                 if (gameTime.TotalGameTime > (_cooldownOnRocket.Add(TimeSpan.FromSeconds(5))))
                 {
                     if (Global.NumberOfRockets > 0)
                     {
-                        GunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser, ref bulletList);
+                        gunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser.Forward, ref bulletList);
                         Global.NumberOfRockets -= 1;
                     }
                     Console.WriteLine(Global.NumberOfRockets);

@@ -26,18 +26,18 @@ namespace SpaceAssault.Entities
             EnemyLazer
         }
 
-        public Bullet(BulletType bulletType, Model model, float moveSpeed, bool canDamageStation, int damage, Vector3 position, Matrix droneRotateMatrix)
+        public Bullet(BulletType bulletType, Model model, float moveSpeed, bool canDamageStation, int damage, Vector3 position, Vector3 direction)
         {
             Model = model;
             Position = position;
-            RotationMatrix = droneRotateMatrix;
             Spheres = Collider3D.UpdateBoundingSphere(this);
+            RotationMatrix = Matrix.CreateWorld(position, direction, Vector3.Up);
 
             _bulletType = bulletType;
             _makeDmg = damage;
             _canDmgStation = canDamageStation;
             _bulletLifeTime = 25000;
-            _moveDirection = droneRotateMatrix.Forward;
+            _moveDirection = direction;
             _moveSpeed = moveSpeed;
             if (bulletType == BulletType.BigJoe)
                 _trail = new Trail(new BombTrailSettings());

@@ -42,8 +42,8 @@ namespace SpaceAssault.Screens
             _rocketSymbol.LoadContent("Images/Rocket_Icon");
 
             //Bars
-            Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 80), new Point(300, 60)), Color.Red, droneFleet.GetActiveDrone()._maxHealth));
-            Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 90), new Point(300, 60)), Color.Blue, droneFleet.GetActiveDrone()._maxShield));
+            Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 80), new Point(300, 60)), Color.Red, droneFleet.GetActiveDrone().maxHealth));
+            Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 90), new Point(300, 60)), Color.Blue, droneFleet.GetActiveDrone().maxShield));
             Bars.Add(new Bar(new Rectangle(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width - 400, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 750), new Point(300, 60)), Color.Green, _station._maxhealth));
             Bars.Add(new Bar(new Rectangle(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width - 400, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 740), new Point(300, 60)), Color.White,_station._maxShield));
             foreach (var bar in Bars)
@@ -74,8 +74,8 @@ namespace SpaceAssault.Screens
             Global.UIBatch.DrawString(Global.Font, Global.NumberOfRockets.ToString(), new Vector2(390,725), new Color(58f, 116f, 112f));
             Global.UIBatch.End();
 
-            Bars[0].Draw(droneFleet.GetActiveDrone()._health, droneFleet.GetActiveDrone()._maxHealth);
-            Bars[1].Draw(droneFleet.GetActiveDrone()._shield, droneFleet.GetActiveDrone()._maxShield);
+            Bars[0].Draw(droneFleet.GetActiveDrone().health, droneFleet.GetActiveDrone().maxHealth);
+            Bars[1].Draw(droneFleet.GetActiveDrone().shield, droneFleet.GetActiveDrone().maxShield);
 
             if (Vector3.Distance(this._station.Position, droneFleet.GetActiveDrone().Position) < 300)
             {

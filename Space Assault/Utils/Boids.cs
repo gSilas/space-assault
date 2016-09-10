@@ -10,11 +10,8 @@ namespace SpaceAssault.Utils
 {
     class Boids
     {
-        public List<AEnemys> _ships;
-        public List<AEntity> _objectsToAvoid;
-        public List<Bullet> _bullets;
         private Random _random;
-        InputState _input;
+        private InputState _input;
         private int _proximityRadius;
         private int _cohesionRadius;
         private int _aligningRadius;
@@ -24,8 +21,13 @@ namespace SpaceAssault.Utils
         private int _flyToStationRadius;
         private int _avoidDroneRadius;
         private int _avoidStationRadius;
+        private int _fighterShootRadius;
         private float _maxSpeed;
-        private bool workMouseAdd = false;
+        private bool _workMouseAdd = false;
+
+        public List<AEnemys> ships;
+        public List<AEntity> objectsToAvoid;
+        public List<Bullet> bullets;
 
         public enum EnemyType
         {
@@ -36,9 +38,9 @@ namespace SpaceAssault.Utils
 
         public Boids()
         {
-            _ships = new List<AEnemys>();
-            _objectsToAvoid = new List<AEntity>();
-            _bullets = new List<Bullet>();
+            ships = new List<AEnemys>();
+            objectsToAvoid = new List<AEntity>();
+            bullets = new List<Bullet>();
             _random = new Random();
             _input = new InputState();
 
@@ -51,24 +53,17 @@ namespace SpaceAssault.Utils
             _flyToStationRadius = (int)(_flyToDroneRadius * 1.3f);
             _avoidDroneRadius = (int)(_flyToDroneRadius * 0.4f);
             _avoidStationRadius = 50;
+            _fighterShootRadius = 185;
         }
 
         [Conditional("DEBUG")]
         public void MouseAdd()
         {
-            if (_input.IsNewKeyPress(Keys.N)) workMouseAdd = !workMouseAdd;
-            if (workMouseAdd)
+            if (_input.IsNewKeyPress(Keys.N)) _workMouseAdd = !_workMouseAdd;
+            if (_workMouseAdd)
             {
-                Vector3 nearScreenPoint = new Vector3(MouseHandler.Position, 0);
-                Vector3 farScreenPoint = new Vector3(MouseHandler.Position, 1);
-                Vector3 nearWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(nearScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
-                Vector3 farWorldPoint = Global.GraphicsManager.GraphicsDevice.Viewport.Unproject(farScreenPoint, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity);
-                Vector3 direction = farWorldPoint - nearWorldPoint;
-                float zFactor = -nearWorldPoint.Y / direction.Y;
-                Vector3 zeroWorldPoint = nearWorldPoint + direction * zFactor;
-                zeroWorldPoint.Y = 0;
                 if (_input.IsLeftMouseButtonNewPressed())
-                    addBoid(zeroWorldPoint, EnemyType.Fighter);
+                    addBoid(_input.getMouseInWorldPos(), EnemyType.Fighter);
             }
         }
 
@@ -92,7 +87,7 @@ namespace SpaceAssault.Utils
             }
 
             ship.LoadContent();
-            _ships.Add(ship);
+            ships.Add(ship);
         }
 
         // adds a number of random boids at the map corner (which is a circle), for radius see Global.cs
@@ -114,12 +109,12 @@ namespace SpaceAssault.Utils
 
             List<Bullet> _removeBullets = new List<Bullet>();
             List<AEnemys> _removeShips = new List<AEnemys>();
-            _objectsToAvoid = objList;
+            objectsToAvoid = objList;
             // applying boid logic to our ships
             moveAllBoidsToNewPositions();
 
             // updating bullets
-            foreach (Bullet bullet in _bullets)
+            foreach (Bullet bullet in bullets)
             {
                 bullet.Update(gameTime);
                 if (bullet._bulletLifeTime < 0)
@@ -132,11 +127,11 @@ namespace SpaceAssault.Utils
             }
             foreach (Bullet bullet in _removeBullets)
             {
-                _bullets.Remove(bullet);
+                bullets.Remove(bullet);
             }
 
             // updating every ship
-            foreach (var curShip in _ships)
+            foreach (var curShip in ships)
             {
                 if (curShip.IsDead)
                 {
@@ -145,18 +140,19 @@ namespace SpaceAssault.Utils
                     continue;
                 }
 
-                //shootlogic fighter
-                if (curShip.GetType() == typeof(EnemyFighter))
+                //shootlogic fighters
+                if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2))
                 {
                     Vector3 direction = Global.Camera.Target - curShip.Position;
                     float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
                     double distanceToTarget = Vector3.Distance(curShip.Position, Global.Camera.Target);
-                    if (Math.Abs(vectorDirection) <= 16 && distanceToTarget < 185 && !curShip.flyingAwayFromDrone)
+                    if (Math.Abs(vectorDirection) <= 16 && distanceToTarget < _fighterShootRadius && !curShip.flyingAwayFromDrone)
                     {
-                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix, ref _bullets);
+                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position, direction, ref bullets);
                     }
                 }
-
+                /*
+                //shootlogic fighter2
                 if (curShip.GetType() == typeof(EnemyFighter2))
                 {
                     Vector3 direction = Global.Camera.Target - curShip.Position;
@@ -164,19 +160,18 @@ namespace SpaceAssault.Utils
                     double distanceToTarget = Vector3.Distance(curShip.Position, Global.Camera.Target);
                     if (Math.Abs(vectorDirection) <= 16 && distanceToTarget < 185 && !curShip.flyingAwayFromDrone)
                     {
-                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix, ref _bullets);
+                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix, ref bullets);
                     }
-                }
+                }*/
 
                 //shotlogic bomber
                 if (curShip.GetType() == typeof(EnemyBomber))
                 {
-                    double distanceToDrone = (curShip.Position - Global.Camera.Target).Length();
                     double distanceToStation = curShip.Position.Length();
 
                     if (distanceToStation < 500 && !curShip.flyingAwayFromStation && !curShip.flyingAwayFromDrone)
                     {
-                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.PhotonBomb, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix, ref _bullets);
+                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.PhotonBomb, curShip.gunMakeDmg, curShip.Position, curShip.RotationMatrix.Forward, ref bullets);
                     }
                 }
 
@@ -188,14 +183,14 @@ namespace SpaceAssault.Utils
             //removing dead ships from the list
             foreach (var ship in _removeShips)
             {
-                _ships.Remove(ship);
+                ships.Remove(ship);
             }
 
         }
 
         public void Draw()
         {
-            foreach (Bullet bullet in _bullets)
+            foreach (Bullet bullet in bullets)
             {
                 // BombTrail
                 if (bullet._trail != null)
@@ -203,7 +198,7 @@ namespace SpaceAssault.Utils
                 bullet.Draw(Global.EnemyBulletColor);
             }
 
-            foreach (var ship in _ships)
+            foreach (var ship in ships)
             {
                 ship._trail.Draw();
                 ship.Draw(Global.EnemyColor);
@@ -215,7 +210,7 @@ namespace SpaceAssault.Utils
         /// </summary>
         private void moveAllBoidsToNewPositions()
         {
-            foreach (var curShip in _ships)
+            foreach (var curShip in ships)
             {
                 Vector3
                     cohesion = Vector3.Zero,
@@ -306,7 +301,7 @@ namespace SpaceAssault.Utils
         {
             Vector3 pcj = Vector3.Zero;
             int count = 0;
-            foreach (var otherShip in _ships)
+            foreach (var otherShip in ships)
             {
                 if (otherShip != curShip && Vector3.Distance(otherShip.Position, curShip.Position) < _cohesionRadius)
                 {
@@ -326,7 +321,7 @@ namespace SpaceAssault.Utils
         private Vector3 avoidBoidRule(AEnemys curShip)
         {
             Vector3 c = Vector3.Zero;
-            foreach (var otherShip in _ships)
+            foreach (var otherShip in ships)
             {
                 float distanceDiff = Vector3.Distance(otherShip.Position, curShip.Position) - _avoidBoidsRadius;
                 if (otherShip != curShip && distanceDiff < 0)
@@ -341,7 +336,7 @@ namespace SpaceAssault.Utils
         private Vector3 avoidObjRule(AEnemys curShip)
         {
             Vector3 c = Vector3.Zero;
-            foreach (var curObj in _objectsToAvoid)
+            foreach (var curObj in objectsToAvoid)
             {
                 float distance = Vector3.Distance(curObj.Position, curShip.Position);
                 if (curObj != curShip && distance < _avoidObjRadius)
@@ -357,7 +352,7 @@ namespace SpaceAssault.Utils
         {
             Vector3 pvj = Vector3.Zero;
             int count = 0;
-            foreach (var otherShip in _ships)
+            foreach (var otherShip in ships)
             {
                 float distance = Vector3.Distance(otherShip.Position, curShip.Position);
                 if (otherShip != curShip && distance < _aligningRadius)
