@@ -111,7 +111,7 @@ namespace SpaceAssault.Utils
             List<AEnemys> _removeShips = new List<AEnemys>();
             objectsToAvoid = objList;
             // applying boid logic to our ships
-            //moveAllBoidsToNewPositions();
+            moveAllBoidsToNewPositions();
 
             // updating bullets
             foreach (Bullet bullet in bullets)
