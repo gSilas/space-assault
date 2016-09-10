@@ -214,7 +214,7 @@ namespace SpaceAssault.Utils
                     float vectorDirection = curShip.RotationMatrix.Forward.Z * direction.X - curShip.RotationMatrix.Forward.X * direction.Z;
                     if (Math.Abs(vectorDirection) <= 0.15f && distanceToTarget < _fighterShootRadius && !curShip.flyingAwayFromDrone)
                     {
-                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.BigJoe, curShip.gunMakeDmg, curShip.Position + curShip.RotationMatrix.Forward * 2, direction, ref bullets);
+                        curShip.Gun.Shoot(gameTime, Bullet.BulletType.BossGun, curShip.gunMakeDmg, curShip.Position + curShip.RotationMatrix.Forward * 2, direction, ref bullets);
                     }
 
 
