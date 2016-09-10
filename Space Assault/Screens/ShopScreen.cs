@@ -322,7 +322,8 @@ namespace SpaceAssault.Screens
                 Global.Money -= _priceStationHealth;
              
                 this._station._health += 1000;
-             
+                this._station._maxhealth += 1000;
+
                 SetMenuEntryText();
                 SetShopText();
 
