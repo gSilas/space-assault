@@ -1,9 +1,10 @@
-﻿using IrrKlang;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
 using SpaceAssault.Utils.Particle;
 using SpaceAssault.Utils.Particle.Settings;
+using System;
+using System.Collections.Generic;
 
 namespace SpaceAssault.Entities
 {
@@ -15,7 +16,7 @@ namespace SpaceAssault.Entities
             private Vector3 _center;
             private float _width;
             private float _height;
-           
+
             public Vec3Rectangle(Vector3 center, float width, float height)
             {
                 _center = center;
@@ -45,10 +46,7 @@ namespace SpaceAssault.Entities
             }
         }
 
-        private AttackTower _tower1;
-        private AttackTower _tower2;
-        private AttackTower _tower3;
-        private AttackTower _tower4;
+        public List<AttackTower> towerList;
         private Vec3Rectangle _compositionRec;
 
         public EnemyBoss(Vector3 spawnposition)
@@ -63,21 +61,16 @@ namespace SpaceAssault.Entities
             KillMoney = 100;
             Health = 40;
             Gun = new Weapon(2000);
-           
             gunMakeDmg = 500;
 
             //BIGJOE Rocket for Body
             _compositionRec = new Vec3Rectangle(spawnposition, 50, 50);
-
             Position = _compositionRec.Center;
-            _tower1 = new AttackTower(_compositionRec.EdgeBottomLeft, 600, 150, new Weapon(100), this);
-            _tower2 = new AttackTower(_compositionRec.EdgeBottomRight, 600, 150, new Weapon(100), this);
-            _tower3 = new AttackTower(_compositionRec.EdgeTopLeft, 600, 150, new Weapon(100), this);
-            _tower4 = new AttackTower(_compositionRec.EdgeTopRight, 600, 150, new Weapon(100), this);
-        }
-        public AttackTower[] GetTowers
-        {
-            get { return new AttackTower[] { _tower1, _tower2, _tower3, _tower4 }; }
+            towerList = new List<AttackTower>();
+            towerList.Add(new AttackTower(_compositionRec.EdgeBottomLeft, 600, 150, new Weapon(100), this));
+            towerList.Add(new AttackTower(_compositionRec.EdgeBottomRight, 600, 150, new Weapon(100), this));
+            towerList.Add(new AttackTower(_compositionRec.EdgeTopLeft, 600, 150, new Weapon(100), this));
+            towerList.Add(new AttackTower(_compositionRec.EdgeTopRight, 600, 150, new Weapon(100), this));
         }
 
         public override void Update(GameTime gameTime)
@@ -87,10 +80,33 @@ namespace SpaceAssault.Entities
             Spheres = Collider3D.UpdateBoundingSphere(this);
 
             _compositionRec.Center = Position;
-            _tower1.Position = _compositionRec.EdgeBottomLeft;
-            _tower2.Position = _compositionRec.EdgeBottomRight;
-            _tower3.Position = _compositionRec.EdgeTopLeft;
-            _tower4.Position = _compositionRec.EdgeTopRight;
+            towerList[0].Position = _compositionRec.EdgeBottomLeft;
+            towerList[1].Position = _compositionRec.EdgeBottomRight;
+            towerList[2].Position = _compositionRec.EdgeTopLeft;
+            towerList[3].Position = _compositionRec.EdgeTopRight;
+
+            foreach (AttackTower tower in towerList)
+            {
+                tower.RotateTowards(tower.Position - Global.Camera.Position);
+            }
+        }
+
+        public void shootTower(GameTime gameTime, Drone curDrone, ref List<Bullet> bullets)
+        {
+            foreach (AttackTower tower in towerList)
+            {
+                float distanceToTarget = Vector3.Distance(tower.Position, curDrone.Position);
+                Vector3 futureDronePos = curDrone.Position + (distanceToTarget / tower.Gun.getBullet(Bullet.BulletType.EnemyLazer).moveSpeed) * curDrone.curVelocity;
+
+                Vector3 direction = -(futureDronePos - tower.Position);
+                direction.Normalize();
+
+                float vectorDirection = tower.RotationMatrix.Forward.Z * direction.X - tower.RotationMatrix.Forward.X * direction.Z;
+                if (Math.Abs(vectorDirection) <= 0.15f && distanceToTarget < 350 && !tower.flyingAwayFromDrone)
+                {
+                    tower.Gun.Shoot(gameTime, Bullet.BulletType.EnemyLazer, tower.gunMakeDmg, tower.Position, direction, ref bullets);
+                }
+            }
         }
 
         public override void LoadContent()
@@ -98,13 +114,31 @@ namespace SpaceAssault.Entities
             Model = Global.ContentManager.Load<Model>("Models/enemy_bomber");           
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.LoadContent();
-            _tower1.LoadContent();
-            _tower2.LoadContent();
-            _tower3.LoadContent();
-            _tower4.LoadContent();
+            foreach(var tower in towerList)
+            {
+                tower.LoadContent();
+            }
+        }
+
+        public override void Draw(Color entityColor)
+        {
+            base.Draw(entityColor);
+            foreach (var tower in towerList)
+            {
+                tower.Draw(entityColor);
+            }
+        }
+
+        public override void Draw(Color entityColor, float alphaValue)
+        {
+            base.Draw(entityColor, alphaValue);
+            foreach (var tower in towerList)
+            {
+                tower.Draw(entityColor, alphaValue);
+            }
         }
     }
-    class AttackTower : AEnemys
+    internal class AttackTower : AEnemys
     {
         EnemyBoss _boss;
         public AttackTower(Vector3 position, int health, int damage, Weapon gun, EnemyBoss boss)
@@ -114,7 +148,7 @@ namespace SpaceAssault.Entities
             Position = position;
             Gun = gun;
             _boss = boss;
-            gunMakeDmg = damage;
+            RotationMatrix = Matrix.Identity;
         }
 
         public override void Update(GameTime gameTime)
