@@ -23,6 +23,7 @@ namespace SpaceAssault.Utils
         private BulletMemory photonBomb;
         private BulletMemory bigJoe;
         private BulletMemory enemyLazer;
+        private BulletMemory bossGun;
 
         public class BulletMemory
         {
@@ -57,9 +58,10 @@ namespace SpaceAssault.Utils
             ISoundSource rocket= _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/RocketShot.wav", StreamMode.AutoDetect, true);
             yellowLazer = new BulletMemory("Models/laser", lazer, 6f, false);
             blueLazer = new BulletMemory("Models/laser2", lazer2, 6f, false);
-            photonBomb = new BulletMemory("Models/bullet", lazer, 2f, true);
+            photonBomb = new BulletMemory("Models/bullet", rocket, 2f, true);
             bigJoe = new BulletMemory("Models/bullet", rocket, 4f, false);
             enemyLazer = new BulletMemory("Models/laser", lazer3, 6f, false);
+            bossGun = new BulletMemory("Models/bullet", rocket,4f,true);
         }
 
         public bool Shoot(GameTime gameTime, Bullet.BulletType bullet, int damage, Vector3 position, Vector3 direction, ref List<Bullet> bulletList)
@@ -101,6 +103,9 @@ namespace SpaceAssault.Utils
                 case Bullet.BulletType.EnemyLazer:
                     return enemyLazer;
 
+                case Bullet.BulletType.BossGun:
+                    return bossGun;
+                    
                 default:
                     return yellowLazer;
 
