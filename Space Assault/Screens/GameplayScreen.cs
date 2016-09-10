@@ -44,6 +44,7 @@ namespace SpaceAssault.Screens
         private Frame _frame;
         private Background _back;
         private UIItem _stationSymbol;
+        private UIItem _enemySymbol;
 
         // Sound
         private ISoundSource _explosionSource;
@@ -118,7 +119,9 @@ namespace SpaceAssault.Screens
         {
          
             _stationSymbol = new UIItem();
+            _enemySymbol = new UIItem();
             _stationSymbol.LoadContent("Images/station_icon");
+            _enemySymbol.LoadContent("Images/enemy_icon");
             _droneFleet.addDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
             _station.LoadContent();
@@ -351,7 +354,8 @@ namespace SpaceAssault.Screens
                 ScreenManager.FadeBackBufferToBlack(alpha);
             }
 
-            DrawDirectionArrow();
+            DrawStationDirectionArrow();
+            DrawShipDirectionArrow();
 
             if (_station._shield > 0)
                 _sphere.Draw(new Color(255, 255, 255), _sphereAlpha);
@@ -603,7 +607,7 @@ namespace SpaceAssault.Screens
         //#################################
         // Helper Draw - Arrow
         //#################################
-        void DrawDirectionArrow()
+        void DrawStationDirectionArrow()
         {
             if (Vector3.Distance(_droneFleet.GetActiveDrone().Position, _station.Position) > 300)
             {
@@ -615,7 +619,28 @@ namespace SpaceAssault.Screens
                 _stationSymbol.Draw(vec.ToPoint(), 1, Color.White);
             }
         }
+        void DrawShipDirectionArrow()
+        {
+            float minDistance = float.MaxValue;
+            Vector3 posS = Vector3.Zero;
+            foreach (var ship in _waveBuilder.ShipList)
+            {
+               var val = Math.Min(Vector3.Distance(_droneFleet.GetActiveDrone().Position, ship.Position), minDistance);
+               if ( minDistance != val)
+               {
+                    minDistance = val;
+                    posS = ship.Position;
+               }
 
+            }
+            var vec3 = posS - _droneFleet.GetActiveDrone().Position;
+            vec3.Normalize();
+            var vec = new Vector2();
+            vec.X = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position + vec3 * 50, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X;
+            vec.Y = Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position + vec3 * 50, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y;
+            _enemySymbol.Draw(vec.ToPoint(), 1, Global.EnemyColor);
+         }
+        
         //#################################
         // Helper RndPoint
         //#################################
