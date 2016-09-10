@@ -278,8 +278,10 @@ namespace SpaceAssault.Utils
 
                 if (ship.GetType() == typeof(EnemyBoss))
                     ship.Draw(Global.EnemyBossColor);
-                else if (ship.GetType() == typeof(EnemyBomber))
+                else if (ship.GetType() == typeof(EnemyBomber)|| ship.GetType() == typeof(EnemyBomber2))
                     ship.Draw(Global.EnemyBomberColor);
+                else if (ship.GetType() == typeof(EnemyFighter2))
+                    ship.Draw(Global.EnemyFighterColor);
                 else if (ship.GetType() == typeof(EnemyBoss))
                     ship.Draw(Global.EnemyFighterColor);
                 else ship.Draw(Global.EnemyColor);
