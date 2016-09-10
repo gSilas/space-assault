@@ -469,7 +469,7 @@ namespace SpaceAssault.Utils
             List<AEntity> avoidList = new List<AEntity>();
             avoidList.AddRange(asteroidField._asteroidList);
             avoidList.AddRange(droneFleet._droneShips);
-            _boids.Update(gameTime, avoidList);
+            _boids.Update(gameTime, avoidList, droneFleet.GetActiveDrone());
         }
         public void Draw()
         {

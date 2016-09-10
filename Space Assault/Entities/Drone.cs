@@ -44,6 +44,7 @@ namespace SpaceAssault.Entities
         public int shield;
         public Weapon gunPrimary;
         public Weapon gunSecondary;
+        public Vector3 curVelocity;
 
         public Drone(Vector3 position, int makeDmg, int maxHealth, int armor, int maxShield)
         {
@@ -141,6 +142,8 @@ namespace SpaceAssault.Entities
         }
         public void HandleInput(GameTime gameTime, Bullet.BulletType curBullet, ref List<Bullet> bulletList)
         {
+            Vector3 _oldPosition = Position;
+
             // handling rotation of the drone
 
             // Laser - Mouse control
@@ -293,6 +296,7 @@ namespace SpaceAssault.Entities
 
             //RotationMatrix = Matrix.CreateRotationZ(_tiltZ);
             //Position -= RotationMatrix.Forward * _moveSpeedModifier;
+            curVelocity = Position - _oldPosition;
         }
     }
 }
