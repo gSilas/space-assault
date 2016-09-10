@@ -253,6 +253,12 @@ namespace SpaceAssault.Screens
             {
                 _station._health -= 1000;
             }
+
+            if (_input.IsNewKeyPress(Keys.F) && _input.IsNewKeyPress(Keys.H))
+            {
+                _station._shield -= 1000;
+            }
+
             if (_input.IsNewKeyPress(Keys.F1))
             {
                 Console.WriteLine("Drone Damage: " + _droneFleet.GetActiveDrone().makeDmg);
