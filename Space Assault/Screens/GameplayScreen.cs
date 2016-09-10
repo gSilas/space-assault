@@ -35,7 +35,7 @@ namespace SpaceAssault.Screens
         private int _deathCounter = 0;
         public static int _stationHeight = 80;
         private WaveBuilder _waveBuilder;
-
+        private Planet _planet;
         private InputState _input;
 
 
@@ -106,7 +106,7 @@ namespace SpaceAssault.Screens
             Global.Money = 0;
             Global.NumberOfRockets = 1;
             _input = new InputState();
-
+            _planet = new Planet(new Vector3(-1000,-2000,-1000), 0);
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
             // Construct Particles
@@ -134,7 +134,7 @@ namespace SpaceAssault.Screens
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             _waveBuilder.LoadContent();
-            
+            _planet.LoadContent();
             //Effects
             _stationEffect = Global.ContentManager.Load<Effect>("Effects/stationEffect");
 
@@ -190,9 +190,9 @@ namespace SpaceAssault.Screens
             //boids
             _waveBuilder.Update(gameTime, ref _asteroidField, ref _droneFleet);
 
-
             // calling update of objects where necessary
             _station.Update(gameTime);
+            _planet.Update(gameTime);
             _droneFleet.Update(gameTime);
             _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
             _input.Update();
@@ -338,10 +338,10 @@ namespace SpaceAssault.Screens
             // calling draw of objects where necessary
             _back.Draw(90, new Vector3(-15000, -2000, -15000));
             _station.Draw(Global.StationColor);
+            _planet.Draw(Color.DarkViolet);
             _droneFleet.Draw();
             _asteroidField.Draw();
             _waveBuilder.Draw(gameTime);
-
             // Particle
             dustParticles.Draw();
             borderParticles.Draw();

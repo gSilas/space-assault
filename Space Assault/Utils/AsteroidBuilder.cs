@@ -41,7 +41,6 @@ namespace SpaceAssault.Utils
             }
             if (_asteroidList.Count < _asteroidNumber)
             {
-                Console.WriteLine("here come dat boi");
                     int movespeed;
                     double angle;
                     int size = _rand.Next(0, 11);

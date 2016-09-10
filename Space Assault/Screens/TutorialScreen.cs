@@ -30,6 +30,7 @@ namespace SpaceAssault.Screens
         private Sphere _sphere;
         private DroneBuilder _droneFleet;
         public static int _stationHeight = 80;
+        Planet _planet;
 
         //UI + Frame + Background
         private InGameOverlay _ui;
@@ -79,6 +80,7 @@ namespace SpaceAssault.Screens
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
             //actual gameplay objects
             _station = new Station(new Vector3(0, _stationHeight, 0), 0);
+            _planet = new Planet(new Vector3(-1000, -2000, -1000), 0);
             _sphere = new Sphere(new Vector3(0, _stationHeight / 2, 0), 0);
             _droneFleet = new DroneBuilder();
             movementAllowed = false;
@@ -128,12 +130,12 @@ namespace SpaceAssault.Screens
             _droneFleet.addDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
             _station.LoadContent();
+            _planet.LoadContent();
             _sphere.LoadContent();
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             tutorialDialog.LoadContent();
             _asteroidField.LoadContent();
-
             //Sounds
 
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
@@ -183,6 +185,7 @@ namespace SpaceAssault.Screens
 
             // calling update of objects where necessary
             _station.Update(gameTime);
+            _planet.Update(gameTime);
             if (movementAllowed)
             {
                 _droneFleet.Update(gameTime);
@@ -310,6 +313,7 @@ namespace SpaceAssault.Screens
             // calling draw of objects where necessary
             _back.Draw(90, new Vector3(-5000, -2500, -5000));
             _station.Draw(Global.StationColor);
+            _planet.Draw(Color.DarkViolet);
             _droneFleet.Draw();
 
             foreach (ExplosionSystem explosion in explosionList)
