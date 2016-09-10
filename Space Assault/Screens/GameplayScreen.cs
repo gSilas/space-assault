@@ -129,7 +129,7 @@ namespace SpaceAssault.Screens
 
             //Sounds
            
-            Global.Music = _engine.Play2D("Content/Media/Music/Space Fighter Loop.mp3", false);
+            Global.Music = _engine.Play2D("Content/Media/Effects/Objects/Explosion3.wav", false);
             Global.Music.Volume = Global.MusicVolume / 10;
 
             _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OpenShop.wav", StreamMode.AutoDetect, true);
@@ -156,8 +156,10 @@ namespace SpaceAssault.Screens
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                        bool coveredByOtherScreen)
         {
+
             base.Update(gameTime, otherScreenHasFocus, false);
 
+            SoundDJ();
             if (_sphereAlpha > 0.1f)
                 _sphereAlpha -= 0.001f;
 
@@ -647,6 +649,35 @@ namespace SpaceAssault.Screens
                 borderParticles.AddParticle(RandomPointOnCircle(Global.MapRingRadius), Vector3.Zero);
             }
             borderParticles.Update(gameTime);
+        }
+        //###########################
+        // SoundDJ
+        //###########################
+        void SoundDJ()
+        {
+            if (Global.Music.Finished)
+            {
+
+                Random _rand = new Random();
+                ;
+                switch (_rand.Next(1, 3))
+                {
+                    case 1:
+                        Global.Music = _engine.Play2D("Content/Media/Music/Space Fighter Loop.mp3", false);
+                        Global.Music.Volume = Global.MusicVolume/10;
+                        break;
+                    case 2:
+                        Global.Music = _engine.Play2D("Content/Media/Music/Shiny Tech2.mp3", false);
+                        Global.Music.Volume = Global.MusicVolume/10;
+                        break;
+                    case 3:
+                        Global.Music = _engine.Play2D("Content/Media/Music/Cyborg Ninja.mp3", false);
+                        Global.Music.Volume = Global.MusicVolume/10;
+                        break;
+
+                }
+            }
+        
         }
 
     }
