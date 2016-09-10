@@ -132,9 +132,8 @@ namespace SpaceAssault.Screens
 
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
-            Global.Music.Stop();
-            Global.Music = _engine.Play2D("Content/Media/Music/Space Fighter Loop.mp3", false);
-            Global.Music.Volume = Global.MusicVolume / 10;
+           
+
 
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
             _explosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion1.wav", StreamMode.AutoDetect, true);
@@ -218,6 +217,7 @@ namespace SpaceAssault.Screens
             {
                 if (input.IsNewKeyPress(Keys.Y))
                 {
+                    Global.MusicEngine.StopAllSounds();
                     ScreenManager.AddScreen(new GameplayScreen());
                     ScreenManager.RemoveScreen(this);
                 }
@@ -283,6 +283,7 @@ namespace SpaceAssault.Screens
             {
                 if (input.IsNewKeyPress(Keys.X))
                 {
+                    Global.MusicEngine.StopAllSounds();
                     ScreenManager.AddScreen(new GameplayScreen());
                     ScreenManager.RemoveScreen(this);
                 }

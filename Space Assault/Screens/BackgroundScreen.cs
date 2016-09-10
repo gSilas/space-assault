@@ -17,7 +17,6 @@ namespace SpaceAssault.Screens
         private Station _station;
 
         //Sound
-        private ISoundEngine _engine;
         float posOnCircle = 0;
 
         //Dialogs
@@ -64,9 +63,8 @@ namespace SpaceAssault.Screens
             _station.LoadContent();
 
             //Sound
-            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
-            _engine.SetListenerPosition(new Vector3D(0,0,0), new Vector3D(0, 0, 1));
-            Global.Music = _engine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
+            Global.MusicEngine.StopAllSounds();
+            Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
             Global.Music.Volume = Global.MusicVolume / 10;
 
             _back = new Background();
@@ -76,8 +74,8 @@ namespace SpaceAssault.Screens
         // Unloads content for this screen.
         public override void UnloadContent()
         {
-            _engine.StopAllSounds();
-            _engine.Dispose();
+            Global.MusicEngine.StopAllSounds();
+            //Global.MusicEngine.Dispose();
         }
 
 

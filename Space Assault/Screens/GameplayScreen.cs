@@ -113,6 +113,7 @@ namespace SpaceAssault.Screens
         //#################################
         public override void LoadContent()
         {
+         
             _stationSymbol = new UIItem();
             _stationSymbol.LoadContent("Images/station_icon");
             _droneFleet.addDrone(new Vector3(150, 0, 100));
@@ -129,7 +130,7 @@ namespace SpaceAssault.Screens
 
             //Sounds
            
-            Global.Music = _engine.Play2D("Content/Media/Music/Space Fighter Loop.mp3", false);
+            Global.Music = _engine.Play2D("Content/Media/Effects/Objects/Explosion3.wav", false);
             Global.Music.Volume = Global.MusicVolume / 10;
 
             _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OpenShop.wav", StreamMode.AutoDetect, true);
@@ -146,6 +147,7 @@ namespace SpaceAssault.Screens
         public override void UnloadContent()
         {
             //Global.ContentManager.Unload();
+            
             _engine.StopAllSounds();
             _engine.Dispose();
         }
@@ -156,7 +158,9 @@ namespace SpaceAssault.Screens
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                        bool coveredByOtherScreen)
         {
+
             base.Update(gameTime, otherScreenHasFocus, false);
+            SoundDJ();
 
             if (_sphereAlpha > 0.1f)
                 _sphereAlpha -= 0.001f;
@@ -223,6 +227,7 @@ namespace SpaceAssault.Screens
                 _droneFleet.GetActiveDrone().Reset();
                 _deathCounter++;
             }
+            
         }
 
         //#################################
@@ -288,6 +293,7 @@ namespace SpaceAssault.Screens
             if (input.IsPauseGame())
             {
                 //playing the sound
+                
                 _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                 ISound Open;
                 Open = _engine.Play2D(_openShop, false, true, false);
@@ -647,6 +653,37 @@ namespace SpaceAssault.Screens
                 borderParticles.AddParticle(RandomPointOnCircle(Global.MapRingRadius), Vector3.Zero);
             }
             borderParticles.Update(gameTime);
+        }
+        //###########################
+        // SoundDJ
+        //###########################
+        void SoundDJ()
+        {
+            if (Global.Music.Finished)
+            {
+
+                Random _rand = new Random();
+          
+                switch (_rand.Next(1, 4))
+                {
+                    case 1:
+                        Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Space Fighter Loop.mp3", false);
+                        Global.Music.Volume = Global.MusicVolume / 10;
+                        break;
+
+                    case 2:
+                        Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Shiny Tech2.mp3", false);
+                        Global.Music.Volume = Global.MusicVolume / 10;
+                        break;
+
+                    case 3:
+                        Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Cyborg Ninja.mp3", false);
+                        Global.Music.Volume = Global.MusicVolume/10;
+                        break;
+
+                }
+            }
+        
         }
 
     }

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Screens;
 using SpaceAssault.Utils;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using IrrKlang;
 
 /// <summary>
@@ -46,7 +47,10 @@ namespace SpaceAssault
         public static float MusicVolume = 1;
 
         //MUSIC
+        public static ISoundEngine MusicEngine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
         public static ISound Music;
+        
+
 
         //RocketCount
         public static int NumberOfRockets=1;

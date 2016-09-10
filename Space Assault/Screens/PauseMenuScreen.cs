@@ -38,6 +38,7 @@ namespace SpaceAssault.Screens
         // Event handler for when the Quit Game menu entry is selected.
         void QuitGameMenuEntrySelected(object sender, EventArgs e)
         {
+            
             const string message = "Are you sure you want to abandon your Mission?";
             MessageBoxScreen confirmQuitMessageBox = new MessageBoxScreen(message);
             confirmQuitMessageBox.Accepted += ConfirmQuitMessageBoxAccepted;
@@ -77,7 +78,7 @@ namespace SpaceAssault.Screens
         // transition from the game back to the main menu screen.
         void ConfirmQuitMessageBoxAccepted(object sender, EventArgs e)
         {
-
+           
             LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),new MainMenuScreen());
             //LoadingScreen.Load(ScreenManager, false, null, new MainMenuScreen());
             //ScreenManager.Game.Exit();
@@ -87,6 +88,7 @@ namespace SpaceAssault.Screens
             Accept = SoundEngine.Play2D(GoBack, false, true, false);
             Accept.Volume = Global.SpeakerVolume / 10;
             Accept.Paused = false;
+            Global.MusicEngine.StopAllSounds();
         }
 
         void SetMenuEntryText()
