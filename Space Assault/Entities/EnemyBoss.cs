@@ -109,9 +109,9 @@ namespace SpaceAssault.Entities
             }
         }
 
-        public override void LoadContent()
+        public override void LoadContent(Model model)
         {
-            Model = Global.ContentManager.Load<Model>("Models/enemy_bomber");           
+            Model = model;     
             Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.LoadContent();
             foreach(var tower in towerList)

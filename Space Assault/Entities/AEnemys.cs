@@ -68,5 +68,17 @@ namespace SpaceAssault.Entities
             Health -= HowMuchDMG;
             //playing the sound
         }
+
+        public override void LoadContent()
+        {
+            throw new NotImplementedException();
+        }
+        public virtual void LoadContent(Model model)
+        {
+            Model = model;
+            Spheres = Collider3D.UpdateBoundingSphere(this);
+            Gun.LoadContent();
+        }
     }
+
 }

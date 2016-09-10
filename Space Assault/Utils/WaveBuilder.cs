@@ -49,6 +49,7 @@ namespace SpaceAssault.Utils
                 if(gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)) && _waveCount < _max)
                 {
                     _waveCount++;
+                    _currentWave.UnLoadContent();
                     _currentWave = new Wave(_waveCount);
                     _currentWave.LoadContent();
                     _timeSet = false;
@@ -94,8 +95,13 @@ namespace SpaceAssault.Utils
             _boids = new Boids();
             _waveNumber = waveNumber;
         }
+        public void UnLoadContent()
+        {
+            _boids.UnLoadContent();
+        }
         public void LoadContent()
         {
+            _boids.LoadContent();
             switch (_waveNumber)
             {
                 case 0:

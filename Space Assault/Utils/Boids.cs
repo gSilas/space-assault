@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Input;
 using SpaceAssault.Entities;
 using SpaceAssault.ScreenManagers;
 using System.Diagnostics;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace SpaceAssault.Utils
 {
@@ -30,6 +32,15 @@ namespace SpaceAssault.Utils
         public List<AEntity> objectsToAvoid;
         public List<Bullet> bullets;
 
+        Model bomberModel;
+        Model bomber2Model;
+        Model bossModel;
+        Model fighterModel;
+        Model fighter2Model;
+        Model fighter3Model;
+
+        ContentManager boidContent;
+
         public enum EnemyType
         {
             Fighter,
@@ -48,7 +59,7 @@ namespace SpaceAssault.Utils
             bullets = new List<Bullet>();
             _random = new Random();
             _input = new InputState();
-
+            boidContent = new ContentManager( Global.game.Services, Global.game.Content.RootDirectory);
             _cohesionRadius = 125;
             _aligningRadius = 85;
             _avoidBoidsRadius = 30;
@@ -60,7 +71,20 @@ namespace SpaceAssault.Utils
             _avoidStationRadius = 50;
             _fighterShootRadius = 230;
         }
-
+        public void LoadContent()
+        {
+            bomberModel = Global.ContentManager.Load<Model>("Models/enemy_bomber");
+            bomber2Model = Global.ContentManager.Load<Model>("Models/enemyship");
+            bossModel = Global.ContentManager.Load<Model>("Models/enemy_bomber");
+            fighterModel = Global.ContentManager.Load<Model>("Models/enemyship2");
+            fighter2Model = Global.ContentManager.Load<Model>("Models/enemyship4");
+            fighter3Model = Global.ContentManager.Load<Model>("Models/enemyship3");
+        }
+        public void UnLoadContent()
+        {
+            Console.WriteLine("unload");
+            boidContent.Unload();
+        }
         [Conditional("DEBUG")]
         public void MouseAdd()
         {
@@ -79,28 +103,33 @@ namespace SpaceAssault.Utils
             {
                 case EnemyType.Fighter:
                     ship = new EnemyFighter(position);
+                    ship.LoadContent(fighterModel);
                     break;
                 case EnemyType.Fighter2:
                     ship = new EnemyFighter2(position);
+                    ship.LoadContent(fighter2Model);
                     break;
                 case EnemyType.Fighter3:
                     ship = new EnemyFighter3(position);
+                    ship.LoadContent(fighter3Model);
                     break;
                 case EnemyType.Bomber:
                     ship = new EnemyBomber(position);
+                    ship.LoadContent(bomberModel);
                     break;
                 case EnemyType.Bomber2:
                     ship = new EnemyBomber2(position);
+                    ship.LoadContent(bomber2Model);
                     break;
                 case EnemyType.Boss:
                     ship = new EnemyBoss(position);
+                    ship.LoadContent(bossModel);
                     break;
                 default:
                     ship = new EnemyFighter(position);
+                    ship.LoadContent(fighterModel);
                     break;
             }
-
-            ship.LoadContent();
             ship.flyingAwayFromDrone = false;
             ship.flyingAwayFromStation = false;
             _ships.Add(ship);

@@ -30,6 +30,7 @@ namespace SpaceAssault
             // Activate the first screens.
             screenManager.AddScreen(new BackgroundScreen());
             screenManager.AddScreen(new MainMenuScreen());
+            Global.game = this;
         }
 
 

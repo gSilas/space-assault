@@ -71,5 +71,7 @@ namespace SpaceAssault
         public static Color EnemyColor = Color.Crimson;
         public static Color AsteroidColor = Color.LightGray;
         public static Color StationColor = new Color(82, 139, 139);
+
+        public static SpaceAssaultGame game;
     }
 }
