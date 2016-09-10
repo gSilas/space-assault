@@ -45,8 +45,8 @@ namespace SpaceAssault.Screens
             Accept = SoundEngine.Play2D(OkClick, false, true, false);
             Accept.Volume = Global.SpeakerVolume / 10;
             Accept.Paused = false;
-
             LoadingScreen.Load(ScreenManager, true, new GameplayScreen());
+            
         }
 
         // Event handler for when the Options menu entry is selected.

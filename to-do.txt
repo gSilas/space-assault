@@ -29,13 +29,12 @@ Easter Egg:
 	- wenn man esc drückt pausiert es nicht wirklich
 	- immer erst tutorial bzw. dialogabfrage (ja/nein)
 	- tutorial komplettieren (alle funktionen erklären)
-	- man sieht nicht was die sachen im shop machen bevor man sie kauft
+	- man sieht nicht was die sachen im shop machen bevor man sie kauft					#######################
 	- statt shield und dmg sollte man vllt split shots oder homing missiles kaufen können
-	- wenn das gegnerschiff nicht aufm screen ist vllt n kleiner pinker pfeil am rand?
+	- wenn das gegnerschiff nicht aufm screen ist vllt n kleiner pinker pfeil am rand?	##############
 	- armor würd ich komplett rausnehmen weil es irgendwie nicht passt
 	- vllt shield recharge rate im shop? (dass es schneller aufläd)
 	- oder attack speed, movement speed
-	- die musik hört einfach auf, 5/7 would play again
 	- bei dmg upgrade animation vom schuss ändern (sonst nicht befriedigend zu upgraden)
 	- n sound effekt wenn das schild kaputt geht
 	- die zeitspanne zwischen den waves einfach verkürzen und dafür im shop und bei esc wirklich pausieren

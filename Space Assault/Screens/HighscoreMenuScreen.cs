@@ -80,10 +80,8 @@ namespace SpaceAssault.Screens
         public override void LoadContent()
         {
             base.LoadContent();
-            Global.Music.Stop();
-            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
-            _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            Global.Music = _engine.Play2D("Content/Media/Music/Truth of the Legend_Cut.wav", false);
+            Global.MusicEngine.StopAllSounds();
+            Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
             Global.Music.Volume = Global.MusicVolume / 10;
 
             //Dialogs + Background + Frame
@@ -270,8 +268,8 @@ namespace SpaceAssault.Screens
                 // Accept or cancel the menu.
                 if (input.IsMenuSelect())
                 {
-                    Global.Music.Stop();
-                    Global.Music = _engine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
+                    Global.MusicEngine.StopAllSounds();
+                    Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
                     Global.Music.Volume = Global.MusicVolume / 10;
                     OnSelectEntry(selectedEntry);
                 }
@@ -284,8 +282,8 @@ namespace SpaceAssault.Screens
                 else if (input.IsMenuCancel())
                 {
                     OnCancel();
-                    Global.Music.Stop();
-                    Global.Music = _engine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
+                    Global.MusicEngine.StopAllSounds();
+                    Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
                     Global.Music.Volume = Global.MusicVolume / 10;
                 }
             }

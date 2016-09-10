@@ -217,6 +217,7 @@ namespace SpaceAssault.Screens
             {
                 if (input.IsNewKeyPress(Keys.Y))
                 {
+                    Global.MusicEngine.StopAllSounds();
                     ScreenManager.AddScreen(new GameplayScreen());
                     ScreenManager.RemoveScreen(this);
                 }
@@ -282,7 +283,7 @@ namespace SpaceAssault.Screens
             {
                 if (input.IsNewKeyPress(Keys.X))
                 {
-                    Global.Music.Stop();
+                    Global.MusicEngine.StopAllSounds();
                     ScreenManager.AddScreen(new GameplayScreen());
                     ScreenManager.RemoveScreen(this);
                 }
