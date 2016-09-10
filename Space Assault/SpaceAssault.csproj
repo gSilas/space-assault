@@ -108,7 +108,7 @@
     <Compile Include="Utils\Weapon.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ScreenManagers\GameScreen.cs" />
-    <Compile Include="ScreenManagers\InputState.cs" />
+    <Compile Include="Utils\InputState.cs" />
     <Compile Include="ScreenManagers\ScreenManager.cs" />
     <Compile Include="Screens\BackgroundScreen.cs" />
     <Compile Include="Screens\CreditsMenuScreen.cs" />
@@ -121,7 +121,7 @@
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Utils\MenuEntry.cs" />
-    <Compile Include="Screens\MenuScreen.cs" />
+    <Compile Include="ScreenManagers\MenuScreen.cs" />
     <Compile Include="Screens\UI\MessageBoxScreen.cs" />
     <Compile Include="Screens\OptionsMenuScreen.cs" />
     <Compile Include="Screens\PauseMenuScreen.cs" />
