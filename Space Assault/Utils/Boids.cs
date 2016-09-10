@@ -262,11 +262,11 @@ namespace SpaceAssault.Utils
 
             foreach (var ship in ships)
             {
-                if(ship.GetType() != typeof(AttackTower))
+                if (ship.GetType() != typeof(AttackTower))
                 {
                     ship._trail.Draw();
                 }
-               ship.Draw(Global.EnemyColor);
+                ship.Draw(Global.EnemyColor);
             }
         }
 
@@ -291,42 +291,21 @@ namespace SpaceAssault.Utils
                 avoidO = avoidObjRule(curShip);
                 noise = new Vector3((float)_random.NextDouble(), 0, (float)_random.NextDouble());
 
-                if (curShip.GetType() == typeof(EnemyBomber) || curShip.GetType() == typeof(EnemyBomber2))
+                _maxSpeed = curShip.MoveSpeedForward;
+                if (curShip.GetType() == typeof(EnemyBomber) || curShip.GetType() == typeof(EnemyBomber2) || curShip.GetType() == typeof(EnemyBoss))
                 {
-                    _maxSpeed = curShip.MoveSpeedForward;
                     flyToDrone = droneStationRuleBomber(curShip);
                 }
 
-                if (curShip.GetType() == typeof(EnemyFighter))
+                if (curShip.GetType() == typeof(EnemyFighter) || curShip.GetType() == typeof(EnemyFighter2) || curShip.GetType() == typeof(EnemyFighter3))
                 {
-                    _maxSpeed = curShip.MoveSpeedForward;
                     cohesion = cohesionRule(curShip);
                     flyToDrone = droneStationRuleFighter(curShip);
                     avoidS = avoidStationRule(curShip);
-                }
-                if (curShip.GetType() == typeof(EnemyFighter2))
-                {
-                    _maxSpeed = curShip.MoveSpeedForward;
-                    cohesion = cohesionRule(curShip);
-                    flyToDrone = droneStationRuleFighter(curShip);
-                    avoidS = avoidStationRule(curShip);
-                }
-                if (curShip.GetType() == typeof(EnemyFighter3))
-                {
-                    _maxSpeed = curShip.MoveSpeedForward;
-                    cohesion = cohesionRule(curShip);
-                    flyToDrone = droneStationRuleFighter(curShip);
-                    avoidS = avoidStationRule(curShip);
-                }
-                if (curShip.GetType() == typeof(EnemyBoss))
-                {
-                    _maxSpeed = curShip.MoveSpeedForward;
-                    flyToDrone = droneStationRuleBomber(curShip);
                 }
 
                 Vector3 lastDirection = curShip._flyingDirection;
                 curShip._flyingDirection += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS) / 30;
-
                 curShip._flyingDirection.Y = 0;
 
                 if (curShip._flyingDirection.Length() > _maxSpeed)
@@ -437,12 +416,15 @@ namespace SpaceAssault.Utils
                     count++;
                 }
             }
-            if (count > 0)
-            {
-                pvj /= count;
-                pvj.Normalize();
-            }
+            if (count > 0) pvj /= count;
+
             return pvj;
+        }
+
+        private Vector3 goToPlace(AEnemys curShip, Vector3 place)
+        {
+            Vector3 placeDir = place - curShip.Position;
+            return placeDir;
         }
 
         private Vector3 avoidStationRule(AEnemys curShip)
@@ -487,14 +469,7 @@ namespace SpaceAssault.Utils
                     return goToPlace(curShip, Vector3.Zero);
                 }
             }
-
             return Vector3.Zero;
-        }
-
-        private Vector3 goToPlace(AEnemys curShip, Vector3 place)
-        {
-            Vector3 placeDir = place - curShip.Position;
-            return placeDir;
         }
     }
 }
