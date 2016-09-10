@@ -1,9 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using SpaceAssault.Utils;
 using System.Collections.Generic;
+using SpaceAssault.Utils;
 using SpaceAssault.Entities;
 using SpaceAssault.Screens.UI;
-using System;
 
 namespace SpaceAssault.Screens
 {

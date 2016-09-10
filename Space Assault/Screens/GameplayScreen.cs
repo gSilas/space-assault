@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -8,9 +9,8 @@ using SpaceAssault.ScreenManagers;
 using SpaceAssault.Utils;
 using SpaceAssault.Utils.Particle;
 using SpaceAssault.Utils.Particle.Settings;
-using IrrKlang;
 using SpaceAssault.Screens.UI;
-using System.Diagnostics;
+using IrrKlang;
 
 namespace SpaceAssault.Screens
 {

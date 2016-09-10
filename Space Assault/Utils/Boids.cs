@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using SpaceAssault.Entities;
-using SpaceAssault.ScreenManagers;
-using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using SpaceAssault.Entities;
+using SpaceAssault.ScreenManagers;
 
 namespace SpaceAssault.Utils
 {

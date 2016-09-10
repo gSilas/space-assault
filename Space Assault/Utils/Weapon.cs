@@ -4,8 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Entities;
 using IrrKlang;
-using SpaceAssault.Utils.Particle;
-using SpaceAssault.Utils.Particle.Settings;
 
 namespace SpaceAssault.Utils
 {

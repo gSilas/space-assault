@@ -1,9 +1,9 @@
 ﻿using System;
-using SpaceAssault.Entities;
-using SpaceAssault.Utils;
 using System.Collections.Generic;
 using IrrKlang;
 using Microsoft.Xna.Framework;
+using SpaceAssault.Entities;
+using SpaceAssault.Utils;
 using SpaceAssault.Screens.UI;
 using SpaceAssault.ScreenManagers;
 
