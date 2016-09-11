@@ -169,7 +169,7 @@ namespace SpaceAssault.Screens
 
 
             SoundEngine.AddSoundSourceFromFile("MenuAcceptSound", "Content/Media/Effects/MenuPointAccept.wav");
-            SoundEngine.AddSoundSourceFromFile("OkClick", "Content /Media/Effects/OkClick.wav");
+            SoundEngine.AddSoundSourceFromFile("OkClick", "Content/Media/Effects/OkClick.wav");
 
             SoundEngine.AddSoundSourceFromFile("MenuDenieSound", "Content/Media/Effects/MenuPointDenie.wav");
             SoundEngine.AddSoundSourceFromFile("GoBack", "Content/Media/Effects/GoBack2.wav");

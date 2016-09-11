@@ -42,11 +42,11 @@ namespace SpaceAssault.Utils
             var curSoundSource = getISoundSource(soundName);
             if (curSoundSource == null) throw new NullReferenceException(soundName + "was not found in soundSources");
             ISound curSound = Play2D(getISoundSource(soundName), false, true, enableSoundEffects);
-            curSound.Volume = volume;
+            curSound.Volume = volume;      // if you get a nullReferenceException here the soundfile is likely physically not existing (check correct filePath when loading the sound)
             curSound.Paused = false;
             return curSound;
         }
-       
+
         public ISound Play3D(string soundName, float volume, Vector3 position, bool enableSoundEffects)
         {
             var curSoundSource = getISoundSource(soundName);
@@ -65,10 +65,10 @@ namespace SpaceAssault.Utils
 
         public ISoundSource getISoundSource(string soundName)
         {
-            ISoundSource test;
-            if (soundSources.TryGetValue(soundName, out test))
+            ISoundSource sound;
+            if (soundSources.TryGetValue(soundName, out sound))
             {
-                return test;
+                return sound;
             }
             else return null;
         }
