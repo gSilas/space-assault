@@ -432,12 +432,7 @@ namespace SpaceAssault.Screens
                         {
                             explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ship.Position, 0.4, 50, true));
                         }
-                        Console.WriteLine("#####");
-                        Console.WriteLine("Ship health before damage: " + ship.Health);
                         ship.getHit(bullet.makeDmg);
-                        Console.WriteLine("damage by bullet: " + bullet.makeDmg);
-                        Console.WriteLine("ship health after damage: " + ship.Health);
-                        Console.WriteLine("#####");
                         _removeBullets.Add(bullet);
                         Global.HighScorePoints += 20;
                         if (ship.Health > 0)

@@ -97,8 +97,7 @@ namespace SpaceAssault.Screens
             MenuEntries.Add(healthMenuEntry);
             MenuEntries.Add(armorMenuEntry);
             MenuEntries.Add(shieldMenuEntry);
-
-            //MenuEntries.Add(sHealthMenuEntry);
+            MenuEntries.Add(sHealthMenuEntry);
             MenuEntries.Add(sShieldMenuEntry);
             MenuEntries.Add(rocketMenuEntry);
             MenuEntries.Add(back);

@@ -53,6 +53,8 @@ namespace SpaceAssault.Screens
         Point dialogPos;
         bool movementAllowed;
         Dialog tutorialDialog;
+        Dialog captainDialog;
+        UIItem captain;
         string tutorialMessage;
         int nextIndex = 0;
         AsteroidBuilder _asteroidField;
@@ -70,6 +72,9 @@ namespace SpaceAssault.Screens
         // Random number generator for the fire effect.
         Random random = new Random();
 
+        //Created screens
+        PauseMenuScreen pause;
+        ShopScreen shop;
         //#################################
         // Constructor
         //#################################
@@ -92,6 +97,8 @@ namespace SpaceAssault.Screens
             _frame = new Frame();
             dustParticles = new DustParticleSystem();
             tutorialDialog = new Dialog(0, 0, 80, 400, 8, false, true);
+            captainDialog = new Dialog(0, 0, 160, 400, 8, false, true);
+            captain = new UIItem();
             borderParticles = new BorderParticleSettings();
             _asteroidField = new AsteroidBuilder(40);
             TutorialText.Add(TutorialText.Count, "Do you want to skip the tutorial? (Y/N) \n\nYour mission will begin immediately if \nyou choose to skip.");
@@ -135,6 +142,8 @@ namespace SpaceAssault.Screens
             _ui.LoadContent(_droneFleet);
             _frame.LoadContent();
             tutorialDialog.LoadContent();
+            captainDialog.LoadContent();
+            captain.LoadContent("Images/captain");
             _asteroidField.LoadContent();
             //Sounds
 
@@ -146,6 +155,12 @@ namespace SpaceAssault.Screens
             _explosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion3.wav", StreamMode.AutoDetect, true);
 
             _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OkClick.wav", StreamMode.AutoDetect, true);
+
+
+            Global.HighScorePoints = 0;
+            Global.Money = 0;
+            Global.DroneDmg = 10;
+            Global.NumberOfRockets = 1;
 
         }
 
@@ -253,7 +268,9 @@ namespace SpaceAssault.Screens
                         Open = _engine.Play2D(_openShop, false, true, false);
                         Open.Volume = Global.SpeakerVolume / 10;
                         Open.Paused = false;
-                        ScreenManager.AddScreen(new ShopScreen(_droneFleet, _station));
+                        if (shop == null)
+                            shop = new ShopScreen(_droneFleet, _station);
+                        ScreenManager.AddScreen(shop);
                     }
 
                 }
@@ -298,7 +315,9 @@ namespace SpaceAssault.Screens
             //player hits ESC it pauses the game
             if (input.IsPauseGame())
             {
-                ScreenManager.AddScreen(new PauseMenuScreen());
+                if (pause == null)
+                    pause = new PauseMenuScreen();
+                ScreenManager.AddScreen(pause);
             }
         }
 
@@ -397,6 +416,8 @@ namespace SpaceAssault.Screens
             dialogPos.X = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X + 32;
             dialogPos.Y = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y + 32;
             tutorialDialog.Draw(dialogPos, tutorialMessage);
+            captainDialog.Draw(new Point(dialogPos.X,dialogPos.Y-170),"\n\n\n\nPilot!\nYour mission is simple!\nDefend this station against the alien\nthreat or die trying!\nDismissed!");
+            captain.Draw(new Point(dialogPos.X+10, dialogPos.Y - 165), 1, Color.White);
         }
         //#################################
         // Sound
