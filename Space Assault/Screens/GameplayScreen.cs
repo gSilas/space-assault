@@ -47,16 +47,7 @@ namespace SpaceAssault.Screens
         private UIItem _enemySymbol;
 
         // Sound
-        private ISoundSource _explosionSource;
-        private ISoundSource _explosionSource1;
-        private ISoundSource _explosionSource2;
-        private ISoundSource _explosionSource3;
-        private ISoundSource _astexplosionSource1;
-        private ISoundSource _astexplosionSource2;
-        private ISoundSource _astexplosionSource3;
-        private ISoundSource _openShop;
-        private ISoundSource _hitSound;
-        private ISpaceSoundEngine _engine;
+        private ISpaceSoundEngine _soundEngine;
 
         //Particle
         ParticleSystem borderParticles;
@@ -107,7 +98,7 @@ namespace SpaceAssault.Screens
             Global.NumberOfRockets = 1;
             _input = new InputState();
             _planet = new Planet(new Vector3(-1000, -2000, -1000), 0);
-            _engine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+            _soundEngine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
             // Construct Particles
             borderParticles = new BorderParticleSettings();
@@ -141,24 +132,26 @@ namespace SpaceAssault.Screens
 
             //Sounds
             //playing the sound
-            Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
-            _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
-            //Global.Music = _engine.Play2D("Content/Media/Effects/Objects/Explosion3.wav", false);
-            Global.Music.Volume = Global.MusicVolume / 10;
+            _soundEngine.setListenerPosToCameraTarget();
+            _soundEngine.AddSoundSourceFromFile("openShop", "Content/Media/Effects/OpenShop.wav");
+            _soundEngine.AddSoundSourceFromFile("explosionSource", "Content/Media/Effects/Objects/Explosion4.wav");
+            _soundEngine.AddSoundSourceFromFile("explosionSource1", "Content/Media/Effects/Objects/Explosion1.wav");
+            _soundEngine.AddSoundSourceFromFile("explosionSource2", "Content/Media/Effects/Objects/Explosion2.wav");
+            _soundEngine.AddSoundSourceFromFile("explosionSource3", "Content/Media/Effects/Objects/Explosion3.wav");
+            _soundEngine.AddSoundSourceFromFile("astexplosionSource1", "Content/Media/Effects/Objects/ExplosionAst1.wav");
+            _soundEngine.AddSoundSourceFromFile("astexplosionSource2", "Content/Media/Effects/Objects/ExplosionAst2.wav");
+            _soundEngine.AddSoundSourceFromFile("astexplosionSource3", "Content/Media/Effects/Objects/ExplosionAst3.wav");
+            _soundEngine.AddSoundSourceFromFile("hitSound", "Content/Media/Effects/Objects/GetHitShips.wav");
 
-            _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OpenShop.wav", StreamMode.AutoDetect, true);
-            _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion4.wav", StreamMode.AutoDetect, true);
-            _explosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion1.wav", StreamMode.AutoDetect, true);
-            _explosionSource2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion2.wav", StreamMode.AutoDetect, true);
-            _explosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion3.wav", StreamMode.AutoDetect, true);
-            _astexplosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst1.wav", StreamMode.AutoDetect, true);
-            _astexplosionSource2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst2.wav", StreamMode.AutoDetect, true);
-            _astexplosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst3.wav", StreamMode.AutoDetect, true);
+
+            //Global.Music = _soundEngine.Play2D("explosionSource3", Global.MusicVolume / 10, false);
+
 
             // X = left/right
-            Global.Music = _engine.Play3D(_explosionSource3, Global.Camera.Target.X-15, Global.Camera.Target.Y, Global.Camera.Target.Z, false, false, false);
+            _soundEngine.setListenerPosToCameraTarget();
+            var pos = Global.Camera.Target;
+            Global.Music = _soundEngine.Play3D("explosionSource3", Global.MusicVolume / 10, Global.Camera.Target, false);
 
-            _hitSound = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);
         }
 
         //#################################
@@ -168,8 +161,8 @@ namespace SpaceAssault.Screens
         {
             //Global.ContentManager.Unload();
 
-            _engine.StopAllSounds();
-            _engine.Dispose();
+            _soundEngine.StopAllSounds();
+            _soundEngine.Dispose();
         }
 
         //#################################
@@ -180,6 +173,8 @@ namespace SpaceAssault.Screens
         {
 
             base.Update(gameTime, otherScreenHasFocus, false);
+            _soundEngine.Update();
+
             SoundDJ();
 
             // Gradually fade in or out depending on whether we are covered by the pause screen.
@@ -305,10 +300,7 @@ namespace SpaceAssault.Screens
                 if ((Vector3.Distance(_station.Position, _droneFleet.GetActiveDrone().Position) - _stationHeight) < 150)
                 {
                     //playing the sound
-                    ISound Open;
-                    Open = _engine.Play2D(_openShop, false, true, false);
-                    Open.Volume = Global.SpeakerVolume / 10;
-                    Open.Paused = false;
+                    _soundEngine.Play2D("openShop", Global.SpeakerVolume / 10, false);
                     if (shop == null)
                         shop = new ShopScreen(_droneFleet, _station);
                     ScreenManager.AddScreen(shop);
@@ -319,10 +311,7 @@ namespace SpaceAssault.Screens
             if (input.IsPauseGame())
             {
                 //playing the sound
-                ISound Open;
-                Open = _engine.Play2D(_openShop, false, true, false);
-                Open.Volume = Global.SpeakerVolume / 10;
-                Open.Paused = false;
+                _soundEngine.Play2D("openShop", Global.SpeakerVolume / 10, false);
                 if (pause == null)
                     pause = new PauseMenuScreen();
                 ScreenManager.AddScreen(pause);
@@ -386,62 +375,40 @@ namespace SpaceAssault.Screens
         //#################################
         protected void PlayExplosionSound(Vector3D pos)
         {
-            var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
-            _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
             switch (random.Next(0, 3))
             {
                 case 0:
-                    var explosionSound = _engine.Play2D(_explosionSource, false, true, false);
-                    explosionSound.Volume = Global.SpeakerVolume / 10;
-                    explosionSound.Paused = false;
+                    _soundEngine.Play2D("explosionSource", Global.SpeakerVolume / 10, false);
                     break;
                 case 1:
-                    var explosionSound1 = _engine.Play2D(_explosionSource1, false, true, false);
-                    explosionSound1.Volume = Global.SpeakerVolume / 10;
-                    explosionSound1.Paused = false;
+                    _soundEngine.Play2D("explosionSource1", Global.SpeakerVolume / 10, false);
                     break;
                 case 2:
-                    var explosionSound2 = _engine.Play2D(_explosionSource2, false, true, false);
-                    explosionSound2.Volume = Global.SpeakerVolume / 10;
-                    explosionSound2.Paused = false;
+                    _soundEngine.Play2D("explosionSource2", Global.SpeakerVolume / 10, false);
                     break;
                 case 3:
-                    var explosionSound3 = _engine.Play2D(_explosionSource3, false, true, false);
-                    explosionSound3.Volume = Global.SpeakerVolume / 10;
-                    explosionSound3.Paused = false;
+                    _soundEngine.Play2D("explosionSource3", Global.SpeakerVolume / 10, false);
                     break;
             }
         }
         protected void PlayAstExplosionSound(Vector3D pos)
         {
-            var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
-            _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
             switch (random.Next(0, 2))
             {
                 case 0:
-                    var astexplosionSound = _engine.Play2D(_astexplosionSource1, false, true, false);
-                    astexplosionSound.Volume = Global.SpeakerVolume / 10;
-                    astexplosionSound.Paused = false;
+                    _soundEngine.Play2D("astexplosionSource1", Global.SpeakerVolume / 10, false);
                     break;
                 case 1:
-                    var explosionAstSound1 = _engine.Play2D(_astexplosionSource2, false, true, false);
-                    explosionAstSound1.Volume = Global.SpeakerVolume / 10;
-                    explosionAstSound1.Paused = false;
+                    _soundEngine.Play2D("astexplosionSource2", Global.SpeakerVolume / 10, false);
                     break;
                 case 2:
-                    var explosionAstSound2 = _engine.Play2D(_astexplosionSource3, false, true, false);
-                    explosionAstSound2.Volume = Global.SpeakerVolume / 10;
-                    explosionAstSound2.Paused = false;
+                    _soundEngine.Play2D("astexplosionSource3", Global.SpeakerVolume / 10, false);
                     break;
             }
         }
         protected void PlayShipHitSound(Vector3D pos)
         {
-            var curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
-            _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
-            ISound Hit = _engine.Play2D(_hitSound, false, true, false);
-            Hit.Volume = Global.SpeakerVolume / 10;
-            Hit.Paused = false;
+            _soundEngine.Play2D("hitSound", Global.SpeakerVolume / 10, false);
         }
 
         //#################################
