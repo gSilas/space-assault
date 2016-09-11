@@ -329,7 +329,7 @@ namespace SpaceAssault.Screens
             // calling draw of objects where necessary
             _back.Draw(90, new Vector3(-15000, -2000, -15000));
             _station.Draw(Global.StationColor);
-            _planet.Draw(Color.DarkRed);
+            _planet.Draw(Global.PlanetColor);
             _droneFleet.Draw();
             _asteroidField.Draw();
             _waveBuilder.Draw(gameTime);
@@ -431,7 +431,12 @@ namespace SpaceAssault.Screens
                         {
                             explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ship.Position, 0.4, 50, true));
                         }
+                        Console.WriteLine("#####");
+                        Console.WriteLine("Ship health before damage: " + ship.Health);
                         ship.getHit(bullet.makeDmg);
+                        Console.WriteLine("damage by bullet: " + bullet.makeDmg);
+                        Console.WriteLine("ship health after damage: " + ship.Health);
+                        Console.WriteLine("#####");
                         _removeBullets.Add(bullet);
                         Global.HighScorePoints += 20;
                         if (ship.Health > 0)
