@@ -194,7 +194,7 @@ namespace SpaceAssault.Screens
                 if (Global.Music.Finished)
                 {
                     once = false;
-                    Global.Music = Global.MusicEngine.Play2D("voice_intro", Global.MusicVolume / 10, false);                   
+                    Global.Music = Global.MusicEngine.Play2D("voice_intro", (Global.MusicVolume*4 / 10), false);                   
                 }
             }
             SoundDJ();
