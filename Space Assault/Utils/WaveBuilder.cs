@@ -500,6 +500,7 @@ namespace SpaceAssault.Utils
                     Global.EnemyColor = Color.Crimson;
                     Global.EnemyFighterColor = Color.Red;
                     Global.EnemyBomberColor = Color.Red;
+                    Global.EnemyBossColor = Color.DarkGoldenrod;
 
                     Global.EnemyFighterHealth = 200;
                     Global.EnemyFighterDamage = 30;
@@ -513,13 +514,13 @@ namespace SpaceAssault.Utils
                     Global.EnemyBomberDamage = 600;
                     Global.EnemyBomberKillMoney = 400;
 
-                    Global.EnemyBossHealth = 6000;
+                    Global.EnemyBossHealth = 8000;
                     Global.EnemyBossDamage = 100;
                     Global.EnemyBossKillMoney = 5000;
 
                     Global.EnemyAttackTowerHealth = 1;
-                    Global.EnemyAttackTowerDamage = 15;
-                    Global.EnemyAttackTowerKillMoney = 1250;
+                    Global.EnemyAttackTowerDamage = 30;
+                    Global.EnemyAttackTowerKillMoney = 625;
 
                     _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(10, Boids.EnemyType.Fighter2);

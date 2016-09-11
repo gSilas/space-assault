@@ -36,9 +36,9 @@ namespace SpaceAssault.Screens
         public void LoadContent(DroneBuilder droneFleet)
         {          
             //Shield
-            _shields.LoadContent("Images/UI/shield_ui");
+            _shields.LoadContent("Images/UI/shield_ui",4);
             //Rocket
-            _rocketSymbol.LoadContent("Images/Rocket_Icon");
+            _rocketSymbol.LoadContent("Images/Rocket_Icon",4);
 
             //Bars
             Bars.Add(new Bar(new Rectangle(new Point(50, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 80), new Point(300, 60)), Color.Red, droneFleet.GetActiveDrone().maxHealth));

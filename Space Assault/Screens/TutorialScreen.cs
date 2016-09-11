@@ -119,7 +119,7 @@ namespace SpaceAssault.Screens
             TutorialText.Add(TutorialText.Count, "Press B to open the shop and\nnavigate through it with the arrow keys.");
             TutorialText.Add(TutorialText.Count, "But beware! \nYou need to be near the station \nto open the shop.");
             TutorialText.Add(TutorialText.Count, "W ] fly up\nA ] fly left\nS ] fly down\nD ] fly right");
-            TutorialText.Add(TutorialText.Count, "Left mouse button\n] Shoots your laser\nRight mouse button\n] Shoots your rocket\n");
+            TutorialText.Add(TutorialText.Count, "Left mouse button\n] Shoots your laser\nRight mouse button\n] Shoots your missile\n");
             TutorialText.Add(TutorialText.Count, "If you search for close enemys, watch\nat the red dot on your Drone.");
             TutorialText.Add(TutorialText.Count, "I also heard of incoming asteroids.\nThe comets with the blue trail\noffer a nice income.");
             TutorialText.Add(TutorialText.Count, "Before you start, visit the shop\nand buy something with that loaned\nmoney we gave you!");
@@ -135,7 +135,7 @@ namespace SpaceAssault.Screens
         public override void LoadContent()
         {
             _stationSymbol = new UIItem();
-            _stationSymbol.LoadContent("Images/station_icon");
+            _stationSymbol.LoadContent("Images/station_icon", 4);
             _droneFleet.addDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
             _station.LoadContent();
@@ -145,7 +145,7 @@ namespace SpaceAssault.Screens
             _frame.LoadContent();
             tutorialDialog.LoadContent();
             captainDialog.LoadContent();
-            captain.LoadContent("Images/captain");
+            captain.LoadContent("Images/captain", 4);
             _asteroidField.LoadContent();
             //Sounds
 
