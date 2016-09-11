@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace SpaceAssault.Utils
 {
@@ -28,6 +29,31 @@ namespace SpaceAssault.Utils
         {
                 return (CurrentKeyboardState.IsKeyDown(key) &&
                         LastKeyboardState.IsKeyUp(key));
+        }
+
+        public bool IsNewKeyPress(params Keys[] keys)
+        {
+            int keysNewPress = 0;
+            List<Keys> keysNotNewPress = new List<Keys>();
+            foreach (var key in keys)
+            {
+                if (CurrentKeyboardState.IsKeyDown(key) &&
+                    LastKeyboardState.IsKeyUp(key))
+                {
+                    keysNewPress++;
+                }
+                else keysNotNewPress.Add(key);
+            }
+            if (keysNewPress == 0) return false;
+
+            foreach (var key in keysNotNewPress)
+            {
+                if (!CurrentKeyboardState.IsKeyDown(key))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         // Checks for a "menu select" input action.

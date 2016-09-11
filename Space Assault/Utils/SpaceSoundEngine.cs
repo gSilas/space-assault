@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using IrrKlang;
 using Microsoft.Xna.Framework;
+
 
 /// <summary>
 /// use this for playing all sounds, documentation: http://www.ambiera.com/irrklang/docu/classirrklang_1_1_i_sound_engine.html
@@ -32,6 +34,7 @@ namespace SpaceAssault.Utils
 
         public ISoundSource AddSoundSourceFromFile(string soundName, string filePath)
         {
+            if (!File.Exists(filePath)) throw new FileNotFoundException(filePath + "was not found");
             soundSources.Add(soundName, AddSoundSourceFromFile(filePath, StreamMode.AutoDetect, true));
 
             return getISoundSource(soundName);
@@ -52,7 +55,7 @@ namespace SpaceAssault.Utils
             var curSoundSource = getISoundSource(soundName);
             if (curSoundSource == null) throw new NullReferenceException(soundName + "was not found in soundSources");
             ISound curSound = Play3D(curSoundSource, position.X, position.Y, position.Z, false, true, enableSoundEffects);
-            curSound.Volume = volume;
+            curSound.Volume = volume;      // if you get a nullReferenceException here the soundfile is likely physically not existing (check correct filePath when loading the sound)
             curSound.Paused = false;
             return curSound;
         }

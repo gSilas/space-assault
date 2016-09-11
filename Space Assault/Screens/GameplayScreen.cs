@@ -184,6 +184,7 @@ namespace SpaceAssault.Screens
                 _pauseAlpha = Math.Max(_pauseAlpha - 1f / 32, 0);
 
             DebugFunctions();
+            _input.Update();
 
             if (!coveredByOtherScreen)
             {
@@ -198,7 +199,6 @@ namespace SpaceAssault.Screens
                 _planet.Update(gameTime);
                 _droneFleet.Update(gameTime);
                 _asteroidField.Update(gameTime, _droneFleet.GetActiveDrone().Position);
-                _input.Update();
                 Global.Camera.updateCameraPositionTarget(_droneFleet.GetActiveDrone().Position + Global.CameraPosition, _droneFleet.GetActiveDrone().Position);
 
 
@@ -254,17 +254,17 @@ namespace SpaceAssault.Screens
         [Conditional("DEBUG")]
         public void DebugFunctions()
         {
-            if (_input.IsNewKeyPress(Keys.L) && _input.IsNewKeyPress(Keys.K))
+            if (_input.IsNewKeyPress(Keys.K, Keys.L))
             {
                 Global.Money += 10000;
             }
 
-            if (_input.IsNewKeyPress(Keys.F) && _input.IsNewKeyPress(Keys.G))
+            if (_input.IsNewKeyPress(Keys.F, Keys.G))
             {
                 _station._health -= 1000;
             }
 
-            if (_input.IsNewKeyPress(Keys.F) && _input.IsNewKeyPress(Keys.H))
+            if (_input.IsNewKeyPress(Keys.F, Keys.H))
             {
                 _station._shield -= 1000;
             }
