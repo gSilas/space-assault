@@ -141,7 +141,7 @@ namespace SpaceAssault.Entities
                 shield -= howMuch;
             else
             {
-                health -= (howMuch - howMuch * (armor / 10));
+                health -= (howMuch - howMuch * (armor / 20));
             }
         }
         public void HandleInput(GameTime gameTime, Bullet.BulletType curBullet, ref List<Bullet> bulletList)
