@@ -135,7 +135,7 @@ namespace SpaceAssault.Screens
         public override void LoadContent()
         {
             _stationSymbol = new UIItem();
-            _stationSymbol.LoadContent("Images/station_icon");
+            _stationSymbol.LoadContent("Images/station_icon", 4);
             _droneFleet.addDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
             _station.LoadContent();
@@ -145,7 +145,7 @@ namespace SpaceAssault.Screens
             _frame.LoadContent();
             tutorialDialog.LoadContent();
             captainDialog.LoadContent();
-            captain.LoadContent("Images/captain");
+            captain.LoadContent("Images/captain", 4);
             _asteroidField.LoadContent();
             //Sounds
 

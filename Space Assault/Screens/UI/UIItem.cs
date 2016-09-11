@@ -8,10 +8,10 @@ namespace SpaceAssault.Screens.UI
         private Texture2D _tex;
         private Point _size;
 
-        public void LoadContent(string texpath)
+        public void LoadContent(string texpath,int scale)
         {
             _tex = Global.ContentManager.Load<Texture2D>(texpath);
-            _size = new Point(_tex.Width / 4, _tex.Height / 4);
+            _size = new Point(_tex.Width / scale, _tex.Height / scale);
         }
 
         public void Draw(Point pos, int count, Color col)

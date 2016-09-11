@@ -46,12 +46,12 @@ namespace SpaceAssault.Screens
 
             ShopText.Add(0, "\n Our Team:\n     - Philipp 'the_slasher' Thoms\n     - Dustin 'renderThis' Boettcher\n     - Hans-Martin 'debuGger' Wulfmeyer\n     - Daniel 'garbage_collctr' Micheel");
             ShopText.Add(1, "\n This game was created with Microsoft Visual Studio \n and Monogame.\n\n 3D modeling work done with 3Ds Max and Blender. \n\n External library Irrklang used as sound engine.\n\n All graphical assets were made with Krita or MS Paint.");
-            ShopText.Add(2, "\n Music:+\n   "+ '\u0022'+"Unrelenting"+ '\u0022'+"\n   "+ '\u0022'+"Truth of the Legend"+ '\u0022'+"\n   "+ '\u0022'+"SpaceFighterLoop" + '\u0022'+"\n   "+ '\u0022'+"Cyborg Ninja"+ '\u0022'+"\n   "+ '\u0022'+"ShinyTech2"+ '\u0022'+ "\n      by Kevin MacLeod (incompetech.com),\n      licensed under Creative Commons: By Attribution 3.0\n      License creativecommons.org/licenses/by/3.0/ \n\n SoundEffects made with www.bfxr.net \n\n Space Assault uses the " + '\u0022'+ "ModeNine" + '\u0022'+" Font ");
+            ShopText.Add(2, "\n Music:+\n   "+ '\u0022'+"Unrelenting"+ '\u0022'+"\n   "+ '\u0022'+"Truth of the Legend"+ '\u0022'+"\n   "+ '\u0022'+"SpaceFighterLoop" + '\u0022'+"\n   "+ '\u0022'+"Cyborg Ninja"+ '\u0022'+"\n   "+ '\u0022'+"ShinyTech2"+ '\u0022'+ "\n      by Kevin MacLeod (incompetech.com),\n      licensed under Creative Commons: By Attribution \n      3.0 License creativecommons.org/licenses/by/3.0/ \n\n SoundEffects made with www.bfxr.net \n\n Space Assault uses the " + '\u0022'+ "ModeNine" + '\u0022'+" Font ");
             ShopText.Add(3, "\n Special Thanks to\n     AcaGamics\n     random french dude who did the voiceover\n and our testers:\n     - Jan-Ole Perschewski\n     - Julia Heise\n     - Delia Wulfmeyer\n     - Marcel Micheel\n     - Arne Herdick\n ");
             ShopText.Add(4, "");
 
             _itemDialog.LoadContent();
-            _acagamics.LoadContent("Images/acagamics");
+            _acagamics.LoadContent("Images/acagamics", 1);
             _frame.LoadContent();
 
         }
@@ -67,7 +67,7 @@ namespace SpaceAssault.Screens
             string entry;
             ShopText.TryGetValue(selectedEntry, out entry);
             _itemDialog.Draw(entry);
-            _acagamics.Draw(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 + 400, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 640), 1, Color.White);
+            _acagamics.Draw(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 + 450, Global.GraphicsManager.GraphicsDevice.Viewport.Height - 640), 1, Color.White);
             _frame.Draw();
         }
     }

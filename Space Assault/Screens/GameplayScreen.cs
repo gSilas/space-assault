@@ -127,8 +127,8 @@ namespace SpaceAssault.Screens
 
             _stationSymbol = new UIItem();
             _enemySymbol = new UIItem();
-            _stationSymbol.LoadContent("Images/station_icon");
-            _enemySymbol.LoadContent("Images/hit_marker");
+            _stationSymbol.LoadContent("Images/station_icon", 4);
+            _enemySymbol.LoadContent("Images/hit_marker", 4);
 
             _droneFleet.addDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
@@ -157,7 +157,7 @@ namespace SpaceAssault.Screens
 
             //Global.Music = _soundEngine.Play2D("explosionSource3", Global.MusicVolume / 10, false);
             captainDialog.LoadContent();
-            captain.LoadContent("Images/captain");
+            captain.LoadContent("Images/captain", 4);
 
             // X = left/right
             
