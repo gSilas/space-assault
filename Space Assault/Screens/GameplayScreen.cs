@@ -56,7 +56,7 @@ namespace SpaceAssault.Screens
         private ISoundSource _astexplosionSource3;
         private ISoundSource _openShop;
         private ISoundSource _hitSound;
-        private ISoundEngine _engine;
+        private ISpaceSoundEngine _engine;
 
         //Particle
         ParticleSystem borderParticles;
@@ -107,7 +107,7 @@ namespace SpaceAssault.Screens
             Global.NumberOfRockets = 1;
             _input = new InputState();
             _planet = new Planet(new Vector3(-1000, -2000, -1000), 0);
-            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+            _engine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
             // Construct Particles
             borderParticles = new BorderParticleSettings();
@@ -140,8 +140,10 @@ namespace SpaceAssault.Screens
             _stationEffect = Global.ContentManager.Load<Effect>("Effects/stationEffect");
 
             //Sounds
-
-            Global.Music = _engine.Play2D("Content/Media/Effects/Objects/Explosion3.wav", false);
+            //playing the sound
+            Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
+            _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
+            //Global.Music = _engine.Play2D("Content/Media/Effects/Objects/Explosion3.wav", false);
             Global.Music.Volume = Global.MusicVolume / 10;
 
             _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OpenShop.wav", StreamMode.AutoDetect, true);
@@ -152,6 +154,9 @@ namespace SpaceAssault.Screens
             _astexplosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst1.wav", StreamMode.AutoDetect, true);
             _astexplosionSource2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst2.wav", StreamMode.AutoDetect, true);
             _astexplosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst3.wav", StreamMode.AutoDetect, true);
+
+            // X = left/right
+            Global.Music = _engine.Play3D(_explosionSource3, Global.Camera.Target.X-15, Global.Camera.Target.Y, Global.Camera.Target.Z, false, false, false);
 
             _hitSound = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);
         }
@@ -300,7 +305,6 @@ namespace SpaceAssault.Screens
                 if ((Vector3.Distance(_station.Position, _droneFleet.GetActiveDrone().Position) - _stationHeight) < 150)
                 {
                     //playing the sound
-                    _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                     ISound Open;
                     Open = _engine.Play2D(_openShop, false, true, false);
                     Open.Volume = Global.SpeakerVolume / 10;
@@ -315,7 +319,6 @@ namespace SpaceAssault.Screens
             if (input.IsPauseGame())
             {
                 //playing the sound
-                _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                 ISound Open;
                 Open = _engine.Play2D(_openShop, false, true, false);
                 Open.Volume = Global.SpeakerVolume / 10;

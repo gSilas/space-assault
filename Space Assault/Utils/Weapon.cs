@@ -13,7 +13,7 @@ namespace SpaceAssault.Utils
         protected TimeSpan _coolDownTime;
         protected TimeSpan _lastShotTime;
 
-        private ISoundEngine _engine;
+        private ISpaceSoundEngine _engine;
 
         //type of bullets that exist
         private BulletMemory yellowLazer;
@@ -50,7 +50,7 @@ namespace SpaceAssault.Utils
 
         public void LoadContent()
         {
-            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+            _engine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
             ISoundSource lazer;
             ISoundSource lazer2;
             ISoundSource lazer3;
