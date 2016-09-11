@@ -38,22 +38,14 @@ namespace SpaceAssault.Screens
             confirmQuitMessageBox.Accepted += ConfirmQuitMessageBoxAccepted;
             ScreenManager.AddScreen(confirmQuitMessageBox);
             //playing the sound
-            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            ISound Accept;
-            Accept = SoundEngine.Play2D(OkClick, false, true, false);
-            Accept.Volume = Global.SpeakerVolume / 10;
-            Accept.Paused = false;
+            SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
         }
 
         // Event handler for when the Options menu entry is selected.
         void OptionsMenuEntrySelected(object sender, EventArgs e)
         {
             //playing the sound
-            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            ISound Accept;
-            Accept = SoundEngine.Play2D(OkClick, false, true, false);
-            Accept.Volume = Global.SpeakerVolume / 10;
-            Accept.Paused = false;
+            SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
 
             ScreenManager.AddScreen(new OptionsMenuScreen());
         }
@@ -68,12 +60,7 @@ namespace SpaceAssault.Screens
             //LoadingScreen.Load(ScreenManager, false, null, new MainMenuScreen());
             //ScreenManager.Game.Exit();
             //playing the sound
-            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            ISound Accept;
-            Accept = SoundEngine.Play2D(GoBack, false, true, false);
-            Accept.Volume = Global.SpeakerVolume / 10;
-            Accept.Paused = false;
-            Global.MusicEngine.StopAllSounds();
+            SoundEngine.Play2D("GoBack", Global.SpeakerVolume / 10, false);
         }
 
     }

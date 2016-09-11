@@ -42,24 +42,15 @@ namespace SpaceAssault.Screens
         void PlayGameMenuEntrySelected(object sender, EventArgs e)
         {
             //playing the sound
-            SoundEngine.SetListenerPosition(new Vector3D(0,0,0), new Vector3D(0, 0, 1));
-            ISound Accept;
-            Accept = SoundEngine.Play2D(OkClick, false, true, false);
-            Accept.Volume = Global.SpeakerVolume / 10;
-            Accept.Paused = false;
-            LoadingScreen.Load(ScreenManager, true, new GameplayScreen());
-            
+            SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
+
         }
 
         // Event handler for when the Options menu entry is selected.
         void OptionsMenuEntrySelected(object sender, EventArgs e)
         {
             //playing the sound
-            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            ISound Accept;
-            Accept = SoundEngine.Play2D(OkClick,  false, true, false);
-            Accept.Volume = Global.SpeakerVolume / 10;
-            Accept.Paused = false;
+            SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
 
             ScreenManager.AddScreen(new OptionsMenuScreen());
         }
@@ -68,11 +59,7 @@ namespace SpaceAssault.Screens
         void HighscoreMenuEntrySelected(object sender, EventArgs e)
         {
             //playing the sound
-            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            ISound Accept;
-            Accept = SoundEngine.Play2D(OkClick, false, true, false);
-            Accept.Volume = Global.SpeakerVolume / 10;
-            Accept.Paused = false;
+            SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
 
             ScreenManager.AddScreen(new HighscoreMenuScreen(false));
         }
@@ -81,11 +68,7 @@ namespace SpaceAssault.Screens
         void CreditsMenuEntrySelected(object sender, EventArgs e)
         {
             //playing the sound
-            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            ISound Accept;
-            Accept = SoundEngine.Play2D(OkClick, false, true, false);
-            Accept.Volume = Global.SpeakerVolume / 10;
-            Accept.Paused = false;
+            SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
 
             ScreenManager.AddScreen(new CreditsMenuScreen());
         }
@@ -99,11 +82,7 @@ namespace SpaceAssault.Screens
 
         protected override void OnCancel()
         {
-            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            ISound Accept;
-            Accept = SoundEngine.Play2D(OkClick, false, true, false);
-            Accept.Volume = Global.SpeakerVolume / 10;
-            Accept.Paused = false;
+            SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
 
             const string message = "Are you sure you want to exit?";
 
@@ -117,11 +96,7 @@ namespace SpaceAssault.Screens
         void TutorialMenuEntrySelected(object sender, EventArgs e)
         {
             //playing the sound
-            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            ISound Accept;
-            Accept = SoundEngine.Play2D(OkClick, false, true, false);
-            Accept.Volume = Global.SpeakerVolume / 10;
-            Accept.Paused = false;
+            SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
 
             LoadingScreen.Load(ScreenManager, true, new TutorialScreen());
         }
@@ -131,11 +106,7 @@ namespace SpaceAssault.Screens
         void ConfirmExitMessageBoxAccepted(object sender, EventArgs e)
         {
             //playing the sound
-            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            ISound Denie;
-            Denie = SoundEngine.Play2D(OkClick, false, true, false);
-            Denie.Volume = Global.SpeakerVolume / 10;
-            Denie.Paused = false;
+            SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
             ScreenManager.Game.Exit();
         }
     }
