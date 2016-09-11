@@ -48,7 +48,7 @@ namespace SpaceAssault.Screens
             _rand = new Random();
             _id = _rand.Next(10000, 99999);
             _id2 = _rand.Next(10000, 99999);
-
+            Global.PlanetColor = new Color(_rand.Next(100, 240), _rand.Next(100, 240), _rand.Next(100, 240), 255);
             //Dialogs + Background + Frame
             _welcomedialog = new Dialog(100, 700, 32, 544, 4, false, true);
             _pilotdialog = new Dialog(800, 40, 48, 192, 4, false, true);

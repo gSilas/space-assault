@@ -73,6 +73,8 @@ namespace SpaceAssault
         public static Color EnemyBomberColor = Color.MediumVioletRed;
         public static Color EnemyBossColor = Color.DarkRed;
 
+        public static Color PlanetColor = Color.DarkRed;
+
         public static SpaceAssaultGame game;
     }
 }

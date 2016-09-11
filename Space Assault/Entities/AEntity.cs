@@ -75,9 +75,9 @@ namespace SpaceAssault.Entities
                         effect.DirectionalLight0.SpecularColor = Color.DarkGoldenrod.ToVector3(); // with highlights
 
                         effect.DirectionalLight1.Enabled = true;
-                        effect.DirectionalLight1.DiffuseColor = Color.Red.ToVector3(); // a light
+                        effect.DirectionalLight1.DiffuseColor = Global.PlanetColor.ToVector3(); // a light
                         effect.DirectionalLight1.Direction = Vector3.Normalize(Position - new Vector3(-1000f, -2000f, -1000f));  // coming along the x-axis
-                        effect.DirectionalLight1.SpecularColor = Color.DarkRed.ToVector3(); // with highlights
+                        effect.DirectionalLight1.SpecularColor = Global.PlanetColor.ToVector3(); // with highlights
 
                         effect.PreferPerPixelLighting = true;
 
