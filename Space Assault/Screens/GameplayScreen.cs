@@ -73,6 +73,7 @@ namespace SpaceAssault.Screens
         //Created screens
         PauseMenuScreen pause;
         ShopScreen shop;
+        int deadTime;
 
         //#################################
         // Constructor
@@ -109,8 +110,9 @@ namespace SpaceAssault.Screens
             dustParticles = new DustParticleSystem();
             hitmarkerParticles = new HitMarkerParticleSystem();
 
-            captainDialog = new Dialog(0, 0, 160, 400, 8, false, true);
+            captainDialog = new Dialog(0, 0, 320, 400, 8, false, true);
             captain = new UIItem();
+            deadTime = 10000;
         }
 
 
@@ -231,11 +233,11 @@ namespace SpaceAssault.Screens
                 explosionRemoveList.Clear();
 
 
-                if (_waveBuilder.HasEnded)
+                if (_waveBuilder.HasEnded && deadTime <= 0)
                     LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen(), new HighscoreMenuScreen(true));
                 // if station dies go back to MainMenu
                 // TODO: change to EndScreen and HighScore list)
-                if (_station._health <= 0)
+                if (_station._health <= 0 && deadTime <= 0)
                     LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen(), new HighscoreMenuScreen(true));
 
                 CollisionHandling(gameTime);
@@ -276,7 +278,10 @@ namespace SpaceAssault.Screens
             {
                 _station._shield -= 1000;
             }
-
+            if (_input.IsNewKeyPress(Keys.L, Keys.H))
+            {
+                _waveBuilder.WaveCount++;
+            }
             if (_input.IsNewKeyPress(Keys.F1))
             {
                 Console.WriteLine("Drone Damage: " + _droneFleet.GetActiveDrone().makeDmg);
@@ -369,7 +374,18 @@ namespace SpaceAssault.Screens
 
             DrawStationDirectionArrow();
             DrawShipDirectionArrow();
-            DrawCaptainDialog(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Height/2, Global.GraphicsManager.GraphicsDevice.Viewport.Width/2), "\n\n\n\nFuck those NORMIES! REEEEEEEEE");
+            if (_waveBuilder.HasEnded)
+            {
+                DrawCaptainDialog(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 200, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 2 - 100), "\n                    You Succeded!\n\n\n>I am proud of you Pilot, you did your\njob very well. I couldn't have done\nit better myself.\n> Here, take that medal and some\nvacation on this Spa Station not\nfar from your home Planet.\n> Thank you for your service, Pilot!\n> Dismissed!");
+                deadTime -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+              
+            if (_station._health <= 0)
+            {
+                DrawCaptainDialog(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 200, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 2 - 100), "\n                    You Died!\n\n\n>This Pilot did his duty in combat with\ngreat courage and steadfast dedication\neven after he was outnumbered by\nthe hundreds.\n> He sacrificed his life to defend the\nones who couldn't themselves. ");
+                deadTime -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+               
 
             if (_station._shield > 0)
                 _sphere.Draw(new Color(255, 255, 255), _sphereAlpha);
