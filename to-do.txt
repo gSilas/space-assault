@@ -2,21 +2,37 @@ Optimisierung:
 	Collision Handling
 	BoundingFrustrum für alles
 
-Gameplay:		
+Gameplay:	
+	- !!!! todo disable console for release !!!!	
 	- Bossgegner
 	- Rauschschreen außerhalb der Spielwelt - nicht trivial kommt erst zur Präsi		#dustin		
 	- waves anpassen/balancing														#daniel, alle
-	- rakte AoE damage
-	- tutorial shit anpassen
-	- tutorial story text
-	- optionmenu click buys instantly
-	- shop funktionalität erklären
-	- radar schöner machen
-	- 3d sound !!!!!
-	- reload animation torpedo
-	- bomber logic überarbeiten
-	- Rechtschreibung im Tutorial
-	- todo disable console for release !!!!
+	- rakte AoE damage									%%% HIGH PRIORITY %%% 
+	- tutorial shit anpassen							%%% HIGH PRIORITY %%% 
+	- tutorial story text								%%% HIGH PRIORITY %%% 
+	- optionmenu click buys instantly					%%% HIGH PRIORITY %%% 
+	- 3d sound !!!!!									%%% HIGH PRIORITY %%% 
+	- bomber logic überarbeiten							%%% HIGH PRIORITY %%% 
+	- Rechtschreibung im Tutorial						%%% HIGH PRIORITY %%%
+	- gameover (press F to pay your respects) / winning screen		%%% HIGH PRIORITY %%%
+	- shop funktionalität erklären						%%% MED PRIORITY %%% 
+	- radar schöner machen								%%% MED PRIORITY %%% 
+	- reload animation torpedo							%%% MED PRIORITY %%% 
+	- highscore "place" statt "platz"					%%% LOW PRIORITY %%%
+	- Begin Message										%%% LOW PRIORITY %%%
+		>Pilot! 
+		>Your mission is simple! 
+		>Defend this station against the alien threat or die trying! 
+		>Dismissed! 
+	- If you die										%%% LOW PRIORITY %%%
+		>This Pilot did his duty in combat with great courage and steadfast dedication even after he was outnumbered by the hundreds. 
+		>He sacrificed his life to defend the ones who couldn't themselves. 
+	- If you win										%%% LOW PRIORITY %%%
+		>I am proud of you Pilot, you did your job very well. I couldn't have done it better myself. 
+		>Here, take that medal and some vacation on this Spa Station not far from your home Planet. 
+		>Thank you for your service, Pilot! 
+		>Dismissed! 
+
 
 Modelle:
 	- Boss
