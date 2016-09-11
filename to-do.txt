@@ -4,8 +4,8 @@ Optimisierung:
 
 Gameplay:		
 	Bossgegner
-	Rauschschreen außerhalb der Spielwelt ( wird stärker wenn man sich von der Station entfernt)		#dustin		
-	waves anpassen/balancing																#daniel, alle
+	Rauschschreen außerhalb der Spielwelt - nicht trivial kommt erst zur Präsi		#dustin		
+	waves anpassen/balancing														#daniel, alle
 
 Modelle:
 	Boss
