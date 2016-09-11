@@ -83,9 +83,9 @@ namespace SpaceAssault.Utils
 
             foreach (HighscoreEntity entry in _scoresList)
             {
-                curNum = highScoreDoc.CreateElement("Platz" + i);
+                curNum = highScoreDoc.CreateElement("Place" + i);
                 curName = highScoreDoc.CreateElement("Name");
-                curPoints = highScoreDoc.CreateElement("Punkte");
+                curPoints = highScoreDoc.CreateElement("Points");
 
                 curName.InnerText = entry.Name;
                 curPoints.InnerText = entry.Points.ToString();
@@ -123,7 +123,6 @@ namespace SpaceAssault.Utils
                 }
             }
             SaveFile();
-            Debug.WriteLine("Entry added");
         }
     }
 }

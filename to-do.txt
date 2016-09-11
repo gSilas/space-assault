@@ -16,7 +16,6 @@ Gameplay:
 	- shop funktionalität erklären						%%% MED PRIORITY %%% 
 	- radar schöner machen								%%% MED PRIORITY %%% 
 	- reload animation torpedo							%%% MED PRIORITY %%% 
-	- highscore "place" statt "platz"					%%% LOW PRIORITY %%%		HM
 	- Begin Message										%%% LOW PRIORITY %%%
 		>Pilot! 
 		>Your mission is simple! 
