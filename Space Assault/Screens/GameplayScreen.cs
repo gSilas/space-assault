@@ -235,8 +235,11 @@ namespace SpaceAssault.Screens
                 explosionRemoveList.Clear();
 
 
-                if (_waveBuilder.HasEnded && deadTime <= 0)
+                if (_waveBuilder.HasEnded && deadTime <= 0 && _station._health > 0)
+                {
+                    Global.HighScorePoints += Global.Money;
                     LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen(), new HighscoreMenuScreen(true));
+                }
                 // if station dies go back to MainMenu
                 // TODO: change to EndScreen and HighScore list)
                 if (_station._health <= 0 && deadTime <= 0)
@@ -380,7 +383,7 @@ namespace SpaceAssault.Screens
 
             DrawStationDirectionArrow();
             DrawShipDirectionArrow();
-            if (_waveBuilder.HasEnded)
+            if (_waveBuilder.HasEnded && _station._health > 0)
             {
                 DrawCaptainDialog(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 200, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 2 - 100), "                    You Succeded!\n\n        General Stargaz\n\nI am proud of you Pilot, you did your\njob very well. I couldn't have done\nit better myself.\nHere, take that medal and some\nvacation on this Spa Station not\nfar from your home Planet.\nThank you for your service, Pilot!\nDismissed!");
                 deadTime -= gameTime.ElapsedGameTime.Milliseconds;
