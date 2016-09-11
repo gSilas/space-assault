@@ -653,7 +653,7 @@ namespace SpaceAssault.Screens
                 {
                     if (Collider3D.IntersectionSphere(ship, explosion))
                     {
-                        ship.getHit(80);
+                        ship.getHit(80*(_droneFleet.GetActiveDrone().makeDmg/10));
                         Global.HighScorePoints += 20;
                         if (ship.Health > 0)
                         {
