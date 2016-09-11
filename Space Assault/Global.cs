@@ -77,6 +77,9 @@ namespace SpaceAssault
 
         public static SpaceAssaultGame game;
 
+        //Drone DMG
+        public static int DroneDmg=10;
+
         //Enemyvalues
         public static int EnemyFighterHealth;
         public static int EnemyFighterDamage;

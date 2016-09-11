@@ -95,6 +95,7 @@ namespace SpaceAssault.Screens
             _frame = new Frame();
             Global.HighScorePoints = 0;
             Global.Money = 0;
+            Global.DroneDmg = 10;
             Global.NumberOfRockets = 1;
             _input = new InputState();
             _planet = new Planet(new Vector3(-1000, -2000, -1000), 0);
