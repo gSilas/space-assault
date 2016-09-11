@@ -1,3 +1,7 @@
+GDD: https://www.overleaf.com/5171140ndvrkx#/16161237/
+TDD: https://www.overleaf.com/5077288gkyrjg#/15777308/
+
+
 Optimisierung:
 	Collision Handling
 	BoundingFrustrum für alles
@@ -9,7 +13,6 @@ Gameplay:
 	- waves anpassen/balancing														#daniel, alle
 	- tutorial zeug anpassen wie im Gameplay....cs		%%% HIGH PRIORITY %%% 		HM
 	- 3d sound !!!!!									%%% HIGH PRIORITY %%%		HM
-	- bomber logic überarbeiten							%%% HIGH PRIORITY %%% 		HM
 	- gameover (press F to pay your respects) / winning screen		%%% HIGH PRIORITY %%% D
 	- shop funktionalität erklären						%%% MED PRIORITY %%% 
 	- radar schöner machen								%%% MED PRIORITY %%% 
@@ -26,7 +29,8 @@ Gameplay:
 		>I am proud of you Pilot, you did your job very well. I couldn't have done it better myself. 
 		>Here, take that medal and some vacation on this Spa Station not far from your home Planet. 
 		>Thank you for your service, Pilot! 
-		>Dismissed! 
+		>Dismissed!
+		- wenn gegner stirbt JO sound "Neeeein"			%%% LOW PRIORITY %%%
 
 
 Modelle:
