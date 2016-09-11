@@ -9,9 +9,8 @@ namespace SpaceAssault.Utils
 {
     public class Weapon
     {
-        protected TimeSpan _globalTimeSpan;
-        protected TimeSpan _coolDownTime;
-        protected TimeSpan _lastShotTime;
+        protected int _defaultCooldown;
+        protected int _cooldownTime;
 
         private ISpaceSoundEngine _engine;
 
@@ -39,11 +38,10 @@ namespace SpaceAssault.Utils
             }
         }
 
-        public Weapon(double coolDownMilis)
+        public Weapon(int coolDownMilis)
         {
-            _coolDownTime = TimeSpan.FromMilliseconds(coolDownMilis);        
-            _globalTimeSpan = TimeSpan.FromSeconds(0);
-            _lastShotTime = TimeSpan.FromSeconds(0);
+            _defaultCooldown = coolDownMilis;
+            _cooldownTime = 0;
         }
 
         public void LoadContent()
@@ -79,9 +77,10 @@ namespace SpaceAssault.Utils
 
         public bool Shoot(GameTime gameTime, Bullet.BulletType bullet, int damage, Vector3 position, Vector3 direction, ref List<Bullet> bulletList)
         {
-            if (gameTime.TotalGameTime > _lastShotTime.Add(_coolDownTime))
+            if (_cooldownTime <= 0)
             {
-                _lastShotTime = gameTime.TotalGameTime;
+                //resetting cooldown
+                _cooldownTime = _defaultCooldown;
 
                 //playing the sound
                 //Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
@@ -95,6 +94,11 @@ namespace SpaceAssault.Utils
                 return true;
             }
             return false;
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            _cooldownTime -= gameTime.ElapsedGameTime.Milliseconds;
         }
 
         public BulletMemory getBullet(Bullet.BulletType bullet)

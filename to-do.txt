@@ -15,6 +15,7 @@ Gameplay:
 	- 3d sound !!!!!
 	- reload animation torpedo
 	- bomber logic überarbeiten
+	- Rechtschreibung im Tutorial
 
 Modelle:
 	- Boss

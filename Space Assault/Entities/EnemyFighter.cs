@@ -21,12 +21,13 @@ namespace SpaceAssault.Entities
             Health = Global.EnemyFighterHealth;
             gunMakeDmg = Global.EnemyFighterDamage;
 
-            Gun = new Weapon(600d);
+            Gun = new Weapon(600);
         }
 
         public override void Update(GameTime gameTime)
         {
             Spheres = Collider3D.UpdateBoundingSphere(this);
+            Gun.Update(gameTime);
             if (Health <= 0)
             {
                 

@@ -72,8 +72,9 @@ namespace SpaceAssault.Entities
             _isNotDead = true;
             maxRange = Global.MapRingRadius + 200;
 
-            gunPrimary = new Weapon(200d);
-            gunSecondary = new Weapon(5000d);
+            gunPrimary = new Weapon(200);
+
+            gunSecondary = new Weapon(5000);
         }
 
         public void Reset()
@@ -107,6 +108,9 @@ namespace SpaceAssault.Entities
         public override void Update(GameTime gameTime)
         {
             _input.Update();
+            gunPrimary.Update(gameTime);
+            gunSecondary.Update(gameTime);
+
             Spheres = Collider3D.UpdateBoundingSphere(this);
 
             if (gameTime.TotalGameTime > (_shieldrefreshdelay.Add(TimeSpan.FromSeconds(3))))
@@ -136,7 +140,7 @@ namespace SpaceAssault.Entities
                 shield -= howMuch;
             else
             {
-                health -= (howMuch - howMuch*(armor/10));
+                health -= (howMuch - howMuch * (armor / 10));
             }
         }
         public void HandleInput(GameTime gameTime, Bullet.BulletType curBullet, ref List<Bullet> bulletList)
@@ -235,7 +239,7 @@ namespace SpaceAssault.Entities
                 if (_tiltZ < _tiltZMax)
                 {
                     _tiltZ += 0.2f;
-                                  }
+                }
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
@@ -279,18 +283,11 @@ namespace SpaceAssault.Entities
 
             if (_input.IsRightMouseButtonPressed())
             {
-                if (gameTime.TotalGameTime > (_cooldownOnRocket.Add(TimeSpan.FromSeconds(5))))
+                if (Global.NumberOfRockets > 0)
                 {
-                    if (Global.NumberOfRockets > 0)
-                    {
-                        gunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser.Forward, ref bulletList);
+                    if(gunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser.Forward, ref bulletList))
                         Global.NumberOfRockets -= 1;
-                    }
-                    Console.WriteLine(Global.NumberOfRockets);
-
-                    _cooldownOnRocket = gameTime.TotalGameTime;
                 }
-
             }
 
             //RotationMatrix = Matrix.CreateRotationZ(_tiltZ);

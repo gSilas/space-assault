@@ -23,13 +23,13 @@ namespace SpaceAssault.Entities
             Health = Global.EnemyBomber2Health;
             gunMakeDmg = Global.EnemyBomber2Damage;
 
-            Gun = new Weapon(5000d);
+            Gun = new Weapon(5000);
         }
 
         public override void Update(GameTime gameTime)
         {
             if (Health <= 0) IsDead = true;
-
+            Gun.Update(gameTime);
             Spheres = Collider3D.UpdateBoundingSphere(this);
             //TODO: health, armor update
         }

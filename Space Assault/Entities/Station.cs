@@ -31,7 +31,7 @@ namespace SpaceAssault.Entities
             _angle = angle;
             Position = position;
             Scale = 0.5f;
-            Gun = new Weapon(1000d);
+            Gun = new Weapon(1000);
 
             _up = true;
             _maxhealth = 10000;
@@ -61,6 +61,7 @@ namespace SpaceAssault.Entities
         public override void Update(GameTime gameTime)
         {
             //Spheres = Collider3D.UpdateBoundingSphere(this);
+            Gun.Update(gameTime);
             _angle += 0.005f;
             if (Position.Y < 1 && _up)
                 Position += new Vector3(0, 0.002f, 0);
