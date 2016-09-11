@@ -113,7 +113,7 @@ namespace SpaceAssault.Screens
 
             captainDialog = new Dialog(0, 0, 320, 400, 8, false, true);
             captain = new UIItem();
-            deadTime = 20000;
+            deadTime = 17000;
             voice = false;
         }
 
