@@ -22,7 +22,7 @@ namespace SpaceAssault.Entities
 
         public override void Update(GameTime gameTime)
         {
-            _angle += 0.0025f;
+            _angle += 0.00025f;
 
             RotationMatrix = Matrix.CreateRotationY(_angle);
         }
