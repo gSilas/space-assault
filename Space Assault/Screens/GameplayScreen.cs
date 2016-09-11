@@ -48,6 +48,8 @@ namespace SpaceAssault.Screens
         private Background _back;
         private UIItem _stationSymbol;
         private UIItem _enemySymbol;
+        bool isEndWin = false;
+        bool isEndLoose = false;
 
         // Sound
         private ISpaceSoundEngine _soundEngine;
@@ -383,14 +385,15 @@ namespace SpaceAssault.Screens
 
             DrawStationDirectionArrow();
             DrawShipDirectionArrow();
-            if (_waveBuilder.HasEnded && _station._health > 0)
+            if (_waveBuilder.HasEnded && _station._health > 0 || isEndWin)
             {
+                isEndWin = true;
                 DrawCaptainDialog(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 200, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 2 - 100), "                    You Succeded!\n\n        General Stargaz\n\nI am proud of you Pilot, you did your\njob very well. I couldn't have done\nit better myself.\nHere, take that medal and some\nvacation on this Spa Station not\nfar from your home Planet.\nThank you for your service, Pilot!\nDismissed!");
                 deadTime -= gameTime.ElapsedGameTime.Milliseconds;
             }
-              
-            if (_station._health <= 0)
+            else if (_station._health <= 0 || isEndLoose)
             {
+                isEndLoose = true;
                 DrawCaptainDialog(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 200, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 2 - 100), "                    You Died!\n\n        General Stargaz\n\nThis Pilot did his duty in combat with\ngreat courage and steadfast dedication\neven after he was outnumbered by\nthe hundreds.\nHe sacrificed his life to defend the\nones who couldn't themselves. ");
                 deadTime -= gameTime.ElapsedGameTime.Milliseconds;
             }
