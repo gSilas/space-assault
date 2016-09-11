@@ -89,11 +89,8 @@ namespace SpaceAssault.Screens
             base.Update(gameTime, otherScreenHasFocus, false);
             _station.Update(gameTime);
 
-
-            posOnCircle += 0.04f;
-            
+            posOnCircle += 0.04f;          
         }
-
 
         // Draws the background screen.
         public override void Draw(GameTime gameTime)

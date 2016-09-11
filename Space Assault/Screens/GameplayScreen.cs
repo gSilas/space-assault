@@ -307,8 +307,7 @@ namespace SpaceAssault.Screens
                         shop = new ShopScreen(_droneFleet, _station);
                     ScreenManager.AddScreen(shop);
                     //LoadingScreen.Load(this.ScreenManager, false, new ShopScreen(_droneFleet, _station));
-                }
-
+                }             
             }
 
             //player hits ESC it pauses the game

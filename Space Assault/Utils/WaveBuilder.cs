@@ -75,9 +75,9 @@ namespace SpaceAssault.Utils
                 else
                 {
                     if (gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)).Subtract(TimeSpan.FromSeconds(5d)))
-                        _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n\n\n\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
+                        _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n\n\n\n\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
                     else
-                        _dialog.Draw("Wave " + _waveCount + " ended!\n\n\n\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
+                        _dialog.Draw("Wave " + _waveCount + " ended!\n\n\n\n\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
 
                 }
             }
