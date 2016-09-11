@@ -47,7 +47,7 @@ namespace SpaceAssault.Screens
         private ISoundSource _explosionSource2;
         private ISoundSource _explosionSource3;
 
-        private ISoundEngine _engine;
+        private ISpaceSoundEngine _engine;
         private ISoundSource _openShop;
 
         Point dialogPos;
@@ -138,7 +138,7 @@ namespace SpaceAssault.Screens
             _asteroidField.LoadContent();
             //Sounds
 
-            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+            _engine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
             _explosionSource = _engine.AddSoundSourceFromFile("Content/Media/Effects/Explosion.wav", StreamMode.AutoDetect, true);
             _explosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/Explosion1.wav", StreamMode.AutoDetect, true);

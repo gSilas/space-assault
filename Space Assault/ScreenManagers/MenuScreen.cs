@@ -12,7 +12,7 @@ namespace SpaceAssault.ScreenManagers
 
     abstract class MenuScreen : GameScreen
     {
-        protected ISoundEngine SoundEngine;
+        protected ISpaceSoundEngine SoundEngine;
         protected ISoundSource MenuAcceptSound;
         protected ISoundSource MenuDenieSound;
         protected ISoundSource OkClick;
@@ -180,7 +180,7 @@ namespace SpaceAssault.ScreenManagers
         }
         public override void LoadContent()
         {
-            SoundEngine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+            SoundEngine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
             MenuAcceptSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointAccept.wav", StreamMode.AutoDetect, true);
             MenuDenieSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointDenie.wav", StreamMode.AutoDetect, true);

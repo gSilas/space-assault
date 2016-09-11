@@ -44,13 +44,14 @@ namespace SpaceAssault
         public static float MusicVolume = 1;
 
         //MUSIC
-        public static ISoundEngine MusicEngine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+        public static ISpaceSoundEngine MusicEngine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
         public static ISound Music;
         
         //RocketCount
         public static int NumberOfRockets=1;
 
         //SETTINGS
+        public static bool EasterEgg;
         public static int FleetSpawnTime = 5; // 1 Fleet/5 sec
         public static int MapRingRadius = 800;
         public static int MapSpawnRadius = MapRingRadius + 300;

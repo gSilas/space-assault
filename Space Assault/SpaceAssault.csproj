@@ -107,6 +107,7 @@
     <Compile Include="Utils\Particle\Settings\DustParticleSystem.cs" />
     <Compile Include="Utils\Particle\Settings\AsteroidTrailSettings.cs" />
     <Compile Include="Utils\Particle\Settings\AsteroidExplosionSettings.cs" />
+    <Compile Include="Utils\SpaceSoundEngine.cs" />
     <Compile Include="Utils\WaveBuilder.cs" />
     <Compile Include="Utils\Weapon.cs" />
     <Compile Include="Global.cs" />

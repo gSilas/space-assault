@@ -56,7 +56,7 @@ namespace SpaceAssault.Screens
         private ISoundSource _astexplosionSource3;
         private ISoundSource _openShop;
         private ISoundSource _hitSound;
-        private ISoundEngine _engine;
+        private ISpaceSoundEngine _engine;
 
         //Particle
         ParticleSystem borderParticles;
@@ -107,7 +107,7 @@ namespace SpaceAssault.Screens
             Global.NumberOfRockets = 1;
             _input = new InputState();
             _planet = new Planet(new Vector3(-1000, -2000, -1000), 0);
-            _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+            _engine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
             // Construct Particles
             borderParticles = new BorderParticleSettings();
@@ -140,8 +140,10 @@ namespace SpaceAssault.Screens
             _stationEffect = Global.ContentManager.Load<Effect>("Effects/stationEffect");
 
             //Sounds
-
-            Global.Music = _engine.Play2D("Content/Media/Effects/Objects/Explosion3.wav", false);
+            //playing the sound
+            Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
+            _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
+            //Global.Music = _engine.Play2D("Content/Media/Effects/Objects/Explosion3.wav", false);
             Global.Music.Volume = Global.MusicVolume / 10;
 
             _openShop = _engine.AddSoundSourceFromFile("Content/Media/Effects/OpenShop.wav", StreamMode.AutoDetect, true);
@@ -152,6 +154,9 @@ namespace SpaceAssault.Screens
             _astexplosionSource1 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst1.wav", StreamMode.AutoDetect, true);
             _astexplosionSource2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst2.wav", StreamMode.AutoDetect, true);
             _astexplosionSource3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/ExplosionAst3.wav", StreamMode.AutoDetect, true);
+
+            // X = left/right
+            Global.Music = _engine.Play3D(_explosionSource3, Global.Camera.Target.X-15, Global.Camera.Target.Y, Global.Camera.Target.Z, false, false, false);
 
             _hitSound = _engine.AddSoundSourceFromFile("Content/Media/Effects/Objects/GetHitShips.wav", StreamMode.AutoDetect, true);
         }
@@ -300,7 +305,6 @@ namespace SpaceAssault.Screens
                 if ((Vector3.Distance(_station.Position, _droneFleet.GetActiveDrone().Position) - _stationHeight) < 150)
                 {
                     //playing the sound
-                    _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                     ISound Open;
                     Open = _engine.Play2D(_openShop, false, true, false);
                     Open.Volume = Global.SpeakerVolume / 10;
@@ -315,7 +319,6 @@ namespace SpaceAssault.Screens
             if (input.IsPauseGame())
             {
                 //playing the sound
-                _engine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
                 ISound Open;
                 Open = _engine.Play2D(_openShop, false, true, false);
                 Open.Volume = Global.SpeakerVolume / 10;
@@ -462,7 +465,6 @@ namespace SpaceAssault.Screens
                             explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ship.Position, 0.4, 50, true));
                         }
                         ship.getHit(bullet.makeDmg);
-                        //PlayShipHitSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
                         _removeBullets.Add(bullet);
                         Global.HighScorePoints += 20;
                         if (ship.Health > 0)
@@ -490,7 +492,6 @@ namespace SpaceAssault.Screens
             {
                 if (Collider3D.IntersectionSphere(bullet, _droneFleet.GetActiveDrone()))
                 {
-                    //_drone.getHit(ship.Gun.makeDmg);
                     _droneFleet.GetActiveDrone().getHit(bullet.makeDmg);
                     if (bullet._bulletType == Bullet.BulletType.BossGun)
                     {
@@ -536,34 +537,27 @@ namespace SpaceAssault.Screens
                     explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.4));
                     ast.IsDead = true;
                     _removeAsteroid.Add(ast);
-                    _station.getHit(10);
+                    _station.getHit(100);
                     PlayAstExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                     continue;
                 }
                 foreach (var ast2 in _asteroidField._asteroidList)
                 {
-
                     if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
                     {
                         var newDirection = new Vector3();
                         ast.Reflect(ast2.Direction, ast2.Spheres[0].Center, out newDirection);
                         ast2.Direction = newDirection;
                         dustParticles.AddParticle(ast.Position, Vector3.Zero);
-                        //ast.Position += ast.Direction * (2*((float) random.NextDouble())*ast.MaxRadius() + ast.MaxRadius());
                     }
-
                 }
                 foreach (var ship in _waveBuilder.ShipList)
                 {
-
                     if (Collider3D.IntersectionSphere(ast, ship))
                     {
-                        ship.Health -= 5;
                         dustParticles.AddParticle(ship.Position, Vector3.Zero);
                         _removeAsteroid.Add(ast);
                     }
-
-
                 }
                 foreach (var bullet in _waveBuilder.BulletList)
                 {
