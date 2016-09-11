@@ -14,20 +14,11 @@ Gameplay:
 	- shop funktionalität erklären						%%% MED PRIORITY %%% 
 	- radar schöner machen								%%% MED PRIORITY %%% 
 	- reload animation torpedo							%%% MED PRIORITY %%% 
-	- Begin Message										%%% LOW PRIORITY %%%
-		>Pilot! 
-		>Your mission is simple! 
-		>Defend this station against the alien threat or die trying! 
-		>Dismissed! 
-	- If you die										%%% LOW PRIORITY %%%
-		>This Pilot did his duty in combat with great courage and steadfast dedication even after he was outnumbered by the hundreds. 
-		>He sacrificed his life to defend the ones who couldn't themselves. 
-	- If you win										%%% LOW PRIORITY %%%
-		>I am proud of you Pilot, you did your job very well. I couldn't have done it better myself. 
-		>Here, take that medal and some vacation on this Spa Station not far from your home Planet. 
-		>Thank you for your service, Pilot! 
-		>Dismissed! 
 
+GDD
+https://www.overleaf.com/5171140ndvrkx#/16161237/
+TDD
+https://www.overleaf.com/5077288gkyrjg#/15777308/
 
 Modelle:
 	- Boss
