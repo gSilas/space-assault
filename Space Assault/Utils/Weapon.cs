@@ -23,6 +23,8 @@ namespace SpaceAssault.Utils
         private BulletMemory enemyLazer;
         private BulletMemory bossGun;
 
+        private bool easterEgg = true;
+
         public class BulletMemory
         {
             public Model model;
@@ -49,11 +51,26 @@ namespace SpaceAssault.Utils
         public void LoadContent()
         {
             _engine = new ISoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+            ISoundSource lazer;
+            ISoundSource lazer2;
+            ISoundSource lazer3;
+            ISoundSource rocket;
 
-            ISoundSource lazer = _engine.AddSoundSourceFromFile("Content/Media/Effects/Laser_Shoot_try.wav", StreamMode.AutoDetect, true);
-            ISoundSource lazer2= _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/Laser_Shoot3.wav", StreamMode.AutoDetect, true);
-            ISoundSource lazer3= _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/Laser_Shoot5.wav", StreamMode.AutoDetect, true);
-            ISoundSource rocket= _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/RocketShot.wav", StreamMode.AutoDetect, true);
+            if (easterEgg)
+            {
+                lazer = _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/boooow.mp3", StreamMode.AutoDetect, true);
+                lazer2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/pooach.mp3", StreamMode.AutoDetect, true);
+                lazer3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/peeeew.mp3", StreamMode.AutoDetect, true);
+                rocket = _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/paaaach.mp3", StreamMode.AutoDetect, true);
+            }
+            else
+            {
+                lazer = _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/Laser_Shoot_try.wav", StreamMode.AutoDetect, true);
+                lazer2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/Laser_Shoot3.wav", StreamMode.AutoDetect, true);
+                lazer3 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/Laser_Shoot5.wav", StreamMode.AutoDetect, true);
+                rocket = _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/RocketShot.wav", StreamMode.AutoDetect, true);
+            }
+
             yellowLazer = new BulletMemory("Models/laser", lazer, 6f, false);
             blueLazer = new BulletMemory("Models/laser2", lazer2, 6f, false);
             photonBomb = new BulletMemory("Models/bullet", rocket, 2f, true);
@@ -69,9 +86,9 @@ namespace SpaceAssault.Utils
                 _lastShotTime = gameTime.TotalGameTime;
 
                 //playing the sound
-                Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
-                _engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
-                ISound _shootSound = _engine.Play3D(getBullet(bullet).soundSource, curListenerPos.X, curListenerPos.Y + 15f, curListenerPos.Z, false, true, true);
+                //Vector3D curListenerPos = new Vector3D(Global.Camera.Target.X, Global.Camera.Target.Y, Global.Camera.Target.Z);
+                //_engine.SetListenerPosition(curListenerPos, new Vector3D(0, 0, 1));
+                ISound _shootSound = _engine.Play2D(getBullet(bullet).soundSource, false, true, true);
                 _shootSound.Volume = Global.SpeakerVolume / 10;
                 _shootSound.Paused = false;
 
