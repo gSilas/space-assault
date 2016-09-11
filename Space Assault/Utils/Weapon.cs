@@ -23,8 +23,6 @@ namespace SpaceAssault.Utils
         private BulletMemory enemyLazer;
         private BulletMemory bossGun;
 
-        private bool easterEgg = true;
-
         public class BulletMemory
         {
             public Model model;
@@ -56,7 +54,7 @@ namespace SpaceAssault.Utils
             ISoundSource lazer3;
             ISoundSource rocket;
 
-            if (easterEgg)
+            if (Global.EasterEgg)
             {
                 lazer = _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/boooow.mp3", StreamMode.AutoDetect, true);
                 lazer2 = _engine.AddSoundSourceFromFile("Content/Media/Effects/Weapons/pooach.mp3", StreamMode.AutoDetect, true);

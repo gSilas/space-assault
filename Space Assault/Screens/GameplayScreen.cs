@@ -432,7 +432,6 @@ namespace SpaceAssault.Screens
                             explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ship.Position, 0.4, 50, true));
                         }
                         ship.getHit(bullet.makeDmg);
-                        //PlayShipHitSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
                         _removeBullets.Add(bullet);
                         Global.HighScorePoints += 20;
                         if (ship.Health > 0)
@@ -460,7 +459,6 @@ namespace SpaceAssault.Screens
             {
                 if (Collider3D.IntersectionSphere(bullet, _droneFleet.GetActiveDrone()))
                 {
-                    //_drone.getHit(ship.Gun.makeDmg);
                     _droneFleet.GetActiveDrone().getHit(bullet.makeDmg);
                     if (bullet._bulletType == Bullet.BulletType.BossGun)
                     {
@@ -506,34 +504,27 @@ namespace SpaceAssault.Screens
                     explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.4));
                     ast.IsDead = true;
                     _removeAsteroid.Add(ast);
-                    _station.getHit(10);
+                    _station.getHit(100);
                     PlayAstExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
                     continue;
                 }
                 foreach (var ast2 in _asteroidField._asteroidList)
                 {
-
                     if (ast != ast2 && Collider3D.IntersectionSphere(ast2, ast))
                     {
                         var newDirection = new Vector3();
                         ast.Reflect(ast2.Direction, ast2.Spheres[0].Center, out newDirection);
                         ast2.Direction = newDirection;
                         dustParticles.AddParticle(ast.Position, Vector3.Zero);
-                        //ast.Position += ast.Direction * (2*((float) random.NextDouble())*ast.MaxRadius() + ast.MaxRadius());
                     }
-
                 }
                 foreach (var ship in _waveBuilder.ShipList)
                 {
-
                     if (Collider3D.IntersectionSphere(ast, ship))
                     {
-                        ship.Health -= 5;
                         dustParticles.AddParticle(ship.Position, Vector3.Zero);
                         _removeAsteroid.Add(ast);
                     }
-
-
                 }
                 foreach (var bullet in _waveBuilder.BulletList)
                 {

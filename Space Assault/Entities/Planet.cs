@@ -12,6 +12,7 @@ namespace SpaceAssault.Entities
            _angle = angle;
            Position = position;
            Scale = 0.5f;
+            //_angle += 0.0025f;
         }
 
         public override void LoadContent()
@@ -21,7 +22,8 @@ namespace SpaceAssault.Entities
 
         public override void Update(GameTime gameTime)
         {
-            _angle += 0.0025f;
+            _angle += 0.00025f;
+
             RotationMatrix = Matrix.CreateRotationY(_angle);
         }
         public virtual void Draw(Color entityColor)

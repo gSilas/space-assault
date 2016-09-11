@@ -21,6 +21,7 @@ namespace SpaceAssault.Screens
         OptionMenuEntry uiColorRMenuEntry;
         OptionMenuEntry uiColorGMenuEntry;
         OptionMenuEntry uiColorBMenuEntry;
+        OptionMenuEntry easterEggMenuEntry;
         OptionMenuEntry back;
 
         List<OptionMenuEntry> optionMenuEntries = new List<OptionMenuEntry>();
@@ -37,6 +38,7 @@ namespace SpaceAssault.Screens
             uiColorRMenuEntry = new OptionMenuEntry(string.Empty);
             uiColorGMenuEntry = new OptionMenuEntry(string.Empty);
             uiColorBMenuEntry = new OptionMenuEntry(string.Empty);
+            easterEggMenuEntry = new OptionMenuEntry(string.Empty);
             back = new OptionMenuEntry("Back");
 
             SetMenuEntryText();
@@ -46,6 +48,7 @@ namespace SpaceAssault.Screens
             frameCounterMenuEntry.SelectedIncrease += frameCounterMenuEntrySelected;
             effectVolumeMenuEntry.SelectedIncrease += effectVolumeMenuEntrySelectedIncrease;
             musicVolumeMenuEntry.SelectedIncrease += musicVolumeMenuEntrySelectedIncrease;
+            easterEggMenuEntry.SelectedIncrease += easterEggMenuEntrySelected;
 
             uiColorRMenuEntry.SelectedIncrease += uiColorRMenuEntrySelectedIncrease;
             uiColorGMenuEntry.SelectedIncrease += uiColorGMenuEntrySelectedIncrease;
@@ -58,6 +61,7 @@ namespace SpaceAssault.Screens
             uiColorRMenuEntry.SelectedDecrease += uiColorRMenuEntrySelectedDecrease;
             uiColorGMenuEntry.SelectedDecrease += uiColorGMenuEntrySelectedDecrease;
             uiColorBMenuEntry.SelectedDecrease += uiColorBMenuEntrySelectedDecrease;
+            easterEggMenuEntry.SelectedDecrease += easterEggMenuEntrySelected;
 
             back.Selected += OnCancel;
 
@@ -70,6 +74,7 @@ namespace SpaceAssault.Screens
             optionMenuEntries.Add(uiColorRMenuEntry);
             optionMenuEntries.Add(uiColorGMenuEntry);
             optionMenuEntries.Add(uiColorBMenuEntry);
+            optionMenuEntries.Add(easterEggMenuEntry);
             optionMenuEntries.Add(back);
             menuEntries = optionMenuEntries.Cast<MenuEntry>().ToList();
         }
@@ -85,6 +90,7 @@ namespace SpaceAssault.Screens
             uiColorRMenuEntry.Text = "Color R: " + (Global.UIColor.R);
             uiColorGMenuEntry.Text = "Color G: " + (Global.UIColor.G);
             uiColorBMenuEntry.Text = "Color B: " + (Global.UIColor.B);
+            easterEggMenuEntry.Text = "'Special' Sound: " + (Global.EasterEgg ? "on" : "off");           
         }
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
@@ -199,6 +205,11 @@ namespace SpaceAssault.Screens
         void fullscreenMenuEntrySelected(object sender, EventArgs e)
         {
             Global.GraphicsManager.ToggleFullScreen();
+            SetMenuEntryText();
+        }
+        void easterEggMenuEntrySelected(object sender, EventArgs e)
+        {
+            Global.EasterEgg= !Global.EasterEgg;
             SetMenuEntryText();
         }
 
