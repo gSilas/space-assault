@@ -13,11 +13,6 @@ namespace SpaceAssault.ScreenManagers
     abstract class MenuScreen : GameScreen
     {
         protected ISpaceSoundEngine SoundEngine;
-        protected ISoundSource MenuAcceptSound;
-        protected ISoundSource MenuDenieSound;
-        protected ISoundSource OkClick;
-        protected ISoundSource GoBack;
-        protected ISoundSource OpenMenu;
 
         public List<MenuEntry> menuEntries = new List<MenuEntry>();
         protected int selectedEntry = 0;
@@ -42,9 +37,51 @@ namespace SpaceAssault.ScreenManagers
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 
+        //#################################
+        // Load Content
+        //#################################
+        public override void LoadContent()
+        {
+            SoundEngine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
+            SoundEngine.AddSoundSourceFromFile("MenuAcceptSound", "Content/Media/Effects/MenuPointAccept.wav");
+            SoundEngine.AddSoundSourceFromFile("MenuDenieSound", "Content /Media/Effects/MenuPointDenie.wav");
+            SoundEngine.AddSoundSourceFromFile("OkClick", "Content /Media/Effects/OkClick.wav");
+            SoundEngine.AddSoundSourceFromFile("GoBack", "Content /Media/Effects/GoBack2.wav");
+            SoundEngine.AddSoundSourceFromFile("OpenMenu", "Content/Media/Effects/OpenShop.wav");
 
-        // Responds to user input, changing the selected entry and accepting
-        // or cancelling the menu.
+            _frame.LoadContent();
+        }
+
+        //#################################
+        // Update
+        //#################################
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
+                                                       bool coveredByOtherScreen)
+        {
+            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+
+            // Update each nested MenuEntry object.
+            for (int i = 0; i < menuEntries.Count; i++)
+            {
+                bool isSelected = IsActive && (i == selectedEntry);
+
+                menuEntries[i].Update(this, isSelected, gameTime);
+            }
+        }
+
+        //#################################
+        // Draw
+        //#################################
+        public override void Draw(GameTime gameTime)
+        {
+            drawMenuEntries(gameTime);
+            _frame.Draw();
+        }
+
+
+        //#################################
+        // Handle Input
+        //#################################
         public override void HandleInput(InputState input)
         {
 
@@ -80,12 +117,7 @@ namespace SpaceAssault.ScreenManagers
             if (input.IsMenuUp())
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-                ISound Accept;
-                Accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                Accept.Volume = Global.SpeakerVolume/10;
-                Accept.Paused = false;
-
+                SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
                 selectedEntry--;
 
                 if (selectedEntry < 0)
@@ -96,12 +128,7 @@ namespace SpaceAssault.ScreenManagers
             if (input.IsMenuDown())
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-                ISound Accept;
-                Accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                Accept.Volume = Global.SpeakerVolume/10;
-                Accept.Paused = false;
-
+                SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
                 selectedEntry++;
 
                 if (selectedEntry >= menuEntries.Count)
@@ -119,7 +146,6 @@ namespace SpaceAssault.ScreenManagers
             }
         }
 
-
         // Handler for when the user has chosen a menu entry.
         protected virtual void OnSelectEntry(int entryIndex)
         {
@@ -131,11 +157,7 @@ namespace SpaceAssault.ScreenManagers
         protected virtual void OnCancel()
         {
             //playing the sound
-            SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-            ISound Denie;
-            Denie = SoundEngine.Play2D(GoBack, false, true, false);
-            Denie.Volume = Global.SpeakerVolume/10;
-            Denie.Paused = false;
+            SoundEngine.Play2D("GoBack", Global.SpeakerVolume / 10, false);
 
             ExitScreen();
         }
@@ -178,33 +200,6 @@ namespace SpaceAssault.ScreenManagers
                 position.Y += menuEntries[i].GetHeight();
             }
         }
-        public override void LoadContent()
-        {
-            SoundEngine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
-
-            MenuAcceptSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointAccept.wav", StreamMode.AutoDetect, true);
-            MenuDenieSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointDenie.wav", StreamMode.AutoDetect, true);
-            OkClick = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/OkClick.wav", StreamMode.AutoDetect,true);
-            GoBack = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/GoBack2.wav", StreamMode.AutoDetect, true);
-            OpenMenu = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/OpenShop.wav", StreamMode.AutoDetect, true);
-
-            _frame.LoadContent();
-        }
-
-        // Updates the menu.
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
-                                                       bool coveredByOtherScreen)
-        {
-            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-
-            // Update each nested MenuEntry object.
-            for (int i = 0; i < menuEntries.Count; i++)
-            {
-                bool isSelected = IsActive && (i == selectedEntry);
-
-                menuEntries[i].Update(this, isSelected, gameTime);
-            }
-        }
 
         //#################################
         // Helper Draw - MenuEntries
@@ -240,14 +235,5 @@ namespace SpaceAssault.ScreenManagers
                                    titleOrigin, titleScale, SpriteEffects.None, 0);
         }
 
-
-        //#################################
-        // Draw
-        //#################################
-        public override void Draw(GameTime gameTime)
-        {
-            drawMenuEntries(gameTime);
-            _frame.Draw();
-        }
     }
 }
