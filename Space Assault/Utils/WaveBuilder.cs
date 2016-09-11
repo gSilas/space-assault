@@ -358,7 +358,7 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighter3Damage = 40;
                     Global.EnemyFighter3KillMoney = 50;
 
-                    Global.EnemyBomberHealth = 500;
+                    Global.EnemyBomberHealth = 800;
                     Global.EnemyBomberDamage = 600;
                     Global.EnemyBomberKillMoney = 400;
 
@@ -390,7 +390,7 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighter3Damage = 40;
                     Global.EnemyFighter3KillMoney = 50;
 
-                    Global.EnemyBomberHealth = 500;
+                    Global.EnemyBomberHealth = 800;
                     Global.EnemyBomberDamage = 600;
                     Global.EnemyBomberKillMoney = 400;
 
@@ -422,7 +422,7 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighter3Damage = 40;
                     Global.EnemyFighter3KillMoney = 50;
 
-                    Global.EnemyBomberHealth = 500;
+                    Global.EnemyBomberHealth = 800;
                     Global.EnemyBomberDamage = 600;
                     Global.EnemyBomberKillMoney = 400;
 
@@ -454,7 +454,7 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighter3Damage = 40;
                     Global.EnemyFighter3KillMoney = 50;
 
-                    Global.EnemyBomberHealth = 500;
+                    Global.EnemyBomberHealth = 800;
                     Global.EnemyBomberDamage = 600;
                     Global.EnemyBomberKillMoney = 400;
 
@@ -486,7 +486,7 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighter3Damage = 40;
                     Global.EnemyFighter3KillMoney = 50;
 
-                    Global.EnemyBomberHealth = 500;
+                    Global.EnemyBomberHealth = 800;
                     Global.EnemyBomberDamage = 600;
                     Global.EnemyBomberKillMoney = 400;
 
@@ -510,7 +510,7 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighter2Damage = 50;
                     Global.EnemyFighter2KillMoney = 500;
 
-                    Global.EnemyBomberHealth = 500;
+                    Global.EnemyBomberHealth = 800;
                     Global.EnemyBomberDamage = 600;
                     Global.EnemyBomberKillMoney = 400;
 
