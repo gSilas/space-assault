@@ -8,7 +8,7 @@ namespace SpaceAssault.Screens
     class MainMenuScreen : MenuScreen
     {
         // Constructor fills in the menu contents.
-        public MainMenuScreen() : base("Dronecontrol")
+        public MainMenuScreen() : base("Space Assault")
         {
 
             // Create our menu entries.
