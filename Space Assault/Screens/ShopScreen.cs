@@ -164,7 +164,7 @@ namespace SpaceAssault.Screens
             SoundEngine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
 
             SoundEngine.AddSoundSourceFromFile("MenuAcceptSound", "Content/Media/Effects/Blip_Select.wav");
-            SoundEngine.AddSoundSourceFromFile("OkClick", "Content/M3dia/Effects/MenuPointAccept.wav");
+            SoundEngine.AddSoundSourceFromFile("OkClick", "Content/Media/Effects/MenuPointAccept.wav");
             SoundEngine.AddSoundSourceFromFile("MenuDenieSound", "Content/Media/Effects/MenuPointDenie.wav");
             SoundEngine.AddSoundSourceFromFile("GoBack", "Content/Media/Effects/GoBack2.wav");
             SoundEngine.AddSoundSourceFromFile("OpenMenu", "Content/Media/Effects/OpenShop.wav");
