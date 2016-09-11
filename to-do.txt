@@ -3,19 +3,26 @@ Optimisierung:
 	BoundingFrustrum für alles
 
 Gameplay:		
-	Bossgegner
-	Rauschschreen außerhalb der Spielwelt - nicht trivial kommt erst zur Präsi		#dustin		
-	waves anpassen/balancing														#daniel, alle
+	- Bossgegner
+	- Rauschschreen außerhalb der Spielwelt - nicht trivial kommt erst zur Präsi		#dustin		
+	- waves anpassen/balancing														#daniel, alle
+	- rakte AoE damage
+	- tutorial shit anpassen
+	- tutorial story text
+	- optionmenu click buys instantly
+	- shop funktionalität erklären
+	- radar schöner machen
+	- 3d sound !!!!!
+	- reload animation torpedo
+	- bomber logic überarbeiten
 
 Modelle:
-	Boss
+	- Boss
 
 Explosion:
 https://www.freesoundeffects.com/free-sounds/explosion-10070/
 
-Easter Egg:
-	Konamicode
-	Nyan Cat
+	- readme schreiben !!!!!!
 
 
 ### FEEDBACK ###
