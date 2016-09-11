@@ -93,6 +93,8 @@ namespace SpaceAssault.Entities
             _moveSpeedModifier = 0;
             _moveSpeedModifierSideways = 0;
             Position = _spawnPos;
+
+            Global.HighScorePoints -= 200;
         }
 
         public override void LoadContent()
@@ -304,12 +306,6 @@ namespace SpaceAssault.Entities
             {
                 Position += posNormalized;
             }
-        }
-
-        private Vector3 goToPlace(AEnemys curShip, Vector3 place)
-        {
-            Vector3 placeDir = place - curShip.Position;
-            return placeDir;
         }
     }
 }
