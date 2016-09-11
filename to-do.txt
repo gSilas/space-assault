@@ -8,9 +8,10 @@ Gameplay:
 	waves anpassen/balancing																#daniel, alle
 
 Modelle:
-	Drone
 	Boss
-	2ten asterioden
+
+Explosion:
+https://www.freesoundeffects.com/free-sounds/explosion-10070/
 
 Easter Egg:
 	Konamicode
