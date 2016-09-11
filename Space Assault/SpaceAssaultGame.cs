@@ -47,6 +47,9 @@ namespace SpaceAssault
             Global.MusicEngine.AddSoundSourceFromFile("ShinyTech2", "Content/Media/Music/Shiny Tech2.mp3");
             Global.MusicEngine.AddSoundSourceFromFile("CyborgNinja", "Content/Media/Music/Cyborg Ninja.mp3");
             Global.MusicEngine.AddSoundSourceFromFile("TruthOfTheLegend", "Content/Media/Music/Truth of the Legend_Cut.wav");
+            Global.MusicEngine.AddSoundSourceFromFile("voice_loss", "Content/Media/Effects/Voice/voice_loss.mp3");
+            Global.MusicEngine.AddSoundSourceFromFile("voice_win", "Content/Media/Effects/Voice/voice_win.mp3");
+            Global.MusicEngine.AddSoundSourceFromFile("voice_intro", "Content/Media/Effects/Voice/voice_intro.mp3");
 
             // Activate the first screens.
             screenManager.AddScreen(new BackgroundScreen());

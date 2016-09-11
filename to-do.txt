@@ -29,9 +29,12 @@ Gameplay:
 		>I am proud of you Pilot, you did your job very well. I couldn't have done it better myself. 
 		>Here, take that medal and some vacation on this Spa Station not far from your home Planet. 
 		>Thank you for your service, Pilot! 
-		>Dismissed!
-		- wenn gegner stirbt JO sound "Neeeein"			%%% LOW PRIORITY %%%
+		>Dismissed! 
 
+GDD
+https://www.overleaf.com/5171140ndvrkx#/16161237/
+TDD
+https://www.overleaf.com/5077288gkyrjg#/15777308/
 
 Modelle:
 	- Boss

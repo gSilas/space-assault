@@ -63,7 +63,7 @@ namespace SpaceAssault.Screens
         List<ExplosionSystem> explosionList = new List<ExplosionSystem>();
         private double _duration = 0.4;
 
-
+        bool voice;
         // The explosions effect works by firing projectiles up into the
         // air, so we need to keep track of all the active projectiles.
         List<Projectile> projectiles = new List<Projectile>();
@@ -71,7 +71,7 @@ namespace SpaceAssault.Screens
 
         // Random number generator for the fire effect.
         Random random = new Random();
-
+        bool once = true;
         //Created screens
         PauseMenuScreen pause;
         ShopScreen shop;
@@ -80,6 +80,7 @@ namespace SpaceAssault.Screens
         //#################################
         public TutorialScreen()
         {
+            voice = false;
             explosionParticles = new ShipExplosionSettings();
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
@@ -119,9 +120,10 @@ namespace SpaceAssault.Screens
             TutorialText.Add(TutorialText.Count, "But beware! \nYou need to be near the station \nto open the shop.");
             TutorialText.Add(TutorialText.Count, "W ] fly up\nA ] fly left\nS ] fly down\nD ] fly right");
             TutorialText.Add(TutorialText.Count, "Left mouse button\n] Shoots your laser\nRight mouse button\n] Shoots your rocket\n");
-            TutorialText.Add(TutorialText.Count, "I'll now give you your controls back!\nBut stay in radio range.");
+            TutorialText.Add(TutorialText.Count, "If you search for close enemys, watch at the red dot on your Drone.");
             TutorialText.Add(TutorialText.Count, "I also heard of incoming asteroids.\nThe comets with the blue trail\noffer a nice income.");
             TutorialText.Add(TutorialText.Count, "Before you start, visit the shop\nand buy something with that loaned\nmoney we gave you!");
+            TutorialText.Add(TutorialText.Count, "I'll now give you your controls back!\nBut stay in radio range.");
             TutorialText.Add(TutorialText.Count, "Press (X) to start your mission!");
             TutorialText.TryGetValue(0, out tutorialMessage);
         }
@@ -181,6 +183,21 @@ namespace SpaceAssault.Screens
         {
             base.Update(gameTime, otherScreenHasFocus, false);
 
+            if (once)
+            {
+                if (!voice)
+                {
+                    Global.Music.Stop();
+                    voice = true;
+                    Global.SpeakerVolume = 0;
+                }
+                if (Global.Music.Finished)
+                {
+                    once = false;
+                    Global.Music = Global.MusicEngine.Play2D("voice_intro", Global.MusicVolume / 10, false);                   
+                }
+            }
+            SoundDJ();
             if (_sphereAlpha > 0.1f)
                 _sphereAlpha -= 0.001f;
 
@@ -190,8 +207,6 @@ namespace SpaceAssault.Screens
                 _pauseAlpha = Math.Min(_pauseAlpha + 1f / 32, 1);
             else
                 _pauseAlpha = Math.Max(_pauseAlpha - 1f / 32, 0);
-
-
 
             foreach (ExplosionSystem explosion in explosionList)
             {
@@ -416,7 +431,7 @@ namespace SpaceAssault.Screens
             dialogPos.X = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X + 32;
             dialogPos.Y = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y + 32;
             tutorialDialog.Draw(dialogPos, tutorialMessage);
-            captainDialog.Draw(new Point(dialogPos.X,dialogPos.Y-170),"\n\n\n\nPilot!\nYour mission is simple!\nDefend this station against the alien\nthreat or die trying!\nDismissed!");
+            captainDialog.Draw(new Point(dialogPos.X,dialogPos.Y-170), "                   Briefing\n\n        General Stargaz\n\nPilot!\nYour mission is simple!\nDefend this station against the alien\nthreat or die trying!\nDismissed!");
             captain.Draw(new Point(dialogPos.X+10, dialogPos.Y - 165), 1, Color.White);
         }
         //#################################
@@ -545,6 +560,27 @@ namespace SpaceAssault.Screens
             // Create a new projectile once per second
             //projectiles.Add(new Projectile(explosionParticles,explosionSmokeParticles,projectileTrailParticles));
             explosionParticles.AddParticle(position, velocity);
+        }
+        void SoundDJ()
+        {
+            if (Global.Music.Finished)
+            {
+                switch (random.Next(1, 4))
+                {
+                    case 1:
+                        Global.Music = Global.MusicEngine.Play2D("SpaceFighterLoop", Global.MusicVolume / 10, false);
+                        break;
+
+                    case 2:
+                        Global.Music = Global.MusicEngine.Play2D("ShinyTech2", Global.MusicVolume / 10, false);
+                        break;
+
+                    case 3:
+                        Global.Music = Global.MusicEngine.Play2D("CyborgNinja", Global.MusicVolume / 10, false);
+                        break;
+                }
+            }
+
         }
 
     }

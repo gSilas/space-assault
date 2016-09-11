@@ -73,6 +73,8 @@ namespace SpaceAssault.Screens
         //Created screens
         PauseMenuScreen pause;
         ShopScreen shop;
+        int deadTime;
+        bool voice;
 
         //#################################
         // Constructor
@@ -109,8 +111,10 @@ namespace SpaceAssault.Screens
             dustParticles = new DustParticleSystem();
             hitmarkerParticles = new HitMarkerParticleSystem();
 
-            captainDialog = new Dialog(0, 0, 160, 400, 8, false, true);
+            captainDialog = new Dialog(0, 0, 320, 400, 8, false, true);
             captain = new UIItem();
+            deadTime = 17000;
+            voice = false;
         }
 
 
@@ -150,16 +154,15 @@ namespace SpaceAssault.Screens
             _soundEngine.AddSoundSourceFromFile("astexplosionSource3", "Content/Media/Effects/Objects/ExplosionAst3.wav");
             _soundEngine.AddSoundSourceFromFile("hitSound", "Content/Media/Effects/Objects/GetHitShips.wav");
 
-
             //Global.Music = _soundEngine.Play2D("explosionSource3", Global.MusicVolume / 10, false);
             captainDialog.LoadContent();
             captain.LoadContent("Images/captain");
 
             // X = left/right
+            
             _soundEngine.setListenerPosToCameraTarget();
             var pos = Global.Camera.Target;
             Global.Music = _soundEngine.Play3D("explosionSource3", Global.MusicVolume / 10, Global.Camera.Target, false);
-
         }
 
         //#################################
@@ -184,7 +187,7 @@ namespace SpaceAssault.Screens
             _soundEngine.Update();
 
             SoundDJ();
-
+            PlayVoice();
             // Gradually fade in or out depending on whether we are covered by the pause screen.
             if (coveredByOtherScreen)
                 _pauseAlpha = Math.Min(_pauseAlpha + 1f / 32, 1);
@@ -231,11 +234,11 @@ namespace SpaceAssault.Screens
                 explosionRemoveList.Clear();
 
 
-                if (_waveBuilder.HasEnded)
+                if (_waveBuilder.HasEnded && deadTime <= 0)
                     LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen(), new HighscoreMenuScreen(true));
                 // if station dies go back to MainMenu
                 // TODO: change to EndScreen and HighScore list)
-                if (_station._health <= 0)
+                if (_station._health <= 0 && deadTime <= 0)
                     LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen(), new HighscoreMenuScreen(true));
 
                 CollisionHandling(gameTime);
@@ -276,7 +279,10 @@ namespace SpaceAssault.Screens
             {
                 _station._shield -= 1000;
             }
-
+            if (_input.IsNewKeyPress(Keys.L, Keys.H))
+            {
+                _waveBuilder.WaveCount++;
+            }
             if (_input.IsNewKeyPress(Keys.F1))
             {
                 Console.WriteLine("Drone Damage: " + _droneFleet.GetActiveDrone().makeDmg);
@@ -373,7 +379,18 @@ namespace SpaceAssault.Screens
 
             DrawStationDirectionArrow();
             DrawShipDirectionArrow();
-            DrawCaptainDialog(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Height/2, Global.GraphicsManager.GraphicsDevice.Viewport.Width/2), "\n\n\n\nFuck those NORMIES! REEEEEEEEE");
+            if (_waveBuilder.HasEnded)
+            {
+                DrawCaptainDialog(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 200, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 2 - 100), "                    You Succeded!\n\n        General Stargaz\n\nI am proud of you Pilot, you did your\njob very well. I couldn't have done\nit better myself.\nHere, take that medal and some\nvacation on this Spa Station not\nfar from your home Planet.\nThank you for your service, Pilot!\nDismissed!");
+                deadTime -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+              
+            if (_station._health <= 0)
+            {
+                DrawCaptainDialog(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Width / 2 - 200, Global.GraphicsManager.GraphicsDevice.Viewport.Height / 2 - 100), "                    You Died!\n\n        General Stargaz\n\nThis Pilot did his duty in combat with\ngreat courage and steadfast dedication\neven after he was outnumbered by\nthe hundreds.\nHe sacrificed his life to defend the\nones who couldn't themselves. ");
+                deadTime -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+               
 
             if (_station._shield > 0)
                 _sphere.Draw(new Color(255, 255, 255), _sphereAlpha);
@@ -419,7 +436,33 @@ namespace SpaceAssault.Screens
                     break;
             }
         }
-        protected void PlayShipHitSound(Vector3D pos)
+        protected void PlayVoice()
+        {
+            if (_waveBuilder.HasEnded)
+            {
+                if (!voice)
+                {
+                    Global.Music.Stop();
+                    voice = true;
+                    Global.SpeakerVolume = 0;
+                }
+                if(Global.Music.Finished)
+                 Global.Music = Global.MusicEngine.Play2D("voice_win", Global.MusicVolume / 10, false);
+            }
+            if (_station._health <= 0)
+            {
+                if (!voice)
+                {
+                    Global.Music.Stop();
+                    voice = true;
+                    Global.SpeakerVolume = 0;
+                }
+                if (Global.Music.Finished)
+                    Global.Music = Global.MusicEngine.Play2D("voice_loss", Global.MusicVolume / 10, false);
+            }
+        }
+      
+       protected void PlayShipHitSound(Vector3D pos)
         {
             _soundEngine.Play2D("hitSound", Global.SpeakerVolume / 10, false);
         }

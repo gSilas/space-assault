@@ -35,6 +35,19 @@ namespace SpaceAssault.Utils
         public bool HasEnded = false;
         public List<AEnemys> ShipList { get { return _currentWave.ShipList; } }
         public List<Bullet> BulletList { get { return _currentWave.BulletList; } }
+        public int WaveCount {
+            get
+            {
+                return _waveCount;
+            }
+            set
+            {
+                if (value > _max-1)
+                    _waveCount = 14;
+                else
+                    _waveCount = value;
+            }
+        }
         public void Update(GameTime gameTime, ref AsteroidBuilder asteroidField, ref DroneBuilder droneFleet)
         {
             _currentWave.Update(gameTime, ref asteroidField, ref droneFleet);
@@ -49,7 +62,7 @@ namespace SpaceAssault.Utils
                     _currentWave.LoadContent();
                     _time = _timeBetweenWaves;
                 }
-                else if(_time <= 0 && _waveCount >= _max)
+                else if(_waveCount >= _max)
                 {
                     HasEnded = true;
                 }
@@ -63,18 +76,10 @@ namespace SpaceAssault.Utils
 
             if (_currentWave.ShipList.Count <= 0 && _waveCount <= _max)
             {
-                if (_waveCount == _max)
-                {
-                    _dialog.Draw("You have defeated the enemy threat!\nGood Job!");
-                }
+                if (_time <= _timeBetweenWaves/2)
+                   _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n\n\n\n\n\n" + (_time / 1000).ToString() + " until next wave!");
                 else
-                {
-                    if (_time <= _timeBetweenWaves/2)
-                        _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n\n\n\n\n\n" + (_time / 1000).ToString() + " until next wave!");
-                    else
-                        _dialog.Draw("Wave " + _waveCount + " ended!\n\n\n\n\n\n" + (_time / 1000).ToString() + " until next wave!");
-
-                }
+                   _dialog.Draw("Wave " + _waveCount + " ended!\n\n\n\n\n\n" + (_time / 1000).ToString() + " until next wave!");
             }
         }
     }
