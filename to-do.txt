@@ -7,16 +7,16 @@ Gameplay:
 	- Bossgegner
 	- Rauschschreen außerhalb der Spielwelt - nicht trivial kommt erst zur Präsi		#dustin		
 	- waves anpassen/balancing														#daniel, alle
-	- tutorial zeug anpassen wie im Gameplay....cs		%%% HIGH PRIORITY %%% 
+	- tutorial zeug anpassen wie im Gameplay....cs		%%% HIGH PRIORITY %%% 		HM
 	- optionmenu click buys instantly					%%% HIGH PRIORITY %%% 
-	- 3d sound !!!!!									%%% HIGH PRIORITY %%% 
-	- bomber logic überarbeiten							%%% HIGH PRIORITY %%% 
+	- 3d sound !!!!!									%%% HIGH PRIORITY %%%		HM
+	- bomber logic überarbeiten							%%% HIGH PRIORITY %%% 		HM
 	- Rechtschreibung im Tutorial						%%% HIGH PRIORITY %%%
 	- gameover (press F to pay your respects) / winning screen		%%% HIGH PRIORITY %%%
 	- shop funktionalität erklären						%%% MED PRIORITY %%% 
 	- radar schöner machen								%%% MED PRIORITY %%% 
 	- reload animation torpedo							%%% MED PRIORITY %%% 
-	- highscore "place" statt "platz"					%%% LOW PRIORITY %%%
+	- highscore "place" statt "platz"					%%% LOW PRIORITY %%%		HM
 	- Begin Message										%%% LOW PRIORITY %%%
 		>Pilot! 
 		>Your mission is simple! 
