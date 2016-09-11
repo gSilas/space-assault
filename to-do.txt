@@ -2,7 +2,8 @@ Optimisierung:
 	Collision Handling
 	BoundingFrustrum für alles
 
-Gameplay:		
+Gameplay:	
+	- !!!! todo disable console for release !!!!	
 	- Bossgegner
 	- Rauschschreen außerhalb der Spielwelt - nicht trivial kommt erst zur Präsi		#dustin		
 	- waves anpassen/balancing														#daniel, alle
@@ -10,14 +11,13 @@ Gameplay:
 	- tutorial shit anpassen							%%% HIGH PRIORITY %%% 
 	- tutorial story text								%%% HIGH PRIORITY %%% 
 	- optionmenu click buys instantly					%%% HIGH PRIORITY %%% 
-	- shop funktionalität erklären						%%% MED PRIORITY %%% 
-	- radar schöner machen								%%% MED PRIORITY %%% 
 	- 3d sound !!!!!									%%% HIGH PRIORITY %%% 
-	- reload animation torpedo							%%% MED PRIORITY %%% 
 	- bomber logic überarbeiten							%%% HIGH PRIORITY %%% 
 	- Rechtschreibung im Tutorial						%%% HIGH PRIORITY %%%
-	- todo disable console for release !!!!
 	- gameover (press F to pay your respects) / winning screen		%%% HIGH PRIORITY %%%
+	- shop funktionalität erklären						%%% MED PRIORITY %%% 
+	- radar schöner machen								%%% MED PRIORITY %%% 
+	- reload animation torpedo							%%% MED PRIORITY %%% 
 	- highscore "place" statt "platz"					%%% LOW PRIORITY %%%
 	- Begin Message										%%% LOW PRIORITY %%%
 		>Pilot! 
