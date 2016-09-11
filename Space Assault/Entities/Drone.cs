@@ -73,7 +73,6 @@ namespace SpaceAssault.Entities
             maxRange = Global.MapRingRadius + 200;
 
             gunPrimary = new Weapon(200d);
-
             gunSecondary = new Weapon(5000d);
         }
 
