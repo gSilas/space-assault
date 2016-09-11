@@ -46,6 +46,7 @@ namespace SpaceAssault.Screens
             frameCounterMenuEntry.SelectedIncrease += frameCounterMenuEntrySelected;
             effectVolumeMenuEntry.SelectedIncrease += effectVolumeMenuEntrySelectedIncrease;
             musicVolumeMenuEntry.SelectedIncrease += musicVolumeMenuEntrySelectedIncrease;
+
             uiColorRMenuEntry.SelectedIncrease += uiColorRMenuEntrySelectedIncrease;
             uiColorGMenuEntry.SelectedIncrease += uiColorGMenuEntrySelectedIncrease;
             uiColorBMenuEntry.SelectedIncrease += uiColorBMenuEntrySelectedIncrease;
