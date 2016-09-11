@@ -365,9 +365,22 @@ namespace SpaceAssault.Screens
                     {
                         if (cornerD.X > input.MousePosition.X && cornerD.Y > input.MousePosition.Z)
                         {
+                            // doesnt buy stuff with first click on it
+                            if(selectedEntry == i)
+                            {
+                                OnSelectEntry(selectedEntry);
+                            }
+
+                            //playing the sound
+                            if (selectedEntry != i)
+                            {
+                                SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
+                            }
+
                             // menuEntry needs one click
                             selectedEntry = i;
-                            OnSelectEntry(selectedEntry);
+
+
                         }
                     }
                     else continue;

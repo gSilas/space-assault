@@ -8,7 +8,6 @@ Gameplay:
 	- Rauschschreen außerhalb der Spielwelt - nicht trivial kommt erst zur Präsi		#dustin		
 	- waves anpassen/balancing														#daniel, alle
 	- tutorial zeug anpassen wie im Gameplay....cs		%%% HIGH PRIORITY %%% 		HM
-	- optionmenu click buys instantly					%%% HIGH PRIORITY %%%		HM
 	- 3d sound !!!!!									%%% HIGH PRIORITY %%%		HM
 	- bomber logic überarbeiten							%%% HIGH PRIORITY %%% 		HM
 	- gameover (press F to pay your respects) / winning screen		%%% HIGH PRIORITY %%% D
