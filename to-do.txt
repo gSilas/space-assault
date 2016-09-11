@@ -17,6 +17,7 @@ Gameplay:
 	- bomber logic überarbeiten
 	- Rechtschreibung im Tutorial
 	- todo disable console for release !!!!
+	- gameover (press F to pay your respects) / winning screen
 
 Modelle:
 	- Boss
