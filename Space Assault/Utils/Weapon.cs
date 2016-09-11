@@ -9,7 +9,7 @@ namespace SpaceAssault.Utils
 {
     public class Weapon
     {
-        protected static int _defaultCooldown;
+        protected int _defaultCooldown;
         protected int _cooldownTime;
 
         private ISpaceSoundEngine _engine;
