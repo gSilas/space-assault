@@ -30,7 +30,7 @@ namespace SpaceAssault.Screens
         private  int _priceDroneHealth=300;
         private int _priceArmor=2000;
         private int _priceDroneShield=300;
-        private int _priceStationShield=2000;
+        private int _priceStationShield=800;
         private int _priceStationHealth = 2000;
 
         public int _droneDamageLevel = 1;
@@ -98,7 +98,7 @@ namespace SpaceAssault.Screens
             MenuEntries.Add(armorMenuEntry);
             MenuEntries.Add(shieldMenuEntry);
 
-            MenuEntries.Add(sHealthMenuEntry);
+            //MenuEntries.Add(sHealthMenuEntry);
             MenuEntries.Add(sShieldMenuEntry);
             MenuEntries.Add(rocketMenuEntry);
             MenuEntries.Add(back);
@@ -249,7 +249,7 @@ namespace SpaceAssault.Screens
                     this._droneFleet._armor++;
                     SetMenuEntryText();
                     ShopText.Remove(2);
-                    ShopText.Add(2, "Your Drone has now:\n" + _droneFleet._armor.ToString() + " Armor\n\nFor every Upgrade in Armor,\n\nthe incoming Damage is reduced by Damage*Armor/10.");
+                    ShopText.Add(2, "Your Drone has now:\n" + _droneFleet._armor.ToString() + " Armor\n\nFor every Upgrade in Armor,\nthe incoming Damage is reduced \nby Damage*Armor/10.");
                 }
                 else
                 {
