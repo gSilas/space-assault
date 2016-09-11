@@ -696,18 +696,15 @@ namespace SpaceAssault.Screens
                 switch (random.Next(1, 4))
                 {
                     case 1:
-                        Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Space Fighter Loop.mp3", false);
-                        Global.Music.Volume = Global.MusicVolume / 10;
+                        Global.Music = Global.MusicEngine.Play2D("SpaceFighterLoop", Global.MusicVolume / 10, false);
                         break;
 
                     case 2:
-                        Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Shiny Tech2.mp3", false);
-                        Global.Music.Volume = Global.MusicVolume / 10;
+                        Global.Music = Global.MusicEngine.Play2D("ShinyTech2", Global.MusicVolume / 10, false);
                         break;
 
                     case 3:
-                        Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Cyborg Ninja.mp3", false);
-                        Global.Music.Volume = Global.MusicVolume / 10;
+                        Global.Music = Global.MusicEngine.Play2D("CyborgNinja", Global.MusicVolume / 10, false);
                         break;
                 }
             }
