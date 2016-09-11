@@ -16,7 +16,6 @@ namespace SpaceAssault.Entities
             Scale = 0.5f;
         }
 
-
         public override void LoadContent()
         {
             Model = Global.ContentManager.Load<Model>("Models/sphere");

@@ -71,13 +71,18 @@ namespace SpaceAssault.Entities
 
                         effect.DirectionalLight0.Enabled = true;
                         effect.DirectionalLight0.DiffuseColor = Color.LightGoldenrodYellow.ToVector3(); // a light
-                        effect.DirectionalLight0.Direction = new Vector3(-1, -1, 0);  // coming along the x-axis
+                        effect.DirectionalLight0.Direction = Vector3.Normalize(Position - new Vector3(0, 1000, 0));  // coming along the x-axis
                         effect.DirectionalLight0.SpecularColor = Color.DarkGoldenrod.ToVector3(); // with highlights
-                        
+
+                        effect.DirectionalLight1.Enabled = true;
+                        effect.DirectionalLight1.DiffuseColor = Color.Red.ToVector3(); // a light
+                        effect.DirectionalLight1.Direction = Vector3.Normalize(Position - new Vector3(-1000f, -2000f, -1000f));  // coming along the x-axis
+                        effect.DirectionalLight1.SpecularColor = Color.DarkRed.ToVector3(); // with highlights
+
                         effect.PreferPerPixelLighting = true;
 
                         RotationMatrix = Matrix.CreateWorld(Position, RotationMatrix.Forward, Vector3.Up);
-                        effect.World = RotationMatrix * Matrix.CreateScale(_scale);
+                        effect.World = RotationMatrix * Matrix.CreateScale(Scale);
                         effect.View = Global.Camera.ViewMatrix;
                         effect.Projection = Global.Camera.ProjectionMatrix;
 
@@ -87,7 +92,6 @@ namespace SpaceAssault.Entities
                 }
             }
         }
-
         public virtual void Draw(Color entityColor, float alphaValue)
         {
             if (Collider3D.BoundingFrustumIntersection(this))
@@ -104,8 +108,13 @@ namespace SpaceAssault.Entities
 
                         effect.DirectionalLight0.Enabled = true;
                         effect.DirectionalLight0.DiffuseColor = Color.LightGoldenrodYellow.ToVector3(); // a light
-                        effect.DirectionalLight0.Direction = new Vector3(-1, -1, 0);  // coming along the x-axis
+                        effect.DirectionalLight0.Direction = Vector3.Normalize(Position - new Vector3(0, 1000, 0));  // coming along the x-axis
                         effect.DirectionalLight0.SpecularColor = Color.DarkGoldenrod.ToVector3(); // with highlights
+
+                        effect.DirectionalLight1.Enabled = true;
+                        effect.DirectionalLight1.DiffuseColor = Color.Red.ToVector3(); // a light
+                        effect.DirectionalLight1.Direction = Vector3.Normalize(Position - new Vector3(-1000f, -2000f, -1000f));  // coming along the x-axis
+                        effect.DirectionalLight1.SpecularColor = Color.DarkRed.ToVector3(); // with highlights
 
                         effect.PreferPerPixelLighting = true;
                         RotationMatrix = Matrix.CreateWorld(Position, RotationMatrix.Forward, Vector3.Up);

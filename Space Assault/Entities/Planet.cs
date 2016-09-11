@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using SpaceAssault.Utils;
 
 namespace SpaceAssault.Entities
 {
@@ -24,5 +24,36 @@ namespace SpaceAssault.Entities
             _angle += 0.0025f;
             RotationMatrix = Matrix.CreateRotationY(_angle);
         }
-     }
+        public virtual void Draw(Color entityColor)
+        {
+            if (Collider3D.BoundingFrustumIntersection(this))
+            {
+                foreach (var mesh in Model.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+
+                        effect.DiffuseColor = entityColor.ToVector3();
+                        effect.SpecularColor = entityColor.ToVector3();
+
+                        effect.DirectionalLight0.Enabled = true;
+                        effect.DirectionalLight0.DiffuseColor = Color.LightGoldenrodYellow.ToVector3(); // a light
+                        effect.DirectionalLight0.Direction = Vector3.Normalize(Position - new Vector3(0, 1000, 0));  // coming along the x-axis
+                        effect.DirectionalLight0.SpecularColor = Color.DarkGoldenrod.ToVector3(); // with highlights
+
+                        effect.PreferPerPixelLighting = true;
+
+                        RotationMatrix = Matrix.CreateWorld(Position, RotationMatrix.Forward, Vector3.Up);
+                        effect.World = RotationMatrix * Matrix.CreateScale(Scale);
+                        effect.View = Global.Camera.ViewMatrix;
+                        effect.Projection = Global.Camera.ProjectionMatrix;
+
+                        World = effect.World;
+                    }
+                    mesh.Draw();
+                }
+            }
+        }
+    }
 }

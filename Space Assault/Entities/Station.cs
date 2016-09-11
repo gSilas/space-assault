@@ -101,41 +101,5 @@ namespace SpaceAssault.Entities
                 _health -= howMuch;
             }
         }
-        public override void Draw(Color entityColor)
-        {
-            if (Collider3D.BoundingFrustumIntersection(this))
-            {
-                foreach (var mesh in Model.Meshes)
-                {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.EnableDefaultLighting();
-
-                        effect.DiffuseColor = entityColor.ToVector3();
-                        effect.SpecularColor = entityColor.ToVector3();
-
-                        effect.DirectionalLight0.Enabled = true;
-                        effect.DirectionalLight0.DiffuseColor = Color.LightGoldenrodYellow.ToVector3(); // a light
-                        effect.DirectionalLight0.Direction = new Vector3(-1, -1, 0);  // coming along the x-axis
-                        effect.DirectionalLight0.SpecularColor = Color.DarkGoldenrod.ToVector3(); // with highlights
-
-                        effect.DirectionalLight1.Enabled = true;
-                        effect.DirectionalLight1.DiffuseColor = Color.Fuchsia.ToVector3(); // a light
-                        effect.DirectionalLight1.Direction = (Position - new Vector3(-1000, -2000, -1000));  // coming along the x-axis
-                        effect.DirectionalLight1.SpecularColor = Color.Fuchsia.ToVector3(); // with highlights
-
-                        effect.PreferPerPixelLighting = true;
-
-                        RotationMatrix = Matrix.CreateWorld(Position, RotationMatrix.Forward, Vector3.Up);
-                        effect.World = RotationMatrix * Matrix.CreateScale(Scale);
-                        effect.View = Global.Camera.ViewMatrix;
-                        effect.Projection = Global.Camera.ProjectionMatrix;
-
-                        World = effect.World;
-                    }
-                    mesh.Draw();
-                }
-            }
-        }
     }
 }
