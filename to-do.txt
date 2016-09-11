@@ -7,8 +7,7 @@ Gameplay:
 	- Bossgegner
 	- Rauschschreen außerhalb der Spielwelt - nicht trivial kommt erst zur Präsi		#dustin		
 	- waves anpassen/balancing														#daniel, alle
-	- tutorial shit anpassen							%%% HIGH PRIORITY %%% 
-	- tutorial story text								%%% HIGH PRIORITY %%% 
+	- tutorial zeug anpassen wie im Gameplay....cs		%%% HIGH PRIORITY %%% 
 	- optionmenu click buys instantly					%%% HIGH PRIORITY %%% 
 	- 3d sound !!!!!									%%% HIGH PRIORITY %%% 
 	- bomber logic überarbeiten							%%% HIGH PRIORITY %%% 
