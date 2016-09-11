@@ -7,7 +7,6 @@ Gameplay:
 	- Bossgegner
 	- Rauschschreen außerhalb der Spielwelt - nicht trivial kommt erst zur Präsi		#dustin		
 	- waves anpassen/balancing														#daniel, alle
-	- rakte AoE damage									%%% HIGH PRIORITY %%% 
 	- tutorial shit anpassen							%%% HIGH PRIORITY %%% 
 	- tutorial story text								%%% HIGH PRIORITY %%% 
 	- optionmenu click buys instantly					%%% HIGH PRIORITY %%% 
