@@ -11,8 +11,7 @@ Gameplay:
 	- optionmenu click buys instantly					%%% HIGH PRIORITY %%% 
 	- 3d sound !!!!!									%%% HIGH PRIORITY %%%		HM
 	- bomber logic überarbeiten							%%% HIGH PRIORITY %%% 		HM
-	- Rechtschreibung im Tutorial						%%% HIGH PRIORITY %%%
-	- gameover (press F to pay your respects) / winning screen		%%% HIGH PRIORITY %%%
+	- gameover (press F to pay your respects) / winning screen		%%% HIGH PRIORITY %%% D
 	- shop funktionalität erklären						%%% MED PRIORITY %%% 
 	- radar schöner machen								%%% MED PRIORITY %%% 
 	- reload animation torpedo							%%% MED PRIORITY %%% 

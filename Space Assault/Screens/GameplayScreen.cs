@@ -38,6 +38,9 @@ namespace SpaceAssault.Screens
         private Planet _planet;
         private InputState _input;
 
+        //Dialog
+        Dialog captainDialog;
+        UIItem captain;
 
         //UI + Frame + Background
         private InGameOverlay _ui;
@@ -105,6 +108,9 @@ namespace SpaceAssault.Screens
             borderParticles = new BorderParticleSettings();
             dustParticles = new DustParticleSystem();
             hitmarkerParticles = new HitMarkerParticleSystem();
+
+            captainDialog = new Dialog(0, 0, 160, 400, 8, false, true);
+            captain = new UIItem();
         }
 
 
@@ -146,7 +152,8 @@ namespace SpaceAssault.Screens
 
 
             //Global.Music = _soundEngine.Play2D("explosionSource3", Global.MusicVolume / 10, false);
-
+            captainDialog.LoadContent();
+            captain.LoadContent("Images/captain");
 
             // X = left/right
             _soundEngine.setListenerPosToCameraTarget();
@@ -362,6 +369,7 @@ namespace SpaceAssault.Screens
 
             DrawStationDirectionArrow();
             DrawShipDirectionArrow();
+            DrawCaptainDialog(new Point(Global.GraphicsManager.GraphicsDevice.Viewport.Height/2, Global.GraphicsManager.GraphicsDevice.Viewport.Width/2), "\n\n\n\nFuck those NORMIES! REEEEEEEEE");
 
             if (_station._shield > 0)
                 _sphere.Draw(new Color(255, 255, 255), _sphereAlpha);
@@ -668,7 +676,11 @@ namespace SpaceAssault.Screens
                 _enemySymbol.Draw(vec.ToPoint(), 1, Color.Red);
             }
         }
-
+        void DrawCaptainDialog(Point pos, string msg)
+        {
+            captainDialog.Draw(new Point(pos.X, pos.Y - 170), msg);
+            captain.Draw(new Point(pos.X + 10, pos.Y - 165), 1, Color.White);
+        }
         //#################################
         // Helper RndPoint
         //#################################
