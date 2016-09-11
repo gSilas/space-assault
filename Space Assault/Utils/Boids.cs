@@ -68,7 +68,7 @@ namespace SpaceAssault.Utils
             _flyToDroneRadius = 300;
             _flyToStationRadius = (int)(_flyToDroneRadius * 1.3f);
             _avoidDroneRadius = (int)(_flyToDroneRadius * 0.6f);
-            _avoidStationRadius = 50;
+            _avoidStationRadius = 120;
             _fighterShootRadius = 230;
         }
         public void LoadContent()
@@ -325,7 +325,7 @@ namespace SpaceAssault.Utils
                 }
 
                 Vector3 lastDirection = curShip._flyingDirection;
-                curShip._flyingDirection += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS) / 30;
+                curShip._flyingDirection += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS * 3) / 30;
                 curShip._flyingDirection.Y = 0;
 
                 if (curShip._flyingDirection.Length() > _maxSpeed)
@@ -337,38 +337,6 @@ namespace SpaceAssault.Utils
                 curShip.RotateTowards(-(curShip.Direction + lastDirection * 30));
                 curShip.Position += curShip.Direction;
                 //curShip.FlyToDirection(-curShip._direction);
-            }
-        }
-
-        private Vector3 droneStationRuleBomber(AEnemys curShip)
-        {
-            double distanceToDrone = (curShip.Position - Global.Camera.Target).Length();
-            double distanceToStation = curShip.Position.Length();
-
-            if (distanceToStation < 200)
-                curShip.flyingAwayFromStation = true;
-            else if (distanceToStation > Global.MapRingRadius)
-                curShip.flyingAwayFromStation = false;
-
-            //flying away from drone
-            if (distanceToDrone < 200)
-            {
-                curShip.flyingAwayFromDrone = true;
-                return -goToPlace(curShip, Global.Camera.Target);
-            }
-            else
-                curShip.flyingAwayFromDrone = false;
-
-
-            if (curShip.flyingAwayFromStation)
-            {
-                //flying away from station
-                return -goToPlace(curShip, Vector3.Zero);
-            }
-            else
-            {
-                //flying towards station
-                return goToPlace(curShip, Vector3.Zero);
             }
         }
 
@@ -449,14 +417,30 @@ namespace SpaceAssault.Utils
 
         private Vector3 avoidStationRule(AEnemys curShip)
         {
+            var awayVector = -goToPlace(curShip, Vector3.Zero);
+
             if (curShip.Position.Length() < _avoidStationRadius)
             {
-                return -goToPlace(curShip, Vector3.Zero);
+                    var leftVectorLength = (curShip.Position + curShip.RotationMatrix.Left).Length();
+                    var rightVectorLength = (curShip.Position + curShip.RotationMatrix.Right).Length();
+
+                    // ship is left of station, fly left
+                    if (leftVectorLength > rightVectorLength)
+                    {
+                        return new Vector3(awayVector.Z, 0, -awayVector.X) + awayVector/2;
+                    }
+                    // ship is right of station, fly right
+                    else
+                    {
+                        return new Vector3(-awayVector.Z, 0, awayVector.X) + awayVector/2;
+                    }
+                
             }
 
             return Vector3.Zero;
         }
 
+        // some logic for the fighters
         private Vector3 droneStationRuleFighter(AEnemys curShip)
         {
             float distanceToDrone = Vector3.Distance(curShip.Position, Global.Camera.Target);
@@ -489,6 +473,38 @@ namespace SpaceAssault.Utils
                     return goToPlace(curShip, Vector3.Zero);
                 }
             }
+            return Vector3.Zero;
+        }
+
+        // some logic for the bombers
+        private Vector3 droneStationRuleBomber(AEnemys curShip)
+        {
+            float distanceToDrone = Vector3.Distance(curShip.Position, Global.Camera.Target);
+            double distanceToStation = curShip.Position.Length();
+
+            if (distanceToDrone < 200)
+                curShip.flyingAwayFromDrone = true;
+            if (distanceToStation < 200)
+                curShip.flyingAwayFromStation = true;
+
+            if (curShip.flyingAwayFromDrone)
+            {
+                if(distanceToDrone < 300)
+                    return -goToPlace(curShip, Global.Camera.Target);
+                else
+                    curShip.flyingAwayFromDrone = false;
+            }
+            else if (curShip.flyingAwayFromStation)
+            {
+                if (distanceToStation > Global.MapRingRadius + 75)
+                    curShip.flyingAwayFromStation = false;
+                else
+                    return -goToPlace(curShip, Vector3.Zero);
+            }
+            else
+                return goToPlace(curShip, Vector3.Zero);
+
+
             return Vector3.Zero;
         }
     }

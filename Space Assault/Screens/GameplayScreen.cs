@@ -296,6 +296,10 @@ namespace SpaceAssault.Screens
             {
                 Console.WriteLine("Drone Health: " + _droneFleet.GetActiveDrone().health);
             }
+            if (_input.IsNewKeyPress(Keys.F4))
+            {
+                Console.WriteLine("Drone Pos: " + _droneFleet.GetActiveDrone().Position);
+            }
         }
 
         //#################################

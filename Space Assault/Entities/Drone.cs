@@ -28,7 +28,6 @@ namespace SpaceAssault.Entities
         private float _speedScaling = 2f;
         private int _shieldpast;
         private TimeSpan _shieldrefreshdelay;
-        private TimeSpan _cooldownOnRocket;
         private bool _wasDamaged = false;
         private bool _alternatingGunLogic = false;
         private bool _isNotDead;
@@ -293,6 +292,24 @@ namespace SpaceAssault.Entities
             //RotationMatrix = Matrix.CreateRotationZ(_tiltZ);
             //Position -= RotationMatrix.Forward * _moveSpeedModifier;
             curVelocity = Position - _oldPosition;
+            droneMovementBoundaries();
+        }
+
+        public void droneMovementBoundaries()
+        {
+            //cant fly into station sphere
+            Vector3 posNormalized = Position;
+            posNormalized.Normalize();
+            while(Position.Length() < 120)
+            {
+                Position += posNormalized;
+            }
+        }
+
+        private Vector3 goToPlace(AEnemys curShip, Vector3 place)
+        {
+            Vector3 placeDir = place - curShip.Position;
+            return placeDir;
         }
     }
 }
