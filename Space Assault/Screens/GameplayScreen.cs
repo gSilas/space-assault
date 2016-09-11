@@ -74,6 +74,7 @@ namespace SpaceAssault.Screens
         PauseMenuScreen pause;
         ShopScreen shop;
         int deadTime;
+        bool voice;
 
         //#################################
         // Constructor
@@ -112,7 +113,8 @@ namespace SpaceAssault.Screens
 
             captainDialog = new Dialog(0, 0, 320, 400, 8, false, true);
             captain = new UIItem();
-            deadTime = 10000;
+            deadTime = 20000;
+            voice = false;
         }
 
 
@@ -152,16 +154,15 @@ namespace SpaceAssault.Screens
             _soundEngine.AddSoundSourceFromFile("astexplosionSource3", "Content/Media/Effects/Objects/ExplosionAst3.wav");
             _soundEngine.AddSoundSourceFromFile("hitSound", "Content/Media/Effects/Objects/GetHitShips.wav");
 
-
             //Global.Music = _soundEngine.Play2D("explosionSource3", Global.MusicVolume / 10, false);
             captainDialog.LoadContent();
             captain.LoadContent("Images/captain");
 
             // X = left/right
+            
             _soundEngine.setListenerPosToCameraTarget();
             var pos = Global.Camera.Target;
             Global.Music = _soundEngine.Play3D("explosionSource3", Global.MusicVolume / 10, Global.Camera.Target, false);
-
         }
 
         //#################################
@@ -186,7 +187,7 @@ namespace SpaceAssault.Screens
             _soundEngine.Update();
 
             SoundDJ();
-
+            PlayVoice();
             // Gradually fade in or out depending on whether we are covered by the pause screen.
             if (coveredByOtherScreen)
                 _pauseAlpha = Math.Min(_pauseAlpha + 1f / 32, 1);
@@ -431,7 +432,33 @@ namespace SpaceAssault.Screens
                     break;
             }
         }
-        protected void PlayShipHitSound(Vector3D pos)
+        protected void PlayVoice()
+        {
+            if (_waveBuilder.HasEnded)
+            {
+                if (!voice)
+                {
+                    Global.Music.Stop();
+                    voice = true;
+                    Global.SpeakerVolume = 0;
+                }
+                if(Global.Music.Finished)
+                 Global.Music = Global.MusicEngine.Play2D("voice_win", Global.MusicVolume / 10, false);
+            }
+            if (_station._health <= 0)
+            {
+                if (!voice)
+                {
+                    Global.Music.Stop();
+                    voice = true;
+                    Global.SpeakerVolume = 0;
+                }
+                if (Global.Music.Finished)
+                    Global.Music = Global.MusicEngine.Play2D("voice_loss", Global.MusicVolume / 10, false);
+            }
+        }
+      
+       protected void PlayShipHitSound(Vector3D pos)
         {
             _soundEngine.Play2D("hitSound", Global.SpeakerVolume / 10, false);
         }
