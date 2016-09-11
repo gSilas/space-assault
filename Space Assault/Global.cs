@@ -76,5 +76,34 @@ namespace SpaceAssault
         public static Color PlanetColor = Color.DarkRed;
 
         public static SpaceAssaultGame game;
+
+        //Enemyvalues
+        public static int EnemyFighterHealth;
+        public static int EnemyFighterDamage;
+        public static int EnemyFighterKillMoney;
+
+        public static int EnemyFighter2Health;
+        public static int EnemyFighter2Damage;
+        public static int EnemyFighter2KillMoney;
+
+        public static int EnemyFighter3Health;
+        public static int EnemyFighter3Damage;
+        public static int EnemyFighter3KillMoney;
+
+        public static int EnemyBomberHealth;
+        public static int EnemyBomberDamage;
+        public static int EnemyBomberKillMoney;
+
+        public static int EnemyBomber2Health;
+        public static int EnemyBomber2Damage;
+        public static int EnemyBomber2KillMoney;
+
+        public static int EnemyBossHealth;
+        public static int EnemyBossDamage;
+        public static int EnemyBossKillMoney;
+
+        public static int EnemyAttackTowerHealth;
+        public static int EnemyAttackTowerDamage;
+        public static int EnemyAttackTowerKillMoney;
     }
 }

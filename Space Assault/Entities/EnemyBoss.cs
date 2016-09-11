@@ -58,19 +58,19 @@ namespace SpaceAssault.Entities
 
             MoveSpeedForward = 1.0f;
             TurnSpeed = 2.0f;
-            KillMoney = 100;
-            Health = 40;
+            KillMoney = Global.EnemyBossKillMoney;
+            Health = Global.EnemyBossHealth;
+            gunMakeDmg = Global.EnemyBossDamage;
             Gun = new Weapon(2000);
-            gunMakeDmg = 500;
 
             //BIGJOE Rocket for Body
             _compositionRec = new Vec3Rectangle(spawnposition, 10, 10);
             Position = _compositionRec.Center;
             towerList = new List<AttackTower>();
-            towerList.Add(new AttackTower(_compositionRec.EdgeBottomLeft, 200, 150, new Weapon(500), this));
-            towerList.Add(new AttackTower(_compositionRec.EdgeBottomRight, 200, 150, new Weapon(500), this));
-            towerList.Add(new AttackTower(_compositionRec.EdgeTopLeft, 200, 150, new Weapon(500), this));
-            towerList.Add(new AttackTower(_compositionRec.EdgeTopRight, 200, 150, new Weapon(500), this));
+            towerList.Add(new AttackTower(_compositionRec.EdgeBottomLeft, new Weapon(500), this));
+            towerList.Add(new AttackTower(_compositionRec.EdgeBottomRight, new Weapon(500), this));
+            towerList.Add(new AttackTower(_compositionRec.EdgeTopLeft, new Weapon(500), this));
+            towerList.Add(new AttackTower(_compositionRec.EdgeTopRight, new Weapon(500), this));
         }
 
         public override void Update(GameTime gameTime)
@@ -143,9 +143,8 @@ namespace SpaceAssault.Entities
     internal class AttackTower : AEnemys
     {
         EnemyBoss _boss;
-        public AttackTower(Vector3 position, int health, int damage, Weapon gun, EnemyBoss boss)
+        public AttackTower(Vector3 position, Weapon gun, EnemyBoss boss)
         {
-            Health = health;
             SpawnPos = position;
             Position = position;
             Gun = gun;
@@ -153,8 +152,10 @@ namespace SpaceAssault.Entities
             RotationMatrix = Matrix.Identity;
             MoveSpeedForward = 0f;
             TurnSpeed = 100f;
-            KillMoney = 100;
-            gunMakeDmg = 5;
+
+            KillMoney = Global.EnemyAttackTowerKillMoney;
+            Health = Global.EnemyAttackTowerHealth;
+            gunMakeDmg = Global.EnemyAttackTowerDamage;
         }
 
         public override void Update(GameTime gameTime)

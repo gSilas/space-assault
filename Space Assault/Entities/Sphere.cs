@@ -8,7 +8,6 @@ namespace SpaceAssault.Entities
     {
         private float _angle;
 
-
         public Sphere(Vector3 position, float angle)
         {
             _angle = angle;

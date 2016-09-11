@@ -17,11 +17,11 @@ namespace SpaceAssault.Entities
             MoveSpeedForward = 1.2f;
             TurnSpeed = 8.0f;
 
-            KillMoney = 70;
-            Health = 40;
+            KillMoney = Global.EnemyFighter2KillMoney;
+            Health = Global.EnemyFighter2Health;
+            gunMakeDmg = Global.EnemyFighter2Damage;
 
             Gun = new Weapon(300d);
-            gunMakeDmg = 10;
         }
         public override void Update(GameTime gameTime)
         {
