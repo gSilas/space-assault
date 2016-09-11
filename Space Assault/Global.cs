@@ -57,12 +57,12 @@ namespace SpaceAssault
         public static int MapDespawnRadius = MapSpawnRadius + 500;
         public static Vector3 CameraPosition = new Vector3(0,350,350);
 
-        //Color for UI
-        public static Color UIColor = new Color(82, 139, 139);
+        //Color for UI (use multiples of 15 because of optionsmenu)
+        public static Color UIColor = new Color(75, 135, 135);
         //Color for Entity
         public static Color DroneColor = Color.Aquamarine;
         public static Color AsteroidColor = Color.LightGray;
-        public static Color StationColor = new Color(82, 139, 139);
+        public static Color StationColor = new Color(75, 135, 135);
         //Color for Bullets
         public static Color DroneBulletColor = Color.LightGreen;
         public static Color EnemyBulletColor = Color.LightGreen;

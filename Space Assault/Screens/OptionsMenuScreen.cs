@@ -116,7 +116,7 @@ namespace SpaceAssault.Screens
                         {
                             // menuEntry needs one click
                             selectedEntry = i;
-                            if(optionMenuEntries[selectedEntry].Equals(back)) OnSelectEntry(selectedEntry);
+                            if (optionMenuEntries[selectedEntry].Equals(back)) OnSelectEntry(selectedEntry);
                         }
                     }
                     else continue;
@@ -228,44 +228,50 @@ namespace SpaceAssault.Screens
 
         void musicVolumeMenuEntrySelectedDecrease(object sender, EventArgs e)
         {
-            if (Global.MusicVolume >0) Global.MusicVolume--;
+            if (Global.MusicVolume > 0) Global.MusicVolume--;
             Global.Music.Volume = Global.MusicVolume / 10;
             SetMenuEntryText();
         }
 
         void uiColorRMenuEntrySelectedIncrease(object sender, EventArgs e)
         {
-            Global.UIColor.R++;
+            if (Global.UIColor.R == 255) Global.UIColor.R = 0;
+            else Global.UIColor.R += 15;
             SetMenuEntryText();
         }
 
         void uiColorRMenuEntrySelectedDecrease(object sender, EventArgs e)
         {
-            Global.UIColor.R--;
+            if (Global.UIColor.R == 0) Global.UIColor.R = 255;
+            else Global.UIColor.R -= 15;
             SetMenuEntryText();
         }
 
         void uiColorGMenuEntrySelectedIncrease(object sender, EventArgs e)
         {
-            Global.UIColor.G++;
+            if (Global.UIColor.G == 255) Global.UIColor.G = 0;
+            else Global.UIColor.G += 15;
             SetMenuEntryText();
         }
 
         void uiColorGMenuEntrySelectedDecrease(object sender, EventArgs e)
         {
-            Global.UIColor.G--;
+            if (Global.UIColor.G == 0) Global.UIColor.G = 255;
+            else Global.UIColor.G -= 15;
             SetMenuEntryText();
         }
 
         void uiColorBMenuEntrySelectedIncrease(object sender, EventArgs e)
         {
-            Global.UIColor.B++;
+            if (Global.UIColor.B == 255) Global.UIColor.B = 0;
+            else Global.UIColor.B += 15;
             SetMenuEntryText();
         }
 
         void uiColorBMenuEntrySelectedDecrease(object sender, EventArgs e)
         {
-            Global.UIColor.B--;
+            if (Global.UIColor.B == 0) Global.UIColor.B = 255;
+            else Global.UIColor.B -= 15;
             SetMenuEntryText();
         }
 
