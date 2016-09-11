@@ -63,7 +63,7 @@ namespace SpaceAssault.Screens
         List<ExplosionSystem> explosionList = new List<ExplosionSystem>();
         private double _duration = 0.4;
 
-
+        bool voice;
         // The explosions effect works by firing projectiles up into the
         // air, so we need to keep track of all the active projectiles.
         List<Projectile> projectiles = new List<Projectile>();
@@ -71,7 +71,7 @@ namespace SpaceAssault.Screens
 
         // Random number generator for the fire effect.
         Random random = new Random();
-
+        bool once = true;
         //Created screens
         PauseMenuScreen pause;
         ShopScreen shop;
@@ -80,6 +80,7 @@ namespace SpaceAssault.Screens
         //#################################
         public TutorialScreen()
         {
+            voice = false;
             explosionParticles = new ShipExplosionSettings();
             TransitionOnTime = TimeSpan.FromSeconds(1.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
@@ -182,6 +183,21 @@ namespace SpaceAssault.Screens
         {
             base.Update(gameTime, otherScreenHasFocus, false);
 
+            if (once)
+            {
+                if (!voice)
+                {
+                    Global.Music.Stop();
+                    voice = true;
+                    Global.SpeakerVolume = 0;
+                }
+                if (Global.Music.Finished)
+                {
+                    once = false;
+                    Global.Music = Global.MusicEngine.Play2D("voice_intro", Global.MusicVolume / 10, false);                   
+                }
+            }
+            SoundDJ();
             if (_sphereAlpha > 0.1f)
                 _sphereAlpha -= 0.001f;
 
@@ -191,8 +207,6 @@ namespace SpaceAssault.Screens
                 _pauseAlpha = Math.Min(_pauseAlpha + 1f / 32, 1);
             else
                 _pauseAlpha = Math.Max(_pauseAlpha - 1f / 32, 0);
-
-
 
             foreach (ExplosionSystem explosion in explosionList)
             {
@@ -546,6 +560,27 @@ namespace SpaceAssault.Screens
             // Create a new projectile once per second
             //projectiles.Add(new Projectile(explosionParticles,explosionSmokeParticles,projectileTrailParticles));
             explosionParticles.AddParticle(position, velocity);
+        }
+        void SoundDJ()
+        {
+            if (Global.Music.Finished)
+            {
+                switch (random.Next(1, 4))
+                {
+                    case 1:
+                        Global.Music = Global.MusicEngine.Play2D("SpaceFighterLoop", Global.MusicVolume / 10, false);
+                        break;
+
+                    case 2:
+                        Global.Music = Global.MusicEngine.Play2D("ShinyTech2", Global.MusicVolume / 10, false);
+                        break;
+
+                    case 3:
+                        Global.Music = Global.MusicEngine.Play2D("CyborgNinja", Global.MusicVolume / 10, false);
+                        break;
+                }
+            }
+
         }
 
     }
