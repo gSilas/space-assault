@@ -51,6 +51,7 @@ namespace SpaceAssault
         public static int NumberOfRockets=1;
 
         //SETTINGS
+        public static bool EasterEgg;
         public static int FleetSpawnTime = 5; // 1 Fleet/5 sec
         public static int MapRingRadius = 800;
         public static int MapSpawnRadius = MapRingRadius + 300;
