@@ -273,12 +273,6 @@ namespace SpaceAssault.Screens
                     Global.Music.Volume = Global.MusicVolume / 10;
                     OnSelectEntry(selectedEntry);
                 }
-                if (MenuEntries[selectedEntry].IsIncreasingSelect && input.IsMenuIncreasingSelect())
-                {
-
-                    OnSelectEntry(selectedEntry);
-
-                }
                 else if (input.IsMenuCancel())
                 {
                     OnCancel();

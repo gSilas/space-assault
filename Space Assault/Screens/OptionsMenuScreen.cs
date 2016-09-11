@@ -21,6 +21,7 @@ namespace SpaceAssault.Screens
         OptionMenuEntry uiColorRMenuEntry;
         OptionMenuEntry uiColorGMenuEntry;
         OptionMenuEntry uiColorBMenuEntry;
+        OptionMenuEntry back;
 
         List<OptionMenuEntry> optionMenuEntries = new List<OptionMenuEntry>();
         protected int lastSelectedEntry = 0;
@@ -36,7 +37,7 @@ namespace SpaceAssault.Screens
             uiColorRMenuEntry = new OptionMenuEntry(string.Empty);
             uiColorGMenuEntry = new OptionMenuEntry(string.Empty);
             uiColorBMenuEntry = new OptionMenuEntry(string.Empty);
-            OptionMenuEntry back = new OptionMenuEntry("Back");
+            back = new OptionMenuEntry("Back");
 
             SetMenuEntryText();
 
@@ -58,10 +59,6 @@ namespace SpaceAssault.Screens
             uiColorBMenuEntry.SelectedDecrease += uiColorBMenuEntrySelectedDecrease;
 
             back.Selected += OnCancel;
-
-            uiColorRMenuEntry.IsIncreasingSelect = true;
-            uiColorGMenuEntry.IsIncreasingSelect = true;
-            uiColorBMenuEntry.IsIncreasingSelect = true;
 
             // Add entries to the menu.
             optionMenuEntries.Add(fullscreenMenuEntry);
@@ -119,7 +116,7 @@ namespace SpaceAssault.Screens
                         {
                             // menuEntry needs one click
                             selectedEntry = i;
-                            //OnSelectEntry(selectedEntry);
+                            if(optionMenuEntries[selectedEntry].Equals(back)) OnSelectEntry(selectedEntry);
                         }
                     }
                     else continue;
@@ -159,20 +156,13 @@ namespace SpaceAssault.Screens
                     selectedEntry = 0;
             }
 
-            // Accept or cancel the menu.
-            if (input.IsMenuSelect())
-            {
-                OnSelectEntry(selectedEntry);
-            }
-            if (MenuEntries[selectedEntry].IsIncreasingSelect && input.IsMenuIncreasingSelect())
-            {
-                OnSelectEntry(selectedEntry);
-            }
+            //cancel the menu.
             else if (input.IsMenuCancel())
             {
                 OnCancel();
             }
 
+            // checks for increase or decrease
             if (lastSelectedEntry == selectedEntry)
             {
                 if (input.IsNewKeyPress(Keys.Left) || input.IsLeftMouseButtonNewPressed())
