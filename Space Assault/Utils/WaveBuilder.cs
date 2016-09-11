@@ -9,20 +9,20 @@ namespace SpaceAssault.Utils
     class WaveBuilder
     {
         private Wave _currentWave;
-        private TimeSpan _timeBetweenWaves;
-        private TimeSpan _timeOfEmptyness;
+        private int _timeBetweenWaves;
+        private int _time;
         private int _waveCount;
         private int _max;
-        private bool _timeSet;
         private Dialog _dialog;
         private Dialog _waveDialog;
 
-        public WaveBuilder(TimeSpan timeBetweenWaves, int maxwave)
+        public WaveBuilder(int timeInMilliseconds, int maxwave)
         {
             _currentWave = new Wave(1);
             _waveCount++;
             _max = maxwave;
-            _timeBetweenWaves = timeBetweenWaves;
+            _timeBetweenWaves = timeInMilliseconds;
+            _time = timeInMilliseconds;
         }
         public void LoadContent()
         {
@@ -38,23 +38,18 @@ namespace SpaceAssault.Utils
         public void Update(GameTime gameTime, ref AsteroidBuilder asteroidField, ref DroneBuilder droneFleet)
         {
             _currentWave.Update(gameTime, ref asteroidField, ref droneFleet);
-
             if (_currentWave.ShipList.Count <= 0)
             {
-                if (!_timeSet)
-                {
-                    _timeOfEmptyness = gameTime.TotalGameTime.Duration();
-                    _timeSet = true;
-                }
-                if(gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)) && _waveCount < _max)
+                _time -= gameTime.ElapsedGameTime.Milliseconds;
+                if(_time <= 0 && _waveCount < _max)
                 {
                     _waveCount++;
                     _currentWave.UnLoadContent();
                     _currentWave = new Wave(_waveCount);
                     _currentWave.LoadContent();
-                    _timeSet = false;
+                    _time = _timeBetweenWaves;
                 }
-                else if(gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)) && _waveCount >= _max)
+                else if(_time <= 0 && _waveCount >= _max)
                 {
                     HasEnded = true;
                 }
@@ -74,10 +69,10 @@ namespace SpaceAssault.Utils
                 }
                 else
                 {
-                    if (gameTime.TotalGameTime > (_timeOfEmptyness.Add(_timeBetweenWaves)).Subtract(TimeSpan.FromSeconds(5d)))
-                        _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n\n\n\n\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
+                    if (_time <= _timeBetweenWaves/2)
+                        _dialog.Draw("Wave " + (_waveCount + 1) + " coming\n\n\n\n\n\n" + (_time / 1000).ToString() + " until next wave!");
                     else
-                        _dialog.Draw("Wave " + _waveCount + " ended!\n\n\n\n\n\n" + (-gameTime.TotalGameTime.Subtract((_timeOfEmptyness.Add(_timeBetweenWaves))).Seconds).ToString() + " until next wave!");
+                        _dialog.Draw("Wave " + _waveCount + " ended!\n\n\n\n\n\n" + (_time / 1000).ToString() + " until next wave!");
 
                 }
             }

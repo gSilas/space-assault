@@ -87,7 +87,7 @@ namespace SpaceAssault.Screens
 
             _sphereAlpha = 0.1f;
             random = new Random();
-            _waveBuilder = new WaveBuilder(TimeSpan.FromSeconds(10d), 15);
+            _waveBuilder = new WaveBuilder(10000, 15);
             Global.Money = 0;
             //UI + Frame + BG 
             _ui = new InGameOverlay(_station);
