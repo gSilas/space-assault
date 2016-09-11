@@ -420,6 +420,7 @@ namespace SpaceAssault.Screens
             //remove lists for collisions etc 
             List<Asteroid> _removeAsteroid = new List<Asteroid>();
             List<Bullet> _removeBullets = new List<Bullet>();
+            List<BoundingSphere> explosionBoundingSpheres = new List<BoundingSphere>();
 
             /* bullet of drone with enemy ships */
             foreach (var bullet in _droneFleet._bulletList)
@@ -431,6 +432,10 @@ namespace SpaceAssault.Screens
                         if (bullet._bulletType == Bullet.BulletType.BigJoe)
                         {
                             explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ship.Position, 0.4, 50, true));
+                            BoundingSphere curBoundingSphere = new BoundingSphere();
+                            curBoundingSphere.Center = bullet.Position;
+                            curBoundingSphere.Radius = 45;
+                            explosionBoundingSpheres.Add(curBoundingSphere);
                         }
                         ship.getHit(bullet.makeDmg);
                         _removeBullets.Add(bullet);
@@ -552,6 +557,10 @@ namespace SpaceAssault.Screens
                         if (bullet._bulletType == Bullet.BulletType.BigJoe)
                         {
                             explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), ast.Position, 0.6, 50, true));
+                            BoundingSphere curBoundingSphere = new BoundingSphere();
+                            curBoundingSphere.Center = bullet.Position;
+                            curBoundingSphere.Radius = 45;
+                            explosionBoundingSpheres.Add(curBoundingSphere);
                         }
                         if (ast.IsShiny)
                         {
@@ -562,6 +571,47 @@ namespace SpaceAssault.Screens
                 }
             }
 
+            /* AoE explosions */
+            foreach (var explosion in explosionBoundingSpheres)
+            {
+                foreach (var ast in _asteroidField._asteroidList)
+                {
+                    if (Collider3D.IntersectionSphere(ast, explosion))
+                    {
+                        explosionList.Add(new ExplosionSystem(new AsteroidExplosionSettings(), ast.Position, 0.35));
+                        _removeAsteroid.Add(ast);
+                        Global.HighScorePoints += 50;
+                        PlayAstExplosionSound(new Vector3D(ast.Position.X, ast.Position.Y, ast.Position.Z));
+
+                        if (ast.IsShiny)
+                        {
+                            Global.Money += 200;
+                        }
+                    }
+                }
+
+                foreach (var ship in _waveBuilder.ShipList)
+                {
+                    if (Collider3D.IntersectionSphere(ship, explosion))
+                    {
+                        ship.getHit(80);
+                        Global.HighScorePoints += 20;
+                        if (ship.Health > 0)
+                        {
+                            PlayShipHitSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
+                            hitmarkerParticles.AddParticle(ship.Position, Vector3.Zero);
+                        }
+                        else if (ship.Health <= 0)
+                        {
+                            if (ship.GetType() == typeof(EnemyBomber))
+                                explosionList.Add(new ExplosionSystem(new ShipBigExplosionSettings(), new ShipRingExplosionSettings(), ship.Position, 0.4, 50, true));
+                            else
+                                explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), new ShipRingExplosionSettings(), ship.Position, 0.4, 30));
+                            PlayExplosionSound(new Vector3D(ship.Position.X, ship.Position.Y, ship.Position.Z));
+                        }
+                    }
+                }
+            }
             foreach (var ast in _removeAsteroid)
             {
                 _asteroidField._asteroidList.Remove(ast);
