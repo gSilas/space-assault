@@ -18,6 +18,21 @@ Gameplay:
 	- Rechtschreibung im Tutorial
 	- todo disable console for release !!!!
 	- gameover (press F to pay your respects) / winning screen
+	- highscore "place" statt "platz"
+	- Begin Message
+		>Pilot! 
+		>Your mission is simple! 
+		>Defend this station against the alien threat or die trying! 
+		>Dismissed! 
+	- If you die
+		>This Pilot did his duty in combat with great courage and steadfast dedication even after he was outnumbered by the hundreds. 
+		>He sacrificed his life to defend the ones who couldn't themselves. 
+	- If you win
+		>I am proud of you Pilot, you did your job very well. I couldn't have done it better myself. 
+		>Here, take that medal and some vacation on this Spa Station not far from your home Planet. 
+		>Thank you for your service, Pilot! 
+		>Dismissed! 
+
 
 Modelle:
 	- Boss
