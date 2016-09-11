@@ -78,7 +78,7 @@ namespace SpaceAssault.Entities
             if (Health <= 0)
                 IsDead = true;
             Spheres = Collider3D.UpdateBoundingSphere(this);
-
+            Gun.Update(gameTime);
             _compositionRec.Center = Position;
             towerList[0].Position = _compositionRec.EdgeBottomLeft;
             towerList[1].Position = _compositionRec.EdgeBottomRight;
@@ -88,6 +88,7 @@ namespace SpaceAssault.Entities
             foreach (AttackTower tower in towerList)
             {
                 tower.RotateTowards(tower.Position - Global.Camera.Position);
+                tower.Gun.Update(gameTime);
             }
         }
 
