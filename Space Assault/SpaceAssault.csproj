@@ -88,6 +88,7 @@
     <Compile Include="Entities\EnemyFighter3.cs" />
     <Compile Include="Entities\Planet.cs" />
     <Compile Include="Entities\Sphere.cs" />
+    <Compile Include="Screens\GameOverScreen.cs" />
     <Compile Include="Screens\TutorialScreen.cs" />
     <Compile Include="Utils\Boids.cs" />
     <Compile Include="Entities\Station.cs" />
