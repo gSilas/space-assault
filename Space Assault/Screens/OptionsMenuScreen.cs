@@ -41,13 +41,22 @@ namespace SpaceAssault.Screens
             SetMenuEntryText();
 
             // Hook up menu event handlers.
-            fullscreenMenuEntry.Selected += fullscreenMenuEntrySelected;
-            frameCounterMenuEntry.Selected += frameCounterMenuEntrySelected;
-            effectVolumeMenuEntry.Selected += effectVolumeMenuEntrySelected;
-            musicVolumeMenuEntry.Selected += musicVolumeMenuEntrySelected;
-            uiColorRMenuEntry.Selected += uiColorRMenuEntrySelected;
-            uiColorGMenuEntry.Selected += uiColorGMenuEntrySelected;
-            uiColorBMenuEntry.Selected += uiColorBMenuEntrySelected;
+            fullscreenMenuEntry.SelectedIncrease += fullscreenMenuEntrySelected;
+            frameCounterMenuEntry.SelectedIncrease += frameCounterMenuEntrySelected;
+            effectVolumeMenuEntry.SelectedIncrease += effectVolumeMenuEntrySelectedIncrease;
+            musicVolumeMenuEntry.SelectedIncrease += musicVolumeMenuEntrySelectedIncrease;
+            uiColorRMenuEntry.SelectedIncrease += uiColorRMenuEntrySelectedIncrease;
+            uiColorGMenuEntry.SelectedIncrease += uiColorGMenuEntrySelectedIncrease;
+            uiColorBMenuEntry.SelectedIncrease += uiColorBMenuEntrySelectedIncrease;
+
+            fullscreenMenuEntry.SelectedDecrease += fullscreenMenuEntrySelected;
+            frameCounterMenuEntry.SelectedDecrease += frameCounterMenuEntrySelected;
+            effectVolumeMenuEntry.SelectedDecrease += effectVolumeMenuEntrySelectedDecrease;
+            musicVolumeMenuEntry.SelectedDecrease += musicVolumeMenuEntrySelectedDecrease;
+            uiColorRMenuEntry.SelectedDecrease += uiColorRMenuEntrySelectedDecrease;
+            uiColorGMenuEntry.SelectedDecrease += uiColorGMenuEntrySelectedDecrease;
+            uiColorBMenuEntry.SelectedDecrease += uiColorBMenuEntrySelectedDecrease;
+
             back.Selected += OnCancel;
 
             uiColorRMenuEntry.IsIncreasingSelect = true;
@@ -166,18 +175,17 @@ namespace SpaceAssault.Screens
 
             if (lastSelectedEntry == selectedEntry)
             {
-                if (input.IsNewKeyPress(Keys.Left))
-                {
-                    OnSelectEntryIncrease(selectedEntry);
-                }
-
-                if (input.IsNewKeyPress(Keys.Right))
+                if (input.IsNewKeyPress(Keys.Left) || input.IsLeftMouseButtonNewPressed())
                 {
                     OnSelectEntryDecrease(selectedEntry);
                 }
+
+                if (input.IsNewKeyPress(Keys.Right) || input.IsRightMouseButtonNewPressed())
+                {
+                    OnSelectEntryIncrease(selectedEntry);
+                }
             }
         }
-
         // Handler for when the user increases menu entry.
         protected virtual void OnSelectEntryIncrease(int entryIndex)
         {
@@ -190,8 +198,9 @@ namespace SpaceAssault.Screens
             optionMenuEntries[entryIndex].OnSelectEntryDecrease();
         }
 
-
-        // Event handler for when the Fullscreen menu entry is selected.
+        /// <summary>
+        /// Event Handlers for the menu entries
+        /// </summary>
         void fullscreenMenuEntrySelected(object sender, EventArgs e)
         {
             Global.GraphicsManager.ToggleFullScreen();
@@ -204,40 +213,67 @@ namespace SpaceAssault.Screens
             SetMenuEntryText();
         }
 
-        void effectVolumeMenuEntrySelected(object sender, EventArgs e)
+        void effectVolumeMenuEntrySelectedIncrease(object sender, EventArgs e)
         {
-            if (Global.SpeakerVolume == 10)
-                Global.SpeakerVolume = 0;
-            else
-                Global.SpeakerVolume += 1;
+            if (Global.SpeakerVolume < 10) Global.SpeakerVolume++;
             SetMenuEntryText();
         }
 
-        void musicVolumeMenuEntrySelected(object sender, EventArgs e)
+        void effectVolumeMenuEntrySelectedDecrease(object sender, EventArgs e)
         {
-            if (Global.MusicVolume == 10)
-                Global.MusicVolume = 0;
-            else
-                Global.MusicVolume += 1;
+            if (Global.SpeakerVolume > 0) Global.SpeakerVolume--;
+            SetMenuEntryText();
+        }
 
+        void musicVolumeMenuEntrySelectedIncrease(object sender, EventArgs e)
+        {
+            if (Global.MusicVolume < 10) Global.MusicVolume++;
             Global.Music.Volume = Global.MusicVolume / 10;
             SetMenuEntryText();
         }
 
-        void uiColorRMenuEntrySelected(object sender, EventArgs e)
+        void musicVolumeMenuEntrySelectedDecrease(object sender, EventArgs e)
         {
-            Global.UIColor.R += 1;
+            if (Global.MusicVolume >0) Global.MusicVolume--;
+            Global.Music.Volume = Global.MusicVolume / 10;
             SetMenuEntryText();
         }
-        void uiColorGMenuEntrySelected(object sender, EventArgs e)
+
+        void uiColorRMenuEntrySelectedIncrease(object sender, EventArgs e)
         {
-            Global.UIColor.G += 1;
+            Global.UIColor.R++;
             SetMenuEntryText();
         }
-        void uiColorBMenuEntrySelected(object sender, EventArgs e)
+
+        void uiColorRMenuEntrySelectedDecrease(object sender, EventArgs e)
         {
-            Global.UIColor.B += 1;
+            Global.UIColor.R--;
             SetMenuEntryText();
         }
+
+        void uiColorGMenuEntrySelectedIncrease(object sender, EventArgs e)
+        {
+            Global.UIColor.G++;
+            SetMenuEntryText();
+        }
+
+        void uiColorGMenuEntrySelectedDecrease(object sender, EventArgs e)
+        {
+            Global.UIColor.G--;
+            SetMenuEntryText();
+        }
+
+        void uiColorBMenuEntrySelectedIncrease(object sender, EventArgs e)
+        {
+            Global.UIColor.B++;
+            SetMenuEntryText();
+        }
+
+        void uiColorBMenuEntrySelectedDecrease(object sender, EventArgs e)
+        {
+            Global.UIColor.B--;
+            SetMenuEntryText();
+        }
+
     }
 }
