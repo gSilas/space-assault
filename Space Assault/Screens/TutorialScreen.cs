@@ -431,7 +431,7 @@ namespace SpaceAssault.Screens
             dialogPos.X = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).X + 32;
             dialogPos.Y = (int)Global.GraphicsManager.GraphicsDevice.Viewport.Project(_droneFleet.GetActiveDrone().Position, Global.Camera.ProjectionMatrix, Global.Camera.ViewMatrix, Matrix.Identity).Y + 32;
             tutorialDialog.Draw(dialogPos, tutorialMessage);
-            captainDialog.Draw(new Point(dialogPos.X,dialogPos.Y-170),"\n\n\n\nPilot!\nYour mission is simple!\nDefend this station against the alien\nthreat or die trying!\nDismissed!");
+            captainDialog.Draw(new Point(dialogPos.X,dialogPos.Y-170), "                   Briefing\n\n        General Stargaz\n\nPilot!\nYour mission is simple!\nDefend this station against the alien\nthreat or die trying!\nDismissed!");
             captain.Draw(new Point(dialogPos.X+10, dialogPos.Y - 165), 1, Color.White);
         }
         //#################################
