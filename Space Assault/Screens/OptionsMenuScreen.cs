@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using IrrKlang;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SpaceAssault.Utils;
@@ -135,11 +134,7 @@ namespace SpaceAssault.Screens
             if (input.IsMenuUp())
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-                ISound Accept;
-                Accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                Accept.Volume = Global.SpeakerVolume / 10;
-                Accept.Paused = false;
+                SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
 
                 selectedEntry--;
 
@@ -151,11 +146,7 @@ namespace SpaceAssault.Screens
             if (input.IsMenuDown())
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-                ISound Accept;
-                Accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                Accept.Volume = Global.SpeakerVolume / 10;
-                Accept.Paused = false;
+                SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
 
                 selectedEntry++;
 

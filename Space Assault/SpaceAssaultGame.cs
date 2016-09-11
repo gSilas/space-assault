@@ -27,27 +27,30 @@ namespace SpaceAssault
 
             Components.Add(screenManager);
 
-            // Activate the first screens.
-            screenManager.AddScreen(new BackgroundScreen());
-            screenManager.AddScreen(new MainMenuScreen());
             Global.game = this;
         }
 
 
         protected override void LoadContent()
-        {   
+        {
+            base.LoadContent();
+
             // Create a new SpriteBatch, which can be used to draw textures.
             Global.SpriteBatch = new SpriteBatch(Global.GraphicsManager.GraphicsDevice);
             Global.BackgroundBatch = new SpriteBatch(Global.GraphicsManager.GraphicsDevice);
             Global.UIBatch = new SpriteBatch(Global.GraphicsManager.GraphicsDevice);
-
-            //Global.GameFont = Global.ContentManager.Load<SpriteFont>("Fonts/menufont");
-            //Global.GameFont = Global.ContentManager.Load<SpriteFont>("Fonts/pc_senior/pcsenior");
-            //Global.DialogFont = Global.ContentManager.Load<SpriteFont>("Fonts/pc_senior/pcsenior");
             Global.Font = Global.ContentManager.Load<SpriteFont>("Fonts/modenine");
             Global.MenuFont= Global.ContentManager.Load<SpriteFont>("Fonts/modenine_big");
 
-            base.LoadContent();
+            Global.MusicEngine.AddSoundSourceFromFile("Unrelenting", "Content/Media/Music/Unrelenting.mp3");
+            Global.MusicEngine.AddSoundSourceFromFile("SpaceFighterLoop", "Content/Media/Music/Space Fighter Loop.mp3");
+            Global.MusicEngine.AddSoundSourceFromFile("ShinyTech2", "Content/Media/Music/Shiny Tech2.mp3");
+            Global.MusicEngine.AddSoundSourceFromFile("CyborgNinja", "Content/Media/Music/Cyborg Ninja.mp3");
+            Global.MusicEngine.AddSoundSourceFromFile("TruthOfTheLegend", "Content/Media/Music/Truth of the Legend_Cut.wav");
+
+            // Activate the first screens.
+            screenManager.AddScreen(new BackgroundScreen());
+            screenManager.AddScreen(new MainMenuScreen());
         }
 
         //#################################

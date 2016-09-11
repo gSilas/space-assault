@@ -63,8 +63,7 @@ namespace SpaceAssault.Screens
 
             //Sound
             Global.MusicEngine.StopAllSounds();
-            Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
-            Global.Music.Volume = Global.MusicVolume / 10;
+            Global.Music = Global.MusicEngine.Play2D("Unrelenting", Global.MusicVolume / 10, false);
 
             _back = new Background();
         }

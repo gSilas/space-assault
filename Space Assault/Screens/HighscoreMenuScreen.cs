@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using IrrKlang;
 using SpaceAssault.ScreenManagers;
 using SpaceAssault.Screens.UI;
 using SpaceAssault.Utils;
@@ -81,8 +80,7 @@ namespace SpaceAssault.Screens
         {
             base.LoadContent();
             Global.MusicEngine.StopAllSounds();
-            Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
-            Global.Music.Volume = Global.MusicVolume / 10;
+            Global.Music = Global.MusicEngine.Play2D("TruthOfTheLegend", Global.MusicVolume / 10, false);
 
             //Dialogs + Background + Frame
             _inputDialog.LoadContent();
@@ -237,11 +235,7 @@ namespace SpaceAssault.Screens
                 if (input.IsMenuUp())
                 {
                     //playing the sound
-                    SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-                    ISound Accept;
-                    Accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                    Accept.Volume = Global.SpeakerVolume / 10;
-                    Accept.Paused = false;
+                    SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
 
                     selectedEntry--;
 
@@ -253,11 +247,7 @@ namespace SpaceAssault.Screens
                 if (input.IsMenuDown())
                 {
                     //playing the sound
-                    SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-                    ISound Accept;
-                    Accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                    Accept.Volume = Global.SpeakerVolume / 10;
-                    Accept.Paused = false;
+                    SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
 
                     selectedEntry++;
 
@@ -269,16 +259,14 @@ namespace SpaceAssault.Screens
                 if (input.IsMenuSelect())
                 {
                     Global.MusicEngine.StopAllSounds();
-                    Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
-                    Global.Music.Volume = Global.MusicVolume / 10;
+                    Global.Music = Global.MusicEngine.Play2D("Unrelenting", Global.MusicVolume / 10, false);
                     OnSelectEntry(selectedEntry);
                 }
                 else if (input.IsMenuCancel())
                 {
                     OnCancel();
                     Global.MusicEngine.StopAllSounds();
-                    Global.Music = Global.MusicEngine.Play2D("Content/Media/Music/Unrelenting.mp3", false);
-                    Global.Music.Volume = Global.MusicVolume / 10;
+                    Global.Music = Global.MusicEngine.Play2D("Unrelenting", Global.MusicVolume / 10, false);
                 }
             }
         }

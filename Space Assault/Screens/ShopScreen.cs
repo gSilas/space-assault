@@ -52,9 +52,6 @@ namespace SpaceAssault.Screens
         public SortedDictionary<int, string> PriceText;
         public SortedDictionary<int, string> LevelText;
 
-        private ISound _accept;
-        private ISound _denie;
-        private ISound _UpAndDown;
         //#################################
         // Constructor
         //#################################
@@ -165,10 +162,18 @@ namespace SpaceAssault.Screens
 
             //Sound
             SoundEngine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
-            MenuAcceptSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/Blip_Select.wav", StreamMode.AutoDetect, true);
-            MenuDenieSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointDenie.wav", StreamMode.AutoDetect, true);
-            OkClick = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointAccept.wav", StreamMode.AutoDetect, true);
-            GoBack = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/GoBack2.wav", StreamMode.AutoDetect, true);
+
+            //MenuAcceptSound = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/Blip_Select.wav", StreamMode.AutoDetect, true);
+
+            //OkClick = SoundEngine.AddSoundSourceFromFile("Content/Media/Effects/MenuPointAccept.wav", StreamMode.AutoDetect, true);
+
+
+            SoundEngine.AddSoundSourceFromFile("MenuAcceptSound", "Content/Media/Effects/MenuPointAccept.wav");
+            SoundEngine.AddSoundSourceFromFile("OkClick", "Content /Media/Effects/OkClick.wav");
+
+            SoundEngine.AddSoundSourceFromFile("MenuDenieSound", "Content /Media/Effects/MenuPointDenie.wav");
+            SoundEngine.AddSoundSourceFromFile("GoBack", "Content /Media/Effects/GoBack2.wav");
+            SoundEngine.AddSoundSourceFromFile("OpenMenu", "Content/Media/Effects/OpenShop.wav");
         }
 
         //#################################
@@ -199,22 +204,14 @@ namespace SpaceAssault.Screens
                 Global.DroneBulletColor = new Color(_rand.Next(100,200),_rand.Next(100,200),_rand.Next(100,200),255);
                 SetMenuEntryText();
                 SetShopText();
-                
-                //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
 
-                _accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                _accept.Volume = Global.SpeakerVolume / 10;
-                _accept.Paused = false;
+                //playing the sound
+                SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
             }
             else
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-               
-                _denie = SoundEngine.Play2D(MenuDenieSound, false, true, false);
-                _denie.Volume = Global.SpeakerVolume / 10;
-                _denie.Paused = false;
+                SoundEngine.Play2D("MenuDenieSound", Global.SpeakerVolume / 10, false);
             }
         }
         // Event handler for when the Health menu entry is selected.
@@ -232,20 +229,12 @@ namespace SpaceAssault.Screens
                 SetShopText();
 
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-
-                _accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                _accept.Volume = Global.SpeakerVolume / 10;
-                _accept.Paused = false;
+                SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
             }
             else
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-              
-                _denie = SoundEngine.Play2D(MenuDenieSound, false, true, false);
-                _denie.Volume = Global.SpeakerVolume / 10;
-                _denie.Paused = false;
+                SoundEngine.Play2D("MenuDenieSound", Global.SpeakerVolume / 10, false);
             }
         }
 
@@ -267,22 +256,14 @@ namespace SpaceAssault.Screens
                     ShopText.Remove(2);
                     ShopText.Add(2, "Your Drone has now:\n" + _droneFleet._armor.ToString() + "\n\nThis is the maximum armor capacity!");
                 }
-                
-                //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
 
-                _accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                _accept.Volume = Global.SpeakerVolume / 10;
-                _accept.Paused = false;
+                //playing the sound
+                SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
             }
             else
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-         
-                _denie = SoundEngine.Play2D(MenuDenieSound, false, true, false);
-                _denie.Volume = Global.SpeakerVolume / 10;
-                _denie.Paused = false;
+                SoundEngine.Play2D("MenuDenieSound", Global.SpeakerVolume / 10, false);
             }
         }
         void shieldMenuEntrySelected(object sender, EventArgs e)
@@ -298,20 +279,12 @@ namespace SpaceAssault.Screens
                 SetShopText();
 
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-
-                _accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                _accept.Volume = Global.SpeakerVolume / 10;
-                _accept.Paused = false;
+                SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
             }
             else
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-   
-                _denie = SoundEngine.Play2D(MenuDenieSound, false, true, false);
-                _denie.Volume = Global.SpeakerVolume / 10;
-                _denie.Paused = false;
+                SoundEngine.Play2D("MenuDenieSound", Global.SpeakerVolume / 10, false);
             }
         }
         void sHealthMenuEntrySelected(object sender, EventArgs e)
@@ -328,20 +301,12 @@ namespace SpaceAssault.Screens
                 SetShopText();
 
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-
-                _accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                _accept.Volume = Global.SpeakerVolume / 10;
-                _accept.Paused = false;
+                SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
             }
             else
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-    
-                _denie = SoundEngine.Play2D(MenuDenieSound, false, true, false);
-                _denie.Volume = Global.SpeakerVolume / 10;
-                _denie.Paused = false;
+                SoundEngine.Play2D("MenuDenieSound", Global.SpeakerVolume / 10, false);
             }
         }
         void sShieldMenuEntrySelected(object sender, EventArgs e)
@@ -357,20 +322,12 @@ namespace SpaceAssault.Screens
                 SetShopText();
 
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-
-                _accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                _accept.Volume = Global.SpeakerVolume / 10;
-                _accept.Paused = false;
+                SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
             }
             else
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-   
-                _denie = SoundEngine.Play2D(MenuDenieSound, false, true, false);
-                _denie.Volume = Global.SpeakerVolume / 10;
-                _denie.Paused = false;
+                SoundEngine.Play2D("MenuDenieSound", Global.SpeakerVolume / 10, false);
             }
         }
         void rocketMenuEntrySelected(object sender, EventArgs e)
@@ -384,20 +341,12 @@ namespace SpaceAssault.Screens
                 SetShopText();
 
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-
-                _accept = SoundEngine.Play2D(MenuAcceptSound, false, true, false);
-                _accept.Volume = Global.SpeakerVolume / 10;
-                _accept.Paused = false;
+                SoundEngine.Play2D("MenuAcceptSound", Global.SpeakerVolume / 10, false);
             }
             else
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-          
-                _denie = SoundEngine.Play2D(MenuDenieSound, false, true, false);
-                _denie.Volume = Global.SpeakerVolume / 10;
-                _denie.Paused = false;
+                SoundEngine.Play2D("MenuDenieSound", Global.SpeakerVolume / 10, false);
             }
         }
 
@@ -437,11 +386,7 @@ namespace SpaceAssault.Screens
             if (input.IsMenuUp())
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-
-                _UpAndDown = SoundEngine.Play2D(OkClick, false, true, false);
-                _UpAndDown.Volume = Global.SpeakerVolume / 10;
-                _UpAndDown.Paused = false;
+                SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
 
                 selectedEntry--;
 
@@ -452,11 +397,7 @@ namespace SpaceAssault.Screens
             if (input.IsMenuDown())
             {
                 //playing the sound
-                SoundEngine.SetListenerPosition(new Vector3D(0, 0, 0), new Vector3D(0, 0, 1));
-               
-                _UpAndDown = SoundEngine.Play2D(OkClick, false, true, false);
-                _UpAndDown.Volume = Global.SpeakerVolume / 10;
-                _UpAndDown.Paused = false;
+                SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
 
                 selectedEntry++;
 
