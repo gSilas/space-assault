@@ -115,12 +115,12 @@ namespace SpaceAssault.Screens
             TutorialText.Add(TutorialText.Count, "The Number next to the rocket icon\nis the amount of your BIG rockets.\nUse them wisely.");
             TutorialText.Add(TutorialText.Count, "Your score is your combat rating!\nShooting stuff increases\nyour score!");
             TutorialText.Add(TutorialText.Count, "Fragments are the common\ncurrency on this station.");
-            TutorialText.Add(TutorialText.Count, "You can buy upgrades in the station shop\nin exchange for fragments.");
+            TutorialText.Add(TutorialText.Count, "You can buy upgrades in the station\nshop in exchange for fragments.");
             TutorialText.Add(TutorialText.Count, "Press B to open the shop and\nnavigate through it with the arrow keys.");
             TutorialText.Add(TutorialText.Count, "But beware! \nYou need to be near the station \nto open the shop.");
             TutorialText.Add(TutorialText.Count, "W ] fly up\nA ] fly left\nS ] fly down\nD ] fly right");
             TutorialText.Add(TutorialText.Count, "Left mouse button\n] Shoots your laser\nRight mouse button\n] Shoots your rocket\n");
-            TutorialText.Add(TutorialText.Count, "If you search for close enemys, watch at the red dot on your Drone.");
+            TutorialText.Add(TutorialText.Count, "If you search for close enemys, watch\nat the red dot on your Drone.");
             TutorialText.Add(TutorialText.Count, "I also heard of incoming asteroids.\nThe comets with the blue trail\noffer a nice income.");
             TutorialText.Add(TutorialText.Count, "Before you start, visit the shop\nand buy something with that loaned\nmoney we gave you!");
             TutorialText.Add(TutorialText.Count, "I'll now give you your controls back!\nBut stay in radio range.");
@@ -163,7 +163,7 @@ namespace SpaceAssault.Screens
             Global.Money = 0;
             Global.DroneDmg = 10;
             Global.NumberOfRockets = 1;
-
+            Global.SpeakerVolume = 2;
         }
 
         //#################################

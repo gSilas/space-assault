@@ -115,6 +115,7 @@ namespace SpaceAssault.Screens
             captain = new UIItem();
             deadTime = 17000;
             voice = false;
+            Global.SpeakerVolume = 2;
         }
 
 
