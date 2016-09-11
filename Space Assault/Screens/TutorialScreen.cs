@@ -313,7 +313,7 @@ namespace SpaceAssault.Screens
             // calling draw of objects where necessary
             _back.Draw(90, new Vector3(-5000, -2500, -5000));
             _station.Draw(Global.StationColor);
-            _planet.Draw(Color.DarkViolet);
+            _planet.Draw(Color.DarkRed);
             _droneFleet.Draw();
 
             foreach (ExplosionSystem explosion in explosionList)
