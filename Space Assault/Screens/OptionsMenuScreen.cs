@@ -158,6 +158,10 @@ namespace SpaceAssault.Screens
             }
 
             //cancel the menu.
+            if (input.IsMenuSelect())
+            {
+                OnSelectEntry(selectedEntry);
+            }
             else if (input.IsMenuCancel())
             {
                 OnCancel();
