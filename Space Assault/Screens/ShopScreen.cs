@@ -27,9 +27,9 @@ namespace SpaceAssault.Screens
         MenuEntry rocketMenuEntry;
 
         private int _priceDMG=500;
-        private  int _priceDroneHealth=500;
+        private  int _priceDroneHealth=300;
         private int _priceArmor=2000;
-        private int _priceDroneShield=500;
+        private int _priceDroneShield=300;
         private int _priceStationShield=2000;
         private int _priceStationHealth = 2000;
 
@@ -112,7 +112,7 @@ namespace SpaceAssault.Screens
         void SetShopText()
         {
             ShopText.Clear();
-            ShopText.Add(0, "Your Base Damage is: " + _droneFleet._makeDmg.ToString() + "\n\nFor every upgrade your\nGundamage is increased by 10");
+            ShopText.Add(0, "Your Base Damage is: " + Global.DroneDmg.ToString() + "\n\nFor every upgrade your\nGundamage is increased by 10");
             ShopText.Add(1, "Your Base Health is: " + _droneFleet._maxHealth.ToString() + " Health\n\nIf your Health goes down to 0,\nyour Drone will die.\nFor every Upgrade the maximum\nHealth increases by 100.");
             ShopText.Add(2, "New Armor\n" + _droneFleet._armor.ToString() + " Armor\n\nFor every Upgrade in Armor,\nthe incoming Damage is reduced\nby Damage*Armor/10.");
             ShopText.Add(3, "New Shield\n" + _droneFleet._maxShield.ToString() + " Shield\n\nIf your Shield goes down to 0,\nyour Health will get Damage.\n\nAfter a short delay\nthe shield restores itself.\n\nFor every upgrade the maximum\nShield increases by 50.");
@@ -200,7 +200,7 @@ namespace SpaceAssault.Screens
                 _droneDamageLevel++;
                 Global.Money -= _priceDMG;
 
-                this._droneFleet._makeDmg += 10;
+                Global.DroneDmg+=10;
                 Global.DroneBulletColor = new Color(_rand.Next(100,200),_rand.Next(100,200),_rand.Next(100,200),255);
                 SetMenuEntryText();
                 SetShopText();

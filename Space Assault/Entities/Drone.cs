@@ -268,11 +268,11 @@ namespace SpaceAssault.Entities
             // shooting the gun
             if (_input.IsLeftMouseButtonPressed())
             {
-                if (_alternatingGunLogic && gunPrimary.Shoot(gameTime, curBullet, 10, Position - _rotationMatrixLaser.Left * 3.6f - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser.Forward, ref bulletList))
+                if (_alternatingGunLogic && gunPrimary.Shoot(gameTime, curBullet, Global.DroneDmg, Position - _rotationMatrixLaser.Left * 3.6f - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser.Forward, ref bulletList))
                 {
                     _alternatingGunLogic = false;
                 }
-                else if (gunPrimary.Shoot(gameTime, curBullet, 10, Position - _rotationMatrixLaser.Right * 3.6f - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser.Forward, ref bulletList))
+                else if (gunPrimary.Shoot(gameTime, curBullet, Global.DroneDmg, Position - _rotationMatrixLaser.Right * 3.6f - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser.Forward, ref bulletList))
                 {
                     _alternatingGunLogic = true;
                 }
