@@ -2,20 +2,32 @@ GDD: https://www.overleaf.com/5171140ndvrkx#/16161237/
 TDD: https://www.overleaf.com/5077288gkyrjg#/15777308/
 
 
-Optimisierung:
-	Collision Handling
-	BoundingFrustrum für alles
+### TODO ###
+Optimierungen: 
+	//solang es keine performanceeinbrüche gibt ist hier nichts zu tun
+	- Collision Handling						%%% LOW PRIORITY %%%
+	- BoundingFrustrum für alles				%%% LOW PRIORITY %%%
 
-Gameplay:	
-	- !!!! todo disable console for release !!!!	
-	- Bossgegner
-	- Rauschschreen außerhalb der Spielwelt - nicht trivial kommt erst zur Präsi		#dustin		
-	- waves anpassen/balancing														#daniel, alle
-	- 3d sound !!!!!									%%% HIGH PRIORITY %%%		HM
-	- gameover (press F to pay your respects) / winning screen		%%% HIGH PRIORITY %%% D
-	- shop funktionalität erklären						%%% MED PRIORITY %%% 
-	- radar schöner machen								%%% MED PRIORITY %%% 
-	- reload animation torpedo							%%% MED PRIORITY %%% 
+Gameplay:
+			%%% HIGH PRIORITY %%%	
+	- none
+			%%% MED PRIORITY %%%		
+	- 3d sound
+			%%% LOW PRIORITY %%% 											
+	- reload animation torpedo							
+	- radar vielleicht schöner machen
+	- winning / loosing screen überarbeiten
+	- Rauschschreen außerhalb der Spielwelt
+	- mit B shop wieder schließen können
+	- im shop selber nicht ersichtlich wie man was kauft (kleinen hinweis hinpackena)
+	- fragment missiles zu wenig schaden, schaden erhöhen oder billiger machen
+
+ Bugs:
+	- health bar der drone erhöht sich im UI immer weiter wenn man upgraded
+	- option special sound im spiel ändert nichts (da die sounds vorher geladen werden)
+
+ Critical bugs:
+	- none
 
 
 GDD
