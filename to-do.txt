@@ -13,6 +13,7 @@ Gameplay:
 	- none
 			%%% MED PRIORITY %%%		
 	- 3d sound
+	- drone, remove reset & random spawn around station
 			%%% LOW PRIORITY %%% 											
 	- reload animation torpedo							
 	- radar vielleicht schöner machen
