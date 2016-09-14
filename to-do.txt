@@ -1,6 +1,6 @@
 GDD: https://www.overleaf.com/5171140ndvrkx#/16161237/
 TDD: https://www.overleaf.com/5077288gkyrjg#/15777308/
-
+Abschlussdokumentation: https://www.overleaf.com/6204051zygddg#/20789843/
 
 ### TODO ###
 Optimierungen: 
@@ -28,12 +28,6 @@ Gameplay:
 
  Critical bugs:
 	- none
-
-
-GDD
-https://www.overleaf.com/5171140ndvrkx#/16161237/
-TDD
-https://www.overleaf.com/5077288gkyrjg#/15777308/
 
 Modelle:
 	- Boss
