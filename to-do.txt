@@ -13,7 +13,7 @@ Gameplay:
 	- none
 			%%% MED PRIORITY %%%		
 	- 3d sound
-	- drone, remove reset & random spawn around station
+	- drone, remove reset & random spawn around station & nachm spawnen sollte man 1,5 sekunden oder so nicht bemerkt werden
 			%%% LOW PRIORITY %%% 											
 	- reload animation torpedo							
 	- radar vielleicht schöner machen
@@ -21,7 +21,10 @@ Gameplay:
 	- Rauschschreen außerhalb der Spielwelt
 	- mit B shop wieder schließen können
 	- im shop selber nicht ersichtlich wie man was kauft (kleinen hinweis hinpackena)
-	- fragment missiles zu wenig schaden, schaden erhöhen oder billiger machen
+	- fragment missiles zu wenig schaden, schaden erhöhen oder billiger machen (das dmg von den missiles müsste natürlich mit dem leben der schiffe hochgehen)
+	- wär evtl hübscher wenn man statt dem roten punkt nen radar in der rechten ecke unten hätte
+	- für 2000 fragements sollten es mehr als 5% armor sein find ich (überprüfen ob das stimmt)
+	- noch n bissl balancing reinhauen
 
  Bugs:
 	- health bar der drone erhöht sich im UI immer weiter wenn man upgraded
