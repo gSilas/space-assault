@@ -15,7 +15,6 @@ namespace SpaceAssault.Entities
 {
     class Drone : AEntity
     {
-        private Vector3 _spawnPos;
         private float _turnSpeed;
         private float _moveSpeedForward;
         private float _moveSpeedBackward;
@@ -23,8 +22,6 @@ namespace SpaceAssault.Entities
         private float _moveSpeedRight;
         private float _moveSpeedModifier;
         private float _moveSpeedModifierSideways;
-        private float _tiltZ;
-        private float _tiltZMax;
         private float _speedScaling = 2f;
         private int _shieldpast;
         private TimeSpan _shieldrefreshdelay;
@@ -47,38 +44,20 @@ namespace SpaceAssault.Entities
 
         public Drone(Vector3 position, int makeDmg, int maxHealth, int armor, int maxShield)
         {
-            _spawnPos = position;
-            Position = position;
+            _input = new InputState();
+            _trail = new Trail(new DroneTrailSettings());
+            gunPrimary = new Weapon(200);
+            gunSecondary = new Weapon(5000);
+            maxRange = Global.MapRingRadius + 200;
+
             this.makeDmg = makeDmg;
             this.maxHealth = maxHealth;
             this.armor = armor;
             this.maxShield = maxShield;
-            _input = new InputState();
-
-            _trail = new Trail(new DroneTrailSettings());
-
-            RotationMatrix = Matrix.Identity;
-            _turnSpeed = 6.0f;
-            _moveSpeedForward = 1.0f * _speedScaling;
-            _moveSpeedBackward = -1.0f * _speedScaling;
-            _moveSpeedLeft = 1.0f * _speedScaling;
-            _moveSpeedRight = -1.0f * _speedScaling;
-            _tiltZ = 0;
-            _tiltZMax = 6.2f;
             _shieldpast = this.maxShield;
-            shield = this.maxShield;
-            health = this.maxHealth;
-            _isNotDead = true;
-            maxRange = Global.MapRingRadius + 200;
-
-            gunPrimary = new Weapon(200);
-
-            gunSecondary = new Weapon(5000);
-        }
-
-        public void Reset()
-        {
-            //TODO: remove reset and create no Drone object in DroneBuilder
+            shield = maxShield;
+            health = maxHealth;
+            Position = position;
             RotationMatrix = Matrix.Identity;
             _turnSpeed = 6.0f;
             _moveSpeedForward = 1.0f * _speedScaling;
@@ -86,15 +65,7 @@ namespace SpaceAssault.Entities
             _moveSpeedLeft = 1.0f * _speedScaling;
             _moveSpeedRight = -1.0f * _speedScaling;
 
-            health = maxHealth;
-            shield = maxShield;
-
             _isNotDead = true;
-            _moveSpeedModifier = 0;
-            _moveSpeedModifierSideways = 0;
-            Position = _spawnPos;
-
-            Global.HighScorePoints -= 200;
         }
 
         public override void LoadContent()
@@ -214,44 +185,17 @@ namespace SpaceAssault.Entities
             }
             Position -= new Vector3(0, 0, 1) * _moveSpeedModifier;
 
-            // left & right movement
-            if (Keyboard.GetState().IsKeyUp(Keys.D) & Keyboard.GetState().IsKeyUp(Keys.A))
-            {
-                if (_tiltZ == _tiltZMax || _tiltZ == -_tiltZMax)
-                {
-                    _tiltZ = 0;
-                }
-                else
-                {
-                    if (_tiltZ < 0)
-                        _tiltZ += 0.1f;
-                    else if (_tiltZ > 0)
-                        _tiltZ -= 0.1f;
-                }
-            }
-
-
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 //left
                 if (_moveSpeedModifierSideways < _moveSpeedLeft) _moveSpeedModifierSideways += 0.04f;
                 else _moveSpeedModifierSideways = _moveSpeedLeft;
-
-                if (_tiltZ < _tiltZMax)
-                {
-                    _tiltZ += 0.2f;
-                }
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 //right
                 if (_moveSpeedModifierSideways > _moveSpeedRight) _moveSpeedModifierSideways -= 0.04f;
                 else _moveSpeedModifierSideways = _moveSpeedRight;
-
-                if (_tiltZ > -_tiltZMax)
-                {
-                    _tiltZ -= 0.2f;
-                }
             }
             else if (_moveSpeedModifierSideways > 0.02f)
             {
@@ -286,13 +230,11 @@ namespace SpaceAssault.Entities
             {
                 if (Global.NumberOfRockets > 0)
                 {
-                    if(gunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser.Forward, ref bulletList))
+                    if (gunSecondary.Shoot(gameTime, Bullet.BulletType.BigJoe, 100, Position - _rotationMatrixLaser.Forward * 11.0f, _rotationMatrixLaser.Forward, ref bulletList))
                         Global.NumberOfRockets -= 1;
                 }
             }
 
-            //RotationMatrix = Matrix.CreateRotationZ(_tiltZ);
-            //Position -= RotationMatrix.Forward * _moveSpeedModifier;
             curVelocity = Position - _oldPosition;
             droneMovementBoundaries();
         }
@@ -302,7 +244,7 @@ namespace SpaceAssault.Entities
             //cant fly into station sphere
             Vector3 posNormalized = Position;
             posNormalized.Normalize();
-            while(Position.Length() < 120)
+            while (Position.Length() < 120)
             {
                 Position += posNormalized;
             }

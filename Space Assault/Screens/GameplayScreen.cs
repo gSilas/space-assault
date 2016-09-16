@@ -69,9 +69,6 @@ namespace SpaceAssault.Screens
         List<Projectile> projectiles = new List<Projectile>();
         TimeSpan timeToNextProjectile = TimeSpan.Zero;
 
-        // Random number generator
-        Random random;
-
         //Created screens
         PauseMenuScreen pause;
         ShopScreen shop;
@@ -93,7 +90,6 @@ namespace SpaceAssault.Screens
             _droneFleet = new DroneBuilder();
 
             _sphereAlpha = 0.1f;
-            random = new Random();
             _waveBuilder = new WaveBuilder(10000, 15);
             Global.Money = 0;
             //UI + Frame + BG 
@@ -132,7 +128,7 @@ namespace SpaceAssault.Screens
             _stationSymbol.LoadContent("Images/station_icon", 4);
             _enemySymbol.LoadContent("Images/hit_marker", 4);
 
-            _droneFleet.addDrone(new Vector3(150, 0, 100));
+            _droneFleet.replaceOldDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
             _station.LoadContent();
             _sphere.LoadContent();
@@ -259,7 +255,8 @@ namespace SpaceAssault.Screens
                 // if fading out is max, respawn
                 if (_actualDeadDroneAlpha >= 1f)
                 {
-                    _droneFleet.GetActiveDrone().Reset();
+                    _droneFleet.replaceOldDrone();
+                    Global.HighScorePoints -= 200; 
                     _deathCounter++;
                 }
             }
@@ -412,7 +409,7 @@ namespace SpaceAssault.Screens
         //#################################
         protected void PlayExplosionSound(Vector3D pos)
         {
-            switch (random.Next(0, 3))
+            switch (Global.Random.Next(0, 3))
             {
                 case 0:
                     _soundEngine.Play2D("explosionSource", Global.SpeakerVolume / 10, false);
@@ -430,7 +427,7 @@ namespace SpaceAssault.Screens
         }
         protected void PlayAstExplosionSound(Vector3D pos)
         {
-            switch (random.Next(0, 2))
+            switch (Global.Random.Next(0, 2))
             {
                 case 0:
                     _soundEngine.Play2D("astexplosionSource1", Global.SpeakerVolume / 10, false);
@@ -740,7 +737,7 @@ namespace SpaceAssault.Screens
         //#################################
         Vector3 RandomPointOnCircle(float radius)
         {
-            double angle = random.NextDouble() * Math.PI * 2;
+            double angle = Global.Random.NextDouble() * Math.PI * 2;
 
             float x = (float)Math.Cos(angle);
             float y = (float)Math.Sin(angle);
@@ -805,7 +802,7 @@ namespace SpaceAssault.Screens
         {
             if (Global.Music.Finished)
             {
-                switch (random.Next(1, 4))
+                switch (Global.Random.Next(1, 4))
                 {
                     case 1:
                         Global.Music = Global.MusicEngine.Play2D("SpaceFighterLoop", Global.MusicVolume / 10, false);

@@ -136,7 +136,7 @@ namespace SpaceAssault.Screens
         {
             _stationSymbol = new UIItem();
             _stationSymbol.LoadContent("Images/station_icon", 4);
-            _droneFleet.addDrone(new Vector3(150, 0, 100));
+            _droneFleet.replaceOldDrone(new Vector3(150, 0, 100));
             Global.Camera = new Camera(Global.GraphicsManager.GraphicsDevice.DisplayMode.AspectRatio, 10000f, MathHelper.ToRadians(45), 1f, Global.CameraPosition, _droneFleet.GetActiveDrone().Position, Vector3.Up);
             _station.LoadContent();
             _planet.LoadContent();

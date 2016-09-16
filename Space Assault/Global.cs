@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Utils;
 using IrrKlang;
+using System;
 
 /// <summary>
 /// Everything in here has to have values assigned either in here or on it's first occurence
@@ -28,6 +29,9 @@ namespace SpaceAssault
         public static Camera Camera;
 
         public static HighScoreList HighScoreList = new HighScoreList();
+
+        // Random number generator
+        public static Random Random;
 
         //fonts
         public static SpriteFont Font;

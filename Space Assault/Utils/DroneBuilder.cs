@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using SpaceAssault.Entities;
+using System;
 
 namespace SpaceAssault.Utils
 {
@@ -101,12 +102,32 @@ namespace SpaceAssault.Utils
             }
         }
 
-        public void addDrone(Vector3 position)
+        public void replaceOldDrone(Vector3 position)
         {
             var drone = new Drone(new Vector3(150, 0, 100), _makeDmg, _maxHealth, _armor, _maxShield);
             drone.LoadContent();
 
+            _droneShips.Clear();
             _droneShips.Add(drone);
+        }
+
+        public void replaceOldDrone()
+        {
+            var drone = new Drone(RandomPointOnCircle(180), _makeDmg, _maxHealth, _armor, _maxShield);
+            drone.LoadContent();
+
+            _droneShips.Clear();
+            _droneShips.Add(drone);
+        }
+
+        private Vector3 RandomPointOnCircle(float radius)
+        {
+            double angle = Global.Random.NextDouble() * Math.PI * 2;
+
+            float x = (float)Math.Cos(angle);
+            float y = (float)Math.Sin(angle);
+
+            return new Vector3(x * radius, 0, y * radius);
         }
 
         public Drone GetActiveDrone()

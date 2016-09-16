@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using SpaceAssault.Screens;
 using SpaceAssault.ScreenManagers;
-
+using System;
 
 namespace SpaceAssault
 {
@@ -24,7 +24,7 @@ namespace SpaceAssault
             Global.GraphicsManager.PreferredBackBufferWidth = Global.PreferredBackBufferWidth;
             // Create the screen manager component.
             screenManager = new ScreenManager(this);
-
+            Global.Random = new Random();
             Components.Add(screenManager);
 
             Global.game = this;
