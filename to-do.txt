@@ -16,9 +16,8 @@ Gameplay:
 			%%% LOW PRIORITY %%% 											
 	- reload animation torpedo							
 	- radar vielleicht schöner machen
-	- winning / loosing screen überarbeiten
 	- Rauschschreen außerhalb der Spielwelt
-	- im shop selber nicht ersichtlich wie man was kauft (kleinen hinweis hinpackena)
+	- im shop selber nicht ersichtlich wie man was kauft (kleinen hinweis hinpacken)
 	- fragment missiles zu wenig schaden, schaden erhöhen oder billiger machen (das dmg von den missiles müsste natürlich mit dem leben der schiffe hochgehen)
 	- wär evtl hübscher wenn man statt dem roten punkt nen radar in der rechten ecke unten hätte
 	- für 2000 fragements sollten es mehr als 5% armor sein find ich (überprüfen ob das stimmt)
