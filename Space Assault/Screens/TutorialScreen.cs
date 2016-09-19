@@ -218,7 +218,7 @@ namespace SpaceAssault.Screens
             _planet.Update(gameTime);
             if (movementAllowed)
             {
-                _droneFleet.Update(gameTime);
+                _droneFleet.Update(gameTime, movementAllowed);
                 _asteroidField.Update(gameTime, _station.Position);
             }
 

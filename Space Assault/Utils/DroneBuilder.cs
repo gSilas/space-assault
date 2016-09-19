@@ -33,7 +33,7 @@ namespace SpaceAssault.Utils
             curBullet = Bullet.BulletType.YellowLazer;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, bool movementAllowed)
         {
             // updating current drone according to shoplevels
             GetActiveDrone().makeDmg = _makeDmg;
@@ -78,7 +78,7 @@ namespace SpaceAssault.Utils
             }
 
             // let active drone receive input
-            if (GetActiveDrone().IsNotDead)
+            if (GetActiveDrone().IsNotDead && movementAllowed)
             {
                 GetActiveDrone().HandleInput(gameTime, curBullet, ref _bulletList);
             }

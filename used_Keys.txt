@@ -19,3 +19,4 @@ List of Debuggingkeys:
     F1 - Drone Damage
     F2 - Drone Shield
     F3 - Drone Health
+	F4 - Drone position

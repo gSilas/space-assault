@@ -13,7 +13,7 @@ namespace SpaceAssault.Entities
         public int _health;
         public int _maxhealth;
 
-        private bool _isNotDead;
+        private bool _isDead;
 
         public int _maxShield;
         public int _shield;
@@ -41,10 +41,10 @@ namespace SpaceAssault.Entities
             _bulletlist = new List<Bullet>();
         }
 
-        public bool IsNotDead
+        public bool IsDead
         {
-            get { return _isNotDead; }
-            protected set { _isNotDead = value; }
+            get { return _isDead; }
+            protected set { _isDead = value; }
         }
 
         public override void LoadContent()
@@ -60,6 +60,7 @@ namespace SpaceAssault.Entities
 
         public override void Update(GameTime gameTime)
         {
+            if (_health <= 0) IsDead = true;
             //Spheres = Collider3D.UpdateBoundingSphere(this);
             Gun.Update(gameTime);
             _angle += 0.005f;
@@ -74,7 +75,7 @@ namespace SpaceAssault.Entities
             }
             RotationMatrix = Matrix.CreateRotationY(_angle);
 
-            if (gameTime.TotalGameTime > (_shieldrefreshdelay.Add(TimeSpan.FromSeconds(3))))
+            if (gameTime.TotalGameTime > (_shieldrefreshdelay.Add(TimeSpan.FromSeconds(3))) && !IsDead)
             {
 
                 if (_shield == _shieldpast)
@@ -83,14 +84,13 @@ namespace SpaceAssault.Entities
                 _shieldrefreshdelay = gameTime.TotalGameTime;
                 if (_health < _maxhealth) _health += 100;
             }
-            if (_wasDamaged == false && _shield < _maxShield)
+            if (_wasDamaged == false && _shield < _maxShield && !IsDead)
                 _shield += _maxShield/1400;
 
             if (makeDmg != 0)
             {
                 //Gun.Shoot(gameTime, Bullet.BulletType.BlueLazer, makeDmg, Position, RotationMatrix,ref _bulletlist);
             }
-            if (_health <= 0) IsNotDead = false;
         }
         public void getHit(int howMuch)
         {
