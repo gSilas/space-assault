@@ -6,6 +6,7 @@ using SpaceAssault.Entities;
 using SpaceAssault.Utils;
 using SpaceAssault.Screens.UI;
 using SpaceAssault.ScreenManagers;
+using Microsoft.Xna.Framework.Input;
 
 namespace SpaceAssault.Screens
 {
@@ -415,7 +416,7 @@ namespace SpaceAssault.Screens
             {
                 OnSelectEntry(selectedEntry);
             }
-            else if (input.IsMenuCancel())
+            else if (input.IsMenuCancel() || input.IsNewKeyPress(Keys.B))
             {
                 OnCancel();
             }
