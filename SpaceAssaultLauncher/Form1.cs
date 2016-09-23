@@ -27,5 +27,10 @@ namespace SpaceAssaultLauncher
 
         }
 
+        private void Update_Available(object sender, System.EventArgs e)
+        {
+            
+        }
+
     }
 }

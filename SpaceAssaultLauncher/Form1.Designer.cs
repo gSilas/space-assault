@@ -32,6 +32,7 @@
             this.updateButton = new System.Windows.Forms.Button();
             this.runButton = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // updateButton
@@ -46,9 +47,9 @@
             // 
             // runButton
             // 
-            this.runButton.Location = new System.Drawing.Point(14, 59);
+            this.runButton.Location = new System.Drawing.Point(12, 59);
             this.runButton.Name = "runButton";
-            this.runButton.Size = new System.Drawing.Size(245, 19);
+            this.runButton.Size = new System.Drawing.Size(247, 19);
             this.runButton.TabIndex = 1;
             this.runButton.Text = "Launch Space Assault";
             this.runButton.UseVisualStyleBackColor = true;
@@ -56,16 +57,27 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(14, 10);
+            this.progressBar.Location = new System.Drawing.Point(12, 10);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(245, 19);
+            this.progressBar.Size = new System.Drawing.Size(247, 19);
             this.progressBar.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 39);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(138, 11);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "No Update available";
+            this.label1.TextChanged += new System.EventHandler(this.Update_Available);
             // 
             // FormLauncher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 11F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(273, 94);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.runButton);
             this.Controls.Add(this.updateButton);
@@ -76,6 +88,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "Space Assault";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -84,7 +97,7 @@
         private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.Button runButton;
         private System.Windows.Forms.ProgressBar progressBar;
-
+        private System.Windows.Forms.Label label1;
     }
 }
 
