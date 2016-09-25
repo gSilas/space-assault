@@ -54,7 +54,7 @@ namespace SpaceAssaultLauncher
         {
             if (updateReady)
             {
-                this.label1.Text = "Downloading!";
+                this.label1.Text = "Downloading update!";
                 this.label1.ForeColor = System.Drawing.Color.Red;
                 updateReady = false;
 
