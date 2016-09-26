@@ -105,13 +105,14 @@ namespace SpaceAssault.Utils
             switch (_waveNumber)
             {
                 case 0:
+                    // case not used, ignore
                     Global.EnemyFighterHealth = 30;
-                    Global.EnemyFighterDamage = 5;
+                    Global.EnemyFighterDamage = 10;
                     Global.EnemyFighterKillMoney = 25;
       
-                    Global.EnemyBomberHealth = 60;
-                    Global.EnemyBomberDamage = 100;
-                    Global.EnemyBomberKillMoney = 50;
+                    Global.EnemyBomber2Health = 60;
+                    Global.EnemyBomber2Damage = 500;
+                    Global.EnemyBomber2KillMoney = 50;
 
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(2, Boids.EnemyType.Bomber2);
@@ -123,15 +124,15 @@ namespace SpaceAssault.Utils
                     Global.EnemyBomberColor = Color.DarkOliveGreen;
 
                     Global.EnemyFighterHealth = 30;
-                    Global.EnemyFighterDamage = 5;
+                    Global.EnemyFighterDamage = 10;
                     Global.EnemyFighterKillMoney = 25;
 
                     Global.EnemyFighter3Health = 30;
-                    Global.EnemyFighter3Damage = 5;
+                    Global.EnemyFighter3Damage = 10;
                     Global.EnemyFighter3KillMoney = 25;
 
-                    Global.EnemyBomber2Health = 60;
-                    Global.EnemyBomber2Damage = 200;
+                    Global.EnemyBomber2Health = 100;
+                    Global.EnemyBomber2Damage = 500;
                     Global.EnemyBomber2KillMoney = 50;
 
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter);
@@ -143,17 +144,17 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighterColor = Color.DarkGreen;
                     Global.EnemyBomberColor = Color.DarkOliveGreen;
 
-                    Global.EnemyFighterHealth = 70;
-                    Global.EnemyFighterDamage = 5;
-                    Global.EnemyFighterKillMoney = 25;
+                    Global.EnemyFighterHealth += 40;   //70
+                    Global.EnemyFighterDamage += 0;    //10
+                    Global.EnemyFighterKillMoney += 0; //25
 
-                    Global.EnemyFighter3Health = 70;
-                    Global.EnemyFighter3Damage = 5;
-                    Global.EnemyFighter3KillMoney = 25;
+                    Global.EnemyFighter3Health += 40;   //70
+                    Global.EnemyFighter3Damage += 0;    //10
+                    Global.EnemyFighter3KillMoney += 0; //25
 
-                    Global.EnemyBomber2Health = 100;
-                    Global.EnemyBomber2Damage = 500;
-                    Global.EnemyBomber2KillMoney = 50;
+                    Global.EnemyBomber2Health += 0;     //100
+                    Global.EnemyBomber2Damage += 0;     //500
+                    Global.EnemyBomber2KillMoney += 0;  //50
 
                     _boids.addRandomBoids(3, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(3, Boids.EnemyType.Fighter3);
@@ -165,17 +166,17 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighterColor = Color.DarkGreen;
                     Global.EnemyBomberColor = Color.DarkOliveGreen;
 
-                    Global.EnemyFighterHealth = 70;
-                    Global.EnemyFighterDamage = 10;
-                    Global.EnemyFighterKillMoney = 25;
+                    Global.EnemyFighterHealth += 0;
+                    Global.EnemyFighterDamage += 0;
+                    Global.EnemyFighterKillMoney += 0;
 
-                    Global.EnemyFighter3Health = 70;
-                    Global.EnemyFighter3Damage = 10;
-                    Global.EnemyFighter3KillMoney = 25;
+                    Global.EnemyFighter3Health += 0;
+                    Global.EnemyFighter3Damage += 0;
+                    Global.EnemyFighter3KillMoney += 0;
 
-                    Global.EnemyBomber2Health = 100;
-                    Global.EnemyBomber2Damage = 800;
-                    Global.EnemyBomber2KillMoney = 50;
+                    Global.EnemyBomber2Health += 0;
+                    Global.EnemyBomber2Damage += 300;
+                    Global.EnemyBomber2KillMoney += 0;
 
                     _boids.addRandomBoids(4, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(4, Boids.EnemyType.Fighter3);
@@ -187,17 +188,17 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighterColor = Color.YellowGreen;
                     Global.EnemyBomberColor = Color.DarkGreen;
 
-                    Global.EnemyFighterHealth = 100;
-                    Global.EnemyFighterDamage = 15;
-                    Global.EnemyFighterKillMoney = 25;
+                    Global.EnemyFighterHealth += 30;
+                    Global.EnemyFighterDamage += 5;
+                    Global.EnemyFighterKillMoney += 0;
 
-                    Global.EnemyFighter3Health = 100;
-                    Global.EnemyFighter3Damage = 15;
-                    Global.EnemyFighter3KillMoney = 25;
+                    Global.EnemyFighter3Health += 30;
+                    Global.EnemyFighter3Damage += 5;
+                    Global.EnemyFighter3KillMoney += 0;
 
-                    Global.EnemyBomber2Health = 150;
-                    Global.EnemyBomber2Damage = 800;
-                    Global.EnemyBomber2KillMoney = 50;
+                    Global.EnemyBomber2Health += 50;
+                    Global.EnemyBomber2Damage += 0;
+                    Global.EnemyBomber2KillMoney += 0;
 
                     _boids.addRandomBoids(5, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(5, Boids.EnemyType.Fighter3);
@@ -209,14 +210,15 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighterColor = Color.YellowGreen;
                     Global.EnemyBomberColor = Color.DarkGreen;
 
-                    Global.EnemyFighterHealth = 180;
-                    Global.EnemyFighterDamage = 20;
-                    Global.EnemyFighterKillMoney = 60;
-
                     //Enemy Elite Pilot
                     Global.EnemyFighter2Health = 800;
                     Global.EnemyFighter2Damage = 50;
-                    Global.EnemyFighter2KillMoney = 500;
+                    Global.EnemyFighter2KillMoney = 250;
+
+
+                    Global.EnemyFighterHealth = 180;
+                    Global.EnemyFighterDamage = 20;
+                    Global.EnemyFighterKillMoney = 50;
 
                     Global.EnemyFighter3Health = 180;
                     Global.EnemyFighter3Damage = 20;
@@ -241,7 +243,7 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighterDamage = 25;
                     Global.EnemyFighterKillMoney = 60;
 
-                    Global.EnemyFighter2Health = 500;
+                    Global.EnemyFighter2Health = 700;
                     Global.EnemyFighter2Damage = 50;
                     Global.EnemyFighter2KillMoney = 250;
 
@@ -303,9 +305,9 @@ namespace SpaceAssault.Utils
                     Global.EnemyFighter3Damage = 30;
                     Global.EnemyFighter3KillMoney = 50;
 
-                    Global.EnemyBomber2Health = 400;
+                    Global.EnemyBomber2Health = 500;
                     Global.EnemyBomber2Damage = 500;
-                    Global.EnemyBomber2KillMoney = 100;
+                    Global.EnemyBomber2KillMoney = 60;
 
                     _boids.addRandomBoids(8, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter2);
@@ -319,20 +321,20 @@ namespace SpaceAssault.Utils
                     Global.EnemyBomberColor = Color.Orange;
 
                     Global.EnemyFighterHealth = 290;
-                    Global.EnemyFighterDamage = 35;
-                    Global.EnemyFighterKillMoney = 70;
+                    Global.EnemyFighterDamage = 40;
+                    Global.EnemyFighterKillMoney = 50;
 
                     Global.EnemyFighter2Health = 600;
                     Global.EnemyFighter2Damage = 60;
-                    Global.EnemyFighter2KillMoney = 250;
+                    Global.EnemyFighter2KillMoney = 200;
 
                     Global.EnemyFighter3Health = 290;
                     Global.EnemyFighter3Damage = 35;
                     Global.EnemyFighter3KillMoney = 50;
 
-                    Global.EnemyBomber2Health = 400;
+                    Global.EnemyBomber2Health = 500;
                     Global.EnemyBomber2Damage = 500;
-                    Global.EnemyBomber2KillMoney = 100;
+                    Global.EnemyBomber2KillMoney = 70;
 
                     _boids.addRandomBoids(9, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(4, Boids.EnemyType.Fighter2);
@@ -352,7 +354,7 @@ namespace SpaceAssault.Utils
 
                     Global.EnemyFighter2Health = 600;
                     Global.EnemyFighter2Damage = 60;
-                    Global.EnemyFighter2KillMoney = 250;
+                    Global.EnemyFighter2KillMoney = 100;
 
                     Global.EnemyFighter3Health = 300;
                     Global.EnemyFighter3Damage = 40;
@@ -360,11 +362,11 @@ namespace SpaceAssault.Utils
 
                     Global.EnemyBomberHealth = 800;
                     Global.EnemyBomberDamage = 600;
-                    Global.EnemyBomberKillMoney = 400;
+                    Global.EnemyBomberKillMoney = 150;
 
                     Global.EnemyBomber2Health = 400;
                     Global.EnemyBomber2Damage = 500;
-                    Global.EnemyBomber2KillMoney = 100;
+                    Global.EnemyBomber2KillMoney = 70;
 
                     _boids.addRandomBoids(9, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(2, Boids.EnemyType.Fighter2);
@@ -384,7 +386,7 @@ namespace SpaceAssault.Utils
 
                     Global.EnemyFighter2Health = 650;
                     Global.EnemyFighter2Damage = 65;
-                    Global.EnemyFighter2KillMoney = 250;
+                    Global.EnemyFighter2KillMoney = 100;
 
                     Global.EnemyFighter3Health = 300;
                     Global.EnemyFighter3Damage = 40;
@@ -392,10 +394,10 @@ namespace SpaceAssault.Utils
 
                     Global.EnemyBomberHealth = 800;
                     Global.EnemyBomberDamage = 600;
-                    Global.EnemyBomberKillMoney = 400;
+                    Global.EnemyBomberKillMoney = 150;
 
                     Global.EnemyBomber2Health = 400;
-                    Global.EnemyBomber2Damage = 600;
+                    Global.EnemyBomber2Damage = 700;
                     Global.EnemyBomber2KillMoney = 100;
 
                     _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
@@ -416,7 +418,7 @@ namespace SpaceAssault.Utils
 
                     Global.EnemyFighter2Health = 650;
                     Global.EnemyFighter2Damage = 65;
-                    Global.EnemyFighter2KillMoney = 250;
+                    Global.EnemyFighter2KillMoney = 100;
 
                     Global.EnemyFighter3Health = 300;
                     Global.EnemyFighter3Damage = 40;
@@ -424,10 +426,10 @@ namespace SpaceAssault.Utils
 
                     Global.EnemyBomberHealth = 800;
                     Global.EnemyBomberDamage = 600;
-                    Global.EnemyBomberKillMoney = 400;
+                    Global.EnemyBomberKillMoney = 150;
 
                     Global.EnemyBomber2Health = 400;
-                    Global.EnemyBomber2Damage = 600;
+                    Global.EnemyBomber2Damage = 700;
                     Global.EnemyBomber2KillMoney = 100;
 
                     _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
@@ -448,7 +450,7 @@ namespace SpaceAssault.Utils
 
                     Global.EnemyFighter2Health = 650;
                     Global.EnemyFighter2Damage = 65;
-                    Global.EnemyFighter2KillMoney = 250;
+                    Global.EnemyFighter2KillMoney = 100;
 
                     Global.EnemyFighter3Health = 300;
                     Global.EnemyFighter3Damage = 40;
@@ -456,10 +458,10 @@ namespace SpaceAssault.Utils
 
                     Global.EnemyBomberHealth = 800;
                     Global.EnemyBomberDamage = 600;
-                    Global.EnemyBomberKillMoney = 400;
+                    Global.EnemyBomberKillMoney = 150;
 
                     Global.EnemyBomber2Health = 400;
-                    Global.EnemyBomber2Damage = 600;
+                    Global.EnemyBomber2Damage = 700;
                     Global.EnemyBomber2KillMoney = 100;
 
                     _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
@@ -480,15 +482,15 @@ namespace SpaceAssault.Utils
 
                     Global.EnemyFighter2Health = 700;
                     Global.EnemyFighter2Damage = 80;
-                    Global.EnemyFighter2KillMoney = 250;
+                    Global.EnemyFighter2KillMoney = 100;
 
                     Global.EnemyFighter3Health = 300;
                     Global.EnemyFighter3Damage = 40;
                     Global.EnemyFighter3KillMoney = 50;
 
                     Global.EnemyBomberHealth = 800;
-                    Global.EnemyBomberDamage = 600;
-                    Global.EnemyBomberKillMoney = 400;
+                    Global.EnemyBomberDamage = 800;
+                    Global.EnemyBomberKillMoney = 150;
 
                     _boids.addRandomBoids(10, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(6, Boids.EnemyType.Fighter2);
@@ -503,19 +505,19 @@ namespace SpaceAssault.Utils
                     Global.EnemyBossColor = Color.DarkGoldenrod;
 
                     Global.EnemyFighterHealth = 200;
-                    Global.EnemyFighterDamage = 30;
+                    Global.EnemyFighterDamage = 40;
                     Global.EnemyFighterKillMoney = 70;
 
                     Global.EnemyFighter2Health = 500;
                     Global.EnemyFighter2Damage = 50;
-                    Global.EnemyFighter2KillMoney = 500;
+                    Global.EnemyFighter2KillMoney = 150;
 
                     Global.EnemyBomberHealth = 800;
                     Global.EnemyBomberDamage = 600;
-                    Global.EnemyBomberKillMoney = 400;
+                    Global.EnemyBomberKillMoney = 150;
 
-                    Global.EnemyBossHealth = 8000;
-                    Global.EnemyBossDamage = 100;
+                    Global.EnemyBossHealth = 10000;
+                    Global.EnemyBossDamage = 500;
                     Global.EnemyBossKillMoney = 5000;
 
                     Global.EnemyAttackTowerHealth = 1;
