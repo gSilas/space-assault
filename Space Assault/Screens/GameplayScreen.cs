@@ -234,12 +234,12 @@ namespace SpaceAssault.Screens
                 if (_waveBuilder.HasEnded && deadTime <= 0 && _station._health > 0)
                 {
                     Global.HighScorePoints += Global.Money;
-                    LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen(), new HighscoreMenuScreen(true));
+                    LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen(), new HighscoreMenuScreenOnline(true));
                 }
                 // if station dies go back to MainMenu
                 // TODO: change to EndScreen and HighScore list)
                 if (_station._health <= 0 && deadTime <= 0)
-                    LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen(), new HighscoreMenuScreen(true));
+                    LoadingScreen.Load(ScreenManager, true, new BackgroundScreen(), new MainMenuScreen(), new HighscoreMenuScreenOnline(true));
 
                 CollisionHandling(gameTime);
 
@@ -740,6 +740,8 @@ namespace SpaceAssault.Screens
 
             return new Vector3(x * radius, 0, y * radius);
         }
+
+
 
 
         //#################################

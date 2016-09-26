@@ -28,8 +28,6 @@ namespace SpaceAssault
 
         public static Camera Camera;
 
-        public static HighScoreList HighScoreList = new HighScoreList();
-
         // Random number generator
         public static Random Random;
 

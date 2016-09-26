@@ -10,7 +10,7 @@ using SpaceAssault.Utils;
 
 namespace SpaceAssault.Screens
 {
-    class HighscoreMenuScreen : MenuScreen
+    class HighscoreMenuScreenOnline : MenuScreen
     {
         MenuEntry back;
         bool _enter;
@@ -19,9 +19,10 @@ namespace SpaceAssault.Screens
         private float inputBoxWidth;
         private KeyboardState oldKeyboardState;
         private KeyboardState currentKeyboardState;
-
         private Dialog _highScoreDialog;
         private Dialog _inputDialog;
+
+        private HighScoreListOnline _highScoreListOn;
 
         public string EntryText
         {
@@ -57,7 +58,7 @@ namespace SpaceAssault.Screens
         }
 
         // Constructor.
-        public HighscoreMenuScreen(bool enter) : base("Highscore")
+        public HighscoreMenuScreenOnline(bool enter) : base("Highscore")
         {
             // Create our menu entries.
             _nextIterationFalse = false;
@@ -69,11 +70,13 @@ namespace SpaceAssault.Screens
 
             EntryText = "";
             _enter = enter;
-
+            a += "4J3";
             int spawnPointX = 150;
             int spawnPointY = 200;
             _highScoreDialog = new Dialog(spawnPointX, spawnPointY, 250, 500, 6, false, true);
             _inputDialog = new Dialog(spawnPointX, spawnPointY + 300, 30, 500, 6, false, true);
+
+            _highScoreListOn = new HighScoreListOnline();
         }
 
         public override void LoadContent()
@@ -92,7 +95,6 @@ namespace SpaceAssault.Screens
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
             if (_nextIterationFalse)
                 _enter = false;
-
             if (_enter)
             {
                 oldKeyboardState = currentKeyboardState;
@@ -119,7 +121,7 @@ namespace SpaceAssault.Screens
                                 if (EntryText.Length > 2)
                                 {
                                     //enter, send the string + points to highscores
-                                    Global.HighScoreList.Add(EntryText, Global.HighScorePoints);
+                                    _highScoreListOn.addScore(EntryText+a);
                                     EntryText = "";
                                     Global.HighScorePoints = 0;
                                     _nextIterationFalse = true;
@@ -169,15 +171,20 @@ namespace SpaceAssault.Screens
                 float spawnPointX = _highScoreDialog.position.ToVector2().X + _highScoreDialog.size.X;
                 float spawnPointY = _highScoreDialog.position.ToVector2().Y + _highScoreDialog.size.Y;
                 Global.UIBatch.Begin();
-                for (int i = 0; i < Global.HighScoreList._listLength; i++)
+
+                if (!_highScoreListOn.isReachable)
+                {
+                    Global.UIBatch.DrawString(Global.Font, "No internet or server not reachable!", new Vector2(spawnPointX+80, spawnPointY-30), Color.White);
+                }
+                for (int i = 0; i < 10; i++)
                 {
                     string text = "";
                     if ((i+1) / 10 >= 1) text += (i + 1) + ". Place";
                     else text += " " + (i + 1) + ". Place";
 
                     Global.UIBatch.DrawString(Global.Font, text, new Vector2(spawnPointX, spawnPointY + i * zeilenAbstand), Color.White);
-                    Global.UIBatch.DrawString(Global.Font, Global.HighScoreList._scoresList[i].Name, new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.White);
-                    Global.UIBatch.DrawString(Global.Font, (Global.HighScoreList._scoresList[i].Points).ToString(), new Vector2(spawnPointX + spaltenAbstand * 2, spawnPointY + i * zeilenAbstand), Color.White);
+                    Global.UIBatch.DrawString(Global.Font, _highScoreListOn._scoresList[i,0], new Vector2(spawnPointX + spaltenAbstand, spawnPointY + i * zeilenAbstand), Color.White);
+                    Global.UIBatch.DrawString(Global.Font, _highScoreListOn._scoresList[i,1], new Vector2(spawnPointX + spaltenAbstand * 2, spawnPointY + i * zeilenAbstand), Color.White);
                 }
                 Global.UIBatch.End();
 

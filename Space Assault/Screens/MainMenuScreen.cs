@@ -60,7 +60,7 @@ namespace SpaceAssault.Screens
             //playing the sound
             SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
 
-            ScreenManager.AddScreen(new HighscoreMenuScreen(false));
+            ScreenManager.AddScreen(new HighscoreMenuScreenOnline(false));
         }
 
         // Event handler for when the Credits menu entry is selected.

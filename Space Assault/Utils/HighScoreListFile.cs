@@ -17,15 +17,14 @@ namespace SpaceAssault.Utils
         }
     }
 
-    public class HighScoreList
+    public class HighScoreListFile
     {
-        public int _listLength;
         public string _filePath;
         public HighscoreEntity[] _scoresList;
 
-        public HighScoreList()
+        public HighScoreListFile()
         {
-            _listLength = 10;
+            int _listLength = 10;
             _scoresList = new HighscoreEntity[_listLength];
 
             _filePath = "HighScoreList.xml";
