@@ -82,7 +82,7 @@ namespace SpaceAssault.Utils
             try
             {
                 response = wb.UploadValues(_addUrl, "POST", data);
-                77Console.WriteLine(Encoding.ASCII.GetString(response));
+                //Console.WriteLine(Encoding.ASCII.GetString(response));
             }
             catch (System.Net.WebException e)
             {
