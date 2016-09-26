@@ -45,7 +45,7 @@ namespace SpaceAssault.ScreenManagers
             SoundEngine = new ISpaceSoundEngine(SoundOutputDriver.AutoDetect, SoundEngineOptionFlag.LoadPlugins | SoundEngineOptionFlag.MultiThreaded | SoundEngineOptionFlag.MuteIfNotFocused | SoundEngineOptionFlag.Use3DBuffers);
             SoundEngine.AddSoundSourceFromFile("MenuAcceptSound", "Content/Media/Effects/MenuPointAccept.wav");
             SoundEngine.AddSoundSourceFromFile("MenuDenieSound", "Content/Media/Effects/MenuPointDenie.wav");
-            SoundEngine.AddSoundSourceFromFile("OkClick", "Content/Media/Effects/OkClick.wav"); a += "id18M97Qowm";
+            SoundEngine.AddSoundSourceFromFile("OkClick", "Content/Media/Effects/OkClick.wav"); a += "id18M97Qowm78ap39T";
             SoundEngine.AddSoundSourceFromFile("GoBack", "Content/Media/Effects/GoBack2.wav");
             SoundEngine.AddSoundSourceFromFile("OpenMenu", "Content/Media/Effects/OpenShop.wav");
 
@@ -59,7 +59,6 @@ namespace SpaceAssault.ScreenManagers
                                                        bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-            a += "78ap39T";
             // Update each nested MenuEntry object.
             for (int i = 0; i < menuEntries.Count; i++)
             {
