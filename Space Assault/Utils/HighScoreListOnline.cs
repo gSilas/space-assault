@@ -60,7 +60,7 @@ namespace SpaceAssault.Utils
                 string[] splitScnd = split[i].Split(',');
                 string[] score = splitScnd[2].Split(':', '"', ' ');
                 string[] name = splitScnd[4].Split(':', '"', ' ');
-                _scoresList[i / 2 - 1, 0] = name[6];
+                _scoresList[i / 2 - 1, 0] = name[6].Replace('#',' ');
                 int numCharsMissing = 7 - score[5].Length;
                 if (numCharsMissing < 0) numCharsMissing = 0;
                 _scoresList[i / 2 - 1, 1] = String.Concat(Enumerable.Repeat(" ", numCharsMissing)) + score[5];
@@ -72,16 +72,17 @@ namespace SpaceAssault.Utils
         {
             var wb = new WebClient();
             var data = new NameValueCollection();
-
+            name = name.Replace(' ', '#');
             data["id"] = _gameName;
             data["nickname"] = name;
             data["score"] = Global.HighScorePoints.ToString();
             //game_id + str(score) + nickname + platform + extra + secret_salt
-            data["hash"] = Md5Sum(_gameName + Global.HighScorePoints.ToString() + name);
+            data["hash"] = Md5Sum(_gameName + Global.HighScorePoints.ToString() + name + "BK8566xJ6mUid18M97Qowm78ap39T4J3");
             byte[] response;
             try
             {
                 response = wb.UploadValues(_addUrl, "POST", data);
+                77Console.WriteLine(Encoding.ASCII.GetString(response));
             }
             catch (System.Net.WebException e)
             {

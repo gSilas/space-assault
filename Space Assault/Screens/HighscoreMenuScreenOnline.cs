@@ -70,7 +70,6 @@ namespace SpaceAssault.Screens
 
             EntryText = "";
             _enter = enter;
-            a += "4J3";
             int spawnPointX = 150;
             int spawnPointY = 200;
             _highScoreDialog = new Dialog(spawnPointX, spawnPointY, 250, 500, 6, false, true);
@@ -121,7 +120,7 @@ namespace SpaceAssault.Screens
                                 if (EntryText.Length > 2)
                                 {
                                     //enter, send the string + points to highscores
-                                    _highScoreListOn.addScore(EntryText+a);
+                                    _highScoreListOn.addScore(EntryText);
                                     EntryText = "";
                                     Global.HighScorePoints = 0;
                                     _nextIterationFalse = true;

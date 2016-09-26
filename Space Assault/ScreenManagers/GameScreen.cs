@@ -96,7 +96,6 @@ namespace SpaceAssault.ScreenManagers
         }
 
         bool isExiting = false;
-        public string a = "BK8566xJ6mU";
 
         // Checks whether this screen is active and can respond to user input.
         public bool IsActive
