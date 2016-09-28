@@ -1,6 +1,7 @@
 using System;
 using SpaceAssault.Utils;
 using SpaceAssault.ScreenManagers;
+using SpaceAssault.Screens.Demo;
 
 namespace SpaceAssault.Screens
 {
@@ -16,8 +17,9 @@ namespace SpaceAssault.Screens
             MenuEntry highscoreMenuEntry = new MenuEntry("Station Records");
             MenuEntry optionsMenuEntry = new MenuEntry("Station Configuration");
             MenuEntry creditsMenuEntry = new MenuEntry("Honorable Mentions");
-            MenuEntry exitMenuEntry = new MenuEntry("Quit Game");
             MenuEntry tutorialMenuEntry = new MenuEntry("Begin Your Mission");
+            MenuEntry demoMenuEntry = new MenuEntry("Demonstration Mode");
+            MenuEntry exitMenuEntry = new MenuEntry("Quit Game");
 
             // Hook up menu event handlers.
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
@@ -25,6 +27,7 @@ namespace SpaceAssault.Screens
             optionsMenuEntry.Selected += OptionsMenuEntrySelected;
             creditsMenuEntry.Selected += CreditsMenuEntrySelected;
             tutorialMenuEntry.Selected += TutorialMenuEntrySelected;
+            demoMenuEntry.Selected += DemoMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
             // Add entries to the menu.
@@ -34,8 +37,20 @@ namespace SpaceAssault.Screens
             MenuEntries.Add(optionsMenuEntry);
             MenuEntries.Add(highscoreMenuEntry);
             MenuEntries.Add(creditsMenuEntry);
+            MenuEntries.Add(demoMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
+
+
+        // Event handler for when the Credits menu entry is selected.
+        void DemoMenuEntrySelected(object sender, EventArgs e)
+        {
+            //playing the sound
+            SoundEngine.Play2D("OkClick", Global.SpeakerVolume / 10, false);
+
+            ScreenManager.AddScreen(new DemoModeMenuScreen());
+        }
+
 
         // Event handler for when the Play Game menu entry is selected.
         void PlayGameMenuEntrySelected(object sender, EventArgs e)

@@ -110,5 +110,8 @@ namespace SpaceAssault
         public static int EnemyAttackTowerHealth;
         public static int EnemyAttackTowerDamage;
         public static int EnemyAttackTowerKillMoney;
+
+        // Demo
+        public static string DemoMode;
     }
 }
