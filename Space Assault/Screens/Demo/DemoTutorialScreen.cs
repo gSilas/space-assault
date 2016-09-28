@@ -73,7 +73,7 @@ namespace SpaceAssault.Screens.Demo
         Random random = new Random();
         bool once = true;
         //Created screens
-        PauseMenuScreen pause;
+        DemoPauseMenuScreen pause;
         ShopScreen shop;
         //#################################
         // Constructor
@@ -331,7 +331,7 @@ namespace SpaceAssault.Screens.Demo
             if (input.IsPauseGame())
             {
                 if (pause == null)
-                    pause = new PauseMenuScreen();
+                    pause = new DemoPauseMenuScreen();
                 ScreenManager.AddScreen(pause);
             }
         }

@@ -617,7 +617,23 @@ namespace SpaceAssault.Screens.Demo
                 }
             }
 
-
+            if (Global.DemoMode == "Models")
+            {
+                /* bullet of enemy ships with drone and station */
+                foreach (var bullet in _boidBuilder.BulletList)
+                {
+                    if (bullet.CanDamageStation && Collider3D.IntersectionSphere(bullet, _station))
+                    {
+                        _sphereAlpha = 0.2f;
+                        explosionList.Add(new ExplosionSystem(new ShipExplosionSettings(), bullet.Position, 0.4));
+                        if (bullet._bulletType == Bullet.BulletType.BossGun)
+                        {
+                            explosionList.Add(new ExplosionSystem(new BombExplosionSettings(), new BombRingExplosionSettings(), bullet.Position, 0.6, 50, true));
+                        }
+                        _removeBullets.Add(bullet);
+                    }
+                }
+            }
 
             /* bullet of enemy ships with drone and station */
             foreach (var bullet in _waveBuilder.BulletList)
@@ -780,6 +796,8 @@ namespace SpaceAssault.Screens.Demo
             {
                 _droneFleet._bulletList.Remove(bullet);
                 _waveBuilder.BulletList.Remove(bullet);
+                if (Global.DemoMode == "Models")
+                    _boidBuilder.BulletList.Remove(bullet);
             }
 
         }
