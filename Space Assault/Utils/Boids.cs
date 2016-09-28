@@ -68,7 +68,7 @@ namespace SpaceAssault.Utils
             _flyToDroneRadius = 300;
             _flyToStationRadius = (int)(_flyToDroneRadius * 1.3f);
             _avoidDroneRadius = (int)(_flyToDroneRadius * 0.6f);
-            _avoidStationRadius = 120;
+            _avoidStationRadius = 150;
             _fighterShootRadius = 230;
         }
         public void LoadContent()
@@ -80,11 +80,13 @@ namespace SpaceAssault.Utils
             fighter2Model = Global.ContentManager.Load<Model>("Models/enemyship4");
             fighter3Model = Global.ContentManager.Load<Model>("Models/enemyship3");
         }
+
         public void UnLoadContent()
         {
             Console.WriteLine("unload");
             boidContent.Unload();
         }
+
         [Conditional("DEBUG")]
         public void MouseAdd()
         {
@@ -325,7 +327,7 @@ namespace SpaceAssault.Utils
                 }
 
                 Vector3 lastDirection = curShip._flyingDirection;
-                curShip._flyingDirection += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS * 3) / 30;
+                curShip._flyingDirection += (cohesion / 100 + aligning + avoidB + avoidO + noise / 20 + flyToDrone / 5 + avoidS *45 ) / 30;
                 curShip._flyingDirection.Y = 0;
 
                 if (curShip._flyingDirection.Length() > _maxSpeed)
@@ -355,6 +357,7 @@ namespace SpaceAssault.Utils
             }
 
             if (count > 0) pcj /= count;
+            else return Vector3.Zero;
 
             //richtungsvektor zur 'masse'
             return pcj - curShip.Position;
@@ -418,21 +421,22 @@ namespace SpaceAssault.Utils
         private Vector3 avoidStationRule(AEnemys curShip)
         {
             var awayVector = -goToPlace(curShip, Vector3.Zero);
-
-            if (curShip.Position.Length() < _avoidStationRadius)
+            var shipDist = curShip.Position.Length();
+            if (shipDist < _avoidStationRadius)
             {
+                
                     var leftVectorLength = (curShip.Position + curShip.RotationMatrix.Left).Length();
                     var rightVectorLength = (curShip.Position + curShip.RotationMatrix.Right).Length();
 
                     // ship is left of station, fly left
                     if (leftVectorLength > rightVectorLength)
                     {
-                        return new Vector3(awayVector.Z, 0, -awayVector.X) + awayVector/2;
+                        return (new Vector3(awayVector.Z, 0, -awayVector.X) + awayVector) / shipDist;
                     }
                     // ship is right of station, fly right
                     else
                     {
-                        return new Vector3(-awayVector.Z, 0, awayVector.X) + awayVector/2;
+                        return (new Vector3(-awayVector.Z, 0, awayVector.X) + awayVector) / shipDist;
                     }
                 
             }
