@@ -122,9 +122,6 @@ namespace SpaceAssault.Utils.Demo
                     Global.EnemyBomber2Damage = 0;
                     Global.EnemyBomber2KillMoney = 2000;
 
-                    Global.EnemyBossHealth = 10;
-                    Global.EnemyBossDamage = 0;
-                    Global.EnemyBossKillMoney = 2000;
 
                     _boids.addBoid(new Vector3(150, 0, 50), Boids.EnemyType.Fighter);
                     _boids.addBoid(new Vector3(250, 0, 50), Boids.EnemyType.Fighter);
@@ -139,7 +136,7 @@ namespace SpaceAssault.Utils.Demo
                     _boids.addBoid(new Vector3(350, 0, -150), Boids.EnemyType.Fighter3);
 
                     _boids.addBoid(new Vector3(450, 0, 25), Boids.EnemyType.Bomber);
-                    _boids.addBoid(new Vector3(450, 0, -125), Boids.EnemyType.Boss);
+           
 
                     break;
 

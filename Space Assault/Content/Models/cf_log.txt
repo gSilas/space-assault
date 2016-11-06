@@ -1,0 +1,1 @@
+Warning: None triangle mesh: Cube (file: 'C:\Users\Daniel\Source\Repos\space-assault\Space Assault\Content\Models\bullet.FBX') [ (line 0)]

@@ -186,11 +186,6 @@ namespace SpaceAssault.Utils.Demo
                     Global.EnemyBomberDamage = 1000;
                     Global.EnemyBomberKillMoney = 0;
 
-                    Global.EnemyFighterHealth = 100;
-                    Global.EnemyFighterDamage = 900;
-                    Global.EnemyFighterKillMoney = 0;
-
-                    _boids.addRandomBoids(1, Boids.EnemyType.Fighter);
                     _boids.addRandomBoids(10, Boids.EnemyType.Bomber);
                     break;
 

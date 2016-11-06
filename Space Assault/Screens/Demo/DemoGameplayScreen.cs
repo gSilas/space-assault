@@ -424,7 +424,7 @@ namespace SpaceAssault.Screens.Demo
         //#################################
         public override void Draw(GameTime gameTime)
         {
-            Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target, Color.DarkGray, 0, 0);
+            Global.GraphicsManager.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 0, 0);
 
 
             switch (Global.DemoMode)
