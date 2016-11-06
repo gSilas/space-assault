@@ -16,7 +16,7 @@ namespace SpaceAssault.Utils
     public class HighScoreListOnline
     {
 
-        private string _gameName = "spaceAssault";
+        private string _gameName = "vortrag"; //spaceAssault
         private string _addUrl = "https://omgleaderboards.appspot.com/add";
         private string _getUrl = "http://omgleaderboards.appspot.com/get/";
 
